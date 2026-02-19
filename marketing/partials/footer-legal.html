@@ -1,0 +1,13 @@
+<!-- Legal footer -->
+<footer class="bg-[#1A1A1A] text-gray-400">
+    <div class="max-w-6xl mx-auto px-6 py-12">
+        <div class="flex flex-col md:flex-row items-center justify-between gap-6" x-data="{ path: window.location.pathname }">
+            <p class="text-sm">&copy; 2026 Contento. All rights reserved.</p>
+            <div class="flex items-center gap-8">
+                <a href="privacy.html" class="text-sm hover:text-white transition" :class="path.includes('privacy') ? 'text-gray-300' : ''">Privacy</a>
+                <a href="terms.html" class="text-sm hover:text-white transition" :class="path.includes('terms') ? 'text-gray-300' : ''">Terms</a>
+                <a href="cookies.html" class="text-sm hover:text-white transition" :class="path.includes('cookies') ? 'text-gray-300' : ''">Cookies</a>
+            </div>
+        </div>
+    </div>
+</footer>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en" :class="$store.darkMode.on ? 'dark' : 'light'">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home - My Contento Site</title>
+
+
+    <!-- OpenGraph -->
+    <meta property="og:title" content="Home" />
+    <meta property="og:type" content="article" />
+
+    <!-- OpenGraph (extended) -->
+    <meta property="og:description" content="Content, made happy." />
+    <meta property="og:site_name" content="My Contento Site" />
+    <meta property="og:locale" content="en_US" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Home" />
+
+    <!-- JSON-LD Structured Data -->
+        <script type="application/ld&#x2B;json">{"@type":"WebSite","name":"My Contento Site","description":"Content, made happy.","url":"http://localhost:5000","@context":"https://schema.org"}</script>
+        <script type="application/ld&#x2B;json">{"@type":"Organization","name":"My Contento Site","url":"http://localhost:5000","@context":"https://schema.org"}</script>
+    <script type="application/ld&#x2B;json">{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"http://localhost:5000/"},{"@type":"ListItem","position":2,"name":"Home","item":"http://localhost:5000/"}],"@context":"https://schema.org"}</script>
+
+    <link rel="stylesheet" href="/css/app.css?v=HXhq1AGGdhk6g1rUQV3izmFC9kXE_-0z_ATt3Gb0g_Q" />
+    <link rel="alternate" type="application/rss+xml" title="My Contento Site RSS Feed" href="/feed.xml" />
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3/dist/cdn.min.js"></script>
+
+    
+
+        <style>:root{--color-ash:#8888A0;--color-ink:#1A1A2E;--font-sans:'DM Sans', system-ui, sans-serif;--color-mist:#E0E0ED;--color-snow:#FFFFFF;--font-serif:'DM Sans', system-ui, sans-serif;--color-cloud:#B5B5CC;--color-paper:#FAF5FF;--color-stone:#4A4A5E;--color-indigo:#7C3AED;--color-indigo-pale:#F3EEFF;--color-indigo-light:#9F67FF;}</style>
+    <style>
+        body {
+            font-family: var(--font-serif);
+            color: var(--color-ink);
+            background: var(--color-paper);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+    <!-- Header -->
+    <header class="border-b py-6" style="border-color: var(--color-mist);">
+        <div class="mx-auto px-4 sm:px-6" style="max-width: 1200px;">
+            <div class="flex items-center justify-between">
+                <a href="/" class="text-xl font-semibold" style="color: var(--color-ink); font-family: var(--font-serif); letter-spacing: -0.02em;">
+                    My Contento Site
+                </a>
+                <nav class="flex items-center gap-6">
+                    <a href="/" class="text-sm" style="color: var(--color-stone);">Home</a>
+                    <a href="/membership" class="text-sm" style="color: var(--color-stone);">Membership</a>
+                    <a href="/search" class="text-sm" style="color: var(--color-stone);">Search</a>
+                    <!-- Dark mode toggle -->
+                    <button @click="$store.darkMode.toggle()" class="p-1.5 rounded" style="color: var(--color-ash);" title="Toggle dark mode">
+                        <template x-if="$store.darkMode.on">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+                            </svg>
+                        </template>
+                        <template x-if="!$store.darkMode.on">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+                            </svg>
+                        </template>
+                    </button>
+                </nav>
+            </div>
+                <p class="mt-1 text-sm" style="color: var(--color-ash);">Content, made happy.</p>
+        </div>
+    </header>
+
+    <!-- Main content -->
+    <main class="flex-1 py-8">
+            <div class="mx-auto px-4 sm:px-6" style="max-width: 1200px;">
+                
+<!-- Recent Posts -->
+<div class="space-y-10">
+        <article class="group">
+            <div>
+                    <div class="flex gap-2 mb-2">
+                            <a href="/tag/welcome" class="text-xs font-medium uppercase tracking-wider" style="color: var(--color-indigo);">welcome</a>
+                            <a href="/tag/getting-started" class="text-xs font-medium uppercase tracking-wider" style="color: var(--color-indigo);">getting-started</a>
+                    </div>
+                <h2 class="text-2xl font-semibold mb-2" style="font-family: var(--font-serif);">
+                    <a href="/welcome-to-contento" class="hover:underline" style="color: var(--color-ink);">Welcome to Contento</a>
+                </h2>
+                    <p class="text-base mb-3" style="color: var(--color-stone); line-height: 1.7;">Contento is a writer-first content management system that doesn&#x27;t feel like a CMS.</p>
+                <div class="flex items-center gap-4 text-sm" style="color: var(--color-ash);">
+                    <time datetime="2026-02-18">
+                        February 18, 2026
+                    </time>
+                    <span>·</span>
+                    <span>1 min read</span>
+                </div>
+            </div>
+        </article>
+
+</div>
+
+
+
+
+            </div>
+    </main>
+
+    <!-- Newsletter signup -->
+    <section class="border-t py-10" style="border-color: var(--color-mist); background: var(--color-cloud);"
+             x-data="{ email: '', status: '', loading: false }">
+        <div class="mx-auto px-4 sm:px-6 text-center" style="max-width: 1200px;">
+            <h3 class="text-lg font-semibold mb-2" style="color: var(--color-ink);">Subscribe to our newsletter</h3>
+            <p class="text-sm mb-4" style="color: var(--color-stone);">Get the latest posts delivered to your inbox.</p>
+            <form>
+                <input type="email" x-model="email" required placeholder="your@email.com"
+                       class="flex-1 px-3 py-2 rounded border text-sm"
+                       style="border-color: var(--color-mist); background: var(--color-paper); color: var(--color-ink);" />
+                <button type="submit" :disabled="loading"
+                        class="px-4 py-2 rounded text-sm font-medium text-white"
+                        style="background: var(--color-indigo);">
+                    Subscribe
+                </button>
+            </form>
+            <p x-show="status === 'success'" class="text-sm mt-2" style="color: var(--color-indigo);">Thanks for subscribing!</p>
+            <p x-show="status === 'error'" class="text-sm mt-2" style="color: #dc2626;">Something went wrong. Please try again.</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t py-8" style="border-color: var(--color-mist);">
+        <div class="mx-auto px-4 sm:px-6 text-center" style="max-width: 1200px;">
+            <p class="text-sm" style="color: var(--color-ash);">
+                &copy; 2026 My Contento Site · Powered by <a href="#" style="color: var(--color-indigo);">Contento</a>
+            </p>
+        </div>
+    </footer>
+
+
+    <script>
+        document.addEventListener('alpine:init', () => {
+            Alpine.store('darkMode', {
+                on: localStorage.getItem('contento-dark') === 'true' ||
+                    (!localStorage.getItem('contento-dark') && window.matchMedia('(prefers-color-scheme: dark)').matches),
+                toggle() {
+                    this.on = !this.on;
+                    localStorage.setItem('contento-dark', this.on);
+                }
+            });
+        });
+    </script>
+    
+</body>
+</html>

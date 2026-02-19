@@ -1,0 +1,58 @@
+@*
+    Layout Grid partial — renders a CSS Grid layout from structure JSON.
+    Usage: pass LayoutRenderContext via ViewData["LayoutContext"]
+    The "body" region is rendered by the parent layout using @RenderBody()
+*@
+@using Contento.Core.Interfaces
+@{
+    var ctx = ViewData["LayoutContext"] as LayoutRenderContext;
+    if (ctx == null || !ctx.HasLayout) return;
+
+    var structure = ctx.StructureJson ?? "{}";
+    var maxWidth = ctx.MaxWidth ?? "1200px";
+    var gap = ctx.Gap ?? "1.5rem";
+    var regions = ctx.RegionContent;
+
+    // Parse structure to get regions (excluding "body" which is rendered by parent)
+    var sidebarRegions = new List<(string region, int cols, string? mobile)>();
+    try
+    {
+        using var doc = System.Text.Json.JsonDocument.Parse(structure);
+        if (doc.RootElement.TryGetProperty("rows", out var rowsEl))
+        {
+            foreach (var row in rowsEl.EnumerateArray())
+            {
+                if (row.TryGetProperty("regions", out var regionsEl))
+                {
+                    foreach (var region in regionsEl.EnumerateArray())
+                    {
+                        var name = region.GetProperty("region").GetString() ?? "body";
+                        if (name == "body") continue; // body is handled by parent
+                        var colSpan = region.TryGetProperty("cols", out var c) ? c.GetInt32() : 4;
+                        var mobileStr = region.TryGetProperty("mobile", out var m) ? m.GetString() : null;
+                        sidebarRegions.Add((name, colSpan, mobileStr));
+                    }
+                }
+            }
+        }
+    }
+    catch { /* Parse failure → no sidebar regions */ }
+}
+
+@foreach (var (region, cols, mobile) in sidebarRegions)
+{
+    var responsiveClass = mobile switch
+    {
+        "hidden" => "hidden md:block",
+        "below" => "col-span-12 md:col-span-" + cols,
+        _ => ""
+    };
+    var gridCol = $"grid-column: span {cols} / span {cols};";
+
+    if (regions.TryGetValue(region, out var content) && !string.IsNullOrEmpty(content))
+    {
+        <div style="@gridCol" class="@responsiveClass">
+            @Html.Raw(content)
+        </div>
+    }
+}

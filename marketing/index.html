@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contento — Content, Made Happy</title>
+    <meta name="description" content="A writer-first content management system with a headless API, plugin system, and beautiful admin UI. Open source, built on .NET 10." />
+    <script type="module" src="/src/main.js"></script>
+</head>
+<body class="bg-white text-gray-900 antialiased">
+
+<%nav-main%>
+
+<!-- Hero -->
+<section class="pt-32 pb-20 px-4 sm:px-6 overflow-hidden">
+    <div class="max-w-6xl mx-auto">
+        <div class="max-w-3xl mx-auto text-center">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium mb-6" style="background: #EEF2F7; color: #3D5A80;">
+                <span class="w-1.5 h-1.5 rounded-full" style="background: #3D5A80;"></span>
+                Open Source &middot; .NET 10 &middot; PostgreSQL
+            </div>
+            <h1 class="font-display text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.1] mb-6">
+                Content,<br><span class="gradient-text">made happy.</span>
+            </h1>
+            <p class="text-lg sm:text-xl text-gray-500 leading-relaxed max-w-2xl mx-auto mb-10">
+                A writer-first CMS that strips away every piece of friction. Beautiful admin UI, headless API, plugin ecosystem, dark mode — all in one package.
+            </p>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a href="docs/index.html" class="inline-flex items-center gap-2 px-6 py-3 text-sm font-medium text-white rounded-lg transition-all shadow-lg shadow-blue-900/20" style="background: #3D5A80;" onmouseover="this.style.background='#34506F'" onmouseout="this.style.background='#3D5A80'">
+                    Get Started
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+                </a>
+                <a href="docs/api.html" class="inline-flex items-center gap-2 px-6 py-3 text-sm font-medium text-gray-700 bg-white border border-gray-200 rounded-lg hover:border-gray-300 hover:bg-gray-50 transition-all">
+                    View API Docs
+                </a>
+            </div>
+        </div>
+
+        <!-- Terminal mockup -->
+        <div class="max-w-2xl mx-auto mt-16 float">
+            <div class="code-block overflow-hidden shadow-2xl">
+                <div class="flex items-center gap-2 px-4 py-3 border-b border-gray-800">
+                    <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
+                    <div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
+                    <div class="w-3 h-3 rounded-full bg-green-500/80"></div>
+                    <span class="ml-2 text-xs text-gray-500">terminal</span>
+                </div>
+                <div class="p-6 text-sm leading-relaxed">
+                    <p><span class="text-green-400">$</span> git clone https://github.com/plsft/contento.git</p>
+                    <p><span class="text-green-400">$</span> cd contento</p>
+                    <p><span class="text-green-400">$</span> dotnet run --project src/Contento.Web</p>
+                    <p class="mt-3 text-gray-500">info: Contento CMS started successfully</p>
+                    <p class="text-gray-500">info: Listening on: <span class="text-blue-400">https://localhost:5001</span></p>
+                    <p class="mt-3"><span class="text-green-400">$</span> curl https://localhost:5001/api/v1/content/posts</p>
+                    <p class="text-gray-400">{"data": [...], "meta": {"totalCount": 1}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Stats bar -->
+<section class="border-y border-gray-100 py-12 px-4 sm:px-6" style="background: #FAFAFA;">
+    <div class="max-w-4xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+        <div>
+            <p class="text-3xl font-bold tracking-tight" style="color: #3D5A80;">135</p>
+            <p class="text-sm text-gray-500 mt-1">API Endpoints</p>
+        </div>
+        <div>
+            <p class="text-3xl font-bold tracking-tight" style="color: #3D5A80;">8</p>
+            <p class="text-sm text-gray-500 mt-1">Built-in Themes</p>
+        </div>
+        <div>
+            <p class="text-3xl font-bold tracking-tight" style="color: #3D5A80;">582</p>
+            <p class="text-sm text-gray-500 mt-1">Test Coverage</p>
+        </div>
+        <div>
+            <p class="text-3xl font-bold tracking-tight" style="color: #3D5A80;">100%</p>
+            <p class="text-sm text-gray-500 mt-1">Open Source</p>
+        </div>
+    </div>
+</section>
+
+<!-- Features grid -->
+<section class="py-24 px-4 sm:px-6">
+    <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-16">
+            <h2 class="font-display text-3xl sm:text-4xl font-bold tracking-tight mb-4">Everything you need to publish</h2>
+            <p class="text-gray-500 max-w-2xl mx-auto">A complete content platform with the DX you wish every CMS had.</p>
+        </div>
+        <div class="feature-grid grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="p-6 rounded-xl border border-gray-100 bg-white">
+                <div class="w-10 h-10 rounded-lg flex items-center justify-center mb-4" style="background: #EEF2F7; color: #3D5A80;">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+                </div>
+                <h3 class="font-semibold mb-2">Distraction-Free Editor</h3>
+                <p class="text-sm text-gray-500 leading-relaxed">Full-page Markdown editor with autosave, word count, cover images, and keyboard shortcuts.</p>
+            </div>
+            <div class="p-6 rounded-xl border border-gray-100 bg-white">
+                <div class="w-10 h-10 rounded-lg flex items-center justify-center mb-4" style="background: #EEF2F7; color: #3D5A80;">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                </div>
+                <h3 class="font-semibold mb-2">Headless API</h3>
+                <p class="text-sm text-gray-500 leading-relaxed">Full REST API with content delivery endpoints, bearer token auth, search with highlights, and structured JSON.</p>
+            </div>
+            <div class="p-6 rounded-xl border border-gray-100 bg-white">
+                <div class="w-10 h-10 rounded-lg flex items-center justify-center mb-4" style="background: #EEF2F7; color: #3D5A80;">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 14v6m-3-3h6M6 10h2a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2zm10 0h2a2 2 0 002-2V6a2 2 0 00-2-2h-2a2 2 0 00-2 2v2a2 2 0 002 2zM6 20h2a2 2 0 002-2v-2a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2z"/></svg>
+                </div>
+                <h3 class="font-semibold mb-2">Plugin System</h3>
+                <p class="text-sm text-gray-500 leading-relaxed">JavaScript plugins run in a Jint sandbox. SEO analyzer, contact forms, reading progress — install from admin.</p>
+            </div>
+            <div class="p-6 rounded-xl border border-gray-100 bg-white">
+                <div class="w-10 h-10 rounded-lg flex items-center justify-center mb-4" style="background: #EEF2F7; color: #3D5A80;">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/></svg>
+                </div>
+                <h3 class="font-semibold mb-2">8 Themes + Dark Mode</h3>
+                <p class="text-sm text-gray-500 leading-relaxed">From Playfair Display editorial to Lora night-reading. CSS variable system with full dark mode support.</p>
+            </div>
+            <div class="p-6 rounded-xl border border-gray-100 bg-white">
+                <div class="w-10 h-10 rounded-lg flex items-center justify-center mb-4" style="background: #EEF2F7; color: #3D5A80;">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                </div>
+                <h3 class="font-semibold mb-2">Full-Text Search</h3>
+                <p class="text-sm text-gray-500 leading-relaxed">PostgreSQL-powered search with highlighted results, autocomplete suggestions, and relevance ranking.</p>
+            </div>
+            <div class="p-6 rounded-xl border border-gray-100 bg-white">
+                <div class="w-10 h-10 rounded-lg flex items-center justify-center mb-4" style="background: #EEF2F7; color: #3D5A80;">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                </div>
+                <h3 class="font-semibold mb-2">Media Library</h3>
+                <p class="text-sm text-gray-500 leading-relaxed">Folder organization, drag-and-drop upload, responsive image variants (640w, 1024w, 1536w WebP), focal point picker, and grid/list views.</p>
+            </div>
+            <div class="p-6 rounded-xl border border-gray-100 bg-white">
+                <div class="w-10 h-10 rounded-lg flex items-center justify-center mb-4" style="background: #EEF2F7; color: #3D5A80;">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"/></svg>
+                </div>
+                <h3 class="font-semibold mb-2">Threaded Comments</h3>
+                <p class="text-sm text-gray-500 leading-relaxed">Threaded comments with nested replies, AI-powered spam scoring, auto-approve threshold, moderation queue, and batch actions.</p>
+            </div>
+            <div class="p-6 rounded-xl border border-gray-100 bg-white">
+                <div class="w-10 h-10 rounded-lg flex items-center justify-center mb-4" style="background: #EEF2F7; color: #3D5A80;">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"/></svg>
+                </div>
+                <h3 class="font-semibold mb-2">Import / Export</h3>
+                <p class="text-sm text-gray-500 leading-relaxed">Import from WordPress (WXR) or Markdown files. Export as JSON, Markdown, or HTML.</p>
+            </div>
+            <div class="p-6 rounded-xl border border-gray-100 bg-white">
+                <div class="w-10 h-10 rounded-lg flex items-center justify-center mb-4" style="background: #EEF2F7; color: #3D5A80;">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                </div>
+                <h3 class="font-semibold mb-2">Security First</h3>
+                <p class="text-sm text-gray-500 leading-relaxed">CSRF protection, CSP headers, BCrypt passwords, role-based access, audit logging, and anti-XSS sanitization.</p>
+            </div>
+            <div class="p-6 rounded-xl border border-gray-100 bg-white">
+                <div class="w-10 h-10 rounded-lg flex items-center justify-center mb-4" style="background: #EEF2F7; color: #3D5A80;">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
+                </div>
+                <h3 class="font-semibold mb-2">Membership &amp; Subscriptions</h3>
+                <p class="text-sm text-gray-500 leading-relaxed">Stripe-powered paid memberships with plan management, content gating, billing portal, and subscriber dashboard.</p>
+            </div>
+            <div class="p-6 rounded-xl border border-gray-100 bg-white">
+                <div class="w-10 h-10 rounded-lg flex items-center justify-center mb-4" style="background: #EEF2F7; color: #3D5A80;">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                </div>
+                <h3 class="font-semibold mb-2">Newsletter &amp; Email</h3>
+                <p class="text-sm text-gray-500 leading-relaxed">Built-in newsletter with subscriber management, campaign editor, and email delivery. Grow your audience.</p>
+            </div>
+            <div class="p-6 rounded-xl border border-gray-100 bg-white">
+                <div class="w-10 h-10 rounded-lg flex items-center justify-center mb-4" style="background: #EEF2F7; color: #3D5A80;">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h7"/></svg>
+                </div>
+                <h3 class="font-semibold mb-2">Navigation Menus</h3>
+                <p class="text-sm text-gray-500 leading-relaxed">Admin-configurable header and footer menus with nested dropdowns, link types (custom, post, category, tag), and reordering.</p>
+            </div>
+            <div class="p-6 rounded-xl border border-gray-100 bg-white">
+                <div class="w-10 h-10 rounded-lg flex items-center justify-center mb-4" style="background: #EEF2F7; color: #3D5A80;">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9"/></svg>
+                </div>
+                <h3 class="font-semibold mb-2">Multi-Site</h3>
+                <p class="text-sm text-gray-500 leading-relaxed">Run multiple sites from one installation. Domain-based routing with per-site themes, content, and settings.</p>
+            </div>
+            <div class="p-6 rounded-xl border border-gray-100 bg-white">
+                <div class="w-10 h-10 rounded-lg flex items-center justify-center mb-4" style="background: #EEF2F7; color: #3D5A80;">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                </div>
+                <h3 class="font-semibold mb-2">oEmbed &amp; Rich Media</h3>
+                <p class="text-sm text-gray-500 leading-relaxed">Paste a YouTube, Vimeo, Spotify, or Twitter URL and it auto-embeds. Cached provider lookups with fallback.</p>
+            </div>
+            <div class="p-6 rounded-xl border border-gray-100 bg-white">
+                <div class="w-10 h-10 rounded-lg flex items-center justify-center mb-4" style="background: #EEF2F7; color: #3D5A80;">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+                </div>
+                <h3 class="font-semibold mb-2">Shortcodes</h3>
+                <p class="text-sm text-gray-500 leading-relaxed">Use [youtube], [button], [callout], [gallery], [code], and [toc] shortcodes in your content. Register custom ones at runtime.</p>
+            </div>
+            <div class="p-6 rounded-xl border border-gray-100 bg-white">
+                <div class="w-10 h-10 rounded-lg flex items-center justify-center mb-4" style="background: #EEF2F7; color: #3D5A80;">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 9l3 3m0 0l-3 3m3-3H8m13 0a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                </div>
+                <h3 class="font-semibold mb-2">URL Redirects</h3>
+                <p class="text-sm text-gray-500 leading-relaxed">Manage 301/302 redirects from the admin panel. Hit tracking, auto-redirect on slug changes, and middleware processing.</p>
+            </div>
+            <div class="p-6 rounded-xl border border-gray-100 bg-white">
+                <div class="w-10 h-10 rounded-lg flex items-center justify-center mb-4" style="background: #EEF2F7; color: #3D5A80;">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/></svg>
+                </div>
+                <h3 class="font-semibold mb-2">User Registration</h3>
+                <p class="text-sm text-gray-500 leading-relaxed">Public signup with email verification, password reset flow, and Gravatar avatars. Secure token-based verification.</p>
+            </div>
+            <div class="p-6 rounded-xl border border-gray-100 bg-white">
+                <div class="w-10 h-10 rounded-lg flex items-center justify-center mb-4" style="background: #EEF2F7; color: #3D5A80;">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+                </div>
+                <h3 class="font-semibold mb-2">Post Editing Locks</h3>
+                <p class="text-sm text-gray-500 leading-relaxed">Prevents simultaneous editing conflicts. 2-minute TTL locks with automatic expiry and real-time lock status.</p>
+            </div>
+            <div class="p-6 rounded-xl border border-gray-100 bg-white">
+                <div class="w-10 h-10 rounded-lg flex items-center justify-center mb-4" style="background: #EEF2F7; color: #3D5A80;">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                </div>
+                <h3 class="font-semibold mb-2">AI &amp; MCP Ready</h3>
+                <p class="text-sm text-gray-500 leading-relaxed">Full REST API with OpenAPI spec lets AI agents create, manage, and publish content via MCP. Stateless bearer tokens, streaming AI endpoints, and SEO analysis built in.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Headless CTA -->
+<section class="py-24 px-4 sm:px-6" style="background: #F8FAFC;">
+    <div class="max-w-6xl mx-auto">
+        <div class="grid lg:grid-cols-2 gap-12 items-center">
+            <div>
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium mb-4" style="background: #EEF2F7; color: #3D5A80;">Headless Mode</div>
+                <h2 class="font-display text-3xl sm:text-4xl font-bold tracking-tight mb-4">Use it your way</h2>
+                <p class="text-gray-500 leading-relaxed mb-6">
+                    Contento works as a traditional CMS with server-rendered pages, or as a headless API powering any frontend. Next.js, Astro, 11ty, mobile apps — anything that speaks HTTP.
+                </p>
+                <ul class="space-y-3 text-sm text-gray-600 mb-8">
+                    <li class="flex items-center gap-3">
+                        <svg class="w-5 h-5 flex-shrink-0" style="color: #059669;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                        Content Delivery API — no auth needed for public content
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <svg class="w-5 h-5 flex-shrink-0" style="color: #059669;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                        Bearer token authentication for management endpoints
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <svg class="w-5 h-5 flex-shrink-0" style="color: #059669;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                        Posts returned with rendered HTML + Markdown + table of contents
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <svg class="w-5 h-5 flex-shrink-0" style="color: #059669;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                        Search, comments, media, themes — all accessible via API
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <svg class="w-5 h-5 flex-shrink-0" style="color: #059669;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                        MCP-compatible — AI agents can create and publish content autonomously
+                    </li>
+                </ul>
+                <a href="docs/headless.html" class="inline-flex items-center gap-2 text-sm font-medium transition-colors" style="color: #3D5A80;">
+                    Read the headless guide
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+                </a>
+            </div>
+            <div class="code-block overflow-hidden shadow-xl float-delay">
+                <div class="flex items-center gap-2 px-4 py-3 border-b border-gray-800">
+                    <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
+                    <div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
+                    <div class="w-3 h-3 rounded-full bg-green-500/80"></div>
+                    <span class="ml-2 text-xs text-gray-500">fetch.js</span>
+                </div>
+                <div class="p-6 text-sm leading-relaxed overflow-x-auto">
+<pre class="text-gray-300"><span class="text-purple-400">const</span> res = <span class="text-purple-400">await</span> <span class="text-blue-400">fetch</span>(<span class="text-green-400">'/api/v1/content/posts'</span>);
+<span class="text-purple-400">const</span> { data, meta } = <span class="text-purple-400">await</span> res.<span class="text-blue-400">json</span>();
+
+<span class="text-gray-500">// Each post includes:</span>
+<span class="text-gray-500">// id, title, slug, excerpt, coverImageUrl,</span>
+<span class="text-gray-500">// publishedAt, readingTimeMinutes, tags</span>
+
+data.<span class="text-blue-400">forEach</span>(post <span class="text-purple-400">=></span> {
+  <span class="text-blue-400">console</span>.<span class="text-blue-400">log</span>(post.title, post.slug);
+});
+
+<span class="text-gray-500">// Get full post with HTML + table of contents</span>
+<span class="text-purple-400">const</span> post = <span class="text-purple-400">await</span> <span class="text-blue-400">fetch</span>(
+  <span class="text-green-400">`/api/v1/content/posts/${slug}`</span>
+).<span class="text-blue-400">then</span>(r <span class="text-purple-400">=></span> r.<span class="text-blue-400">json</span>());
+
+<span class="text-gray-500">// post.data.bodyHtml — rendered HTML</span>
+<span class="text-gray-500">// post.data.tableOfContents — [{id, text, level}]</span></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Theme showcase -->
+<section class="py-24 px-4 sm:px-6">
+    <div class="max-w-6xl mx-auto text-center">
+        <h2 class="font-display text-3xl sm:text-4xl font-bold tracking-tight mb-4">8 beautiful themes, ready to go</h2>
+        <p class="text-gray-500 max-w-2xl mx-auto mb-12">Each with its own personality, font pairing, and color palette. Switch instantly from the admin panel.</p>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div class="p-4 rounded-xl border border-gray-100 text-left">
+                <div class="w-full h-20 rounded-lg mb-3 flex items-center justify-center" style="background: #FAF8F5; border: 1px solid #eee;"><span class="text-sm" style="font-family: 'Noto Serif JP', serif; color: #8B6914;">Shizen</span></div>
+                <p class="text-xs text-gray-500">Warm organic serif</p>
+            </div>
+            <div class="p-4 rounded-xl border border-gray-100 text-left">
+                <div class="w-full h-20 rounded-lg mb-3 flex items-center justify-center" style="background: #FFFFFF; border: 1px solid #eee;"><span class="text-sm" style="color: #E63946; font-family: 'Playfair Display', serif;">Ink</span></div>
+                <p class="text-xs text-gray-500">Modern editorial</p>
+            </div>
+            <div class="p-4 rounded-xl border border-gray-100 text-left">
+                <div class="w-full h-20 rounded-lg mb-3 flex items-center justify-center" style="background: #FBF8F1; border: 1px solid #eee;"><span class="text-sm" style="color: #2D6A4F; font-family: 'Merriweather', serif;">Grove</span></div>
+                <p class="text-xs text-gray-500">Classic literary</p>
+            </div>
+            <div class="p-4 rounded-xl border border-gray-100 text-left">
+                <div class="w-full h-20 rounded-lg mb-3 flex items-center justify-center" style="background: #FAF5FF; border: 1px solid #eee;"><span class="text-sm" style="color: #7C3AED;">Neon</span></div>
+                <p class="text-xs text-gray-500">Playful creative</p>
+            </div>
+            <div class="p-4 rounded-xl border border-gray-100 text-left">
+                <div class="w-full h-20 rounded-lg mb-3 flex items-center justify-center" style="background: #FEFDFB; border: 1px solid #eee;"><span class="text-sm" style="color: #0E7490; font-family: 'Crimson Pro', serif;">Folio</span></div>
+                <p class="text-xs text-gray-500">Minimal reading</p>
+            </div>
+            <div class="p-4 rounded-xl border border-gray-100 text-left">
+                <div class="w-full h-20 rounded-lg mb-3 flex items-center justify-center" style="background: #1A1A2E; border: 1px solid #333;"><span class="text-sm" style="color: #F59E0B; font-family: 'Lora', serif;">Dusk</span></div>
+                <p class="text-xs text-gray-500">Dark elegance</p>
+            </div>
+            <div class="p-4 rounded-xl border border-gray-100 text-left">
+                <div class="w-full h-20 rounded-lg mb-3 flex items-center justify-center" style="background: #FDF6EC; border: 1px solid #eee;"><span class="text-sm" style="color: #A0522D;">Koyo</span></div>
+                <p class="text-xs text-gray-500">Autumn earth tones</p>
+            </div>
+            <div class="p-4 rounded-xl border border-gray-100 text-left">
+                <div class="w-full h-20 rounded-lg mb-3 flex items-center justify-center" style="background: #FFFFFF; border: 1px solid #eee;"><span class="text-sm" style="color: #3D5A80;">Yuki</span></div>
+                <p class="text-xs text-gray-500">Stark minimal</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Tech stack -->
+<section class="py-24 px-4 sm:px-6 border-t border-gray-100" style="background: #FAFAFA;">
+    <div class="max-w-4xl mx-auto text-center">
+        <h2 class="font-display text-3xl font-bold tracking-tight mb-4">Built on proven foundations</h2>
+        <p class="text-gray-500 mb-12">Modern stack, battle-tested components, zero lock-in.</p>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-sm">
+            <div class="p-4 bg-white rounded-lg border border-gray-100"><p class="font-semibold mb-1">.NET 10</p><p class="text-gray-500 text-xs">Runtime &amp; framework</p></div>
+            <div class="p-4 bg-white rounded-lg border border-gray-100"><p class="font-semibold mb-1">PostgreSQL</p><p class="text-gray-500 text-xs">Primary database</p></div>
+            <div class="p-4 bg-white rounded-lg border border-gray-100"><p class="font-semibold mb-1">Redis</p><p class="text-gray-500 text-xs">Caching layer</p></div>
+            <div class="p-4 bg-white rounded-lg border border-gray-100"><p class="font-semibold mb-1">Alpine.js</p><p class="text-gray-500 text-xs">Reactive UI</p></div>
+            <div class="p-4 bg-white rounded-lg border border-gray-100"><p class="font-semibold mb-1">Tailwind CSS v4</p><p class="text-gray-500 text-xs">Design system</p></div>
+            <div class="p-4 bg-white rounded-lg border border-gray-100"><p class="font-semibold mb-1">Jint</p><p class="text-gray-500 text-xs">Plugin sandbox</p></div>
+            <div class="p-4 bg-white rounded-lg border border-gray-100"><p class="font-semibold mb-1">BCrypt</p><p class="text-gray-500 text-xs">Password hashing</p></div>
+            <div class="p-4 bg-white rounded-lg border border-gray-100"><p class="font-semibold mb-1">Serilog</p><p class="text-gray-500 text-xs">Structured logging</p></div>
+            <div class="p-4 bg-white rounded-lg border border-gray-100"><p class="font-semibold mb-1">Stripe</p><p class="text-gray-500 text-xs">Payments &amp; subscriptions</p></div>
+            <div class="p-4 bg-white rounded-lg border border-gray-100"><p class="font-semibold mb-1">ImageSharp</p><p class="text-gray-500 text-xs">Image processing</p></div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="py-24 px-4 sm:px-6">
+    <div class="max-w-3xl mx-auto text-center">
+        <h2 class="font-display text-3xl sm:text-4xl font-bold tracking-tight mb-4">Start writing in minutes</h2>
+        <p class="text-gray-500 mb-8">Clone the repo, run one command, and you're live. No complex setup, no configuration files to hunt down.</p>
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <a href="docs/index.html" class="inline-flex items-center gap-2 px-6 py-3 text-sm font-medium text-white rounded-lg transition-colors" style="background: #3D5A80;" onmouseover="this.style.background='#34506F'" onmouseout="this.style.background='#3D5A80'">Read the Docs</a>
+            <a href="docs/api.html" class="inline-flex items-center gap-2 px-6 py-3 text-sm font-medium text-gray-700 bg-white border border-gray-200 rounded-lg hover:border-gray-300 hover:bg-gray-50 transition-all">API Reference</a>
+        </div>
+    </div>
+</section>
+
+<%footer-main%>
+
+</body>
+</html>

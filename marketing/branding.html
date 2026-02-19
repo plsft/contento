@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Branding Guidelines — Contento CMS</title>
+    <meta name="description" content="Official branding guidelines for Contento CMS. Download logos, learn about our colour palette, typography, and usage rules." />
+    <script type="module" src="/src/main.js"></script>
+</head>
+<body class="bg-white text-gray-900 antialiased">
+
+<%nav-main%>
+
+<!-- Hero -->
+<section class="pt-32 pb-16 px-4 sm:px-6">
+    <div class="max-w-4xl mx-auto text-center">
+        <h1 class="font-display text-4xl sm:text-5xl font-bold tracking-tight mb-4">Brand <span class="gradient-text">guidelines</span></h1>
+        <p class="text-lg text-gray-500 max-w-2xl mx-auto">Everything you need to represent Contento consistently — logos, colours, typography, and usage rules.</p>
+    </div>
+</section>
+
+<!-- Logo -->
+<section class="py-16 px-4 sm:px-6">
+    <div class="max-w-4xl mx-auto">
+        <h2 class="text-2xl font-bold tracking-tight mb-8">Logo</h2>
+        <p class="text-gray-500 mb-8">The Contento logo combines the word "content" with a friendly speech-bubble smiley, followed by "cms" in a slightly smaller weight. The speech-bubble icon represents the conversational, approachable nature of the platform.</p>
+
+        <!-- Primary logo -->
+        <div class="mb-12">
+            <h3 class="text-lg font-semibold mb-4">Primary logo</h3>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="border border-gray-200 rounded-xl p-8 flex items-center justify-center bg-white">
+                    <img src="/contento-cms-logo.png" alt="Contento CMS logo — dark on light" class="max-h-16 w-auto">
+                </div>
+                <div class="border border-gray-200 rounded-xl p-8 flex items-center justify-center bg-[#1A1A1A]">
+                    <img src="/contento-cms-logo.png" alt="Contento CMS logo — inverted on dark" class="max-h-16 w-auto brightness-0 invert">
+                </div>
+            </div>
+            <p class="text-sm text-gray-400 mt-3">Left: light backgrounds. Right: dark backgrounds (CSS <code class="text-xs bg-gray-100 px-1.5 py-0.5 rounded">filter: brightness(0) invert(1)</code>).</p>
+        </div>
+
+        <!-- Small logo -->
+        <div class="mb-12">
+            <h3 class="text-lg font-semibold mb-4">Small / compact logo</h3>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="border border-gray-200 rounded-xl p-8 flex items-center justify-center bg-white">
+                    <img src="/small-contento-cms-logo.png" alt="Contento CMS small logo — dark on light" class="max-h-10 w-auto">
+                </div>
+                <div class="border border-gray-200 rounded-xl p-8 flex items-center justify-center bg-[#1A1A1A]">
+                    <img src="/small-contento-cms-logo.png" alt="Contento CMS small logo — inverted on dark" class="max-h-10 w-auto brightness-0 invert">
+                </div>
+            </div>
+            <p class="text-sm text-gray-400 mt-3">Use the small variant for navigation bars, favicons at higher resolutions, and inline references.</p>
+        </div>
+
+        <!-- Download -->
+        <div class="p-6 rounded-xl border border-gray-200 bg-gray-50 mb-12">
+            <h3 class="text-lg font-semibold mb-2">Download</h3>
+            <div class="flex flex-wrap gap-4">
+                <a href="/contento-cms-logo.png" download class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white rounded-lg transition-colors" style="background: #3D5A80;" onmouseover="this.style.background='#34506F'" onmouseout="this.style.background='#3D5A80'">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                    Primary logo (PNG)
+                </a>
+                <a href="/small-contento-cms-logo.png" download class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg border border-gray-300 hover:bg-gray-100 transition-colors">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                    Small logo (PNG)
+                </a>
+            </div>
+        </div>
+
+        <!-- Usage rules -->
+        <div class="mb-12">
+            <h3 class="text-lg font-semibold mb-4">Logo usage rules</h3>
+            <div class="grid sm:grid-cols-2 gap-6">
+                <div class="p-5 rounded-xl border border-green-200 bg-green-50">
+                    <p class="text-sm font-semibold text-green-800 mb-3">Do</p>
+                    <ul class="space-y-2 text-sm text-green-700">
+                        <li class="flex items-start gap-2"><span>&#10003;</span> Use the logo on a solid background with sufficient contrast</li>
+                        <li class="flex items-start gap-2"><span>&#10003;</span> Maintain minimum clear space equal to the height of the "o" in "content"</li>
+                        <li class="flex items-start gap-2"><span>&#10003;</span> Use the inverted (white) variant on dark backgrounds</li>
+                        <li class="flex items-start gap-2"><span>&#10003;</span> Scale proportionally — never distort</li>
+                    </ul>
+                </div>
+                <div class="p-5 rounded-xl border border-red-200 bg-red-50">
+                    <p class="text-sm font-semibold text-red-800 mb-3">Don't</p>
+                    <ul class="space-y-2 text-sm text-red-700">
+                        <li class="flex items-start gap-2"><span>&#10007;</span> Rotate, skew, or add effects to the logo</li>
+                        <li class="flex items-start gap-2"><span>&#10007;</span> Change the colours of individual parts of the logo</li>
+                        <li class="flex items-start gap-2"><span>&#10007;</span> Place the logo on busy backgrounds or photos without an overlay</li>
+                        <li class="flex items-start gap-2"><span>&#10007;</span> Recreate or redraw the logo with different typefaces</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Colour Palette -->
+<section class="py-16 px-4 sm:px-6 bg-gray-50">
+    <div class="max-w-4xl mx-auto">
+        <h2 class="text-2xl font-bold tracking-tight mb-8">Colour palette</h2>
+
+        <!-- Primary colours -->
+        <div class="mb-10">
+            <h3 class="text-lg font-semibold mb-4">Primary</h3>
+            <div class="grid sm:grid-cols-3 gap-4">
+                <div>
+                    <div class="h-24 rounded-xl mb-3" style="background: #3D5A80;"></div>
+                    <p class="text-sm font-semibold">Contento Blue</p>
+                    <p class="text-xs text-gray-400 font-mono">#3D5A80</p>
+                    <p class="text-xs text-gray-400 font-mono">rgb(61, 90, 128)</p>
+                </div>
+                <div>
+                    <div class="h-24 rounded-xl mb-3" style="background: #1A1A1A;"></div>
+                    <p class="text-sm font-semibold">Ink</p>
+                    <p class="text-xs text-gray-400 font-mono">#1A1A1A</p>
+                    <p class="text-xs text-gray-400 font-mono">rgb(26, 26, 26)</p>
+                </div>
+                <div>
+                    <div class="h-24 rounded-xl border border-gray-200 mb-3" style="background: #FFFFFF;"></div>
+                    <p class="text-sm font-semibold">White</p>
+                    <p class="text-xs text-gray-400 font-mono">#FFFFFF</p>
+                    <p class="text-xs text-gray-400 font-mono">rgb(255, 255, 255)</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Secondary / UI colours -->
+        <div class="mb-10">
+            <h3 class="text-lg font-semibold mb-4">Secondary &amp; UI</h3>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                <div>
+                    <div class="h-16 rounded-xl mb-2" style="background: #34506F;"></div>
+                    <p class="text-sm font-semibold">Blue Dark</p>
+                    <p class="text-xs text-gray-400 font-mono">#34506F</p>
+                </div>
+                <div>
+                    <div class="h-16 rounded-xl mb-2" style="background: #E5E5E3;"></div>
+                    <p class="text-sm font-semibold">Stone</p>
+                    <p class="text-xs text-gray-400 font-mono">#E5E5E3</p>
+                </div>
+                <div>
+                    <div class="h-16 rounded-xl border border-gray-200 mb-2" style="background: #F5F5F4;"></div>
+                    <p class="text-sm font-semibold">Ash</p>
+                    <p class="text-xs text-gray-400 font-mono">#F5F5F4</p>
+                </div>
+                <div>
+                    <div class="h-16 rounded-xl mb-2" style="background: #065F46;"></div>
+                    <p class="text-sm font-semibold">Success</p>
+                    <p class="text-xs text-gray-400 font-mono">#065F46</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gradient -->
+        <div>
+            <h3 class="text-lg font-semibold mb-4">Accent gradient</h3>
+            <div class="h-16 rounded-xl mb-3" style="background: linear-gradient(135deg, #3D5A80 0%, #5B8CB8 100%);"></div>
+            <p class="text-sm text-gray-500">Used sparingly for hero text highlights and call-to-action accents. Defined as a 135-degree gradient from Contento Blue to <span class="font-mono text-xs">#5B8CB8</span>.</p>
+        </div>
+    </div>
+</section>
+
+<!-- Typography -->
+<section class="py-16 px-4 sm:px-6">
+    <div class="max-w-4xl mx-auto">
+        <h2 class="text-2xl font-bold tracking-tight mb-8">Typography</h2>
+
+        <div class="grid md:grid-cols-2 gap-10">
+            <div>
+                <h3 class="text-lg font-semibold mb-4">Display &amp; headings</h3>
+                <p class="text-4xl font-bold tracking-tight mb-2" style="font-family: 'Inter', system-ui, sans-serif;">Inter</p>
+                <p class="text-sm text-gray-500 mb-4">The primary typeface for headings and display text. Use <strong>bold (700)</strong> for headings and <strong>semibold (600)</strong> for sub-headings. Apply tight letter-spacing (<code class="text-xs bg-gray-100 px-1 py-0.5 rounded">tracking-tight</code>).</p>
+                <div class="space-y-2 text-sm">
+                    <p class="text-3xl font-bold tracking-tight">Heading 1 — 36px bold</p>
+                    <p class="text-2xl font-bold tracking-tight">Heading 2 — 24px bold</p>
+                    <p class="text-lg font-semibold">Heading 3 — 18px semibold</p>
+                </div>
+            </div>
+            <div>
+                <h3 class="text-lg font-semibold mb-4">Body &amp; UI</h3>
+                <p class="text-4xl mb-2" style="font-family: 'Inter', system-ui, sans-serif;">Inter</p>
+                <p class="text-sm text-gray-500 mb-4">Body text uses Inter at <strong>regular (400)</strong> weight. UI labels and navigation use <strong>medium (500)</strong>. The base size is 16px with relaxed line-height for readability.</p>
+                <div class="space-y-2 text-sm">
+                    <p class="text-base">Body — 16px regular, 1.6 line-height</p>
+                    <p class="text-sm text-gray-500">Caption — 14px, gray-500</p>
+                    <p class="text-xs font-mono text-gray-400">Code — 12px mono, gray-400</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Voice & Tone -->
+<section class="py-16 px-4 sm:px-6 bg-gray-50">
+    <div class="max-w-4xl mx-auto">
+        <h2 class="text-2xl font-bold tracking-tight mb-8">Voice &amp; tone</h2>
+
+        <div class="grid sm:grid-cols-2 gap-6">
+            <div class="p-6 bg-white rounded-xl border border-gray-200">
+                <p class="font-semibold mb-2">Friendly, not casual</p>
+                <p class="text-sm text-gray-500">We are approachable and warm — the smiley in our logo says it all. But we are also professional. Avoid slang, excessive exclamation marks, and emojis in product copy.</p>
+            </div>
+            <div class="p-6 bg-white rounded-xl border border-gray-200">
+                <p class="font-semibold mb-2">Clear, not clever</p>
+                <p class="text-sm text-gray-500">Prefer plain language. Say "Create a post" instead of "Craft your narrative." Our users are busy — respect their time with concise, direct copy.</p>
+            </div>
+            <div class="p-6 bg-white rounded-xl border border-gray-200">
+                <p class="font-semibold mb-2">Confident, not arrogant</p>
+                <p class="text-sm text-gray-500">We believe Contento is a great CMS. We state facts and let the product speak for itself. Avoid superlatives like "the best" or "revolutionary."</p>
+            </div>
+            <div class="p-6 bg-white rounded-xl border border-gray-200">
+                <p class="font-semibold mb-2">Inclusive, not exclusive</p>
+                <p class="text-sm text-gray-500">Write for everyone — beginners and experts alike. Avoid jargon without explanation. When we say "developer-friendly", we also make sure it is accessible to non-developers.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Naming -->
+<section class="py-16 px-4 sm:px-6">
+    <div class="max-w-4xl mx-auto">
+        <h2 class="text-2xl font-bold tracking-tight mb-8">Naming &amp; spelling</h2>
+
+        <div class="overflow-x-auto">
+            <table class="w-full text-sm">
+                <thead>
+                    <tr class="border-b border-gray-200">
+                        <th class="text-left py-3 pr-4 font-semibold">Context</th>
+                        <th class="text-left py-3 pr-4 font-semibold text-green-700">Correct</th>
+                        <th class="text-left py-3 font-semibold text-red-700">Incorrect</th>
+                    </tr>
+                </thead>
+                <tbody class="text-gray-600">
+                    <tr class="border-b border-gray-100">
+                        <td class="py-3 pr-4">Full product name</td>
+                        <td class="py-3 pr-4 font-medium">Contento CMS</td>
+                        <td class="py-3 text-gray-400">ContentoCMS, contento cms, CONTENTO</td>
+                    </tr>
+                    <tr class="border-b border-gray-100">
+                        <td class="py-3 pr-4">Short form (after first mention)</td>
+                        <td class="py-3 pr-4 font-medium">Contento</td>
+                        <td class="py-3 text-gray-400">contento, CONTENTO, The Contento</td>
+                    </tr>
+                    <tr class="border-b border-gray-100">
+                        <td class="py-3 pr-4">In a URL or slug</td>
+                        <td class="py-3 pr-4 font-mono font-medium">contento</td>
+                        <td class="py-3 text-gray-400 font-mono">Contento, contentoCms</td>
+                    </tr>
+                    <tr>
+                        <td class="py-3 pr-4">Possessive</td>
+                        <td class="py-3 pr-4 font-medium">Contento's API</td>
+                        <td class="py-3 text-gray-400">Contento' API, Contentos API</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<%footer-main%>
+
+</body>
+</html>

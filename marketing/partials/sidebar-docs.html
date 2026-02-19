@@ -1,0 +1,36 @@
+<!-- Desktop sidebar -->
+<aside class="hidden lg:block w-64 shrink-0 border-r border-gray-200 min-h-[calc(100vh-4rem)] sticky top-16 self-start overflow-y-auto" style="background: #F8FAFC;">
+    <div class="py-8">
+        <p class="px-4 mb-4 text-xs font-semibold uppercase tracking-wider text-gray-400">Documentation</p>
+        <nav x-data="{ path: window.location.pathname }">
+            <a href="index.html" class="sidebar-link" :class="path.endsWith('/docs/index.html') || path.endsWith('/docs/') ? 'active' : ''">Getting Started</a>
+            <a href="admin.html" class="sidebar-link" :class="path.endsWith('/docs/admin.html') ? 'active' : ''">Admin Guide</a>
+            <a href="api.html" class="sidebar-link" :class="path.endsWith('/docs/api.html') ? 'active' : ''">API Reference</a>
+            <a href="headless.html" class="sidebar-link" :class="path.endsWith('/docs/headless.html') ? 'active' : ''">Headless Mode</a>
+            <a href="plugins.html" class="sidebar-link" :class="path.endsWith('/docs/plugins.html') ? 'active' : ''">Plugin Development</a>
+            <a href="themes.html" class="sidebar-link" :class="path.endsWith('/docs/themes.html') ? 'active' : ''">Theme Development</a>
+        </nav>
+    </div>
+</aside>
+
+<!-- Mobile sidebar -->
+<div x-show="mobileMenuOpen" x-cloak @click.away="mobileMenuOpen = false" class="lg:hidden fixed inset-0 z-40 bg-black/30">
+    <div class="w-64 h-full bg-white border-r border-gray-200 overflow-y-auto" style="background: #F8FAFC;" @click.stop>
+        <div class="py-6">
+            <div class="px-4 mb-4 flex items-center justify-between">
+                <p class="text-xs font-semibold uppercase tracking-wider text-gray-400">Documentation</p>
+                <button @click="mobileMenuOpen = false" class="text-gray-400 hover:text-gray-600">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            </div>
+            <nav x-data="{ path: window.location.pathname }">
+                <a href="index.html" class="sidebar-link" :class="path.endsWith('/docs/index.html') || path.endsWith('/docs/') ? 'active' : ''">Getting Started</a>
+                <a href="admin.html" class="sidebar-link" :class="path.endsWith('/docs/admin.html') ? 'active' : ''">Admin Guide</a>
+                <a href="api.html" class="sidebar-link" :class="path.endsWith('/docs/api.html') ? 'active' : ''">API Reference</a>
+                <a href="headless.html" class="sidebar-link" :class="path.endsWith('/docs/headless.html') ? 'active' : ''">Headless Mode</a>
+                <a href="plugins.html" class="sidebar-link" :class="path.endsWith('/docs/plugins.html') ? 'active' : ''">Plugin Development</a>
+                <a href="themes.html" class="sidebar-link" :class="path.endsWith('/docs/themes.html') ? 'active' : ''">Theme Development</a>
+            </nav>
+        </div>
+    </div>
+</div>

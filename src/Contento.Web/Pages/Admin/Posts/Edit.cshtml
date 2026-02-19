@@ -1,0 +1,922 @@
+@page "/admin/posts/{id}/edit"
+@model Contento.Web.Pages.Admin.Posts.EditModel
+@{
+    ViewData["Title"] = "Edit Post";
+    Layout = null; // Full-page editor — no sidebar
+}
+<!DOCTYPE html>
+<html lang="en" class="h-full" :class="$store.darkMode.on ? 'dark' : ''">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@(Model.Post?.Title ?? "Edit Post") - Contento</title>
+    <link rel="stylesheet" href="~/css/app.css" asp-append-version="true" />
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.8/dist/cdn.min.js"></script>
+    <style>
+        [x-cloak] { display: none !important; }
+
+        body { background-color: var(--color-paper); color: var(--color-ink); }
+
+        .editor-title {
+            font-family: var(--font-serif);
+            font-size: 2.5rem;
+            font-weight: 700;
+            line-height: 1.15;
+            color: var(--color-ink);
+            border: none;
+            outline: none;
+            width: 100%;
+            background: transparent;
+            resize: none;
+            overflow: hidden;
+        }
+        .editor-title::placeholder { color: var(--color-cloud); }
+
+        .editor-subtitle {
+            font-family: var(--font-serif);
+            font-size: 1.25rem;
+            font-weight: 400;
+            line-height: 1.5;
+            color: var(--color-stone);
+            border: none;
+            outline: none;
+            width: 100%;
+            background: transparent;
+            resize: none;
+            overflow: hidden;
+        }
+        .editor-subtitle::placeholder { color: var(--color-cloud); }
+
+        .editor-body {
+            font-family: var(--font-serif);
+            font-size: 1.125rem;
+            line-height: 1.8;
+            color: var(--color-ink);
+            border: none;
+            outline: none;
+            width: 100%;
+            background: transparent;
+            resize: none;
+            min-height: 60vh;
+        }
+        .editor-body::placeholder { color: var(--color-cloud); }
+
+        /* Floating toolbar */
+        .floating-toolbar {
+            display: flex;
+            align-items: center;
+            gap: 2px;
+            padding: 4px 8px;
+            background: var(--color-snow);
+            border: 1px solid var(--color-mist);
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        .toolbar-btn {
+            padding: 6px 8px;
+            border-radius: 4px;
+            color: var(--color-stone);
+            transition: all 150ms;
+            cursor: pointer;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+        .toolbar-btn:hover {
+            background: var(--color-paper);
+            color: var(--color-ink);
+        }
+
+        /* Settings drawer */
+        .settings-drawer {
+            width: 400px;
+            background: var(--color-snow);
+            border-left: 1px solid var(--color-mist);
+            box-shadow: -4px 0 12px rgba(0,0,0,0.04);
+        }
+
+        /* Cover image area */
+        .cover-upload {
+            height: 200px;
+            border: 2px dashed var(--color-mist);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: border-color 200ms;
+        }
+        .cover-upload:hover {
+            border-color: var(--color-indigo);
+        }
+    </style>
+</head>
+<body class="h-full">
+
+<div x-data="postEditor()" x-init="init()" class="h-full flex flex-col">
+    <!-- Top bar -->
+    <header class="h-14 flex items-center justify-between px-4 border-b" style="border-color: var(--color-mist); background: var(--color-snow); backdrop-filter: blur(8px);">
+        <div class="flex items-center gap-4">
+            <a href="/admin/posts" class="p-2 rounded hover:bg-stone-100 transition-colors" style="color: var(--color-ash);">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+                </svg>
+            </a>
+            <span class="text-sm font-medium" style="color: var(--color-ink);">
+                <span x-text="post.status === 'published' ? 'Published' : 'Draft'" class="badge"
+                      :class="post.status === 'published' ? 'badge-success' : 'badge-neutral'"></span>
+            </span>
+        </div>
+
+        <div class="flex items-center gap-3">
+            <!-- Autosave indicator -->
+            <div class="flex items-center gap-2">
+                <div class="save-indicator" :class="{ 'saving': justSaved }"></div>
+                <span x-show="justSaved" x-cloak class="text-xs" style="color: var(--color-ash);">Saved</span>
+            </div>
+
+            <!-- Dark mode toggle -->
+            <button @@click="$store.darkMode.toggle()" class="btn btn-ghost btn-sm" title="Toggle dark mode">
+                <template x-if="$store.darkMode.on">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+                    </svg>
+                </template>
+                <template x-if="!$store.darkMode.on">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+                    </svg>
+                </template>
+            </button>
+
+            <!-- Preview toggle -->
+            <button @@click="togglePreview()" class="btn btn-ghost btn-sm" :class="showPreview && 'bg-stone-100'" title="Toggle Preview">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                </svg>
+                Preview
+            </button>
+
+            <!-- AI Assistant toggle -->
+            <button @@click="showAi = !showAi; if(showAi) showSettings = false" class="btn btn-ghost btn-sm" title="AI Writing Assistant">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 00-2.455 2.456z"/>
+                </svg>
+                AI
+            </button>
+
+            <!-- Settings toggle -->
+            <button @@click="showSettings = !showSettings; if(showSettings) showAi = false" class="btn btn-ghost btn-sm">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                </svg>
+                Settings
+            </button>
+
+            <!-- Publish/Save -->
+            <template x-if="post.status !== 'published'">
+                <button @@click="publish()" class="btn btn-primary btn-sm">Publish</button>
+            </template>
+            <template x-if="post.status === 'published'">
+                <button @@click="save()" class="btn btn-primary btn-sm">Update</button>
+            </template>
+        </div>
+    </header>
+
+    <div class="flex-1 flex overflow-hidden">
+        <!-- Editor area -->
+        <div class="overflow-y-auto" :class="showPreview ? 'w-1/2' : 'flex-1'">
+            <div class="max-w-[720px] mx-auto px-6 py-12">
+                <!-- Cover image -->
+                <div x-show="!post.coverImageUrl" class="cover-upload mb-8" @@click="$refs.coverInput.click()">
+                    <div class="text-center">
+                        <svg class="w-8 h-8 mx-auto mb-2" style="color: var(--color-cloud);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                        </svg>
+                        <p class="text-sm" style="color: var(--color-cloud);">Add cover image</p>
+                    </div>
+                    <input type="file" x-ref="coverInput" accept="image/*" class="hidden" @@change="uploadCover($event)" />
+                </div>
+                <div x-show="post.coverImageUrl" x-cloak class="mb-8 relative rounded-lg overflow-hidden">
+                    <img :src="post.coverImageUrl" class="w-full h-48 object-cover" />
+                    <button @@click="post.coverImageUrl = ''" class="absolute top-2 right-2 p-1 bg-white/80 rounded-full hover:bg-white transition-colors">
+                        <svg class="w-4 h-4" style="color: var(--color-stone);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Title -->
+                <textarea x-model="post.title"
+                          @@input="autoResize($event); scheduleAutosave()"
+                          @@keydown.enter.prevent="$refs.subtitle.focus()"
+                          placeholder="Title"
+                          class="editor-title mb-2"
+                          rows="1"
+                          autofocus></textarea>
+
+                <!-- Subtitle -->
+                <textarea x-ref="subtitle"
+                          x-model="post.subtitle"
+                          @@input="autoResize($event); scheduleAutosave()"
+                          @@keydown.enter.prevent="$refs.body.focus()"
+                          placeholder="Tell your story..."
+                          class="editor-subtitle mb-8"
+                          rows="1"></textarea>
+
+                <!-- Body -->
+                <textarea x-ref="body"
+                          x-model="post.bodyMarkdown"
+                          @@input="autoResize($event); updateWordCount(); scheduleAutosave()"
+                          @@keydown.tab.prevent="insertTab($event)"
+                          placeholder="Start writing..."
+                          class="editor-body"
+                          rows="20"></textarea>
+            </div>
+        </div>
+
+        <!-- Preview Pane -->
+        <div x-show="showPreview" x-cloak class="w-1/2 border-l flex flex-col" style="border-color: var(--color-mist);">
+            <div class="h-10 flex items-center justify-between px-4 border-b" style="border-color: var(--color-mist); background: var(--color-snow);">
+                <span class="text-xs font-medium" style="color: var(--color-ash);">Preview</span>
+                <button @@click="showPreview = false" class="p-1 rounded hover:bg-stone-100">
+                    <svg class="w-4 h-4" style="color: var(--color-ash);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+            <iframe x-ref="previewFrame" class="flex-1 w-full bg-white" sandbox="allow-same-origin"></iframe>
+        </div>
+
+        <!-- Settings Drawer -->
+        <div x-show="showSettings" x-cloak
+             x-transition:enter="transition ease-out duration-200"
+             x-transition:enter-start="translate-x-full"
+             x-transition:enter-end="translate-x-0"
+             x-transition:leave="transition ease-in duration-150"
+             x-transition:leave-start="translate-x-0"
+             x-transition:leave-end="translate-x-full"
+             class="settings-drawer h-full overflow-y-auto flex-shrink-0">
+            <div class="p-6">
+                <div class="flex items-center justify-between mb-6">
+                    <h3 class="text-base font-semibold" style="color: var(--color-ink);">Post Settings</h3>
+                    <button @@click="showSettings = false" class="p-1 rounded hover:bg-stone-100">
+                        <svg class="w-5 h-5" style="color: var(--color-ash);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Publication -->
+                <div class="mb-6">
+                    <h4 class="text-sm font-semibold mb-3" style="color: var(--color-ink);">Publication</h4>
+                    <div class="space-y-3">
+                        <div>
+                            <label class="form-label">Status</label>
+                            <select x-model="post.status" class="form-input">
+                                <option value="draft">Draft</option>
+                                <option value="review">In Review</option>
+                                <option value="published">Published</option>
+                                <option value="scheduled">Scheduled</option>
+                                <option value="archived">Archived</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="form-label">Visibility</label>
+                            <select x-model="post.visibility" class="form-input">
+                                <option value="public">Public</option>
+                                <option value="unlisted">Unlisted</option>
+                                <option value="members_only">Members Only</option>
+                                <option value="password_protected">Password Protected</option>
+                            </select>
+                        </div>
+                        <div x-show="post.status === 'scheduled'">
+                            <label class="form-label">Schedule Date</label>
+                            <input type="datetime-local" x-model="post.scheduledAt" class="form-input" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SEO -->
+                <div class="mb-6">
+                    <h4 class="text-sm font-semibold mb-3" style="color: var(--color-ink);">SEO</h4>
+                    <div class="space-y-3">
+                        <div>
+                            <label class="form-label">Meta Title <span x-text="'(' + (post.metaTitle || '').length + '/60)'" style="color: var(--color-cloud);"></span></label>
+                            <input type="text" x-model="post.metaTitle" maxlength="60" class="form-input" />
+                        </div>
+                        <div>
+                            <label class="form-label">Meta Description <span x-text="'(' + (post.metaDescription || '').length + '/160)'" style="color: var(--color-cloud);"></span></label>
+                            <textarea x-model="post.metaDescription" maxlength="160" rows="3" class="form-input"></textarea>
+                        </div>
+                        <div>
+                            <label class="form-label">Canonical URL</label>
+                            <input type="url" x-model="post.canonicalUrl" class="form-input" placeholder="https://" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- URL -->
+                <div class="mb-6">
+                    <h4 class="text-sm font-semibold mb-3" style="color: var(--color-ink);">URL</h4>
+                    <div>
+                        <label class="form-label">Slug</label>
+                        <input type="text" x-model="post.slug" class="form-input" />
+                    </div>
+                </div>
+
+                <!-- Tags -->
+                <div class="mb-6">
+                    <h4 class="text-sm font-semibold mb-3" style="color: var(--color-ink);">Tags</h4>
+                    <input type="text" x-model="tagInput" @@keydown.enter.prevent="addTag()" class="form-input" placeholder="Add tag and press Enter" />
+                    <div class="flex flex-wrap gap-2 mt-2">
+                        <template x-for="(tag, i) in post.tags" :key="i">
+                            <span class="badge badge-info flex items-center gap-1">
+                                <span x-text="tag"></span>
+                                <button @@click="post.tags.splice(i, 1)" class="hover:opacity-70">&times;</button>
+                            </span>
+                        </template>
+                    </div>
+                </div>
+
+                <!-- Custom Fields -->
+                <template x-if="postTypeFields.length > 0">
+                    <div class="mb-6">
+                        <h4 class="text-sm font-semibold mb-3" style="color: var(--color-ink);">Custom Fields</h4>
+                        <div class="space-y-3">
+                            <template x-for="field in postTypeFields" :key="field.name">
+                                <div>
+                                    <label class="form-label" x-text="field.label + (field.required ? ' *' : '')"></label>
+
+                                    <!-- text -->
+                                    <template x-if="field.type === 'text' || field.type === 'url' || field.type === 'color'">
+                                        <input :type="field.type === 'color' ? 'color' : field.type === 'url' ? 'url' : 'text'"
+                                               x-model="customFieldValues[field.name]"
+                                               class="form-input"
+                                               :required="field.required"
+                                               @@input="scheduleAutosave()" />
+                                    </template>
+
+                                    <!-- textarea / rich_text -->
+                                    <template x-if="field.type === 'textarea' || field.type === 'rich_text'">
+                                        <textarea x-model="customFieldValues[field.name]"
+                                                  rows="3"
+                                                  class="form-input"
+                                                  :required="field.required"
+                                                  @@input="scheduleAutosave()"></textarea>
+                                    </template>
+
+                                    <!-- number -->
+                                    <template x-if="field.type === 'number'">
+                                        <input type="number"
+                                               x-model="customFieldValues[field.name]"
+                                               class="form-input"
+                                               :required="field.required"
+                                               @@input="scheduleAutosave()" />
+                                    </template>
+
+                                    <!-- boolean -->
+                                    <template x-if="field.type === 'boolean'">
+                                        <label class="flex items-center gap-3">
+                                            <input type="checkbox"
+                                                   x-model="customFieldValues[field.name]"
+                                                   class="rounded"
+                                                   style="accent-color: var(--color-indigo);"
+                                                   @@change="scheduleAutosave()" />
+                                            <span class="text-sm" style="color: var(--color-stone);" x-text="field.label"></span>
+                                        </label>
+                                    </template>
+
+                                    <!-- date -->
+                                    <template x-if="field.type === 'date'">
+                                        <input type="date"
+                                               x-model="customFieldValues[field.name]"
+                                               class="form-input"
+                                               :required="field.required"
+                                               @@input="scheduleAutosave()" />
+                                    </template>
+
+                                    <!-- select -->
+                                    <template x-if="field.type === 'select'">
+                                        <select x-model="customFieldValues[field.name]"
+                                                class="form-input"
+                                                :required="field.required"
+                                                @@change="scheduleAutosave()">
+                                            <option value="">Select...</option>
+                                            <template x-for="opt in (field.options || [])" :key="opt">
+                                                <option :value="opt" x-text="opt"></option>
+                                            </template>
+                                        </select>
+                                    </template>
+
+                                    <!-- media -->
+                                    <template x-if="field.type === 'media'">
+                                        <input type="url"
+                                               x-model="customFieldValues[field.name]"
+                                               class="form-input"
+                                               placeholder="Image URL"
+                                               @@input="scheduleAutosave()" />
+                                    </template>
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+                </template>
+
+                <!-- SEO Analysis -->
+                <div class="mb-6">
+                    <h4 class="text-sm font-semibold mb-3" style="color: var(--color-ink);">SEO Analysis</h4>
+                    <div class="space-y-3">
+                        <div>
+                            <label class="form-label">Focus Keyword</label>
+                            <div class="flex gap-2">
+                                <input type="text" x-model="seoKeyword" class="form-input flex-1" placeholder="e.g. web development" />
+                                <button @@click="analyzeSeo()" class="btn btn-secondary btn-sm" :disabled="seoLoading">Analyze</button>
+                            </div>
+                        </div>
+                        <div x-show="seoScore !== null" x-cloak>
+                            <div class="flex items-center gap-3 mb-2">
+                                <div class="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold text-white"
+                                     :style="'background-color: ' + (seoScore >= 80 ? 'var(--color-success)' : seoScore >= 50 ? 'var(--color-warning)' : 'var(--color-danger)')">
+                                    <span x-text="seoScore"></span>
+                                </div>
+                                <span class="text-sm" style="color: var(--color-stone);" x-text="seoScore >= 80 ? 'Good' : seoScore >= 50 ? 'Needs Work' : 'Poor'"></span>
+                            </div>
+                            <div class="space-y-1 max-h-48 overflow-y-auto">
+                                <template x-for="issue in seoIssues" :key="issue.message">
+                                    <div class="flex items-start gap-2 text-xs p-1.5 rounded" style="background: var(--color-paper);">
+                                        <span :class="issue.severity === 'error' ? 'text-red-500' : issue.severity === 'warning' ? 'text-yellow-500' : 'text-green-500'">
+                                            <template x-if="issue.severity === 'error'">&#9679;</template>
+                                            <template x-if="issue.severity === 'warning'">&#9679;</template>
+                                            <template x-if="issue.severity === 'info'">&#10003;</template>
+                                        </span>
+                                        <span x-text="issue.message" style="color: var(--color-stone);"></span>
+                                    </div>
+                                </template>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Advanced -->
+                <div class="mb-6">
+                    <h4 class="text-sm font-semibold mb-3" style="color: var(--color-ink);">Advanced</h4>
+                    <div class="space-y-3">
+                        <label class="flex items-center gap-3">
+                            <input type="checkbox" x-model="post.featured" class="rounded" style="accent-color: var(--color-indigo);" />
+                            <span class="text-sm" style="color: var(--color-stone);">Featured post</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- AI Assistant Drawer -->
+        <div x-show="showAi" x-cloak
+             x-transition:enter="transition ease-out duration-200"
+             x-transition:enter-start="translate-x-full"
+             x-transition:enter-end="translate-x-0"
+             x-transition:leave="transition ease-in duration-150"
+             x-transition:leave-start="translate-x-0"
+             x-transition:leave-end="translate-x-full"
+             class="settings-drawer h-full overflow-y-auto flex-shrink-0">
+            <div class="p-6">
+                <div class="flex items-center justify-between mb-6">
+                    <h3 class="text-base font-semibold flex items-center gap-2" style="color: var(--color-ink);">
+                        <svg class="w-5 h-5" style="color: var(--color-indigo);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z"/>
+                        </svg>
+                        AI Assistant
+                    </h3>
+                    <button @@click="showAi = false" class="p-1 rounded hover:bg-stone-100">
+                        <svg class="w-5 h-5" style="color: var(--color-ash);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="mb-6">
+                    <h4 class="text-xs font-semibold uppercase tracking-wider mb-3" style="color: var(--color-ash);">Rewrite</h4>
+                    <div class="grid grid-cols-2 gap-2">
+                        <button @@click="aiAssist('improve')" :disabled="aiLoading" class="btn btn-secondary btn-sm text-left">Improve</button>
+                        <button @@click="aiAssist('expand')" :disabled="aiLoading" class="btn btn-secondary btn-sm text-left">Expand</button>
+                        <button @@click="aiAssist('summarize')" :disabled="aiLoading" class="btn btn-secondary btn-sm text-left">Summarize</button>
+                        <button @@click="aiAssist('formal')" :disabled="aiLoading" class="btn btn-secondary btn-sm text-left">Formal</button>
+                        <button @@click="aiAssist('casual')" :disabled="aiLoading" class="btn btn-secondary btn-sm text-left">Casual</button>
+                    </div>
+                </div>
+
+                <!-- Generate -->
+                <div class="mb-6">
+                    <h4 class="text-xs font-semibold uppercase tracking-wider mb-3" style="color: var(--color-ash);">Generate</h4>
+                    <div class="grid grid-cols-2 gap-2">
+                        <button @@click="aiAssist('outline')" :disabled="aiLoading" class="btn btn-secondary btn-sm text-left">Outline</button>
+                        <button @@click="aiAssist('titles')" :disabled="aiLoading" class="btn btn-secondary btn-sm text-left">Titles</button>
+                        <button @@click="aiAssist('seo')" :disabled="aiLoading" class="btn btn-secondary btn-sm text-left">SEO Meta</button>
+                    </div>
+                </div>
+
+                <!-- Custom Prompt -->
+                <div class="mb-6">
+                    <h4 class="text-xs font-semibold uppercase tracking-wider mb-3" style="color: var(--color-ash);">Custom</h4>
+                    <textarea x-model="aiCustomPrompt" rows="3" class="form-input text-sm" placeholder="Describe what you want AI to do..."></textarea>
+                    <button @@click="aiAssist('custom')" :disabled="aiLoading || !aiCustomPrompt.trim()" class="btn btn-primary btn-sm mt-2 w-full">
+                        Run
+                    </button>
+                </div>
+
+                <!-- Result -->
+                <div x-show="aiResult || aiLoading || aiError" x-cloak>
+                    <h4 class="text-xs font-semibold uppercase tracking-wider mb-3" style="color: var(--color-ash);">Result</h4>
+
+                    <!-- Loading -->
+                    <div x-show="aiLoading" class="flex items-center gap-2 mb-3">
+                        <svg class="animate-spin h-4 w-4" style="color: var(--color-indigo)" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                        <span class="text-xs" style="color: var(--color-ash);">Generating...</span>
+                    </div>
+
+                    <!-- Error -->
+                    <div x-show="aiError" x-cloak class="text-sm px-3 py-2 mb-3 rounded bg-red-50 text-red-800 border border-red-200">
+                        <span x-text="aiError"></span>
+                        <a href="/admin/settings/ai" class="underline ml-1">Configure AI</a>
+                    </div>
+
+                    <!-- Result text -->
+                    <div x-show="aiResult" x-cloak class="rounded p-3 mb-3 text-sm overflow-y-auto" style="background: var(--color-paper); border: 1px solid var(--color-mist); max-height: 300px; white-space: pre-wrap; font-family: var(--font-serif);" x-text="aiResult"></div>
+
+                    <!-- Action buttons -->
+                    <div x-show="aiResult && !aiLoading" x-cloak class="flex gap-2">
+                        <button @@click="applyAiResult()" class="btn btn-primary btn-sm flex-1">Apply</button>
+                        <button @@click="copyAiResult()" class="btn btn-secondary btn-sm">Copy</button>
+                        <button @@click="aiResult = ''; aiError = ''" class="btn btn-ghost btn-sm">Dismiss</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom bar -->
+    <footer class="h-10 flex items-center justify-between px-6 border-t" style="border-color: var(--color-mist); background: var(--color-snow);">
+        <div class="flex items-center gap-4">
+            <span class="text-xs" style="color: var(--color-ash);" x-text="wordCount + ' words'"></span>
+            <span class="text-xs" style="color: var(--color-ash);" x-text="readingTime + ' min read'"></span>
+        </div>
+        <div>
+            <span class="text-xs" style="color: var(--color-ash);" x-text="'v' + post.version"></span>
+        </div>
+    </footer>
+</div>
+
+<script>
+function postEditor() {
+    return {
+        post: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(new {
+            id = Model.Post?.Id.ToString() ?? "",
+            title = Model.Post?.Title ?? "",
+            subtitle = Model.Post?.Subtitle ?? "",
+            slug = Model.Post?.Slug ?? "",
+            bodyMarkdown = Model.Post?.BodyMarkdown ?? "",
+            coverImageUrl = Model.Post?.CoverImageUrl ?? "",
+            status = Model.Post?.Status ?? "draft",
+            visibility = Model.Post?.Visibility ?? "public",
+            featured = Model.Post?.Featured ?? false,
+            metaTitle = Model.Post?.MetaTitle ?? "",
+            metaDescription = Model.Post?.MetaDescription ?? "",
+            canonicalUrl = Model.Post?.CanonicalUrl ?? "",
+            scheduledAt = "",
+            tags = Model.Post?.Tags ?? Array.Empty<string>(),
+            version = Model.Post?.Version ?? 1,
+            customFields = Model.Post?.CustomFields ?? "{}",
+            postTypeId = Model.Post?.PostTypeId?.ToString() ?? ""
+        })),
+        postTypeFields: @Html.Raw(Model.PostType?.Fields ?? "[]"),
+        showSettings: false,
+        showPreview: localStorage.getItem('contento-preview') === 'true',
+        showAi: false,
+        seoKeyword: '',
+        seoScore: null,
+        seoIssues: [],
+        seoLoading: false,
+        previewTimeout: null,
+        aiLoading: false,
+        aiResult: '',
+        aiError: '',
+        aiCustomPrompt: '',
+        aiAbortController: null,
+        wordCount: 0,
+        readingTime: 0,
+        justSaved: false,
+        saveTimeout: null,
+        tagInput: '',
+        customFieldValues: {},
+
+        init() {
+            // Initialize custom field values from post data
+            try {
+                this.customFieldValues = typeof this.post.customFields === 'string'
+                    ? JSON.parse(this.post.customFields)
+                    : (this.post.customFields || {});
+            } catch (e) {
+                this.customFieldValues = {};
+            }
+            this.updateWordCount();
+            // Auto-resize textareas on load
+            this.$nextTick(() => {
+                document.querySelectorAll('textarea').forEach(el => {
+                    el.style.height = 'auto';
+                    el.style.height = el.scrollHeight + 'px';
+                });
+            });
+        },
+
+        autoResize(event) {
+            const el = event.target;
+            el.style.height = 'auto';
+            el.style.height = el.scrollHeight + 'px';
+        },
+
+        updateWordCount() {
+            const text = this.post.bodyMarkdown.trim();
+            this.wordCount = text ? text.split(/\s+/).length : 0;
+            this.readingTime = Math.max(1, Math.ceil(this.wordCount / 250));
+        },
+
+        insertTab(event) {
+            const el = event.target;
+            const start = el.selectionStart;
+            const end = el.selectionEnd;
+            this.post.bodyMarkdown = this.post.bodyMarkdown.substring(0, start) + '    ' + this.post.bodyMarkdown.substring(end);
+            this.$nextTick(() => {
+                el.selectionStart = el.selectionEnd = start + 4;
+            });
+        },
+
+        addTag() {
+            const tag = this.tagInput.trim().toLowerCase();
+            if (tag && !this.post.tags.includes(tag)) {
+                this.post.tags.push(tag);
+            }
+            this.tagInput = '';
+        },
+
+        scheduleAutosave() {
+            clearTimeout(this.saveTimeout);
+            this.saveTimeout = setTimeout(() => this.autosave(), 3000);
+            if (this.showPreview) this.refreshPreview();
+        },
+
+        async autosave() {
+            await this.saveToServer();
+            this.justSaved = true;
+            setTimeout(() => this.justSaved = false, 2000);
+        },
+
+        async save() {
+            await this.saveToServer();
+            Alpine.store('toast')?.show('Post updated', 'success');
+        },
+
+        async publish() {
+            this.post.status = 'published';
+            await this.saveToServer();
+            Alpine.store('toast')?.show('Post published!', 'success');
+        },
+
+        async saveToServer() {
+            const token = document.querySelector('input[name="__RequestVerificationToken"]')?.value;
+            try {
+                const response = await fetch(`/api/v1/posts/${this.post.id}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': token || ''
+                    },
+                    body: JSON.stringify({
+                        title: this.post.title,
+                        subtitle: this.post.subtitle,
+                        slug: this.post.slug,
+                        bodyMarkdown: this.post.bodyMarkdown,
+                        coverImageUrl: this.post.coverImageUrl,
+                        status: this.post.status,
+                        visibility: this.post.visibility,
+                        featured: this.post.featured,
+                        metaTitle: this.post.metaTitle,
+                        metaDescription: this.post.metaDescription,
+                        canonicalUrl: this.post.canonicalUrl,
+                        tags: this.post.tags,
+                        customFields: JSON.stringify(this.customFieldValues)
+                    })
+                });
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.data?.version) this.post.version = data.data.version;
+                }
+            } catch (e) {
+                console.error('Save failed:', e);
+            }
+        },
+
+        togglePreview() {
+            this.showPreview = !this.showPreview;
+            localStorage.setItem('contento-preview', this.showPreview);
+            if (this.showPreview) {
+                this.showSettings = false;
+                this.showAi = false;
+                this.refreshPreview();
+            }
+        },
+
+        refreshPreview() {
+            clearTimeout(this.previewTimeout);
+            this.previewTimeout = setTimeout(async () => {
+                try {
+                    const token = document.querySelector('input[name="__RequestVerificationToken"]')?.value;
+                    const response = await fetch('/api/v1/posts/preview', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': token || '' },
+                        body: JSON.stringify({
+                            bodyMarkdown: this.post.bodyMarkdown,
+                            title: this.post.title,
+                            subtitle: this.post.subtitle,
+                            coverImageUrl: this.post.coverImageUrl
+                        })
+                    });
+                    if (response.ok) {
+                        const data = await response.json();
+                        const frame = this.$refs.previewFrame;
+                        if (frame) {
+                            frame.srcdoc = data.data?.fullHtml || data.data?.bodyHtml || '';
+                        }
+                    }
+                } catch (e) {
+                    console.error('Preview failed:', e);
+                }
+            }, 500);
+        },
+
+        async analyzeSeo() {
+            if (!this.post.id) return;
+            this.seoLoading = true;
+            try {
+                const token = document.querySelector('input[name="__RequestVerificationToken"]')?.value;
+                const response = await fetch(`/api/v1/posts/${this.post.id}/seo-analyze`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': token || '' },
+                    body: JSON.stringify({ focusKeyword: this.seoKeyword })
+                });
+                if (response.ok) {
+                    const data = await response.json();
+                    this.seoScore = data.data?.overallScore ?? 0;
+                    this.seoIssues = data.data?.issues ? JSON.parse(data.data.issues) : [];
+                }
+            } catch (e) {
+                console.error('SEO analysis failed:', e);
+            }
+            this.seoLoading = false;
+        },
+
+        getSelectedText() {
+            const body = this.$refs.body;
+            if (!body) return '';
+            const start = body.selectionStart;
+            const end = body.selectionEnd;
+            if (start === end) return this.post.bodyMarkdown;
+            return this.post.bodyMarkdown.substring(start, end);
+        },
+
+        async aiAssist(action) {
+            const text = this.getSelectedText();
+            if (!text.trim() && !['outline', 'titles'].includes(action)) {
+                this.aiError = 'Select some text first, or write some content.';
+                return;
+            }
+
+            let userPrompt;
+            if (action === 'custom') {
+                userPrompt = `Action: ${this.aiCustomPrompt}\n\nText:\n${text}`;
+            } else if (action === 'outline') {
+                userPrompt = `Generate an outline for an article about: ${this.post.title || text}`;
+            } else if (action === 'titles') {
+                userPrompt = `Generate title options for this content:\n${text.substring(0, 1000)}`;
+            } else if (action === 'seo') {
+                userPrompt = `Generate SEO meta title and description for this post:\nTitle: ${this.post.title}\nContent: ${text.substring(0, 1000)}`;
+            } else {
+                userPrompt = `Action: ${action}\n\nText:\n${text}`;
+            }
+
+            this.aiResult = '';
+            this.aiError = '';
+            this.aiLoading = true;
+
+            // Abort any existing stream
+            if (this.aiAbortController) {
+                this.aiAbortController.abort();
+                this.aiAbortController = null;
+            }
+
+            const systemPrompt = 'You are a writing assistant embedded in a CMS post editor. Follow the action precisely. Respond only with the improved/generated text in markdown. No preamble.';
+
+            try {
+                this.aiAbortController = new AbortController();
+                const response = await fetch('/api/v1/ai/stream', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ systemPrompt, userPrompt }),
+                    signal: this.aiAbortController.signal
+                });
+
+                const reader = response.body.getReader();
+                const decoder = new TextDecoder();
+                let buffer = '';
+
+                while (true) {
+                    const { done, value } = await reader.read();
+                    if (done) break;
+                    buffer += decoder.decode(value, { stream: true });
+                    const lines = buffer.split('\n');
+                    buffer = lines.pop();
+                    for (const line of lines) {
+                        if (!line.startsWith('data: ')) continue;
+                        const payload = line.slice(6);
+                        if (payload === '[DONE]') { this.aiLoading = false; return; }
+                        try {
+                            const data = JSON.parse(payload);
+                            if (data.error) { this.aiError = data.error; this.aiLoading = false; return; }
+                            if (data.text) this.aiResult += data.text;
+                        } catch (e) {}
+                    }
+                }
+                this.aiLoading = false;
+            } catch (e) {
+                if (e.name !== 'AbortError') {
+                    this.aiError = 'Failed to connect: ' + e.message;
+                }
+                this.aiLoading = false;
+            }
+        },
+
+        applyAiResult() {
+            const body = this.$refs.body;
+            const start = body.selectionStart;
+            const end = body.selectionEnd;
+            if (start !== end) {
+                // Replace selected text
+                this.post.bodyMarkdown = this.post.bodyMarkdown.substring(0, start) + this.aiResult + this.post.bodyMarkdown.substring(end);
+            } else {
+                // Append at cursor or end
+                const pos = start || this.post.bodyMarkdown.length;
+                this.post.bodyMarkdown = this.post.bodyMarkdown.substring(0, pos) + '\n\n' + this.aiResult + this.post.bodyMarkdown.substring(pos);
+            }
+            this.aiResult = '';
+            this.updateWordCount();
+            this.scheduleAutosave();
+        },
+
+        copyAiResult() {
+            navigator.clipboard.writeText(this.aiResult);
+        },
+
+        async uploadCover(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const formData = new FormData();
+            formData.append('file', file);
+            try {
+                const response = await fetch('/api/v1/media/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+                if (response.ok) {
+                    const data = await response.json();
+                    this.post.coverImageUrl = data.data?.url || '';
+                }
+            } catch (e) {
+                console.error('Upload failed:', e);
+            }
+        }
+    };
+}
+</script>
+
+<script>
+    document.addEventListener('alpine:init', () => {
+        Alpine.store('darkMode', {
+            on: localStorage.getItem('contento-dark') === 'true' ||
+                (!localStorage.getItem('contento-dark') && window.matchMedia('(prefers-color-scheme: dark)').matches),
+            toggle() {
+                this.on = !this.on;
+                localStorage.setItem('contento-dark', this.on);
+            }
+        });
+    });
+</script>
+
+@Html.AntiForgeryToken()
+</body>
+</html>

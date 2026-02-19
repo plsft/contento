@@ -1,0 +1,30 @@
+<!-- Main site navigation -->
+<nav class="fixed top-0 inset-x-0 z-50 glass border-b border-gray-200/50" x-data="{ open: false }">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+        <div class="flex items-center justify-between h-16">
+            <a href="index.html" class="flex items-center">
+                <img src="/small-contento-cms-logo.png" alt="Contento CMS" class="h-8 w-auto">
+            </a>
+            <div class="hidden md:flex items-center gap-8">
+                <a href="features.html" class="text-sm text-gray-600 hover:text-gray-900 transition-colors">Features</a>
+                <a href="docs/index.html" class="text-sm text-gray-600 hover:text-gray-900 transition-colors">Docs</a>
+                <a href="docs/api.html" class="text-sm text-gray-600 hover:text-gray-900 transition-colors">API</a>
+                <a href="https://github.com/plsft/contento" class="text-sm text-gray-600 hover:text-gray-900 transition-colors">GitHub</a>
+                <a href="docs/index.html" class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white rounded-lg transition-colors" style="background: #3D5A80;" onmouseover="this.style.background='#34506F'" onmouseout="this.style.background='#3D5A80'">
+                    Get Started
+                </a>
+            </div>
+            <button @click="open = !open" class="md:hidden p-2">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"/></svg>
+            </button>
+        </div>
+        <div x-show="open" x-cloak x-transition class="md:hidden pb-4 border-t border-gray-100">
+            <div class="flex flex-col gap-2 pt-4">
+                <a href="features.html" class="px-3 py-2 text-sm text-gray-600 hover:text-gray-900">Features</a>
+                <a href="docs/index.html" class="px-3 py-2 text-sm text-gray-600 hover:text-gray-900">Docs</a>
+                <a href="docs/api.html" class="px-3 py-2 text-sm text-gray-600 hover:text-gray-900">API</a>
+                <a href="https://github.com/plsft/contento" class="px-3 py-2 text-sm text-gray-600 hover:text-gray-900">GitHub</a>
+            </div>
+        </div>
+    </div>
+</nav>

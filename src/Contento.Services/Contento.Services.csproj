@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>Contento.Services</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Contento.Core\Contento.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="StackExchange.Redis" Version="2.*" />
+    <PackageReference Include="Markdig" Version="0.*" />
+    <PackageReference Include="Noundry.AIG.Client" Version="1.*" />
+    <PackageReference Include="SharpGrip.FileSystem" Version="1.*" />
+    <PackageReference Include="SharpGrip.FileSystem.Adapters.AmazonS3" Version="1.*" />
+    <PackageReference Include="MailKit" Version="4.*" />
+    <PackageReference Include="Stripe.net" Version="50.*" />
+    <PackageReference Include="SixLabors.ImageSharp" Version="3.*" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="10.*" />
+  </ItemGroup>
+
+</Project>

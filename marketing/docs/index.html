@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Getting Started - Contento CMS Documentation</title>
+    <script type="module" src="/src/main.js"></script>
+</head>
+<body class="bg-white text-[#1A1A1A]" x-data="{ mobileMenuOpen: false }">
+
+    <%nav-docs%>
+
+    <div class="max-w-[90rem] mx-auto flex">
+        <%sidebar-docs%>
+
+        <!-- Main content -->
+        <main class="flex-1 min-w-0 px-6 sm:px-8 lg:px-12 py-10 max-w-4xl">
+            <div class="prose">
+
+                <!-- Breadcrumb -->
+                <div class="flex items-center gap-2 text-sm text-gray-400 mb-8">
+                    <a href="index.html" class="hover:text-gray-600">Docs</a>
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                    <span class="text-gray-600">Getting Started</span>
+                </div>
+
+                <h1 style="font-size: 2.25rem; font-weight: 700; color: #1A1A1A; margin-bottom: 0.5rem; letter-spacing: -0.02em;">Getting Started</h1>
+                <p style="font-size: 1.125rem; color: #6B7280; margin-bottom: 2.5rem;">Get Contento CMS up and running in under five minutes.</p>
+
+                <!-- Intro -->
+                <p>
+                    Contento is an open-source content management system built on <strong>.NET 10</strong> and <strong>PostgreSQL</strong>.
+                    It ships as a traditional server-rendered admin panel <em>and</em> a fully featured headless JSON API, so you can
+                    power any front end &mdash; a Next.js app, a static site generator, a mobile app, or the built-in themed blog.
+                </p>
+                <p>
+                    Key highlights:
+                </p>
+                <ul>
+                    <li>Markdown-first editor with live preview and autosave</li>
+                    <li>Full REST API with public content delivery and authenticated management endpoints</li>
+                    <li>Theme system with CSS variables and 8 built-in themes</li>
+                    <li>Plugin system powered by a sandboxed JavaScript engine (Jint)</li>
+                    <li>WordPress and Markdown import/export</li>
+                    <li>Full-text search with PostgreSQL <code>ts_vector</code></li>
+                    <li>Threaded comments with honeypot spam protection</li>
+                    <li>Media library with image, PDF, and video support</li>
+                    <li>Hierarchical categories and tag-based taxonomy</li>
+                    <li>Audit log for tracking all content changes</li>
+                    <li>Newsletter management with subscriber signup and campaign editor</li>
+                    <li>Stripe-powered membership with plans, content gating, and billing portal</li>
+                    <li>Multi-site support with domain-based routing</li>
+                    <li>Task scheduler with cron-based automation</li>
+                    <li>Custom post types with JSON field schemas</li>
+                    <li>SEO service with JSON-LD structured data and sitemap generation</li>
+                    <li>AI-powered content generation and SEO analysis</li>
+                    <li>Automatic responsive image variants (640w, 1024w, 1536w WebP)</li>
+                    <li>Spam protection with AI scoring and configurable auto-approve threshold</li>
+                </ul>
+
+                <h2>Prerequisites</h2>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Dependency</th>
+                            <th>Version</th>
+                            <th>Required</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>.NET SDK</strong></td>
+                            <td>10.0 or later</td>
+                            <td>Yes</td>
+                        </tr>
+                        <tr>
+                            <td><strong>PostgreSQL</strong></td>
+                            <td>14 or later</td>
+                            <td>Yes</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Redis</strong></td>
+                            <td>7.x</td>
+                            <td>Optional (caching)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Node.js</strong></td>
+                            <td>18+ (for Tailwind CSS build)</td>
+                            <td>Optional (development)</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h2>Installation</h2>
+
+                <h3>1. Clone the repository</h3>
+
+<pre><span class="comment"># Clone via HTTPS</span>
+<span class="function">git</span> clone https://github.com/plsft/contento.git
+<span class="keyword">cd</span> contento</pre>
+
+                <h3>2. Restore dependencies</h3>
+
+<pre><span class="function">dotnet</span> restore</pre>
+
+                <h3>3. Configure connection strings</h3>
+
+                <p>Create an <code>appsettings.Development.json</code> file in the <code>src/Contento.Web</code> directory (or set environment variables):</p>
+
+<pre>{
+  <span class="string">"ConnectionStrings"</span>: {
+    <span class="string">"DefaultConnection"</span>: <span class="string">"Host=localhost;Port=5432;Database=contento;Username=postgres;Password=yourpassword"</span>
+  },
+  <span class="string">"Contento"</span>: {
+    <span class="string">"ApiSigningKey"</span>: <span class="string">"your-secret-key-at-least-32-characters-long"</span>
+  },
+  <span class="string">"Redis"</span>: {
+    <span class="string">"ConnectionString"</span>: <span class="string">"localhost:6379"</span>
+  },
+  <span class="string">"Stripe"</span>: {
+    <span class="string">"SecretKey"</span>: <span class="string">"sk_test_..."</span>,
+    <span class="string">"PublishableKey"</span>: <span class="string">"pk_test_..."</span>,
+    <span class="string">"WebhookSecret"</span>: <span class="string">"whsec_..."</span>
+  },
+  <span class="string">"Email"</span>: {
+    <span class="string">"SmtpHost"</span>: <span class="string">"smtp.example.com"</span>,
+    <span class="string">"SmtpPort"</span>: <span class="string">"587"</span>,
+    <span class="string">"FromAddress"</span>: <span class="string">"noreply@yourdomain.com"</span>
+  }
+}</pre>
+
+                <div class="callout callout-warning">
+                    <strong>Important:</strong> In production, always set <code>Contento:ApiSigningKey</code> to a strong, unique secret.
+                    The default fallback key is insecure and should never be used in production.
+                </div>
+
+                <h3>4. Initialize the database</h3>
+
+                <p>Contento uses Bowtie for automatic schema management. On first run, it creates all tables and seeds default data automatically:</p>
+
+<pre><span class="keyword">cd</span> src/Contento.Web
+<span class="function">dotnet</span> run</pre>
+
+                <p>The application starts at <code>https://localhost:5001</code> (or <code>http://localhost:5000</code>).</p>
+
+                <div class="callout callout-tip">
+                    <strong>Tip:</strong> The database schema is managed automatically via Bowtie. You do not need to run
+                    any migration commands. On first startup, Contento creates all 21 tables and seeds the default site,
+                    admin user, and built-in themes.
+                </div>
+
+                <h2>First Steps</h2>
+
+                <h3>1. Log in to the admin panel</h3>
+
+                <p>Navigate to <code>https://localhost:5001/admin</code> and log in with the default credentials:</p>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Field</th>
+                            <th>Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Email</td>
+                            <td><code>admin@contento.local</code></td>
+                        </tr>
+                        <tr>
+                            <td>Password</td>
+                            <td>Set via <code>Admin:DefaultPassword</code> in config</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="callout callout-warning">
+                    <strong>Change this password immediately.</strong> Navigate to the Users section in admin and update
+                    the default admin account credentials before deploying to production.
+                </div>
+
+                <h3>2. Create your first post</h3>
+
+                <ol>
+                    <li>Click <strong>Posts</strong> in the sidebar, then click <strong>New Post</strong>.</li>
+                    <li>Enter a title and write your content in Markdown. The live preview updates as you type.</li>
+                    <li>Add tags, choose a category, and optionally upload a cover image.</li>
+                    <li>Click <strong>Publish</strong> to make the post live.</li>
+                </ol>
+
+                <h3>3. Configure site settings</h3>
+
+                <p>Go to <strong>Settings</strong> in the admin sidebar to configure:</p>
+
+                <ul>
+                    <li><strong>Site name</strong> &mdash; Displayed in the header, feeds, and metadata</li>
+                    <li><strong>Tagline</strong> &mdash; A short description of your site</li>
+                    <li><strong>Locale</strong> &mdash; e.g., <code>en-US</code>, <code>ja-JP</code></li>
+                    <li><strong>Timezone</strong> &mdash; e.g., <code>UTC</code>, <code>America/New_York</code>, <code>Asia/Tokyo</code></li>
+                </ul>
+
+                <h3>4. Choose a theme</h3>
+
+                <p>Navigate to <strong>Themes</strong> and activate one of the 8 built-in themes. Each theme sets CSS variables
+                that control fonts, colors, and spacing across the public site.</p>
+
+                <h3>5. Configure Stripe (optional)</h3>
+
+                <p>If you want to enable paid memberships, configure your Stripe keys in the environment variables or <code>appsettings.json</code>.
+                Then navigate to <strong>Membership</strong> in the admin sidebar to create your first plan.</p>
+
+                <h2>Project Structure</h2>
+
+<pre>contento/
+<span class="comment">|-- src/</span>
+<span class="comment">|   |-- Contento.Core/</span>            <span class="comment"># Domain models, interfaces</span>
+<span class="comment">|   |   |-- Models/</span>                <span class="comment"># 17 entity models (Post, User, Theme, Subscriber, ...)</span>
+<span class="comment">|   |   |-- Interfaces/</span>            <span class="comment"># 22 service interfaces</span>
+<span class="comment">|   |</span>
+<span class="comment">|   |-- Contento.Services/</span>        <span class="comment"># Service implementations (23 files)</span>
+<span class="comment">|   |</span>
+<span class="comment">|   |-- Contento.Plugins/</span>         <span class="comment"># Jint-based plugin host</span>
+<span class="comment">|   |</span>
+<span class="comment">|   |-- Contento.Web/</span>             <span class="comment"># ASP.NET 10 web application</span>
+<span class="comment">|   |   |-- Controllers/</span>          <span class="comment"># 21 API controllers (113 endpoints)</span>
+<span class="comment">|   |   |-- Pages/Admin/</span>          <span class="comment"># 21+ Razor admin pages</span>
+<span class="comment">|   |   |-- Styles/app.css</span>        <span class="comment"># CSS design system</span>
+<span class="comment">|   |</span>
+<span class="comment">|   |-- Contento.Tests/</span>           <span class="comment"># 428 tests (NUnit + Moq + Bogus)</span>
+<span class="comment">|</span>
+<span class="comment">|-- marketing/</span>                    <span class="comment"># Marketing site and docs</span></pre>
+
+                <h2>Environment Variables</h2>
+
+                <p>Contento reads configuration from <code>appsettings.json</code>, environment variables, and user secrets.
+                Environment variables follow the <code>__</code> (double underscore) convention for nested keys.</p>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Variable</th>
+                            <th>Description</th>
+                            <th>Default</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>ConnectionStrings__DefaultConnection</code></td>
+                            <td>PostgreSQL connection string</td>
+                            <td>Required</td>
+                        </tr>
+                        <tr>
+                            <td><code>Contento__ApiSigningKey</code></td>
+                            <td>HMAC-SHA256 signing key for API tokens</td>
+                            <td>Insecure default</td>
+                        </tr>
+                        <tr>
+                            <td><code>Redis__ConnectionString</code></td>
+                            <td>Redis connection string for caching</td>
+                            <td>Empty (disabled)</td>
+                        </tr>
+                        <tr>
+                            <td><code>ASPNETCORE_ENVIRONMENT</code></td>
+                            <td>Runtime environment</td>
+                            <td><code>Production</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>ASPNETCORE_URLS</code></td>
+                            <td>Listening URLs</td>
+                            <td><code>http://+:5000</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>Serilog__MinimumLevel__Default</code></td>
+                            <td>Log level: Verbose, Debug, Information, Warning, Error, Fatal</td>
+                            <td><code>Information</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>Contento__MaxUploadSizeMb</code></td>
+                            <td>Maximum media upload size</td>
+                            <td><code>10</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>Contento__AllowedOrigins</code></td>
+                            <td>Comma-separated CORS origins for headless mode</td>
+                            <td><code>*</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>Stripe__SecretKey</code></td>
+                            <td>Stripe API secret key for server-side operations</td>
+                            <td>Empty (disabled)</td>
+                        </tr>
+                        <tr>
+                            <td><code>Stripe__PublishableKey</code></td>
+                            <td>Stripe publishable key for client-side checkout</td>
+                            <td>Empty (disabled)</td>
+                        </tr>
+                        <tr>
+                            <td><code>Stripe__WebhookSecret</code></td>
+                            <td>Stripe webhook signing secret for event verification</td>
+                            <td>Empty</td>
+                        </tr>
+                        <tr>
+                            <td><code>Email__SmtpHost</code></td>
+                            <td>SMTP server hostname for newsletter delivery</td>
+                            <td>Empty (disabled)</td>
+                        </tr>
+                        <tr>
+                            <td><code>Email__SmtpPort</code></td>
+                            <td>SMTP server port</td>
+                            <td><code>587</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>Email__FromAddress</code></td>
+                            <td>Sender email address for newsletters</td>
+                            <td>Empty</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h2>Next Steps</h2>
+
+                <ul>
+                    <li><a href="admin.html" style="color: #3D5A80; font-weight: 500;">Admin Guide</a> &mdash; Learn how to manage posts, media, themes, and users</li>
+                    <li><a href="api.html" style="color: #3D5A80; font-weight: 500;">API Reference</a> &mdash; Complete endpoint documentation for headless integrations</li>
+                    <li><a href="headless.html" style="color: #3D5A80; font-weight: 500;">Headless Mode</a> &mdash; Build custom frontends with Next.js, 11ty, or any framework</li>
+                    <li><a href="plugins.html" style="color: #3D5A80; font-weight: 500;">Plugin Development</a> &mdash; Extend Contento with JavaScript plugins</li>
+                    <li><a href="themes.html" style="color: #3D5A80; font-weight: 500;">Theme Development</a> &mdash; Create custom themes with CSS variables</li>
+                </ul>
+
+            </div>
+        </main>
+    </div>
+
+    <%footer-docs%>
+
+</body>
+</html>

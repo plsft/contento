@@ -1,0 +1,415 @@
+@page "/features"
+@{
+    ViewData["Title"] = "Features";
+    Layout = "_PublicLayout";
+    ViewData["SiteTitle"] = "Contento";
+    ViewData["MetaDescription"] = "Explore Contento's features: AI-powered writing, theme and layout generation, extensible plugin system, and a full REST API.";
+}
+
+<!-- Hero Section -->
+<div class="text-center py-12">
+    <h1 class="text-3xl font-bold mb-4" style="color: var(--color-ink); font-family: var(--font-serif); letter-spacing: -0.02em;">
+        Everything you need to publish
+    </h1>
+    <p class="text-lg mx-auto" style="color: var(--color-stone); max-width: 40rem; line-height: 1.7;">
+        A modern, open-source CMS with AI-powered writing, visual theming, a flexible layout engine,
+        and an extensible plugin system &mdash; all in one clean package.
+    </p>
+</div>
+
+<!-- Feature Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 pb-16">
+
+    <!-- AI Writing Assistant -->
+    <div class="rounded-lg p-6" style="border: 1px solid var(--color-mist); background: var(--color-snow);">
+        <div class="flex items-start gap-4 mb-4">
+            <svg class="w-6 h-6 flex-shrink-0 mt-0.5" style="color: var(--color-indigo);" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 00-2.455 2.456z" />
+            </svg>
+            <div>
+                <h2 class="text-lg font-semibold" style="color: var(--color-ink);">AI Writing Assistant</h2>
+            </div>
+        </div>
+        <p class="text-sm mb-3" style="color: var(--color-stone); line-height: 1.6;">
+            Intelligent writing tools built directly into the editor. Generate, refine, and transform your content with AI.
+        </p>
+        <ul class="space-y-2 text-sm" style="color: var(--color-stone);">
+            <li class="flex items-start gap-2">
+                <span class="mt-1.5 w-1 h-1 rounded-full flex-shrink-0" style="background: var(--color-indigo);"></span>
+                BYOK: Bring your own API key (OpenAI, Anthropic, Google)
+            </li>
+            <li class="flex items-start gap-2">
+                <span class="mt-1.5 w-1 h-1 rounded-full flex-shrink-0" style="background: var(--color-indigo);"></span>
+                Streaming responses with real-time text generation
+            </li>
+            <li class="flex items-start gap-2">
+                <span class="mt-1.5 w-1 h-1 rounded-full flex-shrink-0" style="background: var(--color-indigo);"></span>
+                Actions: improve, expand, summarize, change tone, generate outlines
+            </li>
+            <li class="flex items-start gap-2">
+                <span class="mt-1.5 w-1 h-1 rounded-full flex-shrink-0" style="background: var(--color-indigo);"></span>
+                Custom prompts for any writing task
+            </li>
+        </ul>
+    </div>
+
+    <!-- AI Theme Generation -->
+    <div class="rounded-lg p-6" style="border: 1px solid var(--color-mist); background: var(--color-snow);">
+        <div class="flex items-start gap-4 mb-4">
+            <svg class="w-6 h-6 flex-shrink-0 mt-0.5" style="color: var(--color-indigo);" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4.098 19.902a3.75 3.75 0 005.304 0l6.401-6.402M6.75 21A3.75 3.75 0 013 17.25V4.125C3 3.504 3.504 3 4.125 3h5.25c.621 0 1.125.504 1.125 1.125v4.072M6.75 21a3.75 3.75 0 003.75-3.75V8.197M6.75 21h13.125c.621 0 1.125-.504 1.125-1.125v-5.25c0-.621-.504-1.125-1.125-1.125h-4.072M10.5 8.197l2.88-2.88c.438-.439 1.15-.439 1.59 0l3.712 3.713c.44.44.44 1.152 0 1.59l-2.879 2.88M6.75 17.25h.008v.008H6.75v-.008z" />
+            </svg>
+            <div>
+                <h2 class="text-lg font-semibold" style="color: var(--color-ink);">AI Theme Generation</h2>
+            </div>
+        </div>
+        <p class="text-sm mb-3" style="color: var(--color-stone); line-height: 1.6;">
+            Describe the look you want in plain English and let AI generate a complete theme for your site.
+        </p>
+        <ul class="space-y-2 text-sm" style="color: var(--color-stone);">
+            <li class="flex items-start gap-2">
+                <span class="mt-1.5 w-1 h-1 rounded-full flex-shrink-0" style="background: var(--color-indigo);"></span>
+                Describe a visual style in plain English
+            </li>
+            <li class="flex items-start gap-2">
+                <span class="mt-1.5 w-1 h-1 rounded-full flex-shrink-0" style="background: var(--color-indigo);"></span>
+                AI generates complete CSS variable themes
+            </li>
+            <li class="flex items-start gap-2">
+                <span class="mt-1.5 w-1 h-1 rounded-full flex-shrink-0" style="background: var(--color-indigo);"></span>
+                Preview colors and fonts before saving
+            </li>
+            <li class="flex items-start gap-2">
+                <span class="mt-1.5 w-1 h-1 rounded-full flex-shrink-0" style="background: var(--color-indigo);"></span>
+                WCAG-aware color contrast
+            </li>
+        </ul>
+    </div>
+
+    <!-- AI Layout Generation -->
+    <div class="rounded-lg p-6" style="border: 1px solid var(--color-mist); background: var(--color-snow);">
+        <div class="flex items-start gap-4 mb-4">
+            <svg class="w-6 h-6 flex-shrink-0 mt-0.5" style="color: var(--color-indigo);" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z" />
+            </svg>
+            <div>
+                <h2 class="text-lg font-semibold" style="color: var(--color-ink);">AI Layout Generation</h2>
+            </div>
+        </div>
+        <p class="text-sm mb-3" style="color: var(--color-stone); line-height: 1.6;">
+            Describe your ideal page structure and AI builds a responsive layout with a live wireframe preview.
+        </p>
+        <ul class="space-y-2 text-sm" style="color: var(--color-stone);">
+            <li class="flex items-start gap-2">
+                <span class="mt-1.5 w-1 h-1 rounded-full flex-shrink-0" style="background: var(--color-indigo);"></span>
+                Describe your page structure naturally
+            </li>
+            <li class="flex items-start gap-2">
+                <span class="mt-1.5 w-1 h-1 rounded-full flex-shrink-0" style="background: var(--color-indigo);"></span>
+                Generates responsive 12-column grid layouts
+            </li>
+            <li class="flex items-start gap-2">
+                <span class="mt-1.5 w-1 h-1 rounded-full flex-shrink-0" style="background: var(--color-indigo);"></span>
+                Preview wireframe before committing
+            </li>
+            <li class="flex items-start gap-2">
+                <span class="mt-1.5 w-1 h-1 rounded-full flex-shrink-0" style="background: var(--color-indigo);"></span>
+                Regions: header, hero, body, sidebar, footer
+            </li>
+        </ul>
+    </div>
+
+    <!-- Plugin System -->
+    <div class="rounded-lg p-6" style="border: 1px solid var(--color-mist); background: var(--color-snow);">
+        <div class="flex items-start gap-4 mb-4">
+            <svg class="w-6 h-6 flex-shrink-0 mt-0.5" style="color: var(--color-indigo);" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M14.25 6.087c0-.355.186-.676.401-.959.221-.29.349-.634.349-1.003 0-1.036-1.007-1.875-2.25-1.875s-2.25.84-2.25 1.875c0 .369.128.713.349 1.003.215.283.401.604.401.959v0a.64.64 0 01-.657.643 48.421 48.421 0 01-4.185-.408c-.009-.77.005-1.522.042-2.254a.64.64 0 00-.643-.657 48.421 48.421 0 01-.408-4.185c-.77-.009-1.522.005-2.254.042M14.25 6.087c0 .355-.186.676-.401.959a1.647 1.647 0 00-.349 1.003c0 1.035 1.008 1.875 2.25 1.875 1.243 0 2.25-.84 2.25-1.875 0-.369-.128-.713-.349-1.003-.215-.283-.401-.604-.401-.959M14.25 18v-4.5m0 0c0-.355.186-.676.401-.959.221-.29.349-.634.349-1.003 0-1.036-1.007-1.875-2.25-1.875s-2.25.84-2.25 1.875c0 .369.128.713.349 1.003.215.283.401.604.401.959m0 0v4.5m0-4.5h4.5m-4.5 0h-4.5" />
+            </svg>
+            <div>
+                <h2 class="text-lg font-semibold" style="color: var(--color-ink);">Plugin System</h2>
+            </div>
+        </div>
+        <p class="text-sm mb-3" style="color: var(--color-stone); line-height: 1.6;">
+            Extend Contento with JavaScript plugins that run in a secure, sandboxed environment.
+        </p>
+        <ul class="space-y-2 text-sm" style="color: var(--color-stone);">
+            <li class="flex items-start gap-2">
+                <span class="mt-1.5 w-1 h-1 rounded-full flex-shrink-0" style="background: var(--color-indigo);"></span>
+                JavaScript plugins in sandboxed Jint runtime
+            </li>
+            <li class="flex items-start gap-2">
+                <span class="mt-1.5 w-1 h-1 rounded-full flex-shrink-0" style="background: var(--color-indigo);"></span>
+                Hook into post rendering, save events, page load
+            </li>
+            <li class="flex items-start gap-2">
+                <span class="mt-1.5 w-1 h-1 rounded-full flex-shrink-0" style="background: var(--color-indigo);"></span>
+                Per-plugin settings with JSON configuration
+            </li>
+            <li class="flex items-start gap-2">
+                <span class="mt-1.5 w-1 h-1 rounded-full flex-shrink-0" style="background: var(--color-indigo);"></span>
+                Memory-limited, timeout-protected execution
+            </li>
+        </ul>
+    </div>
+
+    <!-- Theme Engine -->
+    <div class="rounded-lg p-6" style="border: 1px solid var(--color-mist); background: var(--color-snow);">
+        <div class="flex items-start gap-4 mb-4">
+            <svg class="w-6 h-6 flex-shrink-0 mt-0.5" style="color: var(--color-indigo);" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9.53 16.122a3 3 0 00-5.78 1.128 2.25 2.25 0 01-2.4 2.245 4.5 4.5 0 008.4-2.245c0-.399-.078-.78-.22-1.128zm0 0a15.998 15.998 0 003.388-1.62m-5.043-.025a15.994 15.994 0 011.622-3.395m3.42 3.42a15.995 15.995 0 004.764-4.648l3.876-5.814a1.151 1.151 0 00-1.597-1.597L14.146 6.32a15.996 15.996 0 00-4.649 4.763m3.42 3.42a6.776 6.776 0 00-3.42-3.42" />
+            </svg>
+            <div>
+                <h2 class="text-lg font-semibold" style="color: var(--color-ink);">Theme Engine</h2>
+            </div>
+        </div>
+        <p class="text-sm mb-3" style="color: var(--color-stone); line-height: 1.6;">
+            A CSS variable-based theming system that makes it easy to change the look and feel of your entire site.
+        </p>
+        <ul class="space-y-2 text-sm" style="color: var(--color-stone);">
+            <li class="flex items-start gap-2">
+                <span class="mt-1.5 w-1 h-1 rounded-full flex-shrink-0" style="background: var(--color-indigo);"></span>
+                CSS variable-based theming system
+            </li>
+            <li class="flex items-start gap-2">
+                <span class="mt-1.5 w-1 h-1 rounded-full flex-shrink-0" style="background: var(--color-indigo);"></span>
+                11 Google Fonts available
+            </li>
+            <li class="flex items-start gap-2">
+                <span class="mt-1.5 w-1 h-1 rounded-full flex-shrink-0" style="background: var(--color-indigo);"></span>
+                Automatic dark mode support
+            </li>
+            <li class="flex items-start gap-2">
+                <span class="mt-1.5 w-1 h-1 rounded-full flex-shrink-0" style="background: var(--color-indigo);"></span>
+                One-click theme activation
+            </li>
+        </ul>
+    </div>
+
+    <!-- Layout System -->
+    <div class="rounded-lg p-6" style="border: 1px solid var(--color-mist); background: var(--color-snow);">
+        <div class="flex items-start gap-4 mb-4">
+            <svg class="w-6 h-6 flex-shrink-0 mt-0.5" style="color: var(--color-indigo);" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 4.5v15m6-15v15m-10.875 0h15.75c.621 0 1.125-.504 1.125-1.125V5.625c0-.621-.504-1.125-1.125-1.125H4.125C3.504 4.5 3 5.004 3 5.625v12.75c0 .621.504 1.125 1.125 1.125z" />
+            </svg>
+            <div>
+                <h2 class="text-lg font-semibold" style="color: var(--color-ink);">Layout System</h2>
+            </div>
+        </div>
+        <p class="text-sm mb-3" style="color: var(--color-stone); line-height: 1.6;">
+            A powerful 12-column grid system with configurable regions for complete control over page structure.
+        </p>
+        <ul class="space-y-2 text-sm" style="color: var(--color-stone);">
+            <li class="flex items-start gap-2">
+                <span class="mt-1.5 w-1 h-1 rounded-full flex-shrink-0" style="background: var(--color-indigo);"></span>
+                12-column responsive grid
+            </li>
+            <li class="flex items-start gap-2">
+                <span class="mt-1.5 w-1 h-1 rounded-full flex-shrink-0" style="background: var(--color-indigo);"></span>
+                8 region types (header, menu, hero, meta, body, sidebar, right_nav, footer)
+            </li>
+            <li class="flex items-start gap-2">
+                <span class="mt-1.5 w-1 h-1 rounded-full flex-shrink-0" style="background: var(--color-indigo);"></span>
+                Custom CSS and head content injection
+            </li>
+            <li class="flex items-start gap-2">
+                <span class="mt-1.5 w-1 h-1 rounded-full flex-shrink-0" style="background: var(--color-indigo);"></span>
+                Per-post layout overrides
+            </li>
+        </ul>
+    </div>
+
+    <!-- Content Management -->
+    <div class="rounded-lg p-6" style="border: 1px solid var(--color-mist); background: var(--color-snow);">
+        <div class="flex items-start gap-4 mb-4">
+            <svg class="w-6 h-6 flex-shrink-0 mt-0.5" style="color: var(--color-indigo);" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+            </svg>
+            <div>
+                <h2 class="text-lg font-semibold" style="color: var(--color-ink);">Content Management</h2>
+            </div>
+        </div>
+        <p class="text-sm mb-3" style="color: var(--color-stone); line-height: 1.6;">
+            A rich editing experience with everything you need to create, organize, and publish content.
+        </p>
+        <ul class="space-y-2 text-sm" style="color: var(--color-stone);">
+            <li class="flex items-start gap-2">
+                <span class="mt-1.5 w-1 h-1 rounded-full flex-shrink-0" style="background: var(--color-indigo);"></span>
+                Rich markdown editor with live preview
+            </li>
+            <li class="flex items-start gap-2">
+                <span class="mt-1.5 w-1 h-1 rounded-full flex-shrink-0" style="background: var(--color-indigo);"></span>
+                Categories, tags, and media library
+            </li>
+            <li class="flex items-start gap-2">
+                <span class="mt-1.5 w-1 h-1 rounded-full flex-shrink-0" style="background: var(--color-indigo);"></span>
+                Draft/published/scheduled workflows
+            </li>
+            <li class="flex items-start gap-2">
+                <span class="mt-1.5 w-1 h-1 rounded-full flex-shrink-0" style="background: var(--color-indigo);"></span>
+                Version history and autosave
+            </li>
+        </ul>
+    </div>
+
+    <!-- Full REST API -->
+    <div class="rounded-lg p-6" style="border: 1px solid var(--color-mist); background: var(--color-snow);">
+        <div class="flex items-start gap-4 mb-4">
+            <svg class="w-6 h-6 flex-shrink-0 mt-0.5" style="color: var(--color-indigo);" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5" />
+            </svg>
+            <div>
+                <h2 class="text-lg font-semibold" style="color: var(--color-ink);">Full REST API</h2>
+            </div>
+        </div>
+        <p class="text-sm mb-3" style="color: var(--color-stone); line-height: 1.6;">
+            A comprehensive API for headless usage, integrations, and programmatic content management.
+        </p>
+        <ul class="space-y-2 text-sm" style="color: var(--color-stone);">
+            <li class="flex items-start gap-2">
+                <span class="mt-1.5 w-1 h-1 rounded-full flex-shrink-0" style="background: var(--color-indigo);"></span>
+                Complete CRUD for posts, pages, categories, media, themes, layouts
+            </li>
+            <li class="flex items-start gap-2">
+                <span class="mt-1.5 w-1 h-1 rounded-full flex-shrink-0" style="background: var(--color-indigo);"></span>
+                JSON responses with consistent error handling
+            </li>
+            <li class="flex items-start gap-2">
+                <span class="mt-1.5 w-1 h-1 rounded-full flex-shrink-0" style="background: var(--color-indigo);"></span>
+                Authentication and CSRF protection
+            </li>
+            <li class="flex items-start gap-2">
+                <span class="mt-1.5 w-1 h-1 rounded-full flex-shrink-0" style="background: var(--color-indigo);"></span>
+                RSS/Atom feed generation
+            </li>
+        </ul>
+    </div>
+
+    <!-- Comments & Community -->
+    <div class="rounded-lg p-6" style="border: 1px solid var(--color-mist); background: var(--color-snow);">
+        <div class="flex items-start gap-4 mb-4">
+            <svg class="w-6 h-6 flex-shrink-0 mt-0.5" style="color: var(--color-indigo);" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 01-.825-.242m9.345-8.334a2.126 2.126 0 00-.476-.095 48.64 48.64 0 00-8.048 0c-1.131.094-1.976 1.057-1.976 2.192v4.286c0 .837.46 1.58 1.155 1.951m9.345-8.334V6.637c0-1.621-1.152-3.026-2.76-3.235A48.455 48.455 0 0011.25 3c-2.115 0-4.198.137-6.24.402-1.608.209-2.76 1.614-2.76 3.235v6.226c0 1.621 1.152 3.026 2.76 3.235.577.075 1.157.14 1.74.194V21l4.155-4.155" />
+            </svg>
+            <div>
+                <h2 class="text-lg font-semibold" style="color: var(--color-ink);">Comments &amp; Community</h2>
+            </div>
+        </div>
+        <p class="text-sm mb-3" style="color: var(--color-stone); line-height: 1.6;">
+            Built-in commenting with moderation tools to foster conversation without third-party services.
+        </p>
+        <ul class="space-y-2 text-sm" style="color: var(--color-stone);">
+            <li class="flex items-start gap-2">
+                <span class="mt-1.5 w-1 h-1 rounded-full flex-shrink-0" style="background: var(--color-indigo);"></span>
+                Threaded comments with moderation queue
+            </li>
+            <li class="flex items-start gap-2">
+                <span class="mt-1.5 w-1 h-1 rounded-full flex-shrink-0" style="background: var(--color-indigo);"></span>
+                Honeypot spam prevention
+            </li>
+            <li class="flex items-start gap-2">
+                <span class="mt-1.5 w-1 h-1 rounded-full flex-shrink-0" style="background: var(--color-indigo);"></span>
+                Approve/reject workflow
+            </li>
+            <li class="flex items-start gap-2">
+                <span class="mt-1.5 w-1 h-1 rounded-full flex-shrink-0" style="background: var(--color-indigo);"></span>
+                Nested reply support
+            </li>
+        </ul>
+    </div>
+
+    <!-- SEO & Analytics -->
+    <div class="rounded-lg p-6" style="border: 1px solid var(--color-mist); background: var(--color-snow);">
+        <div class="flex items-start gap-4 mb-4">
+            <svg class="w-6 h-6 flex-shrink-0 mt-0.5" style="color: var(--color-indigo);" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" />
+            </svg>
+            <div>
+                <h2 class="text-lg font-semibold" style="color: var(--color-ink);">SEO &amp; Analytics</h2>
+            </div>
+        </div>
+        <p class="text-sm mb-3" style="color: var(--color-stone); line-height: 1.6;">
+            Everything you need to be found and to understand your audience, built right in.
+        </p>
+        <ul class="space-y-2 text-sm" style="color: var(--color-stone);">
+            <li class="flex items-start gap-2">
+                <span class="mt-1.5 w-1 h-1 rounded-full flex-shrink-0" style="background: var(--color-indigo);"></span>
+                Meta tags, Open Graph, Twitter Cards
+            </li>
+            <li class="flex items-start gap-2">
+                <span class="mt-1.5 w-1 h-1 rounded-full flex-shrink-0" style="background: var(--color-indigo);"></span>
+                JSON-LD structured data (via plugin)
+            </li>
+            <li class="flex items-start gap-2">
+                <span class="mt-1.5 w-1 h-1 rounded-full flex-shrink-0" style="background: var(--color-indigo);"></span>
+                Canonical URLs and sitemaps
+            </li>
+            <li class="flex items-start gap-2">
+                <span class="mt-1.5 w-1 h-1 rounded-full flex-shrink-0" style="background: var(--color-indigo);"></span>
+                Built-in traffic tracking
+            </li>
+        </ul>
+    </div>
+
+    <!-- Developer Experience -->
+    <div class="rounded-lg p-6" style="border: 1px solid var(--color-mist); background: var(--color-snow);">
+        <div class="flex items-start gap-4 mb-4">
+            <svg class="w-6 h-6 flex-shrink-0 mt-0.5" style="color: var(--color-indigo);" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 7.5l3 2.25-3 2.25m4.5 0h3m-9 8.25h13.5A2.25 2.25 0 0021 18V6a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 6v12a2.25 2.25 0 002.25 2.25z" />
+            </svg>
+            <div>
+                <h2 class="text-lg font-semibold" style="color: var(--color-ink);">Developer Experience</h2>
+            </div>
+        </div>
+        <p class="text-sm mb-3" style="color: var(--color-stone); line-height: 1.6;">
+            Built on modern, well-tested foundations with a clean architecture that developers enjoy working with.
+        </p>
+        <ul class="space-y-2 text-sm" style="color: var(--color-stone);">
+            <li class="flex items-start gap-2">
+                <span class="mt-1.5 w-1 h-1 rounded-full flex-shrink-0" style="background: var(--color-indigo);"></span>
+                .NET 10 with minimal API patterns
+            </li>
+            <li class="flex items-start gap-2">
+                <span class="mt-1.5 w-1 h-1 rounded-full flex-shrink-0" style="background: var(--color-indigo);"></span>
+                PostgreSQL with Bowtie ORM
+            </li>
+            <li class="flex items-start gap-2">
+                <span class="mt-1.5 w-1 h-1 rounded-full flex-shrink-0" style="background: var(--color-indigo);"></span>
+                Tailwind CSS v4 design system
+            </li>
+            <li class="flex items-start gap-2">
+                <span class="mt-1.5 w-1 h-1 rounded-full flex-shrink-0" style="background: var(--color-indigo);"></span>
+                Full test suite (235+ tests)
+            </li>
+        </ul>
+    </div>
+
+</div>
+
+<!-- Bottom CTA Section -->
+<div class="text-center py-12 border-t" style="border-color: var(--color-mist);">
+    <h2 class="text-2xl font-bold mb-3" style="color: var(--color-ink); font-family: var(--font-serif); letter-spacing: -0.02em;">
+        Build something beautiful
+    </h2>
+    <p class="text-base mb-6" style="color: var(--color-stone); line-height: 1.7;">
+        Open-source, extensible, and ready for your next project.
+    </p>
+    <div class="flex items-center justify-center gap-4 flex-wrap">
+        <a href="/docs/plugins"
+           class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium text-white"
+           style="background: var(--color-indigo);">
+            Read the Docs
+        </a>
+        <a href="/admin"
+           class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium"
+           style="border: 1px solid var(--color-cloud); color: var(--color-ink);">
+            Open Admin
+        </a>
+        <a href="https://github.com/georgepharrison/contento"
+           class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium"
+           style="border: 1px solid var(--color-cloud); color: var(--color-ink);"
+           target="_blank" rel="noopener noreferrer">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+            GitHub
+        </a>
+    </div>
+</div>

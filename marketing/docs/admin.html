@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Guide - Contento CMS Documentation</title>
+    <script type="module" src="/src/main.js"></script>
+</head>
+<body class="bg-white text-[#1A1A1A]" x-data="{ mobileMenuOpen: false }">
+
+    <%nav-docs%>
+
+    <div class="max-w-[90rem] mx-auto flex">
+
+        <%sidebar-docs%>
+
+        <!-- Main content -->
+        <main class="flex-1 min-w-0 px-6 sm:px-8 lg:px-12 py-10 max-w-4xl">
+            <div class="prose">
+
+                <div class="flex items-center gap-2 text-sm text-gray-400 mb-8">
+                    <a href="index.html" class="hover:text-gray-600">Docs</a>
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                    <span class="text-gray-600">Admin Guide</span>
+                </div>
+
+                <h1 style="font-size: 2.25rem; font-weight: 700; color: #1A1A1A; margin-bottom: 0.5rem; letter-spacing: -0.02em;">Admin Guide</h1>
+                <p style="font-size: 1.125rem; color: #6B7280; margin-bottom: 2.5rem;">Everything you need to know about managing your Contento site from the admin panel.</p>
+
+                <!-- Dashboard -->
+                <h2>Dashboard</h2>
+                <p>The dashboard is your starting point after logging in. It provides an at-a-glance overview of your site, including:</p>
+                <ul>
+                    <li><strong>Total Posts</strong> &mdash; Count of all posts across all statuses (draft, published, scheduled)</li>
+                    <li><strong>Published Posts</strong> &mdash; Number of currently live posts</li>
+                    <li><strong>Comments</strong> &mdash; Total comments and pending moderation queue count</li>
+                    <li><strong>Media Files</strong> &mdash; Number of files in the media library</li>
+                    <li><strong>Recent Activity</strong> &mdash; Latest posts, comments, and changes</li>
+                </ul>
+
+                <!-- Managing Posts -->
+                <h2>Managing Posts</h2>
+
+                <h3>Creating a post</h3>
+                <ol>
+                    <li>Navigate to <strong>Posts</strong> in the sidebar.</li>
+                    <li>Click <strong>New Post</strong>.</li>
+                    <li>Enter a title. The slug is auto-generated but can be customized.</li>
+                    <li>Write content in the Markdown editor. The live preview updates in real-time.</li>
+                    <li>Optionally add: subtitle, excerpt, cover image, tags, category, and SEO metadata.</li>
+                    <li>Click <strong>Save Draft</strong> to save without publishing, or <strong>Publish</strong> to make it live.</li>
+                </ol>
+
+                <h3>Editing posts</h3>
+                <p>Click any post title in the posts list to open the editor. Changes are autosaved as you type.
+                The version counter increments on each save, and previous versions are tracked for recovery.</p>
+
+                <h3>Publishing and scheduling</h3>
+                <ul>
+                    <li><strong>Publish</strong> &mdash; Immediately makes the post visible on the public site</li>
+                    <li><strong>Schedule</strong> &mdash; Set a future date/time. The post goes live automatically when the scheduled time arrives.</li>
+                    <li><strong>Unpublish</strong> &mdash; Reverts a published post back to draft status, removing it from the public site</li>
+                </ul>
+
+                <h3>Post statuses</h3>
+                <table>
+                    <thead>
+                        <tr><th>Status</th><th>Description</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><code>draft</code></td><td>Work in progress. Only visible to admins.</td></tr>
+                        <tr><td><code>published</code></td><td>Live on the public site.</td></tr>
+                        <tr><td><code>scheduled</code></td><td>Will be auto-published at the set date/time.</td></tr>
+                    </tbody>
+                </table>
+
+                <h3>Visibility options</h3>
+                <table>
+                    <thead>
+                        <tr><th>Visibility</th><th>Description</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><code>public</code></td><td>Visible to everyone.</td></tr>
+                        <tr><td><code>private</code></td><td>Only visible to logged-in users.</td></tr>
+                        <tr><td><code>password</code></td><td>Requires a password to view.</td></tr>
+                    </tbody>
+                </table>
+
+                <h3>Bulk actions</h3>
+                <p>In the posts list, select multiple posts using the checkboxes and use the bulk action menu to:</p>
+                <ul>
+                    <li>Publish selected posts</li>
+                    <li>Unpublish selected posts</li>
+                    <li>Delete selected posts</li>
+                    <li>Assign a category to selected posts</li>
+                </ul>
+
+                <!-- Media Library -->
+                <h2>Media Library</h2>
+
+                <h3>Uploading files</h3>
+                <p>Navigate to <strong>Media</strong> in the sidebar. Drag and drop files onto the upload area,
+                or click to browse. You can upload multiple files at once.</p>
+
+                <h3>Supported formats</h3>
+                <table>
+                    <thead>
+                        <tr><th>Type</th><th>Formats</th><th>MIME Types</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Images</td><td>JPEG, PNG, GIF, WebP, SVG</td><td><code>image/jpeg</code>, <code>image/png</code>, <code>image/gif</code>, <code>image/webp</code>, <code>image/svg+xml</code></td></tr>
+                        <tr><td>Documents</td><td>PDF</td><td><code>application/pdf</code></td></tr>
+                        <tr><td>Video</td><td>MP4</td><td><code>video/mp4</code></td></tr>
+                    </tbody>
+                </table>
+
+                <div class="callout callout-info">
+                    <strong>Size limit:</strong> The maximum file upload size is <strong>10 MB</strong>.
+                    Files exceeding this limit are rejected with a <code>FILE_TOO_LARGE</code> error.
+                </div>
+
+                <h3>Organizing media</h3>
+                <p>The media library provides a rich set of tools for organizing your files:</p>
+                <ul>
+                    <li><strong>Folders</strong> &mdash; Organize files into folders. Create folders and move files between them.</li>
+                    <li><strong>Grid/List view</strong> &mdash; Toggle between grid thumbnails and detailed list view (persisted via localStorage).</li>
+                    <li><strong>Bulk selection</strong> &mdash; Select multiple files with checkboxes for bulk delete or move operations.</li>
+                    <li><strong>Search &amp; filters</strong> &mdash; Search by filename and filter by file type (images, documents, video) or folder.</li>
+                    <li><strong>Detail panel</strong> &mdash; Click any file to open a slide-out panel with metadata, alt text, caption, and a copy-URL button.</li>
+                    <li><strong>Focal point picker</strong> &mdash; For images, click to set a focal point. This ensures cropped thumbnails focus on the right area.</li>
+                    <li><strong>Infinite scroll</strong> &mdash; Media loads progressively as you scroll, powered by IntersectionObserver.</li>
+                </ul>
+
+                <h3>Responsive image variants</h3>
+                <p>When you upload an image, Contento automatically generates optimized responsive variants using ImageSharp:</p>
+                <table>
+                    <thead>
+                        <tr><th>Variant</th><th>Width</th><th>Format</th><th>Purpose</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Thumbnail</td><td>400px</td><td>WebP</td><td>Grid previews and cards</td></tr>
+                        <tr><td>Small</td><td>640px</td><td>WebP</td><td>Mobile devices</td></tr>
+                        <tr><td>Medium</td><td>1024px</td><td>WebP</td><td>Tablets and small screens</td></tr>
+                        <tr><td>Large</td><td>1536px</td><td>WebP</td><td>Desktop and retina displays</td></tr>
+                    </tbody>
+                </table>
+                <p>EXIF metadata is automatically stripped from all variants for privacy and reduced file size. The original file is preserved at full resolution.</p>
+
+                <h3>Using media in posts</h3>
+                <p>In the post editor, click the image button or use the Markdown image syntax. The media picker shows all uploaded files with search and filtering.</p>
+
+<pre><span class="comment"># Markdown image syntax</span>
+![Alt text](/uploads/your-image.jpg)</pre>
+
+                <!-- Categories -->
+                <h2>Categories</h2>
+
+                <h3>Creating categories</h3>
+                <p>Navigate to <strong>Categories</strong> in the sidebar. Click <strong>New Category</strong> and provide a name
+                (the slug is auto-generated). Optionally set a description and a parent category.</p>
+
+                <h3>Hierarchical structure</h3>
+                <p>Categories support unlimited nesting. Each category has:</p>
+                <ul>
+                    <li><strong>Name</strong> &mdash; Display name</li>
+                    <li><strong>Slug</strong> &mdash; URL-safe identifier (auto-generated from name)</li>
+                    <li><strong>Description</strong> &mdash; Optional description</li>
+                    <li><strong>Parent</strong> &mdash; Optional parent category for hierarchy</li>
+                    <li><strong>Sort order</strong> &mdash; Controls display order within the same level</li>
+                </ul>
+
+                <h3>Assigning to posts</h3>
+                <p>Each post can belong to one category. Set the category in the post editor's sidebar panel.</p>
+
+                <!-- Comments -->
+                <h2>Comments</h2>
+
+                <h3>Moderation queue</h3>
+                <p>New comments arrive with <code>pending</code> status and appear in the moderation queue.
+                From the <strong>Comments</strong> page you can:</p>
+                <ul>
+                    <li><strong>Approve</strong> &mdash; Makes the comment visible on the public post</li>
+                    <li><strong>Mark as Spam</strong> &mdash; Moves the comment to the spam bin</li>
+                    <li><strong>Delete</strong> &mdash; Permanently removes the comment</li>
+                </ul>
+
+                <h3>Comment statuses</h3>
+                <table>
+                    <thead>
+                        <tr><th>Status</th><th>Description</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><code>pending</code></td><td>Awaiting moderation. Not visible publicly.</td></tr>
+                        <tr><td><code>approved</code></td><td>Visible on the post page.</td></tr>
+                        <tr><td><code>spam</code></td><td>Flagged as spam. Hidden from public.</td></tr>
+                    </tbody>
+                </table>
+
+                <h3>Batch actions</h3>
+                <p>Select multiple comments and approve, spam, or delete them in bulk.</p>
+
+                <h3>Honeypot protection</h3>
+                <p>Contento uses a honeypot field (<code>website</code>) in the comment form. If a bot fills in this hidden field,
+                the comment is silently discarded without any error message. This reduces spam without CAPTCHAs.</p>
+
+                <h3>AI spam scoring</h3>
+                <p>In addition to the honeypot, Contento uses an AI-powered spam scoring system that analyzes comment content
+                for spam patterns. Each comment receives a score from 0 to 1, where higher scores indicate more likely spam.</p>
+                <ul>
+                    <li><strong>Auto-approve threshold</strong> &mdash; Configure in Settings. Comments scoring below this threshold are auto-approved.</li>
+                    <li><strong>Spam stats</strong> &mdash; View total approved, blocked, and checked counts in the Settings page.</li>
+                    <li><strong>Pattern detection</strong> &mdash; Regex-based keyword detection for common spam patterns.</li>
+                </ul>
+
+                <h3>Threaded replies</h3>
+                <p>Comments support nested threading via the <code>parentId</code> field. Replies are displayed
+                indented under their parent comment, with a <code>depth</code> value tracking nesting level.</p>
+
+                <!-- Users -->
+                <h2>Users</h2>
+
+                <h3>User roles</h3>
+                <table>
+                    <thead>
+                        <tr><th>Role</th><th>Permissions</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>owner</strong></td><td>Full access to everything, including site deletion and user management</td></tr>
+                        <tr><td><strong>admin</strong></td><td>Full access to content, themes, plugins, and settings. Cannot delete site.</td></tr>
+                        <tr><td><strong>editor</strong></td><td>Can create, edit, and publish any post. Can moderate comments. Cannot manage users or settings.</td></tr>
+                        <tr><td><strong>author</strong></td><td>Can create and edit own posts. Can submit for review. Cannot publish.</td></tr>
+                        <tr><td><strong>viewer</strong></td><td>Read-only access to the admin dashboard. Cannot create or edit content.</td></tr>
+                    </tbody>
+                </table>
+
+                <h3>Managing accounts</h3>
+                <p>Navigate to <strong>Users</strong> in the sidebar. You can:</p>
+                <ul>
+                    <li>Invite new users by email</li>
+                    <li>Change a user's role</li>
+                    <li>Deactivate accounts (sets <code>isActive</code> to false)</li>
+                    <li>Reset passwords</li>
+                </ul>
+
+                <div class="callout callout-warning">
+                    <strong>Note:</strong> Deactivated users cannot log in or generate API tokens,
+                    but their authored content remains published.
+                </div>
+
+                <!-- Themes -->
+                <h2>Themes</h2>
+
+                <h3>Activating a theme</h3>
+                <p>Go to <strong>Themes</strong> in the sidebar. Each theme card shows a preview and description.
+                Click <strong>Activate</strong> to apply the theme to your public site. Only one theme can be active at a time.</p>
+
+                <h3>CSS variable system</h3>
+                <p>Themes work by injecting CSS variables into the page. These variables control fonts, colors, spacing,
+                and other visual properties. See the <a href="themes.html" style="color: #3D5A80;">Theme Development</a> guide for the full variable reference.</p>
+
+                <h3>Built-in themes</h3>
+                <table>
+                    <thead>
+                        <tr><th>Theme</th><th>Description</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><span class="theme-swatch" style="background: #F5F5F0;"></span><strong>Shizen</strong></td><td>Nature-inspired minimalism. Warm paper tones with organic typography.</td></tr>
+                        <tr><td><span class="theme-swatch" style="background: #C75B39;"></span><strong>Koyo</strong></td><td>Autumn leaves palette. Rich reds and warm browns evoking Japanese fall foliage.</td></tr>
+                        <tr><td><span class="theme-swatch" style="background: #F0F4F8;"></span><strong>Yuki</strong></td><td>Winter snow theme. Clean whites with cool blue accents and crisp typography.</td></tr>
+                        <tr><td><span class="theme-swatch" style="background: #1A1A1A;"></span><strong>Ink</strong></td><td>Dark mode calligraphy theme. Deep blacks with high-contrast text.</td></tr>
+                        <tr><td><span class="theme-swatch" style="background: #2D5016;"></span><strong>Grove</strong></td><td>Forest green palette. Earthy tones with serif typography for long-form reading.</td></tr>
+                        <tr><td><span class="theme-swatch" style="background: #7C3AED;"></span><strong>Neon</strong></td><td>Vibrant modern design. Bold colors with sans-serif type for tech and creative blogs.</td></tr>
+                        <tr><td><span class="theme-swatch" style="background: #F9FAFB;"></span><strong>Folio</strong></td><td>Portfolio-style layout. Minimal chrome that puts content and imagery front and center.</td></tr>
+                        <tr><td><span class="theme-swatch" style="background: #1E293B;"></span><strong>Dusk</strong></td><td>Twilight color scheme. Muted purples and blues for a sophisticated evening mood.</td></tr>
+                    </tbody>
+                </table>
+
+                <!-- Layouts -->
+                <h2>Layouts</h2>
+
+                <h3>What are layouts?</h3>
+                <p>Layouts define the structural arrangement of content regions on a page. Each layout has a JSON <code>structure</code>
+                that describes which regions appear, their grid arrangement, and responsive behavior.</p>
+
+                <h3>Built-in layouts</h3>
+                <table>
+                    <thead>
+                        <tr><th>Layout</th><th>Description</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>Standard Blog</strong></td><td>Classic blog layout with main content area, sidebar, header, and footer.</td></tr>
+                        <tr><td><strong>Full Width</strong></td><td>Single column layout that spans the full width. Ideal for landing pages and long-form articles.</td></tr>
+                        <tr><td><strong>Magazine</strong></td><td>Multi-column grid layout with featured post hero section. Great for content-heavy sites.</td></tr>
+                        <tr><td><strong>Minimal</strong></td><td>Stripped-down layout with just header, content, and footer. Maximum reading focus.</td></tr>
+                    </tbody>
+                </table>
+
+                <h3>Setting a default layout</h3>
+                <p>One layout is marked as the default and is used for all posts that do not have a specific layout assigned.
+                To change the default, click <strong>Set as Default</strong> on any layout.</p>
+
+                <h3>Layout structure JSON</h3>
+                <p>The <code>structure</code> field is a JSON object describing the page grid. See the
+                <a href="themes.html" style="color: #3D5A80;">Theme Development</a> guide for the full JSON specification and examples.</p>
+
+                <!-- Navigation Menus -->
+                <h2>Navigation Menus</h2>
+
+                <h3>Overview</h3>
+                <p>Contento includes a full menu management system, similar to WordPress menus. You can create named menus,
+                assign them to display locations (header, footer, or custom), and add items that link to custom URLs, posts,
+                categories, or tags. Items can be nested one level deep for dropdown support.</p>
+
+                <h3>Creating a menu</h3>
+                <p>Navigate to <strong>Menus</strong> in the admin sidebar. Use the &ldquo;Add Menu&rdquo; form to create
+                a new menu with a name and location:</p>
+                <ul>
+                    <li><strong>Header</strong> &mdash; Renders in the public site header navigation</li>
+                    <li><strong>Footer</strong> &mdash; Renders in the public site footer</li>
+                    <li><strong>Custom</strong> &mdash; Available via the API for headless consumers</li>
+                </ul>
+
+                <h3>Adding menu items</h3>
+                <p>Click <strong>Edit</strong> on a menu to manage its items. Each item has:</p>
+                <ul>
+                    <li><strong>Type</strong> &mdash; Custom Link, Post, Category, or Tag</li>
+                    <li><strong>Label</strong> &mdash; The display text shown in the navigation</li>
+                    <li><strong>URL</strong> &mdash; For custom links; post/category/tag URLs are resolved automatically</li>
+                    <li><strong>Target</strong> &mdash; Open in same tab (_self) or new tab (_blank)</li>
+                    <li><strong>Parent</strong> &mdash; Nest under an existing top-level item for dropdown menus</li>
+                </ul>
+
+                <h3>Reordering</h3>
+                <p>Use the <strong>Up</strong> and <strong>Down</strong> arrows next to each item to reorder.
+                Changes take effect immediately on the public site.</p>
+
+                <h3>Default menus</h3>
+                <p>Contento seeds two menus on first run:</p>
+                <table>
+                    <thead>
+                        <tr><th>Menu</th><th>Location</th><th>Default Items</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>Main Navigation</strong></td><td>Header</td><td>Home, Search</td></tr>
+                        <tr><td><strong>Footer</strong></td><td>Footer</td><td>Home, RSS Feed</td></tr>
+                    </tbody>
+                </table>
+
+                <div class="callout callout-tip">
+                    <strong>Tip:</strong> The public layout falls back to a single &ldquo;Home&rdquo; link if no header menu is configured.
+                    Headless consumers can fetch any menu via <code>GET /api/v1/content/menu/{location}</code>.
+                </div>
+
+                <!-- URL Redirects -->
+                <h2>URL Redirects</h2>
+
+                <h3>Overview</h3>
+                <p>Contento includes built-in redirect management for handling moved or renamed content. Navigate to
+                <strong>Redirects</strong> in the admin sidebar. Redirects are processed by middleware on all public GET requests,
+                ensuring search engines and visitors are seamlessly sent to the correct URL.</p>
+
+                <h3>Creating a redirect</h3>
+                <p>Click <strong>Add Redirect</strong> and provide:</p>
+                <ul>
+                    <li><strong>From Path</strong> &mdash; The old URL path (e.g., <code>/old-post-slug</code>)</li>
+                    <li><strong>To Path</strong> &mdash; The new destination (e.g., <code>/new-post-slug</code>)</li>
+                    <li><strong>Status Code</strong> &mdash; <code>301</code> (permanent) or <code>302</code> (temporary)</li>
+                    <li><strong>Notes</strong> &mdash; Optional note explaining why the redirect exists</li>
+                    <li><strong>Active</strong> &mdash; Toggle to enable or disable the redirect</li>
+                </ul>
+
+                <h3>Hit tracking</h3>
+                <p>Each redirect tracks how many times it has been triggered and the timestamp of the last hit.
+                This helps you identify which redirects are still in use and which can be safely removed.</p>
+
+                <h3>Auto-redirects</h3>
+                <p>When a post slug is changed, Contento can automatically create a 301 redirect from the old slug
+                to the new one, preserving SEO value and preventing broken links.</p>
+
+                <div class="callout callout-tip">
+                    <strong>Tip:</strong> The redirect middleware skips <code>/api/</code>, <code>/admin/</code>,
+                    and <code>/health</code> paths for performance. Only public GET requests are evaluated.
+                </div>
+
+                <!-- User Registration -->
+                <h2>User Registration &amp; Password Reset</h2>
+
+                <h3>Public registration</h3>
+                <p>Contento supports public user registration. Visitors can create an account from the <strong>/Register</strong> page
+                by providing an email, display name, and password (minimum 8 characters). New accounts are created with the
+                <strong>viewer</strong> role by default.</p>
+
+                <h3>Email verification</h3>
+                <p>After registration, a verification email is sent with a unique token link. Users must verify their email
+                before gaining full access. The email verification status is visible in the admin Users page.</p>
+
+                <h3>Password reset</h3>
+                <p>Users who forget their password can request a reset from the <strong>/ResetPassword</strong> page:</p>
+                <ol>
+                    <li>Enter your email address and click <strong>Send Reset Link</strong>.</li>
+                    <li>A reset email is sent with a secure token (valid for 1 hour).</li>
+                    <li>Click the link and enter a new password.</li>
+                </ol>
+
+                <div class="callout callout-info">
+                    <strong>Security:</strong> The password reset page always shows a success message regardless of whether the email
+                    exists. This prevents email enumeration attacks.
+                </div>
+
+                <h3>Gravatar avatars</h3>
+                <p>User avatars are automatically loaded from <a href="https://gravatar.com" style="color: #3D5A80;">Gravatar</a>
+                using the user's email address. If no Gravatar is configured, a default mystery-person icon is shown.</p>
+
+                <!-- oEmbed -->
+                <h2>oEmbed &amp; Rich Media</h2>
+
+                <h3>Overview</h3>
+                <p>Contento automatically converts supported URLs in your content into rich embedded media.
+                Paste a YouTube, Vimeo, Twitter, Spotify, SoundCloud, or CodePen URL into your post content
+                and it will be rendered as an interactive embed on the public site.</p>
+
+                <h3>Supported providers</h3>
+                <table>
+                    <thead>
+                        <tr><th>Provider</th><th>URL Patterns</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>YouTube</strong></td><td><code>youtube.com/watch?v=...</code>, <code>youtu.be/...</code></td></tr>
+                        <tr><td><strong>Vimeo</strong></td><td><code>vimeo.com/...</code></td></tr>
+                        <tr><td><strong>Twitter / X</strong></td><td><code>twitter.com/.../status/...</code>, <code>x.com/.../status/...</code></td></tr>
+                        <tr><td><strong>Spotify</strong></td><td><code>open.spotify.com/track/...</code>, <code>open.spotify.com/album/...</code></td></tr>
+                        <tr><td><strong>SoundCloud</strong></td><td><code>soundcloud.com/...</code></td></tr>
+                        <tr><td><strong>CodePen</strong></td><td><code>codepen.io/.../pen/...</code></td></tr>
+                    </tbody>
+                </table>
+
+                <h3>Caching</h3>
+                <p>Embed lookups are cached in memory for 5 minutes to minimize external API calls.
+                Unknown URLs are passed through unchanged.</p>
+
+                <!-- Shortcodes -->
+                <h2>Shortcodes</h2>
+
+                <h3>Overview</h3>
+                <p>Shortcodes let you embed dynamic content in your posts using simple bracket syntax.
+                Write <code>[shortcode attr="value"]</code> in your Markdown and Contento expands it to HTML at render time.</p>
+
+                <h3>Built-in shortcodes</h3>
+                <table>
+                    <thead>
+                        <tr><th>Shortcode</th><th>Example</th><th>Description</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><code>[youtube]</code></td><td><code>[youtube id="dQw4w9WgXcQ"]</code></td><td>Embeds a YouTube video player</td></tr>
+                        <tr><td><code>[vimeo]</code></td><td><code>[vimeo id="123456"]</code></td><td>Embeds a Vimeo video player</td></tr>
+                        <tr><td><code>[button]</code></td><td><code>[button url="/signup" text="Sign Up"]</code></td><td>Renders a styled call-to-action button</td></tr>
+                        <tr><td><code>[callout]</code></td><td><code>[callout type="info"]Note text[/callout]</code></td><td>Highlighted callout box (info, warning, tip)</td></tr>
+                        <tr><td><code>[gallery]</code></td><td><code>[gallery ids="id1,id2,id3"]</code></td><td>Image gallery grid from media IDs</td></tr>
+                        <tr><td><code>[code]</code></td><td><code>[code lang="js"]var x = 1;[/code]</code></td><td>Syntax-highlighted code block</td></tr>
+                        <tr><td><code>[toc]</code></td><td><code>[toc]</code></td><td>Auto-generated table of contents from headings</td></tr>
+                    </tbody>
+                </table>
+
+                <h3>Custom shortcodes</h3>
+                <p>You can register custom shortcodes at runtime via the plugin system. Custom shortcodes receive the tag name,
+                attributes, inner content, and a context object with the current PostId, SiteId, and BaseUrl.</p>
+
+                <!-- Plugins -->
+                <h2>Plugins</h2>
+
+                <h3>Plugin overview</h3>
+                <p>Plugins extend Contento's functionality by running JavaScript code in a sandboxed environment (Jint).
+                They can modify rendered post content by hooking into the rendering pipeline.</p>
+
+                <h3>Enabling and disabling</h3>
+                <p>Navigate to <strong>Plugins</strong> in the sidebar. Each installed plugin shows its name, version, author,
+                and status. Toggle the switch to enable or disable a plugin.</p>
+
+                <h3>Installing via the UI</h3>
+                <ol>
+                    <li>Click <strong>Install Plugin</strong> on the Plugins page.</li>
+                    <li>Provide the plugin name, slug, version, and JavaScript entry point code.</li>
+                    <li>Click <strong>Install</strong>. The plugin is enabled immediately.</li>
+                </ol>
+
+                <h3>Plugin settings</h3>
+                <p>Each plugin has a JSON <code>settings</code> object. Click the gear icon on a plugin card to
+                open the settings editor. Settings are passed to the plugin as the global <code>PLUGIN_SETTINGS</code> object.</p>
+
+                <p>For more details on building plugins, see the <a href="plugins.html" style="color: #3D5A80;">Plugin Development</a> guide.</p>
+
+                <!-- Settings -->
+                <h2>Settings</h2>
+
+                <h3>Site configuration</h3>
+                <p>Navigate to <strong>Settings</strong> in the sidebar to configure core site properties:</p>
+
+                <table>
+                    <thead>
+                        <tr><th>Setting</th><th>Description</th><th>Example</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>Site Name</strong></td><td>The name displayed in the header, feeds, and metadata</td><td>My Awesome Blog</td></tr>
+                        <tr><td><strong>Tagline</strong></td><td>A short description or subtitle</td><td>Thoughts on software engineering</td></tr>
+                        <tr><td><strong>Locale</strong></td><td>Language and region code</td><td><code>en-US</code>, <code>ja-JP</code></td></tr>
+                        <tr><td><strong>Timezone</strong></td><td>Timezone for date display and scheduling</td><td><code>UTC</code>, <code>America/New_York</code></td></tr>
+                        <tr><td><strong>Custom Domain</strong></td><td>Your own domain name for the site</td><td><code>blog.example.com</code></td></tr>
+                    </tbody>
+                </table>
+
+                <h3>Spam protection</h3>
+                <p>The Settings page includes a spam protection section where you can:</p>
+                <ul>
+                    <li><strong>Auto-Approve Threshold</strong> &mdash; Slider from 0-100%. Comments scoring below this threshold are auto-approved. Higher = more lenient.</li>
+                    <li><strong>Spam Statistics</strong> &mdash; View total approved, blocked, and checked comment counts.</li>
+                    <li><strong>Moderation Queue</strong> &mdash; Quick link to the Comments moderation page.</li>
+                </ul>
+
+                <!-- Newsletter -->
+                <h2>Newsletter</h2>
+
+                <h3>Overview</h3>
+                <p>The Newsletter section lets you manage email subscribers and campaigns. Navigate to <strong>Newsletter</strong> in the sidebar.</p>
+
+                <h3>Subscribers</h3>
+                <p>The Subscribers tab shows all newsletter subscribers with their status:</p>
+                <ul>
+                    <li><strong>Active</strong> &mdash; Currently subscribed and receiving emails</li>
+                    <li><strong>Unsubscribed</strong> &mdash; Opted out of newsletters</li>
+                </ul>
+                <p>Subscribers sign up via the public newsletter form in the site footer. You can also view subscriber email, signup date, and membership tier.</p>
+
+                <h3>Campaigns</h3>
+                <p>Create email campaigns from the Campaigns tab:</p>
+                <ol>
+                    <li>Click <strong>New Campaign</strong>.</li>
+                    <li>Enter a subject line and compose the email body.</li>
+                    <li>Preview the campaign before sending.</li>
+                    <li>Click <strong>Send</strong> to deliver to all active subscribers, or save as draft.</li>
+                </ol>
+                <p>Campaign statuses: <code>draft</code>, <code>scheduled</code>, <code>sent</code>.</p>
+
+                <!-- Membership -->
+                <h2>Membership</h2>
+
+                <h3>Overview</h3>
+                <p>The Membership section manages paid subscriptions powered by Stripe. Navigate to <strong>Membership</strong> in the sidebar.</p>
+                <p>The membership admin has four tabs:</p>
+
+                <h3>Dashboard tab</h3>
+                <p>Shows key metrics at a glance:</p>
+                <ul>
+                    <li><strong>Total Subscribers</strong> &mdash; All registered members (free + paid)</li>
+                    <li><strong>Paid Members</strong> &mdash; Subscribers with an active paid plan</li>
+                    <li><strong>Active Plans</strong> &mdash; Number of plans currently enabled</li>
+                </ul>
+
+                <h3>Plans tab</h3>
+                <p>Create and manage membership plans:</p>
+                <ul>
+                    <li><strong>Plan Name</strong> &mdash; Display name (e.g., Premium, VIP)</li>
+                    <li><strong>Slug</strong> &mdash; URL-safe identifier</li>
+                    <li><strong>Price</strong> &mdash; Amount in dollars</li>
+                    <li><strong>Billing Interval</strong> &mdash; Monthly, Yearly, or Lifetime</li>
+                    <li><strong>Stripe Price ID</strong> &mdash; Link to your Stripe price object (e.g., <code>price_...</code>)</li>
+                    <li><strong>Trial Days</strong> &mdash; Number of free trial days before billing starts</li>
+                    <li><strong>Access Level</strong> &mdash; Integer level for content gating (higher = more access)</li>
+                    <li><strong>Features</strong> &mdash; Bullet-point list displayed on the public pricing page</li>
+                </ul>
+
+                <h3>Members tab</h3>
+                <p>View all subscribers with their membership details: email, tier (free/premium/VIP), status (active/expired), Stripe customer ID, expiry date, and join date.</p>
+
+                <h3>Settings tab</h3>
+                <p>Configure membership behavior:</p>
+                <ul>
+                    <li><strong>Grace Period</strong> &mdash; Number of days to maintain access after expiration</li>
+                    <li><strong>Dunning Email Template</strong> &mdash; Email sent when a payment fails. Use <code>{portal_url}</code> placeholder.</li>
+                    <li><strong>Drip Content Delay</strong> &mdash; Default delay before new members access drip content</li>
+                </ul>
+
+                <!-- Multi-Site -->
+                <h2>Multi-Site Management</h2>
+
+                <p>Contento supports running multiple sites from a single installation. Navigate to <strong>Sites</strong> in the sidebar.</p>
+
+                <h3>How it works</h3>
+                <p>Each site has its own content, themes, settings, and domain. Sites are resolved by the <code>Host</code> header
+                using domain-based routing. If no domain matches, the primary site is used as fallback.</p>
+
+                <h3>Managing sites</h3>
+                <ul>
+                    <li><strong>Create Site</strong> &mdash; Provide a name, slug, and optional domain. A new site starts with default settings.</li>
+                    <li><strong>Set Primary</strong> &mdash; Mark one site as the primary (default) site.</li>
+                    <li><strong>Delete Site</strong> &mdash; Remove a site and all its content. Cannot delete the primary site.</li>
+                </ul>
+
+                <h3>Site switcher</h3>
+                <p>The admin navigation includes a site switcher dropdown, allowing you to switch between sites without logging out.</p>
+
+                <!-- Task Scheduler -->
+                <h2>Task Scheduler</h2>
+
+                <p>The Task Scheduler automates recurring operations. Navigate to <strong>Scheduler</strong> in the sidebar.</p>
+
+                <h3>Creating tasks</h3>
+                <ul>
+                    <li><strong>Task Name</strong> &mdash; A descriptive name for the scheduled task</li>
+                    <li><strong>Task Type</strong> &mdash; Choose from 6 built-in types (e.g., cache clearing, sitemap generation)</li>
+                    <li><strong>Cron Expression</strong> &mdash; Standard cron syntax for scheduling, with quick presets (every hour, daily, weekly)</li>
+                    <li><strong>Enabled</strong> &mdash; Toggle tasks on/off</li>
+                </ul>
+
+                <h3>Monitoring</h3>
+                <p>Each task shows its last run time, next scheduled run, and current status. You can manually trigger any task from the admin UI.</p>
+
+                <!-- Post Types -->
+                <h2>Custom Post Types</h2>
+
+                <p>Beyond standard blog posts, you can define custom content types. Navigate to <strong>Post Types</strong> in the sidebar.</p>
+
+                <h3>Creating a post type</h3>
+                <ul>
+                    <li><strong>Name</strong> &mdash; Display name (e.g., Recipe, Portfolio, Review)</li>
+                    <li><strong>Slug</strong> &mdash; URL-safe identifier</li>
+                    <li><strong>Icon</strong> &mdash; Emoji or icon identifier for the sidebar</li>
+                    <li><strong>Field Schema</strong> &mdash; JSON schema defining custom fields for this content type</li>
+                </ul>
+                <p>Posts can then be assigned to a post type, and the editor will show the appropriate custom fields.</p>
+
+                <!-- Audit Log -->
+                <h2>Audit Log</h2>
+
+                <p>The audit log records every significant action performed in the admin panel. Navigate to <strong>Audit Log</strong>
+                in the sidebar to view a chronological list of changes.</p>
+
+                <p>Each audit log entry records:</p>
+                <ul>
+                    <li><strong>Timestamp</strong> &mdash; When the action occurred (UTC)</li>
+                    <li><strong>User</strong> &mdash; Who performed the action</li>
+                    <li><strong>Action</strong> &mdash; What was done (create, update, delete, publish, etc.)</li>
+                    <li><strong>Entity type</strong> &mdash; What type of object was affected (post, comment, user, theme, etc.)</li>
+                    <li><strong>Entity ID</strong> &mdash; The ID of the affected object</li>
+                    <li><strong>Details</strong> &mdash; Additional context about the change</li>
+                </ul>
+
+                <div class="callout callout-tip">
+                    <strong>Tip:</strong> The audit log is read-only and cannot be cleared or modified.
+                    It serves as a permanent record of all administrative actions for security and compliance.
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <%footer-docs%>
+
+</body>
+</html>

@@ -1,0 +1,117 @@
+@page "/admin/users"
+@model Contento.Web.Pages.Admin.Users.IndexModel
+@{
+    ViewData["Title"] = "Users";
+}
+
+<div class="max-w-7xl mx-auto">
+    <!-- Header -->
+    <div class="flex items-center justify-between mb-6">
+        <div>
+            <h2 class="text-xl font-semibold" style="color: var(--color-ink);">Users</h2>
+            <p class="text-sm mt-1" style="color: var(--color-ash);">@Model.TotalCount users</p>
+        </div>
+    </div>
+
+    <!-- Role Filter Tabs -->
+    <div class="flex gap-1 mb-6 border-b" style="border-color: var(--color-mist);">
+        @foreach (var tab in new[] { ((string?)null, "All"), ("owner", "Owners"), ("admin", "Admins"), ("editor", "Editors"), ("author", "Authors"), ("viewer", "Viewers") })
+        {
+            <a href="/admin/users@(tab.Item1 != null ? $"?role={tab.Item1}" : "")"
+               class="px-4 py-2.5 text-sm font-medium border-b-2 transition-colors @(Model.Role == tab.Item1 ? "border-[var(--color-indigo)] text-[var(--color-indigo)]" : "border-transparent text-[var(--color-ash)] hover:text-[var(--color-stone)]")">
+                @tab.Item2
+            </a>
+        }
+    </div>
+
+    <!-- Users Table -->
+    <div class="table-container">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>User</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Status</th>
+                    <th>Last Login</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Users.Any())
+                {
+                    @foreach (var user in Model.Users)
+                    {
+                        var initial = user.DisplayName.Length > 0 ? user.DisplayName[0].ToString().ToUpper() : "?";
+                        <tr>
+                            <td>
+                                <div class="flex items-center gap-3">
+                                    <img src="@(!string.IsNullOrEmpty(user.AvatarUrl) ? user.AvatarUrl : Contento.Services.GravatarHelper.GetAvatarUrl(user.Email, 32))"
+                                         alt="@user.DisplayName" class="w-8 h-8 rounded object-cover flex-shrink-0" loading="lazy" />
+                                    <span class="font-medium" style="color: var(--color-ink);">@user.DisplayName</span>
+                                </div>
+                            </td>
+                            <td>
+                                <span class="text-sm" style="color: var(--color-ash);">@user.Email</span>
+                            </td>
+                            <td>
+                                <span class="badge @(user.Role switch { "owner" => "badge-info", "admin" => "badge-info", "editor" => "badge-success", "author" => "badge-neutral", _ => "badge-neutral" })">
+                                    @user.Role
+                                </span>
+                            </td>
+                            <td>
+                                @if (user.IsActive)
+                                {
+                                    <span class="badge badge-success">Active</span>
+                                }
+                                else
+                                {
+                                    <span class="badge badge-danger">Inactive</span>
+                                }
+                            </td>
+                            <td style="white-space: nowrap;">
+                                <span class="text-sm" style="color: var(--color-ash);">
+                                    @(user.LastLoginAt?.ToString("MMM d, yyyy") ?? "Never")
+                                </span>
+                            </td>
+                            <td>
+                                <div class="flex items-center gap-1">
+                                    @if (user.Role != "owner")
+                                    {
+                                        <form method="post" asp-page-handler="Delete" class="inline">
+                                            <input type="hidden" name="id" value="@user.Id" />
+                                            <button type="submit" class="btn btn-ghost btn-sm" style="color: var(--color-danger);">Deactivate</button>
+                                        </form>
+                                    }
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="6" class="text-center py-12">
+                            <p style="color: var(--color-cloud);">No users found.</p>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Pagination -->
+    @if (Model.TotalPages > 1)
+    {
+        <div class="flex items-center justify-center gap-2 mt-6">
+            @for (var i = 1; i <= Model.TotalPages; i++)
+            {
+                <a href="/admin/users?role=@Model.Role&page=@i"
+                   class="px-3 py-1.5 text-sm rounded"
+                   style="@(i == Model.Page ? "background-color: var(--color-indigo); color: white;" : "color: var(--color-stone);")">
+                    @i
+                </a>
+            }
+        </div>
+    }
+</div>

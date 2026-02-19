@@ -1,0 +1,133 @@
+@page "/admin/settings"
+@model Contento.Web.Pages.Admin.Settings.IndexModel
+@{
+    ViewData["Title"] = "Settings";
+}
+
+<div class="max-w-3xl mx-auto">
+    <!-- Header -->
+    <div class="mb-6">
+        <h2 class="text-xl font-semibold" style="color: var(--color-ink);">Site Settings</h2>
+        <p class="text-sm mt-1" style="color: var(--color-ash);">General configuration for your site</p>
+    </div>
+
+    <!-- Success Message -->
+    @if (Model.SaveSuccess)
+    {
+        <div class="alert alert-success mb-6">
+            <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 13l4 4L19 7"/>
+            </svg>
+            <span class="text-sm font-medium">Settings saved successfully.</span>
+        </div>
+    }
+
+    <!-- Settings Form -->
+    <form method="post">
+        <!-- General -->
+        <div class="card mb-6">
+            <h3 class="text-sm font-semibold mb-4" style="color: var(--color-ink);">General</h3>
+            <div class="space-y-4">
+                <div>
+                    <label class="form-label">Site Name</label>
+                    <input type="text" asp-for="SiteName" class="form-input" placeholder="My Site" />
+                </div>
+                <div>
+                    <label class="form-label">Tagline</label>
+                    <input type="text" asp-for="Tagline" class="form-input" placeholder="A short description of your site" />
+                    <p class="text-xs mt-1" style="color: var(--color-cloud);">Displayed in your site header and meta description.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Domain -->
+        <div class="card mb-6">
+            <h3 class="text-sm font-semibold mb-4" style="color: var(--color-ink);">Domain</h3>
+            <div>
+                <label class="form-label">Custom Domain</label>
+                <input type="text" asp-for="Domain" class="form-input" placeholder="myblog.com" />
+                <p class="text-xs mt-1" style="color: var(--color-cloud);">Point your domain's DNS to our servers to use a custom domain.</p>
+            </div>
+        </div>
+
+        <!-- Localization -->
+        <div class="card mb-6">
+            <h3 class="text-sm font-semibold mb-4" style="color: var(--color-ink);">Localization</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label class="form-label">Locale</label>
+                    <select asp-for="Locale" class="form-input">
+                        <option value="en-US">English (US)</option>
+                        <option value="en-GB">English (UK)</option>
+                        <option value="ja-JP">Japanese</option>
+                        <option value="fr-FR">French</option>
+                        <option value="de-DE">German</option>
+                        <option value="es-ES">Spanish</option>
+                        <option value="pt-BR">Portuguese (Brazil)</option>
+                        <option value="zh-CN">Chinese (Simplified)</option>
+                        <option value="ko-KR">Korean</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="form-label">Timezone</label>
+                    <select asp-for="Timezone" class="form-input">
+                        <option value="UTC">UTC</option>
+                        <option value="America/New_York">Eastern Time (US)</option>
+                        <option value="America/Chicago">Central Time (US)</option>
+                        <option value="America/Denver">Mountain Time (US)</option>
+                        <option value="America/Los_Angeles">Pacific Time (US)</option>
+                        <option value="Europe/London">London</option>
+                        <option value="Europe/Paris">Paris</option>
+                        <option value="Europe/Berlin">Berlin</option>
+                        <option value="Asia/Tokyo">Tokyo</option>
+                        <option value="Asia/Shanghai">Shanghai</option>
+                        <option value="Asia/Seoul">Seoul</option>
+                        <option value="Australia/Sydney">Sydney</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Spam Protection -->
+        <div class="card mb-6">
+            <h3 class="text-sm font-semibold mb-4" style="color: var(--color-ink);">Spam Protection</h3>
+            <div class="space-y-4">
+                <div>
+                    <label class="form-label">Auto-Approve Threshold</label>
+                    <div class="flex items-center gap-4">
+                        <input type="range" asp-for="SpamThreshold" min="0" max="100" class="flex-1" />
+                        <span class="text-sm font-medium w-12 text-right" style="color: var(--color-stone);">@Model.SpamThreshold%</span>
+                    </div>
+                    <p class="text-xs mt-1" style="color: var(--color-cloud);">Comments scoring below this threshold are auto-approved. Higher = more lenient.</p>
+                </div>
+                @if (Model.SpamStats != null)
+                {
+                    <div class="flex gap-6 pt-2">
+                        <div>
+                            <p class="text-2xl font-semibold" style="color: var(--color-indigo);">@Model.SpamStats.TotalApproved</p>
+                            <p class="text-xs" style="color: var(--color-ash);">Approved</p>
+                        </div>
+                        <div>
+                            <p class="text-2xl font-semibold" style="color: var(--color-danger);">@Model.SpamStats.TotalBlocked</p>
+                            <p class="text-xs" style="color: var(--color-ash);">Blocked</p>
+                        </div>
+                        <div>
+                            <p class="text-2xl font-semibold" style="color: var(--color-stone);">@Model.SpamStats.TotalChecked</p>
+                            <p class="text-xs" style="color: var(--color-ash);">Total Checked</p>
+                        </div>
+                    </div>
+                }
+                <div class="pt-2">
+                    <a href="/admin/comments" class="text-sm font-medium" style="color: var(--color-indigo);">
+                        View Moderation Queue &rarr;
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Save -->
+        <div class="flex justify-end">
+            <button type="submit" class="btn btn-primary">Save Settings</button>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,610 @@
+@page "/docs/plugins/ideas"
+@{
+    ViewData["Title"] = "Plugin Ideas & Examples";
+    Layout = "_PublicLayout";
+    ViewData["SiteTitle"] = "Contento";
+    ViewData["MetaDescription"] = "10 plugin ideas with complete source code for Contento CMS — from table of contents to analytics tracking.";
+}
+
+<!-- Navigation -->
+<div class="mb-8 rounded-lg p-4" style="border: 1px solid var(--color-mist); background: var(--color-snow);">
+    <div class="flex items-center gap-3 text-sm">
+        <a href="/docs/plugins" style="color: var(--color-indigo); text-decoration: none;">
+            <span style="margin-right: 4px;">&larr;</span> Plugin Guide
+        </a>
+        <span style="color: var(--color-cloud);">|</span>
+        <a href="/docs/plugins/api" style="color: var(--color-indigo); text-decoration: none;">
+            API Reference
+        </a>
+    </div>
+</div>
+
+<!-- Page Title -->
+<h1 class="text-3xl font-bold mb-4" style="color: var(--color-ink); font-family: var(--font-serif); letter-spacing: -0.02em;">
+    Plugin Ideas &amp; Examples
+</h1>
+
+<!-- Intro -->
+<p class="text-base mb-10" style="color: var(--color-stone); line-height: 1.7; max-width: 40rem;">
+    Need inspiration? Here are 10 plugin ideas with complete, copy-paste-ready source code. Each plugin demonstrates
+    different aspects of the Contento plugin API.
+</p>
+
+<!-- ════════════════════════════════════════════════════ -->
+<!-- 1. Table of Contents -->
+<!-- ════════════════════════════════════════════════════ -->
+<section>
+    <div class="flex flex-wrap items-center gap-3 mb-2">
+        <h2 class="text-xl font-semibold" style="color: var(--color-ink);">1. Table of Contents</h2>
+        <span style="display:inline-block;padding:2px 10px;border-radius:999px;font-size:12px;font-weight:500;background:#D1FAE5;color:#065F46;">Beginner</span>
+        <span style="font-family:var(--font-mono);font-size:12px;background:var(--color-snow);padding:2px 8px;border-radius:4px;border:1px solid var(--color-mist);color:var(--color-stone);">post:render</span>
+    </div>
+    <p class="mb-4" style="color: var(--color-stone); font-size: 14px; line-height: 1.6;">
+        Scans headings (h2/h3) in post content and generates a clickable table of contents at the top.
+        Great for long-form articles and documentation pages.
+    </p>
+    <pre style="font-family:var(--font-mono);font-size:13px;background:var(--color-snow);border:1px solid var(--color-mist);border-radius:8px;padding:16px;overflow-x:auto;line-height:1.5;"><code>// name: "table-of-contents"
+// version: "1.0.0"
+// description: "Generates a clickable table of contents from headings."
+// author: "Contento"
+// hooks: ["post:render"]
+
+(function () {
+    contento.on('post:render', function (context) {
+        var doc = context.document;
+        if (!doc || !doc.body) return;
+
+        var headings = [];
+        var all = doc.body.getElementsByTagName('*');
+        for (var i = 0; i &lt; all.length; i++) {
+            var tag = (all[i].tagName || '').toLowerCase();
+            if (tag === 'h2' || tag === 'h3') {
+                var text = all[i].textContent || '';
+                var id = text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+                all[i].setAttribute('id', id);
+                headings.push({ tag: tag, text: text, id: id });
+            }
+        }
+
+        if (headings.length &lt; 2) return;
+
+        var html = '&lt;nav style="background:var(--color-snow);border:1px solid var(--color-mist);border-radius:8px;padding:16px 20px;margin-bottom:24px;"&gt;';
+        html += '&lt;strong style="font-size:14px;color:var(--color-ink);"&gt;On this page&lt;/strong&gt;';
+        html += '&lt;ul style="list-style:none;padding:0;margin:8px 0 0;"&gt;';
+        for (var j = 0; j &lt; headings.length; j++) {
+            var h = headings[j];
+            var pl = h.tag === 'h3' ? 'padding-left:16px;' : '';
+            html += '&lt;li style="margin:4px 0;' + pl + '"&gt;&lt;a href="#' + h.id + '" style="color:var(--color-indigo);font-size:13px;text-decoration:none;"&gt;' + h.text + '&lt;/a&gt;&lt;/li&gt;';
+        }
+        html += '&lt;/ul&gt;&lt;/nav&gt;';
+
+        var wrap = doc.createElement('div');
+        wrap.innerHTML = html;
+        var target = doc.body.querySelector('article') || doc.body;
+        if (target.firstChild) target.insertBefore(wrap, target.firstChild);
+        else target.appendChild(wrap);
+    });
+})();</code></pre>
+</section>
+
+<!-- ════════════════════════════════════════════════════ -->
+<!-- 2. Code Syntax Highlighter -->
+<!-- ════════════════════════════════════════════════════ -->
+<section class="mt-12 pt-8" style="border-top: 1px solid var(--color-mist);">
+    <div class="flex flex-wrap items-center gap-3 mb-2">
+        <h2 class="text-xl font-semibold" style="color: var(--color-ink);">2. Code Syntax Highlighter</h2>
+        <span style="display:inline-block;padding:2px 10px;border-radius:999px;font-size:12px;font-weight:500;background:#FEF3C7;color:#92400E;">Intermediate</span>
+        <span style="font-family:var(--font-mono);font-size:12px;background:var(--color-snow);padding:2px 8px;border-radius:4px;border:1px solid var(--color-mist);color:var(--color-stone);">post:render</span>
+    </div>
+    <p class="mb-4" style="color: var(--color-stone); font-size: 14px; line-height: 1.6;">
+        Finds <code style="font-family:var(--font-mono);font-size:12px;background:var(--color-snow);padding:1px 4px;border-radius:3px;border:1px solid var(--color-mist);">&lt;pre&gt;&lt;code&gt;</code> blocks and adds syntax-highlighting CSS classes and line numbers.
+        Injects a link to Prism.js CDN for client-side highlighting.
+    </p>
+    <pre style="font-family:var(--font-mono);font-size:13px;background:var(--color-snow);border:1px solid var(--color-mist);border-radius:8px;padding:16px;overflow-x:auto;line-height:1.5;"><code>// name: "code-highlighter"
+// version: "1.0.0"
+// description: "Adds Prism.js syntax highlighting to code blocks in posts."
+// author: "Contento"
+// hooks: ["post:render"]
+
+(function () {
+    contento.on('post:render', function (context) {
+        var doc = context.document;
+        if (!doc) return;
+
+        var head = doc.head;
+        var codeBlocks = doc.body ? doc.body.getElementsByTagName('code') : [];
+
+        if (codeBlocks.length === 0) return;
+
+        // Inject Prism CSS
+        var link = doc.createElement('link');
+        link.setAttribute('rel', 'stylesheet');
+        link.setAttribute('href', 'https://cdn.jsdelivr.net/npm/prismjs@1/themes/prism-tomorrow.min.css');
+        if (head) head.appendChild(link);
+
+        // Inject Prism JS
+        var script = doc.createElement('script');
+        script.setAttribute('src', 'https://cdn.jsdelivr.net/npm/prismjs@1/prism.min.js');
+        script.setAttribute('defer', 'true');
+        if (head) head.appendChild(script);
+
+        // Add language class to code blocks that have a class like "language-js"
+        for (var i = 0; i &lt; codeBlocks.length; i++) {
+            var block = codeBlocks[i];
+            var parent = block.parentNode;
+            if (parent &amp;&amp; (parent.tagName || '').toLowerCase() === 'pre') {
+                parent.className = (parent.className || '') + ' line-numbers';
+                parent.setAttribute('style', 'border-radius:8px;font-size:13px;');
+            }
+        }
+    });
+})();</code></pre>
+</section>
+
+<!-- ════════════════════════════════════════════════════ -->
+<!-- 3. Image Lightbox -->
+<!-- ════════════════════════════════════════════════════ -->
+<section class="mt-12 pt-8" style="border-top: 1px solid var(--color-mist);">
+    <div class="flex flex-wrap items-center gap-3 mb-2">
+        <h2 class="text-xl font-semibold" style="color: var(--color-ink);">3. Image Lightbox</h2>
+        <span style="display:inline-block;padding:2px 10px;border-radius:999px;font-size:12px;font-weight:500;background:#FEF3C7;color:#92400E;">Intermediate</span>
+        <span style="font-family:var(--font-mono);font-size:12px;background:var(--color-snow);padding:2px 8px;border-radius:4px;border:1px solid var(--color-mist);color:var(--color-stone);">post:render</span>
+    </div>
+    <p class="mb-4" style="color: var(--color-stone); font-size: 14px; line-height: 1.6;">
+        Wraps all images in the post body with a clickable overlay that shows a full-screen lightbox when clicked.
+        Includes smooth fade animation and click-outside-to-close.
+    </p>
+    <pre style="font-family:var(--font-mono);font-size:13px;background:var(--color-snow);border:1px solid var(--color-mist);border-radius:8px;padding:16px;overflow-x:auto;line-height:1.5;"><code>// name: "image-lightbox"
+// version: "1.0.0"
+// description: "Adds a click-to-expand lightbox to all images in post content."
+// author: "Contento"
+// hooks: ["post:render"]
+
+(function () {
+    contento.on('post:render', function (context) {
+        var doc = context.document;
+        if (!doc || !doc.body || !doc.head) return;
+
+        var images = doc.body.getElementsByTagName('img');
+        if (images.length === 0) return;
+
+        // Inject lightbox styles
+        var style = doc.createElement('style');
+        style.textContent = ''
+            + '.contento-lightbox-overlay {'
+            + '  position:fixed;top:0;left:0;width:100%;height:100%;'
+            + '  background:rgba(0,0,0,0.85);z-index:99999;'
+            + '  display:flex;align-items:center;justify-content:center;'
+            + '  cursor:pointer;opacity:0;transition:opacity 0.2s;'
+            + '}'
+            + '.contento-lightbox-overlay.active { opacity:1; }'
+            + '.contento-lightbox-overlay img {'
+            + '  max-width:90vw;max-height:90vh;object-fit:contain;'
+            + '  border-radius:4px;box-shadow:0 4px 32px rgba(0,0,0,0.5);'
+            + '}'
+            + '.contento-lightbox-trigger { cursor:zoom-in;transition:opacity 0.15s; }'
+            + '.contento-lightbox-trigger:hover { opacity:0.85; }';
+        doc.head.appendChild(style);
+
+        // Mark images as clickable
+        for (var i = 0; i &lt; images.length; i++) {
+            images[i].className = (images[i].className || '') + ' contento-lightbox-trigger';
+            images[i].setAttribute('data-lightbox', 'true');
+        }
+
+        // Inject lightbox script
+        var script = doc.createElement('script');
+        script.textContent = ''
+            + 'document.addEventListener("click", function(e) {'
+            + '  if (e.target.hasAttribute("data-lightbox")) {'
+            + '    var overlay = document.createElement("div");'
+            + '    overlay.className = "contento-lightbox-overlay";'
+            + '    var img = document.createElement("img");'
+            + '    img.src = e.target.src;'
+            + '    overlay.appendChild(img);'
+            + '    document.body.appendChild(overlay);'
+            + '    requestAnimationFrame(function() { overlay.classList.add("active"); });'
+            + '    overlay.addEventListener("click", function() {'
+            + '      overlay.classList.remove("active");'
+            + '      setTimeout(function() { overlay.remove(); }, 200);'
+            + '    });'
+            + '  }'
+            + '});';
+        doc.body.appendChild(script);
+    });
+})();</code></pre>
+</section>
+
+<!-- ════════════════════════════════════════════════════ -->
+<!-- 4. Estimated Reading Time Badge -->
+<!-- ════════════════════════════════════════════════════ -->
+<section class="mt-12 pt-8" style="border-top: 1px solid var(--color-mist);">
+    <div class="flex flex-wrap items-center gap-3 mb-2">
+        <h2 class="text-xl font-semibold" style="color: var(--color-ink);">4. Estimated Reading Time Badge</h2>
+        <span style="display:inline-block;padding:2px 10px;border-radius:999px;font-size:12px;font-weight:500;background:#D1FAE5;color:#065F46;">Beginner</span>
+        <span style="font-family:var(--font-mono);font-size:12px;background:var(--color-snow);padding:2px 8px;border-radius:4px;border:1px solid var(--color-mist);color:var(--color-stone);">post:render</span>
+    </div>
+    <p class="mb-4" style="color: var(--color-stone); font-size: 14px; line-height: 1.6;">
+        Calculates word count and reading time from the post body and displays a badge at the top of the article.
+        Assumes an average reading speed of 250 words per minute.
+    </p>
+    <pre style="font-family:var(--font-mono);font-size:13px;background:var(--color-snow);border:1px solid var(--color-mist);border-radius:8px;padding:16px;overflow-x:auto;line-height:1.5;"><code>// name: "reading-time-badge"
+// version: "1.0.0"
+// description: "Shows an estimated reading time badge at the top of each post."
+// author: "Contento"
+// hooks: ["post:render"]
+
+(function () {
+    contento.on('post:render', function (context) {
+        var doc = context.document;
+        if (!doc || !doc.body) return;
+
+        var article = doc.body.querySelector('article') || doc.body;
+        var text = article.textContent || '';
+        var words = text.trim().split(/\s+/).length;
+        var minutes = Math.max(1, Math.ceil(words / 250));
+
+        var badge = doc.createElement('div');
+        badge.setAttribute('style',
+            'display:inline-flex;align-items:center;gap:6px;padding:4px 12px;' +
+            'border-radius:999px;font-size:12px;font-weight:500;margin-bottom:16px;' +
+            'background:var(--color-indigo-pale,#EEF2F7);color:var(--color-indigo,#3D5A80);'
+        );
+        badge.innerHTML = '&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"&gt;&lt;circle cx="12" cy="12" r="10"/&gt;&lt;path d="M12 6v6l4 2"/&gt;&lt;/svg&gt; ' + minutes + ' min read (' + words + ' words)';
+
+        if (article.firstChild) {
+            article.insertBefore(badge, article.firstChild);
+        } else {
+            article.appendChild(badge);
+        }
+    });
+})();</code></pre>
+</section>
+
+<!-- ════════════════════════════════════════════════════ -->
+<!-- 5. Related Posts Widget -->
+<!-- ════════════════════════════════════════════════════ -->
+<section class="mt-12 pt-8" style="border-top: 1px solid var(--color-mist);">
+    <div class="flex flex-wrap items-center gap-3 mb-2">
+        <h2 class="text-xl font-semibold" style="color: var(--color-ink);">5. Related Posts Widget</h2>
+        <span style="display:inline-block;padding:2px 10px;border-radius:999px;font-size:12px;font-weight:500;background:var(--color-indigo-pale,#EEF2F7);color:var(--color-indigo,#3D5A80);">Advanced</span>
+        <span style="font-family:var(--font-mono);font-size:12px;background:var(--color-snow);padding:2px 8px;border-radius:4px;border:1px solid var(--color-mist);color:var(--color-stone);">post:render</span>
+    </div>
+    <p class="mb-4" style="color: var(--color-stone); font-size: 14px; line-height: 1.6;">
+        Reads the current post's tags and injects a "Related Posts" section at the bottom. Uses settings for
+        API endpoint and max items. Demonstrates client-side API fetching from within a plugin.
+    </p>
+    <pre style="font-family:var(--font-mono);font-size:13px;background:var(--color-snow);border:1px solid var(--color-mist);border-radius:8px;padding:16px;overflow-x:auto;line-height:1.5;"><code>// name: "related-posts"
+// version: "1.0.0"
+// description: "Adds a related posts section based on matching tags."
+// author: "Contento"
+// hooks: ["post:render"]
+
+(function () {
+    contento.on('post:render', function (context) {
+        var post = context.post;
+        var doc = context.document;
+        if (!post || !doc || !doc.body) return;
+
+        var tags = post.tags || [];
+        if (tags.length === 0) return;
+
+        var maxItems = PLUGIN_SETTINGS.maxItems || 3;
+
+        // Inject a client-side script that fetches related posts via the API
+        var script = doc.createElement('script');
+        script.textContent = ''
+            + '(function() {'
+            + '  var tags = ' + JSON.stringify(tags) + ';'
+            + '  var currentSlug = ' + JSON.stringify(post.slug) + ';'
+            + '  var max = ' + maxItems + ';'
+            + '  fetch("/api/v1/posts?tag=" + encodeURIComponent(tags[0]) + "&amp;pageSize=10")'
+            + '    .then(function(r) { return r.json(); })'
+            + '    .then(function(data) {'
+            + '      var posts = (data.data || []).filter(function(p) { return p.slug !== currentSlug; }).slice(0, max);'
+            + '      if (posts.length === 0) return;'
+            + '      var html = "&lt;div style=\\"margin-top:48px;padding-top:32px;border-top:1px solid var(--color-mist)\\"&gt;";'
+            + '      html += "&lt;h3 style=\\"font-size:18px;font-weight:600;margin-bottom:16px;color:var(--color-ink)\\"&gt;Related Posts&lt;/h3&gt;";'
+            + '      html += "&lt;ul style=\\"list-style:none;padding:0;\\"&gt;";'
+            + '      posts.forEach(function(p) {'
+            + '        html += "&lt;li style=\\"margin:8px 0\\"&gt;&lt;a href=\\"/"+p.slug+"\\" style=\\"color:var(--color-indigo);text-decoration:none;\\"&gt;" + p.title + "&lt;/a&gt;&lt;/li&gt;";'
+            + '      });'
+            + '      html += "&lt;/ul&gt;&lt;/div&gt;";'
+            + '      var container = document.createElement("div");'
+            + '      container.innerHTML = html;'
+            + '      var article = document.querySelector("article") || document.body;'
+            + '      article.appendChild(container);'
+            + '    })'
+            + '    .catch(function() {});'
+            + '})();';
+        doc.body.appendChild(script);
+    });
+})();</code></pre>
+</section>
+
+<!-- ════════════════════════════════════════════════════ -->
+<!-- 6. External Link Opener -->
+<!-- ════════════════════════════════════════════════════ -->
+<section class="mt-12 pt-8" style="border-top: 1px solid var(--color-mist);">
+    <div class="flex flex-wrap items-center gap-3 mb-2">
+        <h2 class="text-xl font-semibold" style="color: var(--color-ink);">6. External Link Opener</h2>
+        <span style="display:inline-block;padding:2px 10px;border-radius:999px;font-size:12px;font-weight:500;background:#D1FAE5;color:#065F46;">Beginner</span>
+        <span style="font-family:var(--font-mono);font-size:12px;background:var(--color-snow);padding:2px 8px;border-radius:4px;border:1px solid var(--color-mist);color:var(--color-stone);">post:render</span>
+    </div>
+    <p class="mb-4" style="color: var(--color-stone); font-size: 14px; line-height: 1.6;">
+        Finds all external links in post content and adds <code style="font-family:var(--font-mono);font-size:12px;background:var(--color-snow);padding:1px 4px;border-radius:3px;border:1px solid var(--color-mist);">target="_blank"</code>
+        and <code style="font-family:var(--font-mono);font-size:12px;background:var(--color-snow);padding:1px 4px;border-radius:3px;border:1px solid var(--color-mist);">rel="noopener noreferrer"</code> attributes, plus an external link icon.
+    </p>
+    <pre style="font-family:var(--font-mono);font-size:13px;background:var(--color-snow);border:1px solid var(--color-mist);border-radius:8px;padding:16px;overflow-x:auto;line-height:1.5;"><code>// name: "external-links"
+// version: "1.0.0"
+// description: "Opens external links in new tabs with security attributes."
+// author: "Contento"
+// hooks: ["post:render"]
+
+(function () {
+    contento.on('post:render', function (context) {
+        var doc = context.document;
+        var site = context.site;
+        if (!doc || !doc.body) return;
+
+        var siteHost = '';
+        if (site &amp;&amp; site.url) {
+            try { siteHost = site.url.replace(/^https?:\/\//, '').split('/')[0]; } catch (e) {}
+        }
+
+        var links = doc.body.getElementsByTagName('a');
+        for (var i = 0; i &lt; links.length; i++) {
+            var href = links[i].getAttribute('href') || '';
+            if (href.indexOf('http') === 0 &amp;&amp; href.indexOf(siteHost) === -1) {
+                links[i].setAttribute('target', '_blank');
+                links[i].setAttribute('rel', 'noopener noreferrer');
+                var icon = ' &lt;svg style="display:inline;vertical-align:middle;width:12px;height:12px;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"&gt;&lt;path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/&gt;&lt;/svg&gt;';
+                links[i].innerHTML = links[i].innerHTML + icon;
+            }
+        }
+    });
+})();</code></pre>
+</section>
+
+<!-- ════════════════════════════════════════════════════ -->
+<!-- 7. Newsletter CTA Injector -->
+<!-- ════════════════════════════════════════════════════ -->
+<section class="mt-12 pt-8" style="border-top: 1px solid var(--color-mist);">
+    <div class="flex flex-wrap items-center gap-3 mb-2">
+        <h2 class="text-xl font-semibold" style="color: var(--color-ink);">7. Newsletter CTA Injector</h2>
+        <span style="display:inline-block;padding:2px 10px;border-radius:999px;font-size:12px;font-weight:500;background:#FEF3C7;color:#92400E;">Intermediate</span>
+        <span style="font-family:var(--font-mono);font-size:12px;background:var(--color-snow);padding:2px 8px;border-radius:4px;border:1px solid var(--color-mist);color:var(--color-stone);">post:render</span>
+    </div>
+    <p class="mb-4" style="color: var(--color-stone); font-size: 14px; line-height: 1.6;">
+        Injects a newsletter signup call-to-action after the second paragraph of every post. Uses plugin settings
+        for the form action URL, heading text, description, and button label.
+    </p>
+    <pre style="font-family:var(--font-mono);font-size:13px;background:var(--color-snow);border:1px solid var(--color-mist);border-radius:8px;padding:16px;overflow-x:auto;line-height:1.5;"><code>// name: "newsletter-cta"
+// version: "1.0.0"
+// description: "Injects a newsletter signup CTA into post content."
+// author: "Contento"
+// hooks: ["post:render"]
+
+(function () {
+    contento.on('post:render', function (context) {
+        var doc = context.document;
+        if (!doc || !doc.body) return;
+
+        var heading = PLUGIN_SETTINGS.heading || 'Stay in the loop';
+        var description = PLUGIN_SETTINGS.description || 'Get notified when we publish new articles.';
+        var formAction = PLUGIN_SETTINGS.formAction || '#';
+        var buttonText = PLUGIN_SETTINGS.buttonText || 'Subscribe';
+
+        var cta = doc.createElement('div');
+        cta.setAttribute('style',
+            'background:var(--color-indigo-pale,#EEF2F7);border-radius:12px;' +
+            'padding:24px;margin:24px 0;text-align:center;'
+        );
+        cta.innerHTML = ''
+            + '&lt;strong style="font-size:16px;color:var(--color-ink);"&gt;' + heading + '&lt;/strong&gt;'
+            + '&lt;p style="font-size:14px;color:var(--color-stone);margin:8px 0 12px;"&gt;' + description + '&lt;/p&gt;'
+            + '&lt;form action="' + formAction + '" method="POST" style="display:flex;gap:8px;max-width:360px;margin:0 auto;"&gt;'
+            + '&lt;input type="email" name="email" placeholder="you@example.com" required '
+            + 'style="flex:1;padding:8px 12px;border:1px solid var(--color-mist);border-radius:6px;font-size:14px;" /&gt;'
+            + '&lt;button type="submit" style="padding:8px 16px;background:var(--color-indigo);color:#fff;border:none;border-radius:6px;font-size:14px;cursor:pointer;"&gt;'
+            + buttonText + '&lt;/button&gt;&lt;/form&gt;';
+
+        // Find all paragraphs and insert after the second one
+        var paras = doc.body.getElementsByTagName('p');
+        if (paras.length &gt;= 2) {
+            var target = paras[1];
+            if (target.parentNode) {
+                target.parentNode.insertBefore(cta, target.nextSibling);
+            }
+        }
+    });
+})();</code></pre>
+</section>
+
+<!-- ════════════════════════════════════════════════════ -->
+<!-- 8. Back to Top Button -->
+<!-- ════════════════════════════════════════════════════ -->
+<section class="mt-12 pt-8" style="border-top: 1px solid var(--color-mist);">
+    <div class="flex flex-wrap items-center gap-3 mb-2">
+        <h2 class="text-xl font-semibold" style="color: var(--color-ink);">8. Back to Top Button</h2>
+        <span style="display:inline-block;padding:2px 10px;border-radius:999px;font-size:12px;font-weight:500;background:#D1FAE5;color:#065F46;">Beginner</span>
+        <span style="font-family:var(--font-mono);font-size:12px;background:var(--color-snow);padding:2px 8px;border-radius:4px;border:1px solid var(--color-mist);color:var(--color-stone);">post:render</span>
+    </div>
+    <p class="mb-4" style="color: var(--color-stone); font-size: 14px; line-height: 1.6;">
+        Adds a floating "back to top" button that appears after scrolling down 400 pixels. Includes smooth scroll
+        animation and a hover effect that matches the site's accent color.
+    </p>
+    <pre style="font-family:var(--font-mono);font-size:13px;background:var(--color-snow);border:1px solid var(--color-mist);border-radius:8px;padding:16px;overflow-x:auto;line-height:1.5;"><code>// name: "back-to-top"
+// version: "1.0.0"
+// description: "Floating back-to-top button that appears on scroll."
+// author: "Contento"
+// hooks: ["post:render"]
+
+(function () {
+    contento.on('post:render', function (context) {
+        var doc = context.document;
+        if (!doc || !doc.body || !doc.head) return;
+
+        var style = doc.createElement('style');
+        style.textContent = ''
+            + '#contento-btt { position:fixed;bottom:24px;right:24px;width:40px;height:40px;'
+            + 'border-radius:50%;border:1px solid var(--color-mist);background:var(--color-snow);'
+            + 'color:var(--color-stone);cursor:pointer;display:flex;align-items:center;justify-content:center;'
+            + 'opacity:0;transform:translateY(10px);transition:opacity 0.2s,transform 0.2s;z-index:999;'
+            + 'box-shadow:0 2px 8px rgba(0,0,0,0.1); }'
+            + '#contento-btt.visible { opacity:1;transform:translateY(0); }'
+            + '#contento-btt:hover { background:var(--color-indigo);color:#fff;border-color:var(--color-indigo); }';
+        doc.head.appendChild(style);
+
+        var btn = doc.createElement('button');
+        btn.id = 'contento-btt';
+        btn.setAttribute('title', 'Back to top');
+        btn.setAttribute('aria-label', 'Scroll back to top');
+        btn.innerHTML = '&lt;svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"&gt;&lt;path d="M18 15l-6-6-6 6"/&gt;&lt;/svg&gt;';
+        doc.body.appendChild(btn);
+
+        var script = doc.createElement('script');
+        script.textContent = ''
+            + '(function(){'
+            + '  var btn=document.getElementById("contento-btt");'
+            + '  window.addEventListener("scroll",function(){'
+            + '    if(window.scrollY&gt;400) btn.classList.add("visible");'
+            + '    else btn.classList.remove("visible");'
+            + '  },{passive:true});'
+            + '  btn.addEventListener("click",function(){'
+            + '    window.scrollTo({top:0,behavior:"smooth"});'
+            + '  });'
+            + '})();';
+        doc.body.appendChild(script);
+    });
+})();</code></pre>
+</section>
+
+<!-- ════════════════════════════════════════════════════ -->
+<!-- 9. Content Warning / Spoiler Gate -->
+<!-- ════════════════════════════════════════════════════ -->
+<section class="mt-12 pt-8" style="border-top: 1px solid var(--color-mist);">
+    <div class="flex flex-wrap items-center gap-3 mb-2">
+        <h2 class="text-xl font-semibold" style="color: var(--color-ink);">9. Content Warning / Spoiler Gate</h2>
+        <span style="display:inline-block;padding:2px 10px;border-radius:999px;font-size:12px;font-weight:500;background:#FEF3C7;color:#92400E;">Intermediate</span>
+        <span style="font-family:var(--font-mono);font-size:12px;background:var(--color-snow);padding:2px 8px;border-radius:4px;border:1px solid var(--color-mist);color:var(--color-stone);">post:render</span>
+    </div>
+    <p class="mb-4" style="color: var(--color-stone); font-size: 14px; line-height: 1.6;">
+        If the post has a "spoiler" or "nsfw" tag, wraps the content in a blurred overlay with a "Click to reveal" button.
+        Configurable trigger tags and warning message via plugin settings.
+    </p>
+    <pre style="font-family:var(--font-mono);font-size:13px;background:var(--color-snow);border:1px solid var(--color-mist);border-radius:8px;padding:16px;overflow-x:auto;line-height:1.5;"><code>// name: "content-warning"
+// version: "1.0.0"
+// description: "Blurs post content behind a warning gate for tagged posts."
+// author: "Contento"
+// hooks: ["post:render"]
+
+(function () {
+    contento.on('post:render', function (context) {
+        var post = context.post;
+        var doc = context.document;
+        if (!post || !doc || !doc.body || !doc.head) return;
+
+        var triggerTags = (PLUGIN_SETTINGS.tags || 'spoiler,nsfw,sensitive').split(',');
+        var postTags = (post.tags || []).map(function (t) { return t.toLowerCase().trim(); });
+
+        var matched = false;
+        for (var i = 0; i &lt; triggerTags.length; i++) {
+            if (postTags.indexOf(triggerTags[i].toLowerCase().trim()) !== -1) {
+                matched = true;
+                break;
+            }
+        }
+        if (!matched) return;
+
+        var message = PLUGIN_SETTINGS.message || 'This content may contain spoilers or sensitive material.';
+
+        var style = doc.createElement('style');
+        style.textContent = ''
+            + '.contento-cw-blur { filter:blur(8px);pointer-events:none;user-select:none;transition:filter 0.3s; }'
+            + '.contento-cw-gate { text-align:center;padding:48px 24px;margin-bottom:24px; }';
+        doc.head.appendChild(style);
+
+        var article = doc.body.querySelector('article') || doc.body;
+        article.className = (article.className || '') + ' contento-cw-blur';
+
+        var gate = doc.createElement('div');
+        gate.className = 'contento-cw-gate';
+        gate.innerHTML = ''
+            + '&lt;p style="font-size:16px;color:var(--color-stone);margin-bottom:12px;"&gt;' + message + '&lt;/p&gt;'
+            + '&lt;button id="contento-cw-reveal" style="padding:8px 20px;background:var(--color-indigo);color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:14px;"&gt;Reveal Content&lt;/button&gt;';
+        article.parentNode.insertBefore(gate, article);
+
+        var script = doc.createElement('script');
+        script.textContent = ''
+            + 'document.getElementById("contento-cw-reveal").addEventListener("click",function(){'
+            + '  this.parentNode.remove();'
+            + '  var a=document.querySelector(".contento-cw-blur");'
+            + '  if(a){a.classList.remove("contento-cw-blur");a.style.pointerEvents="";a.style.userSelect="";}'
+            + '});';
+        doc.body.appendChild(script);
+    });
+})();</code></pre>
+</section>
+
+<!-- ════════════════════════════════════════════════════ -->
+<!-- 10. Auto-Link Headers -->
+<!-- ════════════════════════════════════════════════════ -->
+<section class="mt-12 pt-8" style="border-top: 1px solid var(--color-mist);">
+    <div class="flex flex-wrap items-center gap-3 mb-2">
+        <h2 class="text-xl font-semibold" style="color: var(--color-ink);">10. Auto-Link Headers</h2>
+        <span style="display:inline-block;padding:2px 10px;border-radius:999px;font-size:12px;font-weight:500;background:#D1FAE5;color:#065F46;">Beginner</span>
+        <span style="font-family:var(--font-mono);font-size:12px;background:var(--color-snow);padding:2px 8px;border-radius:4px;border:1px solid var(--color-mist);color:var(--color-stone);">post:render</span>
+    </div>
+    <p class="mb-4" style="color: var(--color-stone); font-size: 14px; line-height: 1.6;">
+        Adds anchor links to all h2 and h3 headings for easy deep linking.
+        Hovering a heading reveals a clickable hash symbol that copies the direct URL.
+    </p>
+    <pre style="font-family:var(--font-mono);font-size:13px;background:var(--color-snow);border:1px solid var(--color-mist);border-radius:8px;padding:16px;overflow-x:auto;line-height:1.5;"><code>// name: "auto-link-headers"
+// version: "1.0.0"
+// description: "Adds clickable anchor links to h2 and h3 headings."
+// author: "Contento"
+// hooks: ["post:render"]
+
+(function () {
+    contento.on('post:render', function (context) {
+        var doc = context.document;
+        if (!doc || !doc.body || !doc.head) return;
+
+        var style = doc.createElement('style');
+        style.textContent = ''
+            + '.contento-heading-anchor { color:var(--color-cloud);text-decoration:none;margin-left:6px;opacity:0;transition:opacity 0.15s; }'
+            + 'h2:hover .contento-heading-anchor, h3:hover .contento-heading-anchor { opacity:1;color:var(--color-indigo); }';
+        doc.head.appendChild(style);
+
+        var all = doc.body.getElementsByTagName('*');
+        for (var i = 0; i &lt; all.length; i++) {
+            var tag = (all[i].tagName || '').toLowerCase();
+            if (tag !== 'h2' &amp;&amp; tag !== 'h3') continue;
+
+            var text = all[i].textContent || '';
+            var id = text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+            all[i].setAttribute('id', id);
+
+            var link = doc.createElement('a');
+            link.setAttribute('href', '#' + id);
+            link.className = 'contento-heading-anchor';
+            link.setAttribute('aria-label', 'Link to ' + text);
+            link.textContent = '#';
+            all[i].appendChild(link);
+        }
+    });
+})();</code></pre>
+</section>
+
+<!-- Bottom Navigation -->
+<div class="mt-16 pt-8 pb-8" style="border-top: 1px solid var(--color-mist);">
+    <div class="flex items-center justify-between flex-wrap gap-4">
+        <a href="/docs/plugins" class="text-sm" style="color: var(--color-indigo); text-decoration: none;">
+            <span style="margin-right: 4px;">&larr;</span> Back to Plugin Guide
+        </a>
+        <a href="/docs/plugins/api" class="text-sm" style="color: var(--color-indigo); text-decoration: none;">
+            API Reference <span style="margin-left: 4px;">&rarr;</span>
+        </a>
+    </div>
+</div>

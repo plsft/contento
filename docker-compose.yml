@@ -1,0 +1,43 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    environment:
+      - DATABASE_CONNECTION_STRING=Host=postgres;Port=5432;Database=contento;Username=contento;Password=contento_secret
+      - REDIS_CONNECTION_STRING=redis:6379
+    restart: unless-stopped
+
+  postgres:
+    image: postgres:17-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=contento
+      - POSTGRES_USER=contento
+      - POSTGRES_PASSWORD=contento_secret
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U contento -d contento"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  redis:
+    image: redis:7-alpine
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+
+volumes:
+  postgres_data:

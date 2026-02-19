@@ -1,0 +1,27 @@
+.git
+.gitignore
+.github
+.vscode
+.vs
+.idea
+*.md
+LICENSE
+
+# Marketing site (deployed separately)
+marketing/
+
+# Build artifacts
+**/bin/
+**/obj/
+**/node_modules/
+
+# Tests (not needed in production image)
+src/Contento.Tests/
+
+# Docker files
+docker-compose*.yml
+Dockerfile*
+.dockerignore
+
+# Railway config
+railway*.json

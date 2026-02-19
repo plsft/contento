@@ -1,0 +1,42 @@
+# Environment files
+.env
+.env.production
+.env.local
+.env.*.local
+
+# Build outputs
+bin/
+obj/
+publish/
+
+# IDE
+.idea/
+.vs/
+*.user
+*.suo
+
+# Generated files
+wwwroot/css/app.css
+wwwroot/js/pages/
+
+# Logs
+*.log
+logs/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Node modules
+node_modules/
+
+# Database
+*.db
+*.sqlite
+
+# Secrets
+.env.keys
+private_keys/
+appsettings.Development.json
+nuget.config
+next-steps.md

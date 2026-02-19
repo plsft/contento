@@ -1,0 +1,21 @@
+@page
+@model Contento.Web.Pages.ErrorModel
+@{
+    ViewData["Title"] = "Error";
+    Layout = "_PublicLayout";
+    ViewData["SiteTitle"] = "Contento";
+}
+
+<div class="text-center py-20">
+    <h1 class="text-6xl font-bold mb-4" style="color: var(--color-mist);">Oops</h1>
+    <p class="text-lg mb-6" style="color: var(--color-stone);">Something went wrong.</p>
+    <a href="/" class="px-5 py-2.5 rounded-md text-sm font-medium text-white inline-block"
+       style="background: var(--color-indigo);">
+        Go Home
+    </a>
+
+    @if (Model.ShowRequestId)
+    {
+        <p class="mt-8 text-xs" style="color: var(--color-ash);">Request ID: @Model.RequestId</p>
+    }
+</div>
