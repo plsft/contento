@@ -1,35 +1,84 @@
 <!-- Desktop sidebar -->
-<aside class="hidden lg:block w-64 shrink-0 border-r border-gray-200 min-h-[calc(100vh-4rem)] sticky top-16 self-start overflow-y-auto" style="background: #F8FAFC;">
-    <div class="py-8">
-        <p class="px-4 mb-4 text-xs font-semibold uppercase tracking-wider text-gray-400">Documentation</p>
+<aside class="hidden lg:block w-64 shrink-0 border-r border-gray-200 min-h-[calc(100vh-3.5rem)] sticky top-14 self-start overflow-y-auto bg-[#FAFBFC]">
+    <div class="py-6">
         <nav x-data="{ path: window.location.pathname }">
-            <a href="index.html" class="sidebar-link" :class="path.endsWith('/docs/index.html') || path.endsWith('/docs/') ? 'active' : ''">Getting Started</a>
-            <a href="admin.html" class="sidebar-link" :class="path.endsWith('/docs/admin.html') ? 'active' : ''">Admin Guide</a>
-            <a href="api.html" class="sidebar-link" :class="path.endsWith('/docs/api.html') ? 'active' : ''">API Reference</a>
-            <a href="headless.html" class="sidebar-link" :class="path.endsWith('/docs/headless.html') ? 'active' : ''">Headless Mode</a>
-            <a href="plugins.html" class="sidebar-link" :class="path.endsWith('/docs/plugins.html') ? 'active' : ''">Plugin Development</a>
-            <a href="themes.html" class="sidebar-link" :class="path.endsWith('/docs/themes.html') ? 'active' : ''">Theme Development</a>
+            <!-- Getting Started -->
+            <p class="px-4 mb-2 text-[0.6875rem] font-mono font-medium uppercase tracking-wider text-[#94a3b8]">Getting Started</p>
+            <a href="index.html" class="sidebar-link" :class="path.endsWith('/docs/index.html') || path.endsWith('/docs/') ? 'active' : ''">Quick Start</a>
+            <a href="installation.html" class="sidebar-link" :class="path.endsWith('/docs/installation.html') ? 'active' : ''">Installation</a>
+            <a href="first-project.html" class="sidebar-link" :class="path.endsWith('/docs/first-project.html') ? 'active' : ''">First Project</a>
+
+            <!-- pSEO Engine -->
+            <p class="px-4 mt-5 mb-2 text-[0.6875rem] font-mono font-medium uppercase tracking-wider text-[#94a3b8]">pSEO Engine</p>
+            <a href="projects.html" class="sidebar-link" :class="path.endsWith('/docs/projects.html') ? 'active' : ''">Projects</a>
+            <a href="niches.html" class="sidebar-link" :class="path.endsWith('/docs/niches.html') ? 'active' : ''">Niches</a>
+            <a href="schemas.html" class="sidebar-link" :class="path.endsWith('/docs/schemas.html') ? 'active' : ''">Schemas</a>
+            <a href="collections.html" class="sidebar-link" :class="path.endsWith('/docs/collections.html') ? 'active' : ''">Collections</a>
+            <a href="generation.html" class="sidebar-link" :class="path.endsWith('/docs/generation.html') ? 'active' : ''">Generation</a>
+            <a href="publishing.html" class="sidebar-link" :class="path.endsWith('/docs/publishing.html') ? 'active' : ''">Publishing</a>
+
+            <!-- Customization -->
+            <p class="px-4 mt-5 mb-2 text-[0.6875rem] font-mono font-medium uppercase tracking-wider text-[#94a3b8]">Customization</p>
+            <a href="chrome.html" class="sidebar-link" :class="path.endsWith('/docs/chrome.html') ? 'active' : ''">Chrome (Header/Footer/CSS)</a>
+            <a href="renderers.html" class="sidebar-link" :class="path.endsWith('/docs/renderers.html') ? 'active' : ''">Renderers</a>
+            <a href="internal-linking.html" class="sidebar-link" :class="path.endsWith('/docs/internal-linking.html') ? 'active' : ''">Internal Linking</a>
+
+            <!-- API Reference -->
+            <p class="px-4 mt-5 mb-2 text-[0.6875rem] font-mono font-medium uppercase tracking-wider text-[#94a3b8]">API Reference</p>
+            <a href="api.html" class="sidebar-link" :class="path.endsWith('/docs/api.html') ? 'active' : ''">REST API</a>
+            <a href="pseo-api.html" class="sidebar-link" :class="path.endsWith('/docs/pseo-api.html') ? 'active' : ''">pSEO API</a>
+
+            <!-- Infrastructure -->
+            <p class="px-4 mt-5 mb-2 text-[0.6875rem] font-mono font-medium uppercase tracking-wider text-[#94a3b8]">Infrastructure</p>
+            <a href="dns-domains.html" class="sidebar-link" :class="path.endsWith('/docs/dns-domains.html') ? 'active' : ''">DNS &amp; Domains</a>
+            <a href="deployment.html" class="sidebar-link" :class="path.endsWith('/docs/deployment.html') ? 'active' : ''">Deployment</a>
+            <a href="analytics.html" class="sidebar-link" :class="path.endsWith('/docs/analytics.html') ? 'active' : ''">Analytics (GSC)</a>
         </nav>
     </div>
 </aside>
 
 <!-- Mobile sidebar -->
 <div x-show="mobileMenuOpen" x-cloak @click.away="mobileMenuOpen = false" class="lg:hidden fixed inset-0 z-40 bg-black/30">
-    <div class="w-64 h-full bg-white border-r border-gray-200 overflow-y-auto" style="background: #F8FAFC;" @click.stop>
-        <div class="py-6">
+    <div class="w-64 h-full bg-[#FAFBFC] border-r border-gray-200 overflow-y-auto" @click.stop>
+        <div class="py-5">
             <div class="px-4 mb-4 flex items-center justify-between">
-                <p class="text-xs font-semibold uppercase tracking-wider text-gray-400">Documentation</p>
-                <button @click="mobileMenuOpen = false" class="text-gray-400 hover:text-gray-600">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                <span class="font-mono text-sm font-medium text-[#1a1b26]">Docs</span>
+                <button @click="mobileMenuOpen = false" class="text-gray-400 hover:text-[#1a1b26]">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"/></svg>
                 </button>
             </div>
             <nav x-data="{ path: window.location.pathname }">
-                <a href="index.html" class="sidebar-link" :class="path.endsWith('/docs/index.html') || path.endsWith('/docs/') ? 'active' : ''">Getting Started</a>
-                <a href="admin.html" class="sidebar-link" :class="path.endsWith('/docs/admin.html') ? 'active' : ''">Admin Guide</a>
-                <a href="api.html" class="sidebar-link" :class="path.endsWith('/docs/api.html') ? 'active' : ''">API Reference</a>
-                <a href="headless.html" class="sidebar-link" :class="path.endsWith('/docs/headless.html') ? 'active' : ''">Headless Mode</a>
-                <a href="plugins.html" class="sidebar-link" :class="path.endsWith('/docs/plugins.html') ? 'active' : ''">Plugin Development</a>
-                <a href="themes.html" class="sidebar-link" :class="path.endsWith('/docs/themes.html') ? 'active' : ''">Theme Development</a>
+                <!-- Getting Started -->
+                <p class="px-4 mb-2 text-[0.6875rem] font-mono font-medium uppercase tracking-wider text-[#94a3b8]">Getting Started</p>
+                <a href="index.html" class="sidebar-link" :class="path.endsWith('/docs/index.html') || path.endsWith('/docs/') ? 'active' : ''">Quick Start</a>
+                <a href="installation.html" class="sidebar-link" :class="path.endsWith('/docs/installation.html') ? 'active' : ''">Installation</a>
+                <a href="first-project.html" class="sidebar-link" :class="path.endsWith('/docs/first-project.html') ? 'active' : ''">First Project</a>
+
+                <!-- pSEO Engine -->
+                <p class="px-4 mt-5 mb-2 text-[0.6875rem] font-mono font-medium uppercase tracking-wider text-[#94a3b8]">pSEO Engine</p>
+                <a href="projects.html" class="sidebar-link" :class="path.endsWith('/docs/projects.html') ? 'active' : ''">Projects</a>
+                <a href="niches.html" class="sidebar-link" :class="path.endsWith('/docs/niches.html') ? 'active' : ''">Niches</a>
+                <a href="schemas.html" class="sidebar-link" :class="path.endsWith('/docs/schemas.html') ? 'active' : ''">Schemas</a>
+                <a href="collections.html" class="sidebar-link" :class="path.endsWith('/docs/collections.html') ? 'active' : ''">Collections</a>
+                <a href="generation.html" class="sidebar-link" :class="path.endsWith('/docs/generation.html') ? 'active' : ''">Generation</a>
+                <a href="publishing.html" class="sidebar-link" :class="path.endsWith('/docs/publishing.html') ? 'active' : ''">Publishing</a>
+
+                <!-- Customization -->
+                <p class="px-4 mt-5 mb-2 text-[0.6875rem] font-mono font-medium uppercase tracking-wider text-[#94a3b8]">Customization</p>
+                <a href="chrome.html" class="sidebar-link" :class="path.endsWith('/docs/chrome.html') ? 'active' : ''">Chrome (Header/Footer/CSS)</a>
+                <a href="renderers.html" class="sidebar-link" :class="path.endsWith('/docs/renderers.html') ? 'active' : ''">Renderers</a>
+                <a href="internal-linking.html" class="sidebar-link" :class="path.endsWith('/docs/internal-linking.html') ? 'active' : ''">Internal Linking</a>
+
+                <!-- API Reference -->
+                <p class="px-4 mt-5 mb-2 text-[0.6875rem] font-mono font-medium uppercase tracking-wider text-[#94a3b8]">API Reference</p>
+                <a href="api.html" class="sidebar-link" :class="path.endsWith('/docs/api.html') ? 'active' : ''">REST API</a>
+                <a href="pseo-api.html" class="sidebar-link" :class="path.endsWith('/docs/pseo-api.html') ? 'active' : ''">pSEO API</a>
+
+                <!-- Infrastructure -->
+                <p class="px-4 mt-5 mb-2 text-[0.6875rem] font-mono font-medium uppercase tracking-wider text-[#94a3b8]">Infrastructure</p>
+                <a href="dns-domains.html" class="sidebar-link" :class="path.endsWith('/docs/dns-domains.html') ? 'active' : ''">DNS &amp; Domains</a>
+                <a href="deployment.html" class="sidebar-link" :class="path.endsWith('/docs/deployment.html') ? 'active' : ''">Deployment</a>
+                <a href="analytics.html" class="sidebar-link" :class="path.endsWith('/docs/analytics.html') ? 'active' : ''">Analytics (GSC)</a>
             </nav>
         </div>
     </div>

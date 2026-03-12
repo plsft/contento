@@ -15,12 +15,14 @@ public class DatabaseSeeder
 {
     private readonly IDbConnection _db;
     private readonly ILogger<DatabaseSeeder> _logger;
+    private readonly ILoggerFactory _loggerFactory;
     private readonly IConfiguration _configuration;
 
-    public DatabaseSeeder(IDbConnection db, ILogger<DatabaseSeeder> logger, IConfiguration configuration)
+    public DatabaseSeeder(IDbConnection db, ILogger<DatabaseSeeder> logger, ILoggerFactory loggerFactory, IConfiguration configuration)
     {
         _db = Guard.Against.Null(db);
         _logger = Guard.Against.Null(logger);
+        _loggerFactory = Guard.Against.Null(loggerFactory);
         _configuration = Guard.Against.Null(configuration);
     }
 
@@ -38,6 +40,10 @@ public class DatabaseSeeder
         {
             await SeedDemoPostsAsync();
         }
+
+        // Seed pSEO system data (niches + content schemas)
+        var pseoSeeder = new PseoSeeder(_db, _loggerFactory.CreateLogger<PseoSeeder>());
+        await pseoSeeder.SeedAsync();
 
         _logger.LogInformation("Database seeding completed");
     }

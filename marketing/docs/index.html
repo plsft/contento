@@ -1,63 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Getting Started - Contento CMS Documentation</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quick Start — Contento pSEO</title>
+    <meta name="description" content="Get Contento pSEO up and running in minutes. Install via Docker or .NET 10, configure your first project, and start generating programmatic SEO pages at scale." />
     <script type="module" src="/src/main.js"></script>
 </head>
-<body class="bg-white text-[#1A1A1A]" x-data="{ mobileMenuOpen: false }">
+<body class="bg-white text-gray-900 antialiased" x-data="{ mobileMenuOpen: false }">
 
     <%nav-docs%>
 
     <div class="max-w-[90rem] mx-auto flex">
         <%sidebar-docs%>
 
-        <!-- Main content -->
-        <main class="flex-1 min-w-0 px-6 sm:px-8 lg:px-12 py-10 max-w-4xl">
-            <div class="prose">
+        <main class="flex-1 min-w-0 px-4 sm:px-6 lg:px-12 py-12">
+            <div class="max-w-3xl">
 
                 <!-- Breadcrumb -->
                 <div class="flex items-center gap-2 text-sm text-gray-400 mb-8">
                     <a href="index.html" class="hover:text-gray-600">Docs</a>
                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-                    <span class="text-gray-600">Getting Started</span>
+                    <span class="text-gray-600">Quick Start</span>
                 </div>
 
-                <h1 style="font-size: 2.25rem; font-weight: 700; color: #1A1A1A; margin-bottom: 0.5rem; letter-spacing: -0.02em;">Getting Started</h1>
-                <p style="font-size: 1.125rem; color: #6B7280; margin-bottom: 2.5rem;">Get Contento CMS up and running in under five minutes.</p>
+                <h1 style="font-size: 2.25rem; font-weight: 700; color: #1A1A1A; margin-bottom: 0.5rem; letter-spacing: -0.02em;">Quick Start</h1>
+                <p style="font-size: 1.125rem; color: #6B7280; margin-bottom: 2.5rem;">Get Contento pSEO generating pages in under five minutes.</p>
 
-                <!-- Intro -->
+                <!-- What is Contento pSEO -->
+                <h2>What is Contento pSEO?</h2>
+
                 <p>
-                    Contento is an open-source content management system built on <strong>.NET 10</strong> and <strong>PostgreSQL</strong>.
-                    It ships as a traditional server-rendered admin panel <em>and</em> a fully featured headless JSON API, so you can
-                    power any front end &mdash; a Next.js app, a static site generator, a mobile app, or the built-in themed blog.
+                    Contento pSEO is a <strong>programmatic SEO engine</strong> that generates thousands of high-quality, niche-targeted pages
+                    using AI and structured content schemas. Unlike a traditional CMS where you write each page by hand, Contento automates the
+                    entire pipeline: you define a content schema (e.g., "10 Best Tools for {subtopic}"), select your target niches, and the engine
+                    cross-multiplies niches with subtopics to produce unique, validated pages at scale.
                 </p>
                 <p>
-                    Key highlights:
+                    Contento is <strong>not a CMS</strong>. It is a purpose-built tool for programmatic SEO. Every generated page includes
+                    structured JSON-LD, deterministic title patterns for SERP targeting, custom chrome (your branding header/footer), and a
+                    feedback loop from Google Search Console analytics. The result is a self-improving content engine that identifies
+                    what works, doubles down on performing niches, and prunes underperformers automatically.
                 </p>
-                <ul>
-                    <li>Markdown-first editor with live preview and autosave</li>
-                    <li>Full REST API with public content delivery and authenticated management endpoints</li>
-                    <li>Theme system with CSS variables and 8 built-in themes</li>
-                    <li>Plugin system powered by a sandboxed JavaScript engine (Jint)</li>
-                    <li>WordPress and Markdown import/export</li>
-                    <li>Full-text search with PostgreSQL <code>ts_vector</code></li>
-                    <li>Threaded comments with honeypot spam protection</li>
-                    <li>Media library with image, PDF, and video support</li>
-                    <li>Hierarchical categories and tag-based taxonomy</li>
-                    <li>Audit log for tracking all content changes</li>
-                    <li>Newsletter management with subscriber signup and campaign editor</li>
-                    <li>Stripe-powered membership with plans, content gating, and billing portal</li>
-                    <li>Multi-site support with domain-based routing</li>
-                    <li>Task scheduler with cron-based automation</li>
-                    <li>Custom post types with JSON field schemas</li>
-                    <li>SEO service with JSON-LD structured data and sitemap generation</li>
-                    <li>AI-powered content generation and SEO analysis</li>
-                    <li>Automatic responsive image variants (640w, 1024w, 1536w WebP)</li>
-                    <li>Spam protection with AI scoring and configurable auto-approve threshold</li>
-                </ul>
 
+                <!-- Prerequisites -->
                 <h2>Prerequisites</h2>
 
                 <table>
@@ -70,171 +56,73 @@
                     </thead>
                     <tbody>
                         <tr>
+                            <td><strong>Docker + Docker Compose</strong></td>
+                            <td>24+ / v2</td>
+                            <td>Option A</td>
+                        </tr>
+                        <tr>
                             <td><strong>.NET SDK</strong></td>
                             <td>10.0 or later</td>
-                            <td>Yes</td>
+                            <td>Option B</td>
                         </tr>
                         <tr>
                             <td><strong>PostgreSQL</strong></td>
-                            <td>14 or later</td>
+                            <td>17</td>
                             <td>Yes</td>
                         </tr>
                         <tr>
                             <td><strong>Redis</strong></td>
                             <td>7.x</td>
-                            <td>Optional (caching)</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Node.js</strong></td>
-                            <td>18+ (for Tailwind CSS build)</td>
-                            <td>Optional (development)</td>
+                            <td>Yes (job queue)</td>
                         </tr>
                     </tbody>
                 </table>
 
-                <h2>Installation</h2>
+                <!-- Install + Run -->
+                <h2>Install &amp; Run</h2>
 
-                <h3>1. Clone the repository</h3>
+                <h3>Option A &mdash; Docker (recommended)</h3>
 
-<pre><span class="comment"># Clone via HTTPS</span>
+<pre><span class="comment"># Clone the repository</span>
 <span class="function">git</span> clone https://github.com/plsft/contento.git
-<span class="keyword">cd</span> contento</pre>
+<span class="keyword">cd</span> contento
 
-                <h3>2. Restore dependencies</h3>
+<span class="comment"># Start all services (app, PostgreSQL 17, Redis 7)</span>
+<span class="function">docker-compose</span> up -d</pre>
 
-<pre><span class="function">dotnet</span> restore</pre>
+                <p>The application starts at <code>https://localhost:5001</code>. The admin panel is at <code>/admin</code>.</p>
 
-                <h3>3. Configure connection strings</h3>
+                <h3>Option B &mdash; .NET SDK</h3>
 
-                <p>Create an <code>appsettings.Development.json</code> file in the <code>src/Contento.Web</code> directory (or set environment variables):</p>
-
-<pre>{
-  <span class="string">"ConnectionStrings"</span>: {
-    <span class="string">"DefaultConnection"</span>: <span class="string">"Host=localhost;Port=5432;Database=contento;Username=postgres;Password=yourpassword"</span>
-  },
-  <span class="string">"Contento"</span>: {
-    <span class="string">"ApiSigningKey"</span>: <span class="string">"your-secret-key-at-least-32-characters-long"</span>
-  },
-  <span class="string">"Redis"</span>: {
-    <span class="string">"ConnectionString"</span>: <span class="string">"localhost:6379"</span>
-  },
-  <span class="string">"Stripe"</span>: {
-    <span class="string">"SecretKey"</span>: <span class="string">"sk_test_..."</span>,
-    <span class="string">"PublishableKey"</span>: <span class="string">"pk_test_..."</span>,
-    <span class="string">"WebhookSecret"</span>: <span class="string">"whsec_..."</span>
-  },
-  <span class="string">"Email"</span>: {
-    <span class="string">"SmtpHost"</span>: <span class="string">"smtp.example.com"</span>,
-    <span class="string">"SmtpPort"</span>: <span class="string">"587"</span>,
-    <span class="string">"FromAddress"</span>: <span class="string">"noreply@yourdomain.com"</span>
-  }
-}</pre>
-
-                <div class="callout callout-warning">
-                    <strong>Important:</strong> In production, always set <code>Contento:ApiSigningKey</code> to a strong, unique secret.
-                    The default fallback key is insecure and should never be used in production.
-                </div>
-
-                <h3>4. Initialize the database</h3>
-
-                <p>Contento uses Bowtie for automatic schema management. On first run, it creates all tables and seeds default data automatically:</p>
-
-<pre><span class="keyword">cd</span> src/Contento.Web
+<pre><span class="function">git</span> clone https://github.com/plsft/contento.git
+<span class="keyword">cd</span> contento
+<span class="function">dotnet</span> restore
+<span class="keyword">cd</span> src/Contento.Web
 <span class="function">dotnet</span> run</pre>
 
-                <p>The application starts at <code>https://localhost:5001</code> (or <code>http://localhost:5000</code>).</p>
+                <p>Ensure PostgreSQL 17 and Redis 7 are running locally and configured via environment variables (see below).</p>
 
                 <div class="callout callout-tip">
-                    <strong>Tip:</strong> The database schema is managed automatically via Bowtie. You do not need to run
-                    any migration commands. On first startup, Contento creates all 21 tables and seeds the default site,
-                    admin user, and built-in themes.
+                    <strong>Tip:</strong> On first startup, Contento automatically runs database migrations via Bowtie, creates all tables,
+                    and seeds 150 niches and 10 content schemas. No manual migration step is needed.
                 </div>
 
-                <h2>First Steps</h2>
-
-                <h3>1. Log in to the admin panel</h3>
-
-                <p>Navigate to <code>https://localhost:5001/admin</code> and log in with the default credentials:</p>
-
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Field</th>
-                            <th>Value</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Email</td>
-                            <td><code>admin@contento.local</code></td>
-                        </tr>
-                        <tr>
-                            <td>Password</td>
-                            <td>Set via <code>Admin:DefaultPassword</code> in config</td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                <div class="callout callout-warning">
-                    <strong>Change this password immediately.</strong> Navigate to the Users section in admin and update
-                    the default admin account credentials before deploying to production.
-                </div>
-
-                <h3>2. Create your first post</h3>
+                <!-- First Project -->
+                <h2>First Project Setup</h2>
 
                 <ol>
-                    <li>Click <strong>Posts</strong> in the sidebar, then click <strong>New Post</strong>.</li>
-                    <li>Enter a title and write your content in Markdown. The live preview updates as you type.</li>
-                    <li>Add tags, choose a category, and optionally upload a cover image.</li>
-                    <li>Click <strong>Publish</strong> to make the post live.</li>
+                    <li>Navigate to <strong>Admin &rarr; pSEO &rarr; Setup Wizard</strong>.</li>
+                    <li>Enter your <strong>domain</strong> (e.g., <code>example.com</code>) and <strong>subdomain</strong> (e.g., <code>resources.example.com</code>).</li>
+                    <li>Add a <strong>CNAME record</strong> in your DNS provider pointing the subdomain to Contento's app domain.</li>
+                    <li>Choose your target <strong>niches</strong> (e.g., Developer Tools, SaaS Analytics) and <strong>content types</strong> (e.g., idea-list, comparison).</li>
+                    <li>Click <strong>Generate First Batch</strong> to kick off your first page generation run.</li>
                 </ol>
 
-                <h3>3. Configure site settings</h3>
+                <p>The generation pipeline expands subtopics, deduplicates, queues AI generation jobs, validates the output, and publishes.
+                You can monitor real-time progress via the SSE streaming endpoint in the admin dashboard.</p>
 
-                <p>Go to <strong>Settings</strong> in the admin sidebar to configure:</p>
-
-                <ul>
-                    <li><strong>Site name</strong> &mdash; Displayed in the header, feeds, and metadata</li>
-                    <li><strong>Tagline</strong> &mdash; A short description of your site</li>
-                    <li><strong>Locale</strong> &mdash; e.g., <code>en-US</code>, <code>ja-JP</code></li>
-                    <li><strong>Timezone</strong> &mdash; e.g., <code>UTC</code>, <code>America/New_York</code>, <code>Asia/Tokyo</code></li>
-                </ul>
-
-                <h3>4. Choose a theme</h3>
-
-                <p>Navigate to <strong>Themes</strong> and activate one of the 8 built-in themes. Each theme sets CSS variables
-                that control fonts, colors, and spacing across the public site.</p>
-
-                <h3>5. Configure Stripe (optional)</h3>
-
-                <p>If you want to enable paid memberships, configure your Stripe keys in the environment variables or <code>appsettings.json</code>.
-                Then navigate to <strong>Membership</strong> in the admin sidebar to create your first plan.</p>
-
-                <h2>Project Structure</h2>
-
-<pre>contento/
-<span class="comment">|-- src/</span>
-<span class="comment">|   |-- Contento.Core/</span>            <span class="comment"># Domain models, interfaces</span>
-<span class="comment">|   |   |-- Models/</span>                <span class="comment"># 17 entity models (Post, User, Theme, Subscriber, ...)</span>
-<span class="comment">|   |   |-- Interfaces/</span>            <span class="comment"># 22 service interfaces</span>
-<span class="comment">|   |</span>
-<span class="comment">|   |-- Contento.Services/</span>        <span class="comment"># Service implementations (23 files)</span>
-<span class="comment">|   |</span>
-<span class="comment">|   |-- Contento.Plugins/</span>         <span class="comment"># Jint-based plugin host</span>
-<span class="comment">|   |</span>
-<span class="comment">|   |-- Contento.Web/</span>             <span class="comment"># ASP.NET 10 web application</span>
-<span class="comment">|   |   |-- Controllers/</span>          <span class="comment"># 21 API controllers (113 endpoints)</span>
-<span class="comment">|   |   |-- Pages/Admin/</span>          <span class="comment"># 21+ Razor admin pages</span>
-<span class="comment">|   |   |-- Styles/app.css</span>        <span class="comment"># CSS design system</span>
-<span class="comment">|   |</span>
-<span class="comment">|   |-- Contento.Tests/</span>           <span class="comment"># 428 tests (NUnit + Moq + Bogus)</span>
-<span class="comment">|</span>
-<span class="comment">|-- marketing/</span>                    <span class="comment"># Marketing site and docs</span></pre>
-
+                <!-- Environment Variables -->
                 <h2>Environment Variables</h2>
-
-                <p>Contento reads configuration from <code>appsettings.json</code>, environment variables, and user secrets.
-                Environment variables follow the <code>__</code> (double underscore) convention for nested keys.</p>
 
                 <table>
                     <thead>
@@ -246,19 +134,29 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td><code>ConnectionStrings__DefaultConnection</code></td>
-                            <td>PostgreSQL connection string</td>
+                            <td><code>DATABASE_CONNECTION_STRING</code></td>
+                            <td>PostgreSQL 17 connection string</td>
                             <td>Required</td>
                         </tr>
                         <tr>
-                            <td><code>Contento__ApiSigningKey</code></td>
-                            <td>HMAC-SHA256 signing key for API tokens</td>
-                            <td>Insecure default</td>
+                            <td><code>REDIS_CONNECTION_STRING</code></td>
+                            <td>Redis 7 connection string for job queue and caching</td>
+                            <td>Required</td>
                         </tr>
                         <tr>
-                            <td><code>Redis__ConnectionString</code></td>
-                            <td>Redis connection string for caching</td>
-                            <td>Empty (disabled)</td>
+                            <td><code>CONTENTO_ADMIN_PASSWORD</code></td>
+                            <td>Password for the default admin account</td>
+                            <td>Required</td>
+                        </tr>
+                        <tr>
+                            <td><code>GSC_CLIENT_ID</code></td>
+                            <td>Google Search Console OAuth client ID</td>
+                            <td>Empty (analytics disabled)</td>
+                        </tr>
+                        <tr>
+                            <td><code>GSC_CLIENT_SECRET</code></td>
+                            <td>Google Search Console OAuth client secret</td>
+                            <td>Empty (analytics disabled)</td>
                         </tr>
                         <tr>
                             <td><code>ASPNETCORE_ENVIRONMENT</code></td>
@@ -270,62 +168,42 @@
                             <td>Listening URLs</td>
                             <td><code>http://+:5000</code></td>
                         </tr>
-                        <tr>
-                            <td><code>Serilog__MinimumLevel__Default</code></td>
-                            <td>Log level: Verbose, Debug, Information, Warning, Error, Fatal</td>
-                            <td><code>Information</code></td>
-                        </tr>
-                        <tr>
-                            <td><code>Contento__MaxUploadSizeMb</code></td>
-                            <td>Maximum media upload size</td>
-                            <td><code>10</code></td>
-                        </tr>
-                        <tr>
-                            <td><code>Contento__AllowedOrigins</code></td>
-                            <td>Comma-separated CORS origins for headless mode</td>
-                            <td><code>*</code></td>
-                        </tr>
-                        <tr>
-                            <td><code>Stripe__SecretKey</code></td>
-                            <td>Stripe API secret key for server-side operations</td>
-                            <td>Empty (disabled)</td>
-                        </tr>
-                        <tr>
-                            <td><code>Stripe__PublishableKey</code></td>
-                            <td>Stripe publishable key for client-side checkout</td>
-                            <td>Empty (disabled)</td>
-                        </tr>
-                        <tr>
-                            <td><code>Stripe__WebhookSecret</code></td>
-                            <td>Stripe webhook signing secret for event verification</td>
-                            <td>Empty</td>
-                        </tr>
-                        <tr>
-                            <td><code>Email__SmtpHost</code></td>
-                            <td>SMTP server hostname for newsletter delivery</td>
-                            <td>Empty (disabled)</td>
-                        </tr>
-                        <tr>
-                            <td><code>Email__SmtpPort</code></td>
-                            <td>SMTP server port</td>
-                            <td><code>587</code></td>
-                        </tr>
-                        <tr>
-                            <td><code>Email__FromAddress</code></td>
-                            <td>Sender email address for newsletters</td>
-                            <td>Empty</td>
-                        </tr>
                     </tbody>
                 </table>
 
+                <!-- Project Structure -->
+                <h2>Project Structure</h2>
+
+<pre>contento/
+<span class="comment">|-- src/</span>
+<span class="comment">|   |-- Contento.Core/</span>            <span class="comment"># Domain models, interfaces</span>
+<span class="comment">|   |   |-- Models/</span>                <span class="comment"># Entity models (Project, Niche, Schema, Collection, Page, ...)</span>
+<span class="comment">|   |   |-- Interfaces/</span>            <span class="comment"># Service interfaces</span>
+<span class="comment">|   |</span>
+<span class="comment">|   |-- Contento.Services/</span>        <span class="comment"># Service implementations</span>
+<span class="comment">|   |   |-- Pseo/</span>                 <span class="comment"># pSEO generation pipeline, AI integration</span>
+<span class="comment">|   |   |-- Analytics/</span>            <span class="comment"># GSC sync, metrics aggregation</span>
+<span class="comment">|   |</span>
+<span class="comment">|   |-- Contento.Web/</span>             <span class="comment"># ASP.NET 10 web application</span>
+<span class="comment">|   |   |-- Controllers/</span>          <span class="comment"># API controllers (39 pSEO endpoints)</span>
+<span class="comment">|   |   |-- Pages/Admin/</span>          <span class="comment"># Razor admin pages (pSEO dashboard)</span>
+<span class="comment">|   |</span>
+<span class="comment">|   |-- Contento.Tests/</span>           <span class="comment"># NUnit + Moq + Bogus tests</span>
+<span class="comment">|</span>
+<span class="comment">|-- marketing/</span>                    <span class="comment"># Marketing site and docs</span>
+<span class="comment">|-- docker-compose.yml</span>            <span class="comment"># Full stack: app + PostgreSQL 17 + Redis 7</span></pre>
+
+                <!-- Next Steps -->
                 <h2>Next Steps</h2>
 
                 <ul>
-                    <li><a href="admin.html" style="color: #3D5A80; font-weight: 500;">Admin Guide</a> &mdash; Learn how to manage posts, media, themes, and users</li>
-                    <li><a href="api.html" style="color: #3D5A80; font-weight: 500;">API Reference</a> &mdash; Complete endpoint documentation for headless integrations</li>
-                    <li><a href="headless.html" style="color: #3D5A80; font-weight: 500;">Headless Mode</a> &mdash; Build custom frontends with Next.js, 11ty, or any framework</li>
-                    <li><a href="plugins.html" style="color: #3D5A80; font-weight: 500;">Plugin Development</a> &mdash; Extend Contento with JavaScript plugins</li>
-                    <li><a href="themes.html" style="color: #3D5A80; font-weight: 500;">Theme Development</a> &mdash; Create custom themes with CSS variables</li>
+                    <li><a href="projects.html" style="color: #3D5A80; font-weight: 500;">Projects &amp; Domains</a> &mdash; Configure subdomains, DNS, and custom chrome</li>
+                    <li><a href="niches.html" style="color: #3D5A80; font-weight: 500;">Niche Taxonomy</a> &mdash; Browse 150 built-in niches or create custom ones</li>
+                    <li><a href="schemas.html" style="color: #3D5A80; font-weight: 500;">Content Schemas</a> &mdash; Understand the 10 built-in schemas and create your own</li>
+                    <li><a href="collections.html" style="color: #3D5A80; font-weight: 500;">Collections &amp; Generation</a> &mdash; Build and run generation pipelines</li>
+                    <li><a href="api.html" style="color: #3D5A80; font-weight: 500;">API Reference</a> &mdash; All 39 pSEO REST endpoints</li>
+                    <li><a href="analytics.html" style="color: #3D5A80; font-weight: 500;">Analytics &amp; GSC</a> &mdash; Connect Google Search Console and optimize</li>
+                    <li><a href="deployment.html" style="color: #3D5A80; font-weight: 500;">Deployment</a> &mdash; Production Docker, Cloudflare, and scaling</li>
                 </ul>
 
             </div>
