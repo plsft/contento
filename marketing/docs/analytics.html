@@ -38,6 +38,16 @@
                 <!-- Connecting GSC -->
                 <h2>Connecting Google Search Console</h2>
 
+                <p>Connect your GSC property via the CLI or admin UI:</p>
+
+<pre><span class="prompt">$</span> <span class="function">contento</span> analytics connect-gsc --project proj_8f3a...
+
+<span class="output">  Opening browser for Google OAuth authorization...</span>
+<span class="output">  &#10003; Connected to property: sc-domain:example.com</span>
+<span class="output">  Syncing data... this may take a few minutes.</span></pre>
+
+                <p>Or connect via the admin UI:</p>
+
                 <ol>
                     <li>Navigate to <strong>Admin &rarr; pSEO &rarr; Analytics &rarr; Connect GSC</strong>.</li>
                     <li>Click <strong>Authorize with Google</strong>. You will be redirected to Google's OAuth consent screen.</li>
@@ -45,12 +55,6 @@
                     <li>After redirect, select the <strong>property</strong> (domain) to connect.</li>
                     <li>Contento begins syncing data immediately.</li>
                 </ol>
-
-                <div class="callout callout-info">
-                    <strong>Required credentials:</strong> Set the <code>GSC_CLIENT_ID</code> and <code>GSC_CLIENT_SECRET</code>
-                    environment variables before using the GSC integration. These come from a Google Cloud OAuth 2.0 client configured
-                    for the Search Console API.
-                </div>
 
                 <!-- Daily sync -->
                 <h2>Daily Sync</h2>
@@ -71,7 +75,18 @@
                 <!-- Dashboard metrics -->
                 <h2>Dashboard Metrics</h2>
 
-                <p>The analytics dashboard in the admin panel shows:</p>
+                <p>View the analytics summary from the CLI or admin dashboard:</p>
+
+<pre><span class="prompt">$</span> <span class="function">contento</span> analytics summary --project proj_8f3a...
+
+<span class="output">  Project: DevTools Resources</span>
+<span class="output">  Period:  Last 28 days</span>
+<span class="output">  ──────────────────────────────────────</span>
+<span class="output">  Total Clicks        12,450</span>
+<span class="output">  Total Impressions  285,000</span>
+<span class="output">  Average CTR          4.37%</span>
+<span class="output">  Average Position      16.3</span>
+<span class="output">  Indexed Pages      980 / 1,024 (96%)</span></pre>
 
                 <table>
                     <thead><tr><th>Metric</th><th>Description</th></tr></thead>
@@ -88,17 +103,18 @@
                 <!-- Top pages leaderboard -->
                 <h2>Top Pages Leaderboard</h2>
 
-                <p>The leaderboard ranks all pages in a project by performance. You can sort by clicks, impressions, CTR, or position.
-                Use this to identify your top performers and understand what content patterns work best.</p>
+                <p>The leaderboard ranks all pages in a project by performance:</p>
 
-                <p>The leaderboard shows:</p>
-                <ul>
-                    <li>Page title and URL</li>
-                    <li>Niche and subtopic</li>
-                    <li>Schema type</li>
-                    <li>Clicks, impressions, CTR, and average position (28-day)</li>
-                    <li>Indexed status</li>
-                </ul>
+<pre><span class="prompt">$</span> <span class="function">contento</span> analytics top-pages --project proj_8f3a... --limit 5
+
+<span class="output">  #  Title                              Clicks  Impr    CTR    Pos</span>
+<span class="output">  1  100 Remote Work Ideas              2,340   55,714  4.2%   14.2</span>
+<span class="output">  2  50 CI/CD Pipeline Tips              1,890   42,100  4.5%   12.8</span>
+<span class="output">  3  Best API Testing Tools 2026         1,650   38,900  4.2%   15.1</span>
+<span class="output">  4  DevOps Automation Checklist         1,420   31,200  4.6%   11.9</span>
+<span class="output">  5  Freelance Developer Tools Guide     1,100   28,500  3.9%   18.4</span></pre>
+
+                <p>You can sort by clicks, impressions, CTR, or position. Use <code>--json</code> for machine-readable output.</p>
 
                 <!-- Niche performance -->
                 <h2>Niche Performance Ranking</h2>
@@ -119,8 +135,15 @@
                 <!-- Zero-traffic detection -->
                 <h2>Zero-Traffic Page Detection</h2>
 
-                <p>Pages that receive <strong>zero clicks for 60 consecutive days</strong> after publishing are flagged as underperformers.
-                These pages appear in a dedicated "Zero Traffic" report in the analytics dashboard.</p>
+                <p>Pages that receive <strong>zero clicks for 60 consecutive days</strong> after publishing are flagged as underperformers:</p>
+
+<pre><span class="prompt">$</span> <span class="function">contento</span> analytics zero-traffic --project proj_8f3a...
+
+<span class="output">  12 pages with zero traffic (60+ days)</span>
+<span class="output">  ──────────────────────────────────────</span>
+<span class="output">  page_4f2a  /niche-marketing-tips-2026     Published 2026-01-05</span>
+<span class="output">  page_7b1c  /obscure-devops-patterns       Published 2026-01-08</span>
+<span class="output">  ...</span></pre>
 
                 <p>Options for zero-traffic pages:</p>
                 <ul>
@@ -135,32 +158,32 @@
 
                 <p>Export analytics data as CSV for use in spreadsheets or BI tools:</p>
 
+<pre><span class="prompt">$</span> <span class="function">contento</span> analytics export \
+    --project proj_8f3a... \
+    --format csv \
+    --output analytics.csv
+
+<span class="output">  &#10003; Exported 1,024 pages to analytics.csv</span></pre>
+
+                <p>Export levels:</p>
                 <ul>
                     <li><strong>Page-level export</strong> &mdash; All pages with clicks, impressions, CTR, position, and indexed status</li>
                     <li><strong>Niche-level export</strong> &mdash; Aggregated niche performance data</li>
                     <li><strong>Query-level export</strong> &mdash; Top queries per page with click and impression counts</li>
                 </ul>
 
-<pre><span class="comment"># Export page-level analytics as CSV</span>
-<span class="function">curl</span> -o analytics.csv \
-  https://app.contentocms.com/api/v1/pseo/analytics/export?projectId={id}&amp;format=csv \
-  -H <span class="string">"Authorization: Bearer &lt;token&gt;"</span></pre>
-
-                <!-- API endpoints -->
-                <h2>API Endpoints</h2>
+                <!-- CLI Commands -->
+                <h2>CLI Commands</h2>
 
                 <table>
-                    <thead><tr><th>Method</th><th>Endpoint</th><th>Description</th></tr></thead>
+                    <thead><tr><th>Command</th><th>Description</th></tr></thead>
                     <tbody>
-                        <tr><td><code>GET</code></td><td><code>/api/v1/pseo/analytics/overview</code></td><td>Project-level summary (clicks, impressions, CTR, position)</td></tr>
-                        <tr><td><code>GET</code></td><td><code>/api/v1/pseo/analytics/pages</code></td><td>Page-level performance data (paginated, sortable)</td></tr>
-                        <tr><td><code>GET</code></td><td><code>/api/v1/pseo/analytics/niches</code></td><td>Niche-level aggregated performance</td></tr>
-                        <tr><td><code>GET</code></td><td><code>/api/v1/pseo/analytics/queries</code></td><td>Top search queries driving traffic</td></tr>
-                        <tr><td><code>GET</code></td><td><code>/api/v1/pseo/analytics/zero-traffic</code></td><td>Pages with zero clicks in 60+ days</td></tr>
-                        <tr><td><code>GET</code></td><td><code>/api/v1/pseo/analytics/export</code></td><td>CSV export of analytics data</td></tr>
-                        <tr><td><code>POST</code></td><td><code>/api/v1/pseo/analytics/gsc/connect</code></td><td>Initiate GSC OAuth connection</td></tr>
-                        <tr><td><code>POST</code></td><td><code>/api/v1/pseo/analytics/gsc/sync</code></td><td>Trigger manual GSC data sync</td></tr>
-                        <tr><td><code>GET</code></td><td><code>/api/v1/pseo/analytics/gsc/status</code></td><td>Check GSC connection and last sync status</td></tr>
+                        <tr><td><code>contento analytics summary</code></td><td>Project-level summary (clicks, impressions, CTR, position)</td></tr>
+                        <tr><td><code>contento analytics top-pages</code></td><td>Top pages ranked by performance</td></tr>
+                        <tr><td><code>contento analytics zero-traffic</code></td><td>Pages with zero clicks in 60+ days</td></tr>
+                        <tr><td><code>contento analytics export</code></td><td>CSV export of analytics data</td></tr>
+                        <tr><td><code>contento analytics connect-gsc</code></td><td>Connect Google Search Console</td></tr>
+                        <tr><td><code>contento analytics sync</code></td><td>Trigger manual GSC data sync</td></tr>
                     </tbody>
                 </table>
 

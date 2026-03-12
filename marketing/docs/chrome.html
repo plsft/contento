@@ -38,7 +38,7 @@
                     <li><strong>Custom CSS</strong> &mdash; Styles for your chrome elements, scoped to avoid conflicts with generated content</li>
                 </ul>
 
-                <p>Chrome is configured per-project. Each project can have different chrome, allowing you to run multiple brands from a single Contento installation.</p>
+                <p>Chrome is configured per-project. Each project can have different chrome, allowing you to run multiple brands from a single Contento account.</p>
 
                 <!-- How pages render -->
                 <h2>How Pages Render</h2>
@@ -85,17 +85,26 @@
                     <li>Click <strong>Save</strong>. Changes are applied immediately to all pages in the project.</li>
                 </ol>
 
-                <!-- Uploading via API -->
-                <h2>Uploading Chrome via API</h2>
+                <!-- Uploading via CLI -->
+                <h2>Uploading Chrome via CLI</h2>
 
-<pre><span class="function">curl</span> -X PUT https://app.contentocms.com/api/v1/pseo/projects/{id}/chrome \
-  -H <span class="string">"Authorization: Bearer &lt;token&gt;"</span> \
-  -H <span class="string">"Content-Type: application/json"</span> \
-  -d <span class="string">'{
-    "headerHtml": "&lt;header class=\"site-header\"&gt;\n  &lt;div class=\"container\"&gt;\n    &lt;a href=\"https://example.com\" class=\"logo\"&gt;Example Inc&lt;/a&gt;\n    &lt;nav&gt;\n      &lt;a href=\"https://example.com/pricing\"&gt;Pricing&lt;/a&gt;\n      &lt;a href=\"https://example.com/blog\"&gt;Blog&lt;/a&gt;\n      &lt;a href=\"https://example.com/signup\" class=\"cta-btn\"&gt;Get Started&lt;/a&gt;\n    &lt;/nav&gt;\n  &lt;/div&gt;\n&lt;/header&gt;",
-    "footerHtml": "&lt;footer class=\"site-footer\"&gt;\n  &lt;div class=\"container\"&gt;\n    &lt;p&gt;&amp;copy; 2026 Example Inc. All rights reserved.&lt;/p&gt;\n    &lt;nav&gt;\n      &lt;a href=\"https://example.com/privacy\"&gt;Privacy&lt;/a&gt;\n      &lt;a href=\"https://example.com/terms\"&gt;Terms&lt;/a&gt;\n    &lt;/nav&gt;\n  &lt;/div&gt;\n&lt;/footer&gt;",
-    "customCss": ".site-header { padding: 1rem 0; background: #fff; border-bottom: 1px solid #e5e7eb; }\n.site-header .container { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 0 2rem; }\n.site-header .logo { font-weight: 700; font-size: 1.25rem; color: #1a1a1a; text-decoration: none; }\n.site-header nav a { margin-left: 1.5rem; color: #6b7280; text-decoration: none; }\n.site-header .cta-btn { background: #3D5A80; color: #fff; padding: 0.5rem 1rem; border-radius: 6px; }\n.site-footer { padding: 2rem 0; background: #f9fafb; border-top: 1px solid #e5e7eb; text-align: center; color: #6b7280; font-size: 0.875rem; }\n.site-footer nav a { margin: 0 0.75rem; color: #6b7280; text-decoration: none; }"
-  }'</span></pre>
+                <p>Use the <code>projects chrome</code> command to upload chrome from local files:</p>
+
+<pre><span class="prompt">$</span> <span class="function">contento</span> projects chrome \
+    --project proj_8f3a... \
+    --header ./chrome/header.html \
+    --footer ./chrome/footer.html \
+    --css ./chrome/styles.css
+
+<span class="output">  &#10003; Chrome updated for project "DevTools Resources"</span>
+<span class="output">  Changes are live immediately on all pages.</span></pre>
+
+                <p>Or pass inline HTML directly:</p>
+
+<pre><span class="prompt">$</span> <span class="function">contento</span> projects chrome \
+    --project proj_8f3a... \
+    --header-inline <span class="string">'&lt;nav&gt;&lt;a href="https://example.com"&gt;Home&lt;/a&gt;&lt;/nav&gt;'</span> \
+    --footer-inline <span class="string">'&lt;footer&gt;&amp;copy; 2026 Example Inc&lt;/footer&gt;'</span></pre>
 
                 <!-- Back-link configuration -->
                 <h2>Back-link Configuration</h2>
@@ -158,9 +167,10 @@
                     <li>Right-click the header and choose <strong>Inspect</strong>.</li>
                     <li>Find the <code>&lt;header&gt;</code> or <code>&lt;nav&gt;</code> element and copy its outer HTML.</li>
                     <li>Do the same for the <code>&lt;footer&gt;</code> element.</li>
-                    <li>Paste both into the project's chrome fields.</li>
-                    <li>Copy the relevant CSS rules from your site's stylesheet into the custom CSS field.</li>
+                    <li>Save each to a file (e.g., <code>header.html</code>, <code>footer.html</code>).</li>
+                    <li>Copy the relevant CSS rules from your site's stylesheet into a <code>styles.css</code> file.</li>
                     <li>Update any relative URLs (e.g., <code>/images/logo.svg</code>) to absolute URLs (e.g., <code>https://example.com/images/logo.svg</code>).</li>
+                    <li>Upload with the CLI: <code>contento projects chrome --project proj_... --header ./header.html --footer ./footer.html --css ./styles.css</code></li>
                 </ol>
 
                 <div class="callout callout-warning">

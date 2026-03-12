@@ -148,10 +148,14 @@
                 <!-- Creating custom schema -->
                 <h2>Creating a Custom Schema</h2>
 
-<pre><span class="function">curl</span> -X POST https://app.contentocms.com/api/v1/pseo/schemas \
-  -H <span class="string">"Authorization: Bearer &lt;token&gt;"</span> \
-  -H <span class="string">"Content-Type: application/json"</span> \
-  -d <span class="string">'{
+<pre><span class="comment"># List schemas</span>
+<span class="function">contento</span> schemas list
+
+<span class="comment"># View schema details in JSON</span>
+<span class="function">contento</span> schemas list --json
+
+<span class="comment"># Example schema definition:</span>
+{
     "name": "Idea List",
     "slug": "idea-list",
     "titlePattern": "{count} {subtopic} Ideas for {year}",
@@ -189,7 +193,7 @@
         }
       }
     }
-  }'</span></pre>
+  }</pre>
 
                 <!-- How AI uses the schema -->
                 <h2>How AI Uses the Schema</h2>
@@ -211,21 +215,18 @@
                     SERP-optimized titles that are predictable and consistent across all pages in a collection.
                 </div>
 
-                <!-- API Reference -->
-                <h2>API Reference</h2>
+                <!-- CLI Reference -->
+                <h2>CLI Commands</h2>
 
                 <table>
-                    <thead><tr><th>Method</th><th>Endpoint</th><th>Description</th></tr></thead>
+                    <thead><tr><th>Command</th><th>Description</th></tr></thead>
                     <tbody>
-                        <tr><td><code>GET</code></td><td><code>/api/v1/pseo/schemas</code></td><td>List all schemas</td></tr>
-                        <tr><td><code>GET</code></td><td><code>/api/v1/pseo/schemas/{id}</code></td><td>Get schema by ID with full SchemaJson</td></tr>
-                        <tr><td><code>POST</code></td><td><code>/api/v1/pseo/schemas</code></td><td>Create a custom schema</td></tr>
-                        <tr><td><code>PUT</code></td><td><code>/api/v1/pseo/schemas/{id}</code></td><td>Update a schema</td></tr>
-                        <tr><td><code>DELETE</code></td><td><code>/api/v1/pseo/schemas/{id}</code></td><td>Delete a schema (not if used by active collections)</td></tr>
+                        <tr><td><code>contento schemas list</code></td><td>List all schemas</td></tr>
+                        <tr><td><code>contento schemas list --json</code></td><td>List schemas with full JSON structure</td></tr>
                     </tbody>
                 </table>
 
-                <p>See the <a href="api.html" style="color: #3D5A80; font-weight: 500;">full API reference</a> for request/response details.</p>
+                <p>See the <a href="cli.html" style="color: #3D5A80; font-weight: 500;">CLI reference</a> for all available flags and options.</p>
 
             </div>
         </main>

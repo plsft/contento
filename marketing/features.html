@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Features — Contento pSEO Engine</title>
-    <meta name="description" content="Explore every pSEO feature: 150+ niches, 10 content schemas, concurrent AI generation, custom chrome, GSC analytics, and a full REST API with 39 endpoints." />
+    <meta name="description" content="Explore every pSEO feature: 150+ niches, 10 content schemas, concurrent AI generation, custom chrome, GSC analytics, and a CLI with agent-ready JSON output." />
     <script type="module" src="/src/main.js"></script>
 </head>
 <body class="bg-white text-gray-900 antialiased">
@@ -179,7 +179,7 @@
                     </li>
                     <li class="flex items-center gap-3">
                         <span class="text-accent font-mono text-xs">&#9632;</span>
-                        SSE streaming for real-time progress
+                        Real-time progress streaming in the terminal
                     </li>
                 </ul>
             </div>
@@ -188,16 +188,14 @@
                     <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
                     <div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
                     <div class="w-3 h-3 rounded-full bg-green-500/80"></div>
-                    <span class="ml-2 text-xs text-gray-500 font-mono">generation</span>
+                    <span class="ml-2 text-xs text-gray-500 font-mono">terminal</span>
                 </div>
                 <div class="p-6 text-sm leading-relaxed font-mono overflow-x-auto">
-<pre class="!bg-transparent !border-0 !p-0 !m-0"><code><span class="prompt">$</span> contento pseo generate \
-    --collection "Remote Work Ideas" \
-    --type idea-list \
-    --niches remote-work,freelancing,digital-nomad \
-    --workers 10
+<pre class="!bg-transparent !border-0 !p-0 !m-0"><code><span class="prompt">$</span> <span class="function">contento</span> collections generate \
+    --project proj_8f3a... \
+    --schema <span class="string">"idea-list"</span> \
+    --niches <span class="string">"niche_01...,niche_02...,niche_03..."</span>
 
-<span class="output">[00:00] Expanding subtopics...</span>
 <span class="output">[00:02] 48 pages queued across 3 niches</span>
 <span class="output">[00:03] Worker pool: 10 concurrent</span>
 <span class="output">[00:04] &#9608;&#9608;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;  6/48  (12%)</span>
@@ -206,8 +204,7 @@
 <span class="output">[00:26] &#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608; 48/48 (100%)</span>
 <span class="output"></span>
 <span class="output">Validation: <span class="text-accent">46 passed</span>, 2 retried, 0 failed</span>
-<span class="output">Avg generation time: 3.2s per page</span>
-<span class="output">Total: 48 pages ready to publish</span></code></pre>
+<span class="output">Avg generation time: 3.2s per page</span></code></pre>
                 </div>
             </div>
         </div>
@@ -226,13 +223,13 @@
                         <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
                         <div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
                         <div class="w-3 h-3 rounded-full bg-green-500/80"></div>
-                        <span class="ml-2 text-xs text-gray-500 font-mono">publish</span>
+                        <span class="ml-2 text-xs text-gray-500 font-mono">terminal</span>
                     </div>
                     <div class="p-6 text-sm leading-relaxed font-mono overflow-x-auto">
-<pre class="!bg-transparent !border-0 !p-0 !m-0"><code><span class="prompt">$</span> contento pseo publish \
+<pre class="!bg-transparent !border-0 !p-0 !m-0"><code><span class="prompt">$</span> <span class="function">contento</span> publish \
+    --collection col_9d2f... \
     --mode batched \
-    --batch-size 50 \
-    --collection "Remote Work Ideas"
+    --batch-size <span class="number">50</span>
 
 <span class="output">[batch 1/1] Publishing 48 pages...</span>
 <span class="output">  &#10003; Internal linking pass: 142 cross-links added</span>
@@ -242,12 +239,8 @@
 <span class="output">  &#10003; OG meta tags generated</span>
 <span class="output"></span>
 <span class="output">Published to: <span class="url">articles.worktale.org</span></span>
-<span class="output">Next batch available in: 24h (indexing cooldown)</span>
 
-<span class="comment"># Other publish modes:</span>
-<span class="comment"># --mode immediate   (publish all now)</span>
-<span class="comment"># --mode scheduled   (cron-based)</span>
-<span class="comment"># --mode manual      (admin approval)</span></code></pre>
+<span class="comment"># Publish modes: immediate, batched, scheduled, manual</span></code></pre>
                     </div>
                 </div>
             </div>
@@ -359,10 +352,11 @@
                         <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
                         <div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
                         <div class="w-3 h-3 rounded-full bg-green-500/80"></div>
-                        <span class="ml-2 text-xs text-gray-500 font-mono">analytics</span>
+                        <span class="ml-2 text-xs text-gray-500 font-mono">terminal</span>
                     </div>
                     <div class="p-6 text-sm leading-relaxed font-mono overflow-x-auto">
-<pre class="!bg-transparent !border-0 !p-0 !m-0"><code><span class="prompt">$</span> contento pseo analytics --days 30
+<pre class="!bg-transparent !border-0 !p-0 !m-0"><code><span class="comment"># Get top performing pages</span>
+<span class="prompt">$</span> <span class="function">contento</span> analytics top-pages --days <span class="number">30</span>
 
 <span class="output">&#9472;&#9472; Top Pages &#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;</span>
 <span class="output"> 1. /100-remote-work-ideas     2,340 clicks  4.2% CTR</span>
@@ -371,16 +365,16 @@
 <span class="output"> 4. /freelancing-faq               987 clicks  6.3% CTR</span>
 <span class="output"> 5. /digital-nomad-guide           856 clicks  2.9% CTR</span>
 
-<span class="output">&#9472;&#9472; Niche Performance &#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;</span>
-<span class="output"> Remote Work:     12,400 impressions  avg pos 14.2</span>
-<span class="output"> Freelancing:      8,200 impressions  avg pos 18.7</span>
-<span class="output"> Digital Nomad:    5,100 impressions  avg pos 22.1</span>
+<span class="comment"># Detect zero-traffic pages</span>
+<span class="prompt">$</span> <span class="function">contento</span> analytics zero-traffic
 
-<span class="output">&#9472;&#9472; Alerts &#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;</span>
 <span class="output"> &#9888; 3 pages with zero traffic (30d)</span>
-<span class="output"> &#9888; 1 page dropped &gt;10 positions</span></code></pre>
+<span class="output"> &#9888; 1 page dropped &gt;10 positions</span>
+
+<span class="comment"># Export analytics data</span>
+<span class="prompt">$</span> <span class="function">contento</span> analytics export --format csv</code></pre>
+                    </div>
                 </div>
-            </div>
             </div>
             <div class="order-1 lg:order-2">
                 <span class="tag tag-blue mb-4 inline-block">analytics</span>
@@ -419,34 +413,34 @@
 
 <div class="section-divider"></div>
 
-<!-- REST API -->
+<!-- CLI + Agent Interface -->
 <section class="py-24 px-4 sm:px-6">
     <div class="max-w-6xl mx-auto">
         <div class="grid lg:grid-cols-2 gap-16 items-start">
             <div>
-                <span class="tag tag-green mb-4 inline-block">api</span>
-                <h2 class="text-2xl sm:text-3xl font-bold tracking-tight mb-4">REST API</h2>
-                <p class="text-gray-500 leading-relaxed mb-6">39 pSEO-specific endpoints cover every operation: niche management, schema CRUD, generation jobs, publishing, analytics, and domain configuration. Full OpenAPI spec with Scalar interactive docs.</p>
+                <span class="tag tag-green mb-4 inline-block">cli</span>
+                <h2 class="text-2xl sm:text-3xl font-bold tracking-tight mb-4">CLI + Agent Interface</h2>
+                <p class="text-gray-500 leading-relaxed mb-6">Every operation is available through the <code>contento</code> CLI. Add <code>--json</code> to any command for machine-readable output, enabling AI agents to drive the entire pSEO pipeline programmatically.</p>
                 <ul class="space-y-3 text-sm text-gray-600">
                     <li class="flex items-center gap-3">
                         <span class="text-accent font-mono text-xs">&#9632;</span>
-                        39 pSEO-specific endpoints
+                        21 commands across 7 resource types
                     </li>
                     <li class="flex items-center gap-3">
                         <span class="text-accent font-mono text-xs">&#9632;</span>
-                        Bearer token authentication
+                        <code>--json</code> flag for machine-readable output
                     </li>
                     <li class="flex items-center gap-3">
                         <span class="text-accent font-mono text-xs">&#9632;</span>
-                        SSE streaming for generation progress
+                        NDJSON streaming for generation progress
                     </li>
                     <li class="flex items-center gap-3">
                         <span class="text-accent font-mono text-xs">&#9632;</span>
-                        Full OpenAPI spec with Scalar docs
+                        Non-interactive login via API key
                     </li>
                     <li class="flex items-center gap-3">
                         <span class="text-accent font-mono text-xs">&#9632;</span>
-                        Pagination, filtering, and sorting on all list endpoints
+                        Works with Claude Code, Codex, OpenClaw, Co-Work
                     </li>
                 </ul>
             </div>
@@ -455,34 +449,31 @@
                     <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
                     <div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
                     <div class="w-3 h-3 rounded-full bg-green-500/80"></div>
-                    <span class="ml-2 text-xs text-gray-500 font-mono">api-endpoints</span>
+                    <span class="ml-2 text-xs text-gray-500 font-mono">terminal</span>
                 </div>
                 <div class="p-6 text-sm leading-relaxed font-mono overflow-x-auto">
-<pre class="!bg-transparent !border-0 !p-0 !m-0"><code><span class="comment"># Niches</span>
-<span class="function">GET</span>    <span class="string">/api/v1/pseo/niches</span>
-<span class="function">GET</span>    <span class="string">/api/v1/pseo/niches/{id}</span>
-<span class="function">POST</span>   <span class="string">/api/v1/pseo/niches/fork</span>
+<pre class="!bg-transparent !border-0 !p-0 !m-0"><code><span class="comment"># Human-friendly output</span>
+<span class="prompt">$</span> <span class="function">contento</span> projects list
 
-<span class="comment"># Collections</span>
-<span class="function">POST</span>   <span class="string">/api/v1/pseo/collections</span>
-<span class="function">GET</span>    <span class="string">/api/v1/pseo/collections/{id}/pages</span>
+<span class="output">  Name               Status   Pages</span>
+<span class="output">  ─────────────────────────────────</span>
+<span class="output">  DevTools Resources active   48</span>
+<span class="output">  Travel Blog        active   120</span>
 
-<span class="comment"># Generation</span>
-<span class="function">POST</span>   <span class="string">/api/v1/pseo/generate</span>
-<span class="function">GET</span>    <span class="string">/api/v1/pseo/generate/{jobId}/stream</span>  <span class="comment"># SSE</span>
+<span class="comment"># Machine-readable output (for agents)</span>
+<span class="prompt">$</span> <span class="function">contento</span> projects list --json
 
-<span class="comment"># Publishing</span>
-<span class="function">POST</span>   <span class="string">/api/v1/pseo/publish</span>
-<span class="function">GET</span>    <span class="string">/api/v1/pseo/publish/batches</span>
+<span class="output">[</span>
+<span class="output">  {"name":"DevTools Resources","status":"active","pages":48},</span>
+<span class="output">  {"name":"Travel Blog","status":"active","pages":120}</span>
+<span class="output">]</span>
 
-<span class="comment"># Analytics</span>
-<span class="function">GET</span>    <span class="string">/api/v1/pseo/analytics/top-pages</span>
-<span class="function">GET</span>    <span class="string">/api/v1/pseo/analytics/niches</span>
-<span class="function">GET</span>    <span class="string">/api/v1/pseo/analytics/export.csv</span>
+<span class="comment"># NDJSON streaming for generation</span>
+<span class="prompt">$</span> <span class="function">contento</span> collections generate --json
 
-<span class="comment"># Domains</span>
-<span class="function">POST</span>   <span class="string">/api/v1/pseo/domains</span>
-<span class="function">GET</span>    <span class="string">/api/v1/pseo/domains/{id}/verify</span></code></pre>
+<span class="output">{"type":"progress","current":6,"total":48,"done":false}</span>
+<span class="output">{"type":"progress","current":22,"total":48,"done":false}</span>
+<span class="output">{"type":"progress","current":48,"total":48,"done":true}</span></code></pre>
                 </div>
             </div>
         </div>
@@ -491,47 +482,42 @@
 
 <div class="section-divider"></div>
 
-<!-- DNS & Custom Domains -->
+<!-- Built for AI Agents -->
 <section class="py-24 px-4 sm:px-6 grid-bg">
     <div class="max-w-6xl mx-auto">
-        <div class="grid lg:grid-cols-2 gap-16 items-start">
-            <div class="order-2 lg:order-1">
-                <div class="console overflow-hidden">
-                    <div class="flex items-center gap-2 px-4 py-3 border-b border-[#2a2b3d]">
-                        <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
-                        <div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
-                        <div class="w-3 h-3 rounded-full bg-green-500/80"></div>
-                        <span class="ml-2 text-xs text-gray-500 font-mono">dns-setup</span>
-                    </div>
-                    <div class="p-6 text-sm leading-relaxed font-mono overflow-x-auto">
-<pre class="!bg-transparent !border-0 !p-0 !m-0"><code><span class="prompt">$</span> contento pseo domains add \
-    --domain worktale.org \
-    --subdomain articles
-
-<span class="output">&gt; Add this DNS record:</span>
-<span class="output">&gt;</span>
-<span class="output">&gt;   Type:  CNAME</span>
-<span class="output">&gt;   Name:  articles</span>
-<span class="output">&gt;   Value: pseo.contentocms.com</span>
-<span class="output">&gt;</span>
-<span class="output">&gt; Verifying DNS... (polling every 5 min)</span>
-
-<span class="prompt">$</span> contento pseo domains status
-
-<span class="output">  articles.worktale.org</span>
-<span class="output">    DNS:  <span class="text-accent">&#10003; verified</span></span>
-<span class="output">    SSL:  <span class="text-accent">&#10003; active</span> (Cloudflare)</span>
-<span class="output">    Pages: 48 published</span>
-<span class="output"></span>
-<span class="output">  tips.worktale.org</span>
-<span class="output">    DNS:  <span class="text-accent">&#10003; verified</span></span>
-<span class="output">    SSL:  <span class="text-accent">&#10003; active</span> (Cloudflare)</span>
-<span class="output">    Pages: 120 published</span></code></pre>
-                    </div>
-                </div>
+        <div class="text-center mb-16">
+            <span class="tag tag-blue mb-4 inline-block">agents</span>
+            <h2 class="text-3xl sm:text-4xl font-bold tracking-tight mb-4">Built for AI Agents</h2>
+            <p class="text-gray-500 max-w-2xl mx-auto">The <code>--json</code> flag on every command means AI agents can drive the entire pSEO workflow. No scraping, no browser automation &mdash; just structured output.</p>
+        </div>
+        <div class="grid md:grid-cols-3 gap-6">
+            <div class="card p-6">
+                <p class="font-mono text-xs text-accent mb-3">structured output</p>
+                <h3 class="font-semibold mb-2">JSON Everywhere</h3>
+                <p class="text-sm text-gray-500">Every command supports <code>--json</code> for machine-readable output. Tables become arrays, status messages become objects.</p>
             </div>
-            <div class="order-1 lg:order-2">
-                <span class="tag tag-blue mb-4 inline-block">domains</span>
+            <div class="card p-6">
+                <p class="font-mono text-xs text-accent mb-3">streaming</p>
+                <h3 class="font-semibold mb-2">NDJSON Progress</h3>
+                <p class="text-sm text-gray-500">Generation streams progress as newline-delimited JSON. Agents can monitor completion without polling.</p>
+            </div>
+            <div class="card p-6">
+                <p class="font-mono text-xs text-accent mb-3">authentication</p>
+                <h3 class="font-semibold mb-2">Non-Interactive Login</h3>
+                <p class="text-sm text-gray-500">Set <code>CONTENTO_API_KEY</code> as an environment variable. No interactive prompts in CI or agent environments.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- DNS & Custom Domains -->
+<section class="py-24 px-4 sm:px-6">
+    <div class="max-w-6xl mx-auto">
+        <div class="grid lg:grid-cols-2 gap-16 items-start">
+            <div>
+                <span class="tag tag-green mb-4 inline-block">domains</span>
                 <h2 class="text-2xl sm:text-3xl font-bold tracking-tight mb-4">DNS &amp; Custom Domains</h2>
                 <p class="text-gray-500 leading-relaxed mb-6">CNAME-based subdomain routing with automatic SSL via Cloudflare. Add a DNS record and your subdomain is live in minutes. Run multiple subdomains per project for different content verticals.</p>
                 <ul class="space-y-3 text-sm text-gray-600">
@@ -553,6 +539,32 @@
                     </li>
                 </ul>
             </div>
+            <div class="console overflow-hidden">
+                <div class="flex items-center gap-2 px-4 py-3 border-b border-[#2a2b3d]">
+                    <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
+                    <div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
+                    <div class="w-3 h-3 rounded-full bg-green-500/80"></div>
+                    <span class="ml-2 text-xs text-gray-500 font-mono">terminal</span>
+                </div>
+                <div class="p-6 text-sm leading-relaxed font-mono overflow-x-auto">
+<pre class="!bg-transparent !border-0 !p-0 !m-0"><code><span class="prompt">$</span> <span class="function">contento</span> domains status
+
+<span class="output">  articles.worktale.org</span>
+<span class="output">    DNS:  <span class="text-accent">&#10003; verified</span></span>
+<span class="output">    SSL:  <span class="text-accent">&#10003; active</span> (Cloudflare)</span>
+<span class="output">    Pages: 48 published</span>
+<span class="output"></span>
+<span class="output">  tips.worktale.org</span>
+<span class="output">    DNS:  <span class="text-accent">&#10003; verified</span></span>
+<span class="output">    SSL:  <span class="text-accent">&#10003; active</span> (Cloudflare)</span>
+<span class="output">    Pages: 120 published</span>
+
+<span class="prompt">$</span> <span class="function">contento</span> domains add \
+    --subdomain <span class="string">"guides.worktale.org"</span>
+
+<span class="output">  Add CNAME: guides -> pseo.contentocms.com</span></code></pre>
+                </div>
+            </div>
         </div>
     </div>
 </section>
@@ -563,14 +575,14 @@
 <section class="py-24 px-4 sm:px-6">
     <div class="max-w-3xl mx-auto text-center">
         <h2 class="text-3xl sm:text-4xl font-bold tracking-tight mb-4">Deploy your first 500 pages today.</h2>
-        <p class="text-gray-500 mb-8">Pick a niche, choose a schema, and publish. No infrastructure to manage.</p>
+        <p class="text-gray-500 mb-8">Install the CLI, pick a niche, choose a schema, and publish. No infrastructure to manage.</p>
         <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
             <a href="docs/index.html" class="btn-primary inline-flex items-center gap-2">
                 Get Started
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
             </a>
-            <a href="docs/api.html" class="btn-secondary inline-flex items-center gap-2">
-                API Docs
+            <a href="docs/cli.html" class="btn-secondary inline-flex items-center gap-2">
+                CLI Reference
             </a>
         </div>
     </div>

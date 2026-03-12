@@ -57,20 +57,17 @@
                     <li><strong>Review &amp; generate</strong> &mdash; Preview the expected page count and confirm.</li>
                 </ol>
 
-                <p>Via the API:</p>
+                <p>Via the CLI:</p>
 
-<pre><span class="function">curl</span> -X POST https://app.contentocms.com/api/v1/pseo/collections \
-  -H <span class="string">"Authorization: Bearer &lt;token&gt;"</span> \
-  -H <span class="string">"Content-Type: application/json"</span> \
-  -d <span class="string">'{
-    "projectId": "proj-uuid-here",
-    "schemaId": "schema-uuid-here",
-    "nicheIds": ["niche-uuid-1", "niche-uuid-2"],
-    "urlPattern": "/{niche}/{subtopic}-ideas-{year}",
-    "titleTemplate": "{count} {subtopic} Ideas for {year}",
-    "publishingMode": "immediate",
-    "concurrentWorkers": 10
-  }'</span></pre>
+<pre><span class="function">contento</span> collections generate \
+    --project proj_8f3a... \
+    --schema <span class="string">"idea-list"</span> \
+    --niches <span class="string">"niche_01...,niche_02..."</span> \
+    --workers <span class="number">10</span>
+
+<span class="output">  Generating 40 pages across 2 niches...</span>
+<span class="output">  [00:26] &#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608; 40/40 (100%)</span>
+<span class="output">  Validation: 38 passed, 2 retried, 0 failed</span></pre>
 
                 <!-- URL pattern tokens -->
                 <h2>URL Pattern Tokens</h2>
@@ -175,16 +172,14 @@ schema: Idea List
                 <!-- Monitoring progress -->
                 <h2>Monitoring Progress</h2>
 
-                <p>The admin dashboard shows real-time generation progress. You can also subscribe to the SSE (Server-Sent Events)
-                streaming endpoint for programmatic monitoring:</p>
+                <p>The CLI shows a real-time progress bar during generation. For machine-readable output, use <code>--json</code>
+                to get NDJSON streaming:</p>
 
-<pre><span class="function">curl</span> -N https://app.contentocms.com/api/v1/pseo/collections/{id}/progress \
-  -H <span class="string">"Authorization: Bearer &lt;token&gt;"</span> \
-  -H <span class="string">"Accept: text/event-stream"</span>
+<pre><span class="function">contento</span> collections generate --project proj_8f3a... --schema <span class="string">"idea-list"</span> --json
 
-<span class="comment"># Events:</span>
-<span class="comment"># data: {"total": 40, "completed": 12, "failed": 1, "status": "generating"}</span>
-<span class="comment"># data: {"total": 40, "completed": 40, "failed": 2, "status": "complete"}</span></pre>
+<span class="output">{"type":"progress","current":12,"total":40,"done":false}</span>
+<span class="output">{"type":"progress","current":28,"total":40,"done":false}</span>
+<span class="output">{"type":"progress","current":40,"total":40,"done":true}</span></pre>
 
                 <!-- Publishing modes -->
                 <h2>Publishing Modes</h2>
@@ -217,26 +212,20 @@ schema: Idea List
                     Drip-feeding 50-100 pages per day produces better indexing results.
                 </div>
 
-                <!-- API Reference -->
-                <h2>API Reference</h2>
+                <!-- CLI Reference -->
+                <h2>CLI Commands</h2>
 
                 <table>
-                    <thead><tr><th>Method</th><th>Endpoint</th><th>Description</th></tr></thead>
+                    <thead><tr><th>Command</th><th>Description</th></tr></thead>
                     <tbody>
-                        <tr><td><code>POST</code></td><td><code>/api/v1/pseo/collections</code></td><td>Create a new collection</td></tr>
-                        <tr><td><code>GET</code></td><td><code>/api/v1/pseo/collections</code></td><td>List all collections for a project</td></tr>
-                        <tr><td><code>GET</code></td><td><code>/api/v1/pseo/collections/{id}</code></td><td>Get collection details</td></tr>
-                        <tr><td><code>PUT</code></td><td><code>/api/v1/pseo/collections/{id}</code></td><td>Update collection settings</td></tr>
-                        <tr><td><code>DELETE</code></td><td><code>/api/v1/pseo/collections/{id}</code></td><td>Delete collection and its pages</td></tr>
-                        <tr><td><code>POST</code></td><td><code>/api/v1/pseo/collections/{id}/generate</code></td><td>Start or restart generation</td></tr>
-                        <tr><td><code>POST</code></td><td><code>/api/v1/pseo/collections/{id}/pause</code></td><td>Pause generation</td></tr>
-                        <tr><td><code>POST</code></td><td><code>/api/v1/pseo/collections/{id}/resume</code></td><td>Resume paused generation</td></tr>
-                        <tr><td><code>GET</code></td><td><code>/api/v1/pseo/collections/{id}/progress</code></td><td>SSE stream of generation progress</td></tr>
-                        <tr><td><code>POST</code></td><td><code>/api/v1/pseo/collections/{id}/publish</code></td><td>Publish all draft pages in the collection</td></tr>
+                        <tr><td><code>contento collections list</code></td><td>List all collections for a project</td></tr>
+                        <tr><td><code>contento collections create</code></td><td>Create a new collection</td></tr>
+                        <tr><td><code>contento collections generate</code></td><td>Create a collection and start generation</td></tr>
+                        <tr><td><code>contento publish</code></td><td>Publish pages from a collection</td></tr>
                     </tbody>
                 </table>
 
-                <p>See the <a href="api.html" style="color: #3D5A80; font-weight: 500;">full API reference</a> for request/response details.</p>
+                <p>See the <a href="cli.html" style="color: #3D5A80; font-weight: 500;">CLI reference</a> for all available flags and options.</p>
 
             </div>
         </main>

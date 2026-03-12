@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Quick Start — Contento pSEO</title>
-    <meta name="description" content="Get Contento pSEO up and running in minutes. Install via Docker or .NET 10, configure your first project, and start generating programmatic SEO pages at scale." />
+    <meta name="description" content="Get Contento pSEO up and running in minutes. Install the CLI, log in, create your first project, and start generating programmatic SEO pages at scale." />
     <script type="module" src="/src/main.js"></script>
 </head>
 <body class="bg-white text-gray-900 antialiased" x-data="{ mobileMenuOpen: false }">
@@ -31,7 +31,7 @@
                 <h2>What is Contento pSEO?</h2>
 
                 <p>
-                    Contento pSEO is a <strong>programmatic SEO engine</strong> that generates thousands of high-quality, niche-targeted pages
+                    Contento pSEO is a <strong>cloud-hosted programmatic SEO engine</strong> that generates thousands of high-quality, niche-targeted pages
                     using AI and structured content schemas. Unlike a traditional CMS where you write each page by hand, Contento automates the
                     entire pipeline: you define a content schema (e.g., "10 Best Tools for {subtopic}"), select your target niches, and the engine
                     cross-multiplies niches with subtopics to produce unique, validated pages at scale.
@@ -39,8 +39,8 @@
                 <p>
                     Contento is <strong>not a CMS</strong>. It is a purpose-built tool for programmatic SEO. Every generated page includes
                     structured JSON-LD, deterministic title patterns for SERP targeting, custom chrome (your branding header/footer), and a
-                    feedback loop from Google Search Console analytics. The result is a self-improving content engine that identifies
-                    what works, doubles down on performing niches, and prunes underperformers automatically.
+                    feedback loop from Google Search Console analytics. The entire platform is driven through the <code>contento</code> CLI,
+                    with a <code>--json</code> flag on every command for AI agent integration.
                 </p>
 
                 <!-- Prerequisites -->
@@ -51,159 +51,123 @@
                         <tr>
                             <th>Dependency</th>
                             <th>Version</th>
-                            <th>Required</th>
+                            <th>Notes</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td><strong>Docker + Docker Compose</strong></td>
-                            <td>24+ / v2</td>
-                            <td>Option A</td>
+                            <td><strong>Node.js</strong></td>
+                            <td>18 or later</td>
+                            <td>Required for the CLI</td>
                         </tr>
                         <tr>
-                            <td><strong>.NET SDK</strong></td>
-                            <td>10.0 or later</td>
-                            <td>Option B</td>
-                        </tr>
-                        <tr>
-                            <td><strong>PostgreSQL</strong></td>
-                            <td>17</td>
-                            <td>Yes</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Redis</strong></td>
-                            <td>7.x</td>
-                            <td>Yes (job queue)</td>
+                            <td><strong>npm</strong></td>
+                            <td>9+</td>
+                            <td>Included with Node.js</td>
                         </tr>
                     </tbody>
                 </table>
 
                 <!-- Install + Run -->
-                <h2>Install &amp; Run</h2>
+                <h2>Install the CLI</h2>
 
-                <h3>Option A &mdash; Docker (recommended)</h3>
+<pre><span class="comment"># Install the Contento CLI globally</span>
+<span class="function">npm</span> install -g contento
 
-<pre><span class="comment"># Clone the repository</span>
-<span class="function">git</span> clone https://github.com/plsft/contento.git
-<span class="keyword">cd</span> contento
+<span class="comment"># Verify the installation</span>
+<span class="function">contento</span> --version
+<span class="output">contento v1.0.0</span></pre>
 
-<span class="comment"># Start all services (app, PostgreSQL 17, Redis 7)</span>
-<span class="function">docker-compose</span> up -d</pre>
+                <!-- Login -->
+                <h2>Log In</h2>
 
-                <p>The application starts at <code>https://localhost:5001</code>. The admin panel is at <code>/admin</code>.</p>
+<pre><span class="comment"># Interactive login (opens browser)</span>
+<span class="function">contento</span> login
 
-                <h3>Option B &mdash; .NET SDK</h3>
+<span class="comment"># Or non-interactive login with API key</span>
+<span class="function">contento</span> login --api-key ck_live_your_key_here
 
-<pre><span class="function">git</span> clone https://github.com/plsft/contento.git
-<span class="keyword">cd</span> contento
-<span class="function">dotnet</span> restore
-<span class="keyword">cd</span> src/Contento.Web
-<span class="function">dotnet</span> run</pre>
-
-                <p>Ensure PostgreSQL 17 and Redis 7 are running locally and configured via environment variables (see below).</p>
+<span class="output">Authenticated as george@example.com</span>
+<span class="output">API key saved to ~/.contento/config.json</span></pre>
 
                 <div class="callout callout-tip">
-                    <strong>Tip:</strong> On first startup, Contento automatically runs database migrations via Bowtie, creates all tables,
-                    and seeds 150 niches and 10 content schemas. No manual migration step is needed.
+                    <strong>Tip:</strong> For CI/CD and AI agent environments, set the <code>CONTENTO_API_KEY</code> environment variable instead of using <code>contento login</code>. The CLI will automatically use it.
                 </div>
 
                 <!-- First Project -->
                 <h2>First Project Setup</h2>
 
-                <ol>
-                    <li>Navigate to <strong>Admin &rarr; pSEO &rarr; Setup Wizard</strong>.</li>
-                    <li>Enter your <strong>domain</strong> (e.g., <code>example.com</code>) and <strong>subdomain</strong> (e.g., <code>resources.example.com</code>).</li>
-                    <li>Add a <strong>CNAME record</strong> in your DNS provider pointing the subdomain to Contento's app domain.</li>
-                    <li>Choose your target <strong>niches</strong> (e.g., Developer Tools, SaaS Analytics) and <strong>content types</strong> (e.g., idea-list, comparison).</li>
-                    <li>Click <strong>Generate First Batch</strong> to kick off your first page generation run.</li>
-                </ol>
+<pre><span class="comment"># Create a project</span>
+<span class="function">contento</span> projects create \
+    --name <span class="string">"DevTools Resources"</span> \
+    --domain <span class="string">"example.com"</span> \
+    --subdomain <span class="string">"resources.example.com"</span>
+
+<span class="output">  Project created: proj_8f3a...</span>
+<span class="output">  Status: pending_dns</span>
+<span class="output"></span>
+<span class="output">  Add this DNS record:</span>
+<span class="output">    Type:   CNAME</span>
+<span class="output">    Name:   resources</span>
+<span class="output">    Target: pseo.contentocms.com</span>
+
+<span class="comment"># Browse niches</span>
+<span class="function">contento</span> niches list --category <span class="string">"Technology"</span>
+
+<span class="comment"># Generate pages</span>
+<span class="function">contento</span> collections generate \
+    --project proj_8f3a... \
+    --schema <span class="string">"idea-list"</span> \
+    --niches <span class="string">"niche_01...,niche_02..."</span>
+
+<span class="comment"># Publish</span>
+<span class="function">contento</span> publish --collection col_9d2f... --mode immediate</pre>
 
                 <p>The generation pipeline expands subtopics, deduplicates, queues AI generation jobs, validates the output, and publishes.
-                You can monitor real-time progress via the SSE streaming endpoint in the admin dashboard.</p>
+                You can monitor real-time progress directly in the terminal.</p>
 
-                <!-- Environment Variables -->
-                <h2>Environment Variables</h2>
+                <!-- Configuration -->
+                <h2>Configuration</h2>
+
+                <p>The CLI stores configuration in <code>~/.contento/config.json</code>:</p>
+
+<pre>{
+  <span class="property">"apiKey"</span>: <span class="string">"ck_live_..."</span>,
+  <span class="property">"baseUrl"</span>: <span class="string">"https://app.contentocms.com"</span>
+}</pre>
+
+                <p>You can also set configuration via environment variables:</p>
 
                 <table>
                     <thead>
                         <tr>
                             <th>Variable</th>
                             <th>Description</th>
-                            <th>Default</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td><code>DATABASE_CONNECTION_STRING</code></td>
-                            <td>PostgreSQL 17 connection string</td>
-                            <td>Required</td>
+                            <td><code>CONTENTO_API_KEY</code></td>
+                            <td>API key for authentication (overrides config file)</td>
                         </tr>
                         <tr>
-                            <td><code>REDIS_CONNECTION_STRING</code></td>
-                            <td>Redis 7 connection string for job queue and caching</td>
-                            <td>Required</td>
-                        </tr>
-                        <tr>
-                            <td><code>CONTENTO_ADMIN_PASSWORD</code></td>
-                            <td>Password for the default admin account</td>
-                            <td>Required</td>
-                        </tr>
-                        <tr>
-                            <td><code>GSC_CLIENT_ID</code></td>
-                            <td>Google Search Console OAuth client ID</td>
-                            <td>Empty (analytics disabled)</td>
-                        </tr>
-                        <tr>
-                            <td><code>GSC_CLIENT_SECRET</code></td>
-                            <td>Google Search Console OAuth client secret</td>
-                            <td>Empty (analytics disabled)</td>
-                        </tr>
-                        <tr>
-                            <td><code>ASPNETCORE_ENVIRONMENT</code></td>
-                            <td>Runtime environment</td>
-                            <td><code>Production</code></td>
-                        </tr>
-                        <tr>
-                            <td><code>ASPNETCORE_URLS</code></td>
-                            <td>Listening URLs</td>
-                            <td><code>http://+:5000</code></td>
+                            <td><code>CONTENTO_API_URL</code></td>
+                            <td>Base URL override (default: <code>https://app.contentocms.com</code>)</td>
                         </tr>
                     </tbody>
                 </table>
-
-                <!-- Project Structure -->
-                <h2>Project Structure</h2>
-
-<pre>contento/
-<span class="comment">|-- src/</span>
-<span class="comment">|   |-- Contento.Core/</span>            <span class="comment"># Domain models, interfaces</span>
-<span class="comment">|   |   |-- Models/</span>                <span class="comment"># Entity models (Project, Niche, Schema, Collection, Page, ...)</span>
-<span class="comment">|   |   |-- Interfaces/</span>            <span class="comment"># Service interfaces</span>
-<span class="comment">|   |</span>
-<span class="comment">|   |-- Contento.Services/</span>        <span class="comment"># Service implementations</span>
-<span class="comment">|   |   |-- Pseo/</span>                 <span class="comment"># pSEO generation pipeline, AI integration</span>
-<span class="comment">|   |   |-- Analytics/</span>            <span class="comment"># GSC sync, metrics aggregation</span>
-<span class="comment">|   |</span>
-<span class="comment">|   |-- Contento.Web/</span>             <span class="comment"># ASP.NET 10 web application</span>
-<span class="comment">|   |   |-- Controllers/</span>          <span class="comment"># API controllers (39 pSEO endpoints)</span>
-<span class="comment">|   |   |-- Pages/Admin/</span>          <span class="comment"># Razor admin pages (pSEO dashboard)</span>
-<span class="comment">|   |</span>
-<span class="comment">|   |-- Contento.Tests/</span>           <span class="comment"># NUnit + Moq + Bogus tests</span>
-<span class="comment">|</span>
-<span class="comment">|-- marketing/</span>                    <span class="comment"># Marketing site and docs</span>
-<span class="comment">|-- docker-compose.yml</span>            <span class="comment"># Full stack: app + PostgreSQL 17 + Redis 7</span></pre>
 
                 <!-- Next Steps -->
                 <h2>Next Steps</h2>
 
                 <ul>
-                    <li><a href="projects.html" style="color: #3D5A80; font-weight: 500;">Projects &amp; Domains</a> &mdash; Configure subdomains, DNS, and custom chrome</li>
+                    <li><a href="installation.html" style="color: #3D5A80; font-weight: 500;">Install CLI</a> &mdash; Detailed CLI installation and configuration</li>
+                    <li><a href="first-project.html" style="color: #3D5A80; font-weight: 500;">First Project</a> &mdash; End-to-end walkthrough of creating your first pSEO campaign</li>
                     <li><a href="niches.html" style="color: #3D5A80; font-weight: 500;">Niche Taxonomy</a> &mdash; Browse 150 built-in niches or create custom ones</li>
                     <li><a href="schemas.html" style="color: #3D5A80; font-weight: 500;">Content Schemas</a> &mdash; Understand the 10 built-in schemas and create your own</li>
-                    <li><a href="collections.html" style="color: #3D5A80; font-weight: 500;">Collections &amp; Generation</a> &mdash; Build and run generation pipelines</li>
-                    <li><a href="api.html" style="color: #3D5A80; font-weight: 500;">API Reference</a> &mdash; All 39 pSEO REST endpoints</li>
+                    <li><a href="cli.html" style="color: #3D5A80; font-weight: 500;">CLI Reference</a> &mdash; All 21 commands with flags and examples</li>
+                    <li><a href="agents.html" style="color: #3D5A80; font-weight: 500;">Agent Integration</a> &mdash; Use Contento with Claude Code, Codex, and other AI agents</li>
                     <li><a href="analytics.html" style="color: #3D5A80; font-weight: 500;">Analytics &amp; GSC</a> &mdash; Connect Google Search Console and optimize</li>
-                    <li><a href="deployment.html" style="color: #3D5A80; font-weight: 500;">Deployment</a> &mdash; Production Docker, Cloudflare, and scaling</li>
                 </ul>
 
             </div>

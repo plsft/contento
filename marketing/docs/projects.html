@@ -56,19 +56,20 @@
                     <li>Save. The project starts in <code>pending_dns</code> status.</li>
                 </ol>
 
-                <h3>Via the API</h3>
+                <h3>Via the CLI</h3>
 
-<pre><span class="function">curl</span> -X POST https://app.contentocms.com/api/v1/pseo/projects \
-  -H <span class="string">"Authorization: Bearer &lt;token&gt;"</span> \
-  -H <span class="string">"Content-Type: application/json"</span> \
-  -d <span class="string">'{
-    "name": "DevTools Resources",
-    "domain": "example.com",
-    "subdomain": "resources.example.com",
-    "backlinkUrl": "https://example.com",
-    "backlinkAnchorText": "Example Inc",
-    "ctaHtml": "&lt;a href=\"https://example.com/signup\" class=\"cta-btn\"&gt;Start Free Trial&lt;/a&gt;"
-  }'</span></pre>
+<pre><span class="function">contento</span> projects create \
+    --name <span class="string">"DevTools Resources"</span> \
+    --domain <span class="string">"example.com"</span> \
+    --subdomain <span class="string">"resources.example.com"</span>
+
+<span class="output">  Project created: proj_8f3a...</span>
+<span class="output">  Status: pending_dns</span>
+<span class="output"></span>
+<span class="output">  Add this DNS record:</span>
+<span class="output">    Type:   CNAME</span>
+<span class="output">    Name:   resources</span>
+<span class="output">    Target: pseo.contentocms.com</span></pre>
 
                 <!-- DNS / CNAME -->
                 <h2>DNS &amp; CNAME Setup</h2>
@@ -108,16 +109,7 @@
                     <li><strong>Custom CSS</strong> &mdash; Styles scoped to your chrome elements</li>
                 </ul>
 
-                <p>Upload chrome via the admin UI on the project edit page, or via the API:</p>
-
-<pre><span class="function">curl</span> -X PUT https://app.contentocms.com/api/v1/pseo/projects/{id}/chrome \
-  -H <span class="string">"Authorization: Bearer &lt;token&gt;"</span> \
-  -H <span class="string">"Content-Type: application/json"</span> \
-  -d <span class="string">'{
-    "headerHtml": "&lt;nav class=\"site-nav\"&gt;&lt;a href=\"/\"&gt;Home&lt;/a&gt;&lt;/nav&gt;",
-    "footerHtml": "&lt;footer&gt;&amp;copy; 2026 Example Inc&lt;/footer&gt;",
-    "customCss": ".site-nav { padding: 1rem 2rem; background: #fff; border-bottom: 1px solid #e5e7eb; }"
-  }'</span></pre>
+                <p>Upload chrome via the dashboard on the project edit page, or via the CLI. See <a href="chrome.html" style="color: #3D5A80; font-weight: 500;">Custom Chrome</a> for the full guide.</p>
 
                 <p>See <a href="chrome.html" style="color: #3D5A80; font-weight: 500;">Custom Chrome</a> for the full guide.</p>
 
@@ -157,34 +149,27 @@
                     </tbody>
                 </table>
 
-                <p>Transition between states via the admin UI or the API:</p>
+                <p>Transition between states via the dashboard or the CLI:</p>
 
-<pre><span class="comment"># Suspend a project</span>
-<span class="function">curl</span> -X POST https://app.contentocms.com/api/v1/pseo/projects/{id}/suspend \
-  -H <span class="string">"Authorization: Bearer &lt;token&gt;"</span>
+<pre><span class="comment"># Check project status</span>
+<span class="function">contento</span> projects status --project proj_8f3a...
 
-<span class="comment"># Reactivate a suspended project</span>
-<span class="function">curl</span> -X POST https://app.contentocms.com/api/v1/pseo/projects/{id}/activate \
-  -H <span class="string">"Authorization: Bearer &lt;token&gt;"</span></pre>
+<span class="comment"># List all projects</span>
+<span class="function">contento</span> projects list</pre>
 
-                <!-- API Reference -->
-                <h2>API Reference</h2>
+                <!-- CLI Reference -->
+                <h2>CLI Commands</h2>
 
                 <table>
-                    <thead><tr><th>Method</th><th>Endpoint</th><th>Description</th></tr></thead>
+                    <thead><tr><th>Command</th><th>Description</th></tr></thead>
                     <tbody>
-                        <tr><td><code>POST</code></td><td><code>/api/v1/pseo/projects</code></td><td>Create a new project</td></tr>
-                        <tr><td><code>GET</code></td><td><code>/api/v1/pseo/projects</code></td><td>List all projects</td></tr>
-                        <tr><td><code>GET</code></td><td><code>/api/v1/pseo/projects/{id}</code></td><td>Get project by ID</td></tr>
-                        <tr><td><code>PUT</code></td><td><code>/api/v1/pseo/projects/{id}</code></td><td>Update project settings</td></tr>
-                        <tr><td><code>DELETE</code></td><td><code>/api/v1/pseo/projects/{id}</code></td><td>Delete project and all its data</td></tr>
-                        <tr><td><code>PUT</code></td><td><code>/api/v1/pseo/projects/{id}/chrome</code></td><td>Upload custom chrome (header, footer, CSS)</td></tr>
-                        <tr><td><code>POST</code></td><td><code>/api/v1/pseo/projects/{id}/activate</code></td><td>Activate or reactivate a project</td></tr>
-                        <tr><td><code>POST</code></td><td><code>/api/v1/pseo/projects/{id}/suspend</code></td><td>Suspend a project</td></tr>
+                        <tr><td><code>contento projects list</code></td><td>List all projects</td></tr>
+                        <tr><td><code>contento projects create</code></td><td>Create a new project</td></tr>
+                        <tr><td><code>contento projects status</code></td><td>Get project status and page count</td></tr>
                     </tbody>
                 </table>
 
-                <p>See the <a href="api.html" style="color: #3D5A80; font-weight: 500;">full API reference</a> for request/response details.</p>
+                <p>See the <a href="cli.html" style="color: #3D5A80; font-weight: 500;">CLI reference</a> for all available flags and options.</p>
 
             </div>
         </main>

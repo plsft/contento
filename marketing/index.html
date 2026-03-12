@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Contento — Programmatic SEO Engine for Any Domain</title>
-    <meta name="description" content="Generate thousands of structured, schema-validated, AI-powered pages on your subdomain. 150+ niches, 10 content types, no infrastructure required. Open source, built on .NET 10." />
+    <meta name="description" content="Generate thousands of structured, schema-validated, AI-powered pages on your subdomain. 150+ niches, 10 content types, cloud-hosted at contentocms.com. CLI-first, built for AI agents." />
     <script type="module" src="/src/main.js"></script>
 </head>
 <body class="bg-white text-gray-900 antialiased">
@@ -15,20 +15,20 @@
 <section class="pt-32 pb-20 px-4 sm:px-6 dot-bg">
     <div class="max-w-6xl mx-auto">
         <div class="max-w-3xl mx-auto text-center">
-            <p class="font-mono text-sm text-accent mb-6">&gt; pseo v2.0 &mdash; open source &mdash; .net 10</p>
+            <p class="font-mono text-sm text-accent mb-6">&gt; cloud-hosted &middot; cli-first &middot; agentic AI</p>
             <h1 class="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.1] mb-6">
                 Programmatic SEO<br>for any domain.
             </h1>
             <p class="text-lg sm:text-xl text-gray-500 leading-relaxed max-w-2xl mx-auto mb-10">
-                Generate thousands of structured, schema-validated, AI-powered pages &mdash; hosted on your subdomain. No infrastructure required.
+                Generate thousands of structured, schema-validated, AI-powered pages &mdash; hosted on your subdomain. Cloud-hosted at contentocms.com, driven by the <code>contento</code> CLI.
             </p>
             <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
                 <a href="docs/index.html" class="btn-primary inline-flex items-center gap-2">
                     Get Started
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
                 </a>
-                <a href="docs/api.html" class="btn-secondary inline-flex items-center gap-2">
-                    View API Docs
+                <a href="docs/cli.html" class="btn-secondary inline-flex items-center gap-2">
+                    Install CLI
                 </a>
             </div>
         </div>
@@ -43,16 +43,18 @@
                     <span class="ml-2 text-xs text-gray-500 font-mono">terminal</span>
                 </div>
                 <div class="p-6 text-sm leading-relaxed font-mono">
-                    <p><span class="prompt">$</span> contento pseo create --domain worktale.org --subdomain articles</p>
-                    <p class="output">&gt; Project created: <span class="url">articles.worktale.org</span></p>
-                    <p class="output">&gt; DNS: Add CNAME articles &rarr; pseo.contentocms.com</p>
-                    <p class="mt-4"><span class="prompt">$</span> contento pseo generate --collection "Developer Ideas" --niches 3</p>
-                    <p class="output">&gt; Expanding subtopics... 48 pages queued</p>
-                    <p class="output">&gt; Generating [&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9601;&#9601;&#9601;&#9601;] 36/48</p>
-                    <p class="output">&gt; Schema validation: <span class="text-accent">36 passed</span>, 0 failed</p>
-                    <p class="mt-4"><span class="prompt">$</span> contento pseo publish --batch 50</p>
-                    <p class="output">&gt; Published 36 pages to <span class="url">articles.worktale.org</span></p>
-                    <p class="output">&gt; Sitemap updated. 36 URLs indexed.</p>
+                    <p><span class="prompt">$</span> npm install -g contento</p>
+                    <p><span class="prompt">$</span> contento login --api-key ck_live_abc123</p>
+                    <p class="output">&gt; <span class="text-accent">&#10003;</span> Authenticated</p>
+                    <p class="mt-4"><span class="prompt">$</span> contento projects create --name "Articles" --domain worktale.org --subdomain articles</p>
+                    <p class="output">&gt; <span class="text-accent">&#10003;</span> Project created: <span class="url">articles.worktale.org</span></p>
+                    <p class="output">&gt; Add CNAME: articles &rarr; pseo.contentocms.com</p>
+                    <p class="mt-4"><span class="prompt">$</span> contento collections generate coll_a1b2c3</p>
+                    <p class="output">&gt; Generating 48 pages across 3 niches...</p>
+                    <p class="output">&gt; [&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9601;&#9601;&#9601;&#9601;] 36/48 (75%) | 2 retried | ETA 8s</p>
+                    <p class="output">&gt; <span class="text-accent">&#10003;</span> 48 pages generated, 46 validated, 2 retried</p>
+                    <p class="mt-4"><span class="prompt">$</span> contento publish coll_a1b2c3</p>
+                    <p class="output">&gt; <span class="text-accent">&#10003;</span> Published 48 pages to <span class="url">articles.worktale.org</span></p>
                 </div>
             </div>
         </div>
@@ -76,8 +78,8 @@
             <p class="text-sm text-gray-500 mt-1">Max Pages</p>
         </div>
         <div>
-            <p class="stat-number text-3xl" style="color: #1a1b26;">39</p>
-            <p class="text-sm text-gray-500 mt-1">API Endpoints</p>
+            <p class="stat-number text-3xl" style="color: #1a1b26;">5 min</p>
+            <p class="text-sm text-gray-500 mt-1">To First Page</p>
         </div>
     </div>
 </section>
@@ -93,8 +95,8 @@
         <div class="grid md:grid-cols-3 gap-6">
             <div class="card p-6">
                 <div class="stat-number text-4xl text-gray-200 mb-4">01</div>
-                <h3 class="font-semibold text-lg mb-2">Connect your domain</h3>
-                <p class="text-sm text-gray-500 leading-relaxed">Add a CNAME record. Contento handles SSL via Cloudflare. Your subdomain (<code>articles.yourdomain.com</code>) goes live in minutes.</p>
+                <h3 class="font-semibold text-lg mb-2">Install the CLI</h3>
+                <p class="text-sm text-gray-500 leading-relaxed">Run <code>npm install -g contento</code> and authenticate with your API key. Create a project, add a CNAME record, and your subdomain goes live in minutes.</p>
             </div>
             <div class="card p-6">
                 <div class="stat-number text-4xl text-gray-200 mb-4">02</div>
@@ -110,12 +112,12 @@
     </div>
 </section>
 
-<!-- Architecture Diagram -->
+<!-- Built for AI Agents -->
 <section class="py-24 px-4 sm:px-6 grid-bg">
     <div class="max-w-6xl mx-auto">
         <div class="text-center mb-12">
-            <h2 class="text-3xl sm:text-4xl font-bold tracking-tight mb-4">Architecture</h2>
-            <p class="text-gray-500 max-w-2xl mx-auto">From niche selection to live pages on your domain.</p>
+            <h2 class="text-3xl sm:text-4xl font-bold tracking-tight mb-4">Built for AI Agents</h2>
+            <p class="text-gray-500 max-w-2xl mx-auto">Claude Code, Codex, OpenClaw, and Co-Work can automate the entire pSEO workflow through the CLI.</p>
         </div>
         <div class="max-w-3xl mx-auto">
             <div class="console overflow-hidden">
@@ -123,22 +125,32 @@
                     <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
                     <div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
                     <div class="w-3 h-3 rounded-full bg-green-500/80"></div>
-                    <span class="ml-2 text-xs text-gray-500 font-mono">architecture.txt</span>
+                    <span class="ml-2 text-xs text-gray-500 font-mono">agent-workflow.sh</span>
                 </div>
                 <div class="p-6 text-xs sm:text-sm leading-relaxed font-mono overflow-x-auto">
-<pre class="!bg-transparent !border-0 !p-0 !m-0"><code>&#9484;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9488;
-&#9474;              CONTENTO PSEO ENGINE                &#9474;
-&#9500;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9516;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9516;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9508;
-&#9474;  150+ Niches &#9474;  10 Schemas  &#9474;  AI Generation    &#9474;
-&#9474;  with rich   &#9474;  with strict &#9474;  with concurrent  &#9474;
-&#9474;  context     &#9474;  validation  &#9474;  workers          &#9474;
-&#9500;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9524;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9524;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9508;
-&#9474;           Validated JSON Content Store           &#9474;
-&#9500;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9508;
-&#9474;  Your Header &#9474; Rendered Content &#9474; Your Footer   &#9474;
-&#9500;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9508;
-&#9474;         articles.yourdomain.com                  &#9474;
-&#9492;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9496;</code></pre>
+<pre class="!bg-transparent !border-0 !p-0 !m-0"><code><span class="comment"># An AI agent can run the full workflow non-interactively:</span>
+
+<span class="comment"># 1. List available niches (JSON output for parsing)</span>
+<span class="prompt">$</span> contento niches list --category "Technology" --json
+
+<span class="comment"># 2. Create a collection</span>
+<span class="prompt">$</span> contento collections create \
+    --project proj_8f3a \
+    --schema idea-list \
+    --niches niche_01,niche_02,niche_03 \
+    --json
+
+<span class="comment"># 3. Generate pages (streams NDJSON progress)</span>
+<span class="prompt">$</span> contento collections generate coll_a1b2c3 --json
+<span class="output">{"completed":12,"total":48,"status":"generating"}</span>
+<span class="output">{"completed":48,"total":48,"status":"done","passed":46}</span>
+
+<span class="comment"># 4. Publish</span>
+<span class="prompt">$</span> contento publish coll_a1b2c3 --mode immediate --json
+<span class="output">{"published":48,"crossLinks":142,"sitemap":48}</span>
+
+<span class="comment"># 5. Check analytics</span>
+<span class="prompt">$</span> contento analytics top-pages --project proj_8f3a --days 30 --json</code></pre>
                 </div>
             </div>
         </div>
@@ -351,21 +363,21 @@
     </div>
 </section>
 
-<!-- Tech Stack -->
+<!-- Cloud Platform -->
 <section class="py-24 px-4 sm:px-6" style="background: #FAFBFC;">
     <div class="section-divider mb-24"></div>
     <div class="max-w-4xl mx-auto text-center">
-        <h2 class="text-3xl font-bold tracking-tight mb-4">Built on proven foundations</h2>
-        <p class="text-gray-500 mb-12">Modern stack, battle-tested components, zero lock-in.</p>
+        <h2 class="text-3xl font-bold tracking-tight mb-4">Cloud-hosted. Zero infrastructure.</h2>
+        <p class="text-gray-500 mb-12">Contento runs on contentocms.com. Install the CLI, authenticate, and start generating. No servers, no Docker, no databases to manage.</p>
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
-            <div class="card p-4 text-center"><p class="font-semibold mb-1">.NET 10</p><p class="text-gray-500 text-xs">Runtime</p></div>
-            <div class="card p-4 text-center"><p class="font-semibold mb-1">PostgreSQL</p><p class="text-gray-500 text-xs">Database</p></div>
-            <div class="card p-4 text-center"><p class="font-semibold mb-1">Redis</p><p class="text-gray-500 text-xs">Cache + queues</p></div>
+            <div class="card p-4 text-center"><p class="font-semibold mb-1">CLI-First</p><p class="text-gray-500 text-xs">npm package</p></div>
+            <div class="card p-4 text-center"><p class="font-semibold mb-1">AI Agents</p><p class="text-gray-500 text-xs">--json mode</p></div>
             <div class="card p-4 text-center"><p class="font-semibold mb-1">Cloudflare</p><p class="text-gray-500 text-xs">DNS + SSL</p></div>
-            <div class="card p-4 text-center"><p class="font-semibold mb-1">Alpine.js</p><p class="text-gray-500 text-xs">Interactive UI</p></div>
-            <div class="card p-4 text-center"><p class="font-semibold mb-1">Tailwind v4</p><p class="text-gray-500 text-xs">Styling</p></div>
-            <div class="card p-4 text-center"><p class="font-semibold mb-1">Noundry ORM</p><p class="text-gray-500 text-xs">Data access</p></div>
-            <div class="card p-4 text-center"><p class="font-semibold mb-1">Scalar</p><p class="text-gray-500 text-xs">API docs</p></div>
+            <div class="card p-4 text-center"><p class="font-semibold mb-1">Global CDN</p><p class="text-gray-500 text-xs">Edge delivery</p></div>
+            <div class="card p-4 text-center"><p class="font-semibold mb-1">150+ Niches</p><p class="text-gray-500 text-xs">Built-in taxonomy</p></div>
+            <div class="card p-4 text-center"><p class="font-semibold mb-1">10 Schemas</p><p class="text-gray-500 text-xs">Content types</p></div>
+            <div class="card p-4 text-center"><p class="font-semibold mb-1">GSC Analytics</p><p class="text-gray-500 text-xs">Feedback loop</p></div>
+            <div class="card p-4 text-center"><p class="font-semibold mb-1">NDJSON Streaming</p><p class="text-gray-500 text-xs">Real-time progress</p></div>
         </div>
     </div>
     <div class="section-divider mt-24"></div>
@@ -374,15 +386,15 @@
 <!-- CTA -->
 <section class="py-24 px-4 sm:px-6">
     <div class="max-w-3xl mx-auto text-center">
-        <h2 class="text-3xl sm:text-4xl font-bold tracking-tight mb-4">Deploy your first 500 pages today.</h2>
-        <p class="text-gray-500 mb-8">Pick a niche, choose a schema, and publish. No infrastructure to manage, no configuration to debug.</p>
+        <h2 class="text-3xl sm:text-4xl font-bold tracking-tight mb-4">Generate your first 500 pages today.</h2>
+        <p class="text-gray-500 mb-8">Install the CLI, pick a niche, choose a schema, and publish. No infrastructure to manage, no configuration to debug.</p>
         <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
             <a href="docs/index.html" class="btn-primary inline-flex items-center gap-2">
                 Get Started
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
             </a>
-            <a href="docs/api.html" class="btn-secondary inline-flex items-center gap-2">
-                API Docs
+            <a href="docs/cli.html" class="btn-secondary inline-flex items-center gap-2">
+                CLI Reference
             </a>
         </div>
     </div>

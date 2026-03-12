@@ -136,10 +136,14 @@
 
                 <p>To create a niche from scratch via the admin UI or API:</p>
 
-<pre><span class="function">curl</span> -X POST https://app.contentocms.com/api/v1/pseo/niches \
-  -H <span class="string">"Authorization: Bearer &lt;token&gt;"</span> \
-  -H <span class="string">"Content-Type: application/json"</span> \
-  -d <span class="string">'{
+<pre><span class="comment"># Create a custom niche via the CLI</span>
+<span class="function">contento</span> niches list --category <span class="string">"Software"</span>
+<span class="function">contento</span> niches fork --id niche_01... --name <span class="string">"Custom DevTools"</span>
+
+<span class="comment"># Full niche JSON structure (shown with --json flag):</span>
+<span class="function">contento</span> niches list --id niche_01... --json
+
+{
     "name": "Developer Tools",
     "slug": "developer-tools",
     "category": "Software / SaaS",
@@ -188,7 +192,7 @@
         "workflow automation"
       ]
     }
-  }'</span></pre>
+  }</pre>
 
                 <!-- Example JSON -->
                 <h2>Example: Full Niche JSON</h2>
@@ -249,21 +253,19 @@
   <span class="property">"updatedAt"</span>: <span class="string">"2026-01-15T00:00:00Z"</span>
 }</pre>
 
-                <!-- API Reference -->
-                <h2>API Reference</h2>
+                <!-- CLI Reference -->
+                <h2>CLI Commands</h2>
 
                 <table>
-                    <thead><tr><th>Method</th><th>Endpoint</th><th>Description</th></tr></thead>
+                    <thead><tr><th>Command</th><th>Description</th></tr></thead>
                     <tbody>
-                        <tr><td><code>GET</code></td><td><code>/api/v1/pseo/niches</code></td><td>List all niches (filterable by category, system/custom)</td></tr>
-                        <tr><td><code>GET</code></td><td><code>/api/v1/pseo/niches/{id}</code></td><td>Get niche by ID with full context</td></tr>
-                        <tr><td><code>POST</code></td><td><code>/api/v1/pseo/niches</code></td><td>Create a custom niche</td></tr>
-                        <tr><td><code>PUT</code></td><td><code>/api/v1/pseo/niches/{id}</code></td><td>Update a custom niche (system niches are read-only)</td></tr>
-                        <tr><td><code>DELETE</code></td><td><code>/api/v1/pseo/niches/{id}</code></td><td>Delete a custom niche</td></tr>
+                        <tr><td><code>contento niches list</code></td><td>List all niches (filterable by category)</td></tr>
+                        <tr><td><code>contento niches list --id &lt;id&gt;</code></td><td>Get niche by ID with full context</td></tr>
+                        <tr><td><code>contento niches fork --id &lt;id&gt;</code></td><td>Fork a system niche for customization</td></tr>
                     </tbody>
                 </table>
 
-                <p>See the <a href="api.html" style="color: #3D5A80; font-weight: 500;">full API reference</a> for request/response details.</p>
+                <p>See the <a href="cli.html" style="color: #3D5A80; font-weight: 500;">CLI reference</a> for all available flags and options.</p>
 
             </div>
         </main>

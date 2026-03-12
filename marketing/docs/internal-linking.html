@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Internal Linking — Contento Docs</title>
+    <meta name="description" content="How internal linking works in Contento pSEO: same-niche cross-linking, related page discovery, link injection, and link equity distribution." />
+    <script type="module" src="/src/main.js"></script>
+</head>
+<body class="bg-white text-gray-900 antialiased" x-data="{ mobileMenuOpen: false }">
+
+    <%nav-docs%>
+
+    <div class="max-w-[90rem] mx-auto flex">
+        <%sidebar-docs%>
+
+        <main class="flex-1 min-w-0 px-4 sm:px-6 lg:px-12 py-12">
+            <div class="max-w-3xl">
+
+                <!-- Breadcrumb -->
+                <div class="flex items-center gap-2 text-sm text-gray-400 mb-8">
+                    <a href="index.html" class="hover:text-gray-600">Docs</a>
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                    <span class="text-gray-600">Internal Linking</span>
+                </div>
+
+                <h1 style="font-size: 2.25rem; font-weight: 700; color: #1A1A1A; margin-bottom: 0.5rem; letter-spacing: -0.02em;">Internal Linking</h1>
+                <p style="font-size: 1.125rem; color: #6B7280; margin-bottom: 2.5rem;">Automatic cross-linking between related pages for link equity distribution and discoverability.</p>
+
+                <!-- Why internal linking matters -->
+                <h2>Why Internal Linking Matters</h2>
+
+                <p>Internal links serve two critical SEO functions:</p>
+
+                <ol>
+                    <li><strong>Crawl discovery</strong> &mdash; Search engine bots follow internal links to find and index new pages. Without links, pages are "orphaned" and may never be crawled.</li>
+                    <li><strong>Link equity distribution</strong> &mdash; Pages that receive external backlinks pass "authority" to the pages they link to. A well-linked site distributes this equity across all pages, improving rankings site-wide.</li>
+                </ol>
+
+                <p>With thousands of programmatic pages, manual linking is impossible. Contento automates the entire process.</p>
+
+                <!-- How it works -->
+                <h2>How It Works</h2>
+
+                <p>The internal linking engine runs automatically during every publish operation. It follows a three-step process:</p>
+
+                <h3>1. Related Page Discovery</h3>
+
+                <p>The linker identifies related pages using these signals:</p>
+
+                <ul>
+                    <li><strong>Same niche</strong> &mdash; Pages in the same niche are always related (e.g., two Developer Tools pages)</li>
+                    <li><strong>Subtopic similarity</strong> &mdash; Pages covering related subtopics within the same niche (e.g., "CI/CD pipelines" and "container orchestration")</li>
+                    <li><strong>Same schema type</strong> &mdash; Pages using the same content type are weighted slightly lower to encourage cross-type linking</li>
+                </ul>
+
+                <p>The algorithm produces a ranked list of related pages for each newly published page.</p>
+
+                <h3>2. Link Selection</h3>
+
+                <p>From the ranked list, the linker selects 2&ndash;4 links per page. The selection prioritizes:</p>
+
+                <ul>
+                    <li>Pages in the same niche (strongest signal)</li>
+                    <li>Pages with different content types (for content diversity)</li>
+                    <li>Pages that currently have the fewest inbound internal links (equity balancing)</li>
+                </ul>
+
+                <h3>3. Link Injection</h3>
+
+                <p>Links are injected into the page content in two locations:</p>
+
+                <ul>
+                    <li><strong>Contextual links</strong> &mdash; Anchor text links placed naturally within the content body where subtopics are mentioned</li>
+                    <li><strong>Related pages section</strong> &mdash; A "Related Articles" block appended after the main content and before the CTA</li>
+                </ul>
+
+<pre><span class="comment">&lt;!-- Contextual link (injected into content) --&gt;</span>
+<span class="tag">&lt;p&gt;</span>When setting up your CI/CD pipeline, you should also consider
+<span class="tag">&lt;a</span> <span class="property">href</span>=<span class="string">"/container-orchestration-checklist"</span><span class="tag">&gt;</span>container orchestration<span class="tag">&lt;/a&gt;</span>
+as part of your deployment strategy.<span class="tag">&lt;/p&gt;</span>
+
+<span class="comment">&lt;!-- Related pages section (appended after content) --&gt;</span>
+<span class="tag">&lt;aside</span> <span class="property">class</span>=<span class="string">"related-pages"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;h3&gt;</span>Related Articles<span class="tag">&lt;/h3&gt;</span>
+  <span class="tag">&lt;ul&gt;</span>
+    <span class="tag">&lt;li&gt;&lt;a</span> <span class="property">href</span>=<span class="string">"/100-devops-ideas-2026"</span><span class="tag">&gt;</span>100 DevOps Ideas for 2026<span class="tag">&lt;/a&gt;&lt;/li&gt;</span>
+    <span class="tag">&lt;li&gt;&lt;a</span> <span class="property">href</span>=<span class="string">"/infrastructure-as-code-checklist"</span><span class="tag">&gt;</span>The Ultimate Infrastructure as Code Checklist<span class="tag">&lt;/a&gt;&lt;/li&gt;</span>
+    <span class="tag">&lt;li&gt;&lt;a</span> <span class="property">href</span>=<span class="string">"/container-orchestration-faq"</span><span class="tag">&gt;</span>Container Orchestration FAQ<span class="tag">&lt;/a&gt;&lt;/li&gt;</span>
+  <span class="tag">&lt;/ul&gt;</span>
+<span class="tag">&lt;/aside&gt;</span></pre>
+
+                <!-- Bidirectional linking -->
+                <h2>Bidirectional Updates</h2>
+
+                <p>When new pages are published, the linker does not just add links <em>from</em> the new pages. It also updates <em>existing</em> pages to link to the new content. This means:</p>
+
+                <ul>
+                    <li>A page published last week can receive new internal links when related pages are published today</li>
+                    <li>The link graph evolves over time as more content is added</li>
+                    <li>Orphaned pages are automatically connected as related content appears</li>
+                </ul>
+
+                <div class="callout callout-tip">
+                    <strong>Equity balancing:</strong> The linker prefers linking to pages that currently have the fewest inbound internal links. This prevents popular pages from accumulating all the equity while newer pages remain underlinked.
+                </div>
+
+                <!-- Link limits -->
+                <h2>Link Configuration</h2>
+
+                <table>
+                    <thead><tr><th>Setting</th><th>Default</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td>Contextual links per page</td><td>1&ndash;2</td><td>Anchor text links placed within the content body</td></tr>
+                        <tr><td>Related pages per page</td><td>3</td><td>Links shown in the "Related Articles" section</td></tr>
+                        <tr><td>Link scope</td><td>Same niche</td><td>Links are only created between pages in the same niche</td></tr>
+                        <tr><td>Cross-type linking</td><td>Enabled</td><td>Link between different content types (e.g., idea list to checklist)</td></tr>
+                    </tbody>
+                </table>
+
+                <!-- Monitoring -->
+                <h2>Monitoring Internal Links</h2>
+
+<pre><span class="comment"># Get internal link stats for a project</span>
+<span class="prompt">$</span> <span class="function">contento</span> projects link-stats --project proj_8f3a... --json
+
+{
+  <span class="property">"totalPages"</span>: <span class="number">248</span>,
+  <span class="property">"totalInternalLinks"</span>: <span class="number">892</span>,
+  <span class="property">"avgLinksPerPage"</span>: <span class="number">3.6</span>,
+  <span class="property">"orphanedPages"</span>: <span class="number">0</span>,
+  <span class="property">"underlinkedPages"</span>: <span class="number">4</span>,
+  <span class="property">"linksByNiche"</span>: [
+    { <span class="property">"niche"</span>: <span class="string">"Developer Tools"</span>, <span class="property">"links"</span>: <span class="number">342</span> },
+    { <span class="property">"niche"</span>: <span class="string">"DevOps"</span>, <span class="property">"links"</span>: <span class="number">284</span> },
+    { <span class="property">"niche"</span>: <span class="string">"Cloud Computing"</span>, <span class="property">"links"</span>: <span class="number">266</span> }
+  ]
+}</pre>
+
+                <p><strong>Orphaned pages</strong> (zero inbound links) should always be zero in a healthy Contento installation. If the count is non-zero, it usually means pages were manually unpublished, leaving dangling references. Re-running the linking pass fixes this.</p>
+
+            </div>
+        </main>
+    </div>
+
+    <%footer-docs%>
+
+</body>
+</html>
