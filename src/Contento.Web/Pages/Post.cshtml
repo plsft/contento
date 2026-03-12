@@ -1,0 +1,212 @@
+@page "/{slug}"
+@model Contento.Web.Pages.PostModel
+@{
+    ViewData["Title"] = Model.PostItem.MetaTitle ?? Model.PostItem.Title;
+    Layout = "_PublicLayout";
+    ViewData["SiteTitle"] = Model.SiteName;
+    ViewData["SiteTagline"] = Model.SiteTagline;
+    ViewData["MetaDescription"] = Model.PostItem.MetaDescription ?? Model.PostItem.Excerpt;
+    ViewData["OgTitle"] = Model.PostItem.MetaTitle ?? Model.PostItem.Title;
+    ViewData["OgImage"] = Model.PostItem.OgImageUrl ?? Model.PostItem.CoverImageUrl;
+    ViewData["CanonicalUrl"] = Model.PostItem.CanonicalUrl;
+}
+
+<article class="max-w-none">
+    @if (!string.IsNullOrEmpty(Model.PostItem.CoverImageUrl))
+    {
+        <img src="@Model.PostItem.CoverImageUrl" alt="@Model.PostItem.Title"
+             class="w-full h-72 object-cover rounded-lg mb-8" loading="lazy" />
+    }
+
+    @if (Model.PostItem.Tags != null && Model.PostItem.Tags.Length > 0)
+    {
+        <div class="flex gap-2 mb-4">
+            @foreach (var tag in Model.PostItem.Tags)
+            {
+                <a href="/tag/@tag" class="text-xs font-medium uppercase tracking-wider" style="color: var(--color-indigo);">@tag</a>
+            }
+        </div>
+    }
+
+    <h1 class="text-4xl font-bold mb-2" style="font-family: var(--font-serif); color: var(--color-ink); line-height: 1.2;">
+        @Model.PostItem.Title
+    </h1>
+
+    @if (!string.IsNullOrEmpty(Model.PostItem.Subtitle))
+    {
+        <p class="text-xl mb-4" style="color: var(--color-stone);">@Model.PostItem.Subtitle</p>
+    }
+
+    <div class="flex items-center gap-4 text-sm mb-10 pb-8 border-b" style="color: var(--color-ash); border-color: var(--color-mist);">
+        <time datetime="@Model.PostItem.PublishedAt?.ToString("yyyy-MM-dd")">
+            @Model.PostItem.PublishedAt?.ToString("MMMM d, yyyy")
+        </time>
+        <span>&middot;</span>
+        <span>@(Model.PostItem.ReadingTimeMinutes ?? 1) min read</span>
+        @if (Model.PostItem.WordCount.HasValue)
+        {
+            <span>&middot;</span>
+            <span>@Model.PostItem.WordCount.Value.ToString("N0") words</span>
+        }
+    </div>
+
+    @if (Model.ShowPaywall)
+    {
+        @if (!string.IsNullOrEmpty(Model.PostItem.Excerpt))
+        {
+            <div class="editor-content prose prose-lg mb-8" style="color: var(--color-ink); line-height: 1.8;">
+                <p>@Model.PostItem.Excerpt</p>
+            </div>
+        }
+
+        <div class="relative">
+            <div class="absolute inset-x-0 -top-24 h-24" style="background: linear-gradient(to bottom, transparent, var(--color-paper));"></div>
+            <div class="rounded-lg border p-8 text-center" style="border-color: var(--color-indigo); background: var(--color-snow);">
+                <svg class="w-10 h-10 mx-auto mb-3" style="color: var(--color-indigo);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                </svg>
+                <h3 class="text-xl font-semibold mb-2" style="color: var(--color-ink); font-family: var(--font-serif);">This is member-only content</h3>
+                <p class="text-sm mb-6" style="color: var(--color-stone);">
+                    Subscribe to a membership plan to read the full post and access all exclusive content.
+                </p>
+                <a href="/membership"
+                   class="inline-block px-6 py-3 rounded-md text-sm font-medium text-white"
+                   style="background: var(--color-indigo);">
+                    View membership plans
+                </a>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="editor-content prose prose-lg" style="color: var(--color-ink); line-height: 1.8;">
+            @Html.Raw(Model.PostItem.BodyHtml)
+        </div>
+
+        @if (Model.PostItem.Tags != null && Model.PostItem.Tags.Length > 0)
+        {
+            <div class="mt-12 pt-8 border-t" style="border-color: var(--color-mist);">
+                <div class="flex flex-wrap gap-2">
+                    @foreach (var tag in Model.PostItem.Tags)
+                    {
+                        <a href="/tag/@tag"
+                           class="px-3 py-1 rounded-full text-sm"
+                           style="background: var(--color-snow); color: var(--color-stone);">
+                            #@tag
+                        </a>
+                    }
+                </div>
+            </div>
+        }
+    }
+</article>
+
+<!-- Comments Section -->
+<section class="mt-16 pt-8 border-t" style="border-color: var(--color-mist);" x-data="commentForm()">
+    <h2 class="text-2xl font-semibold mb-8" style="font-family: var(--font-serif); color: var(--color-ink);">
+        Comments
+    </h2>
+
+    <form x-on:submit.prevent="submitComment" class="mb-12 space-y-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+                <label class="block text-sm font-medium mb-1" style="color: var(--color-stone);">Name *</label>
+                <input type="text" x-model="name" required
+                       class="w-full px-3 py-2 rounded-md border text-sm"
+                       style="border-color: var(--color-mist); background: var(--color-paper); color: var(--color-ink);" />
+            </div>
+            <div>
+                <label class="block text-sm font-medium mb-1" style="color: var(--color-stone);">Email *</label>
+                <input type="email" x-model="email" required
+                       class="w-full px-3 py-2 rounded-md border text-sm"
+                       style="border-color: var(--color-mist); background: var(--color-paper); color: var(--color-ink);" />
+            </div>
+        </div>
+        <div style="display:none"><input type="text" x-model="website" tabindex="-1" autocomplete="off" /></div>
+        <div>
+            <label class="block text-sm font-medium mb-1" style="color: var(--color-stone);">Comment *</label>
+            <textarea x-model="body" rows="4" required
+                      class="w-full px-3 py-2 rounded-md border text-sm"
+                      style="border-color: var(--color-mist); background: var(--color-paper); color: var(--color-ink);"></textarea>
+        </div>
+        <button type="submit" :disabled="submitting"
+                class="px-5 py-2 rounded-md text-sm font-medium text-white"
+                style="background: var(--color-indigo);">
+            <span x-show="!submitting">Post Comment</span>
+            <span x-show="submitting">Posting...</span>
+        </button>
+        <p x-show="message" x-text="message" class="text-sm mt-2" style="color: var(--color-stone);"></p>
+    </form>
+
+    <div class="space-y-8">
+        @foreach (var comment in Model.Comments.Where(c => c.Status == "approved"))
+        {
+            <div style="padding-left: @(Math.Min(comment.Depth, 3) * 1.5)rem;">
+                <div class="flex items-start gap-3">
+                    <img src="@Contento.Services.GravatarHelper.GetAvatarUrl(comment.AuthorEmail, 40)"
+                         alt="@comment.AuthorName" class="w-10 h-10 rounded-full shrink-0" loading="lazy" />
+                    <div class="flex-1">
+                        <div class="flex items-center gap-2 mb-1">
+                            <span class="font-medium text-sm" style="color: var(--color-ink);">@comment.AuthorName</span>
+                            <time class="text-xs" style="color: var(--color-ash);"
+                                  datetime="@comment.CreatedAt.ToString("yyyy-MM-dd")">
+                                @comment.CreatedAt.ToString("MMM d, yyyy")
+                            </time>
+                        </div>
+                        <div class="text-sm" style="color: var(--color-stone); line-height: 1.6;">
+                            @Html.Raw(comment.BodyHtml ?? comment.BodyMarkdown)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+        @if (!Model.Comments.Any(c => c.Status == "approved"))
+        {
+            <p class="text-sm" style="color: var(--color-ash);">No comments yet. Be the first!</p>
+        }
+    </div>
+</section>
+
+@section Scripts {
+    <script>
+        function commentForm() {
+            return {
+                name: '',
+                email: '',
+                website: '',
+                body: '',
+                submitting: false,
+                message: '',
+                async submitComment() {
+                    if (this.website) return;
+                    this.submitting = true;
+                    this.message = '';
+                    try {
+                        const resp = await fetch('/api/v1/comments', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                postId: '@Model.PostItem.Id',
+                                authorName: this.name,
+                                authorEmail: this.email,
+                                bodyMarkdown: this.body
+                            })
+                        });
+                        if (resp.ok) {
+                            this.message = 'Comment submitted. It will appear after moderation.';
+                            this.name = '';
+                            this.email = '';
+                            this.body = '';
+                        } else {
+                            this.message = 'Failed to post comment. Please try again.';
+                        }
+                    } catch {
+                        this.message = 'Failed to post comment. Please try again.';
+                    }
+                    this.submitting = false;
+                }
+            };
+        }
+    </script>
+}

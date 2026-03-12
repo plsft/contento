@@ -1,0 +1,136 @@
+@page "/admin/pseo"
+@model Contento.Web.Pages.Admin.Pseo.IndexModel
+@{
+    ViewData["Title"] = "pSEO";
+}
+
+<div class="max-w-7xl mx-auto">
+    <!-- Header -->
+    <div class="flex items-center justify-between mb-6">
+        <div>
+            <h2 class="text-xl font-semibold" style="color: var(--color-ink);">Programmatic SEO</h2>
+            <p class="text-sm mt-1" style="color: var(--color-ash);">Manage projects, collections, and generated pages</p>
+        </div>
+        <a href="/admin/pseo/projects?action=new" class="btn btn-primary">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 4v16m8-8H4"/>
+            </svg>
+            New Project
+        </a>
+    </div>
+
+    <!-- Stats Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div class="card">
+            <div class="stat-label">Projects</div>
+            <div class="stat-value">@Model.Projects.Count</div>
+        </div>
+        <div class="card">
+            <div class="stat-label">Collections</div>
+            <div class="stat-value">@Model.TotalCollections</div>
+        </div>
+        <div class="card">
+            <div class="stat-label">Total Pages</div>
+            <div class="stat-value">@Model.TotalPages</div>
+        </div>
+        <div class="card">
+            <div class="stat-label">Published</div>
+            <div class="stat-value">@Model.TotalPublished</div>
+        </div>
+    </div>
+
+    <!-- Quick Links -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+        <a href="/admin/pseo/niches" class="card hover:shadow-md transition-shadow group">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-lg flex items-center justify-center" style="background-color: var(--color-indigo-pale); color: var(--color-indigo);">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/>
+                    </svg>
+                </div>
+                <div>
+                    <p class="text-sm font-medium" style="color: var(--color-ink);">Niche Library</p>
+                    <p class="text-xs" style="color: var(--color-ash);">Browse &amp; manage niches</p>
+                </div>
+            </div>
+        </a>
+        <a href="/admin/pseo/schemas" class="card hover:shadow-md transition-shadow group">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-lg flex items-center justify-center" style="background-color: var(--color-indigo-pale); color: var(--color-indigo);">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                    </svg>
+                </div>
+                <div>
+                    <p class="text-sm font-medium" style="color: var(--color-ink);">Schema Library</p>
+                    <p class="text-xs" style="color: var(--color-ash);">Content structure templates</p>
+                </div>
+            </div>
+        </a>
+        <a href="/admin/pseo/collections" class="card hover:shadow-md transition-shadow group">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-lg flex items-center justify-center" style="background-color: var(--color-indigo-pale); color: var(--color-indigo);">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+                    </svg>
+                </div>
+                <div>
+                    <p class="text-sm font-medium" style="color: var(--color-ink);">Collections</p>
+                    <p class="text-xs" style="color: var(--color-ash);">Page generation groups</p>
+                </div>
+            </div>
+        </a>
+        <a href="/admin/pseo/pages" class="card hover:shadow-md transition-shadow group">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-lg flex items-center justify-center" style="background-color: var(--color-indigo-pale); color: var(--color-indigo);">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                    </svg>
+                </div>
+                <div>
+                    <p class="text-sm font-medium" style="color: var(--color-ink);">Pages</p>
+                    <p class="text-xs" style="color: var(--color-ash);">View generated pages</p>
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <!-- Projects List -->
+    <div class="card">
+        <h3 class="text-base font-semibold mb-4" style="color: var(--color-ink);">Projects</h3>
+        @if (Model.Projects.Any())
+        {
+            <div class="space-y-3">
+                @foreach (var project in Model.Projects)
+                {
+                    <a href="/admin/pseo/projects/@project.Id" class="flex items-center justify-between py-3 px-4 rounded-lg hover:bg-stone-50 transition-colors" style="border: 1px solid var(--color-mist);">
+                        <div class="flex items-center gap-4">
+                            <div>
+                                <p class="text-sm font-medium" style="color: var(--color-ink);">@project.Name</p>
+                                <p class="text-xs" style="color: var(--color-ash);">@project.Fqdn</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <span class="badge @(project.Status switch { "active" => "badge-success", "pending_dns" => "badge-warning", "paused" => "badge-neutral", _ => "badge-neutral" })">
+                                @project.Status
+                            </span>
+                            <svg class="w-4 h-4" style="color: var(--color-cloud);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5l7 7-7 7"/>
+                            </svg>
+                        </div>
+                    </a>
+                }
+            </div>
+        }
+        else
+        {
+            <div class="text-center py-12">
+                <svg class="w-10 h-10 mx-auto mb-3" style="color: var(--color-cloud);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/>
+                </svg>
+                <p style="color: var(--color-cloud);">No pSEO projects yet.</p>
+                <a href="/admin/pseo/projects?action=new" class="btn btn-primary btn-sm mt-4">Create your first project</a>
+            </div>
+        }
+    </div>
+</div>

@@ -1,0 +1,331 @@
+@page "/admin/pseo/analytics"
+@model Contento.Web.Pages.Admin.Pseo.Analytics.IndexModel
+@{
+    ViewData["Title"] = "pSEO Analytics";
+}
+
+<div class="max-w-7xl mx-auto">
+    <!-- Header -->
+    <div class="flex items-center justify-between mb-6">
+        <div>
+            <h2 class="text-xl font-semibold" style="color: var(--color-ink);">Search Analytics</h2>
+            <p class="text-sm mt-1" style="color: var(--color-ash);">Google Search Console performance data for your pSEO pages</p>
+        </div>
+        <div class="flex items-center gap-3">
+            @if (Model.IsGscConnected && Model.ProjectId != null)
+            {
+                <a href="/admin/pseo/analytics?projectId=@Model.ProjectId&days=@Model.Days&handler=Export"
+                   class="btn btn-secondary btn-sm">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+                    </svg>
+                    Export CSV
+                </a>
+                <form method="post" asp-page-handler="Sync" class="inline">
+                    <input type="hidden" name="ProjectId" value="@Model.ProjectId" />
+                    <input type="hidden" name="Days" value="@Model.Days" />
+                    <button type="submit" class="btn btn-primary btn-sm">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                        </svg>
+                        Sync Now
+                    </button>
+                </form>
+            }
+        </div>
+    </div>
+
+    <!-- Project Selector + Date Range -->
+    <div class="card mb-6">
+        <form method="get" class="flex flex-wrap items-end gap-4">
+            <div class="flex-1 min-w-[200px]">
+                <label class="form-label">Project</label>
+                <select name="projectId" class="form-input" onchange="this.form.submit()">
+                    @foreach (var p in Model.Projects)
+                    {
+                        <option value="@p.Id" selected="@(Model.ProjectId == p.Id)">@p.Name (@p.Fqdn)</option>
+                    }
+                </select>
+            </div>
+            <div class="w-40">
+                <label class="form-label">Date Range</label>
+                <select name="days" class="form-input" onchange="this.form.submit()">
+                    <option value="7" selected="@(Model.Days == 7)">Last 7 days</option>
+                    <option value="14" selected="@(Model.Days == 14)">Last 14 days</option>
+                    <option value="30" selected="@(Model.Days == 30)">Last 30 days</option>
+                    <option value="60" selected="@(Model.Days == 60)">Last 60 days</option>
+                    <option value="90" selected="@(Model.Days == 90)">Last 90 days</option>
+                </select>
+            </div>
+        </form>
+    </div>
+
+    @if (Model.SelectedProject == null)
+    {
+        <div class="card text-center py-12">
+            <svg class="w-10 h-10 mx-auto mb-3" style="color: var(--color-cloud);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+            </svg>
+            <p style="color: var(--color-cloud);">No projects found. Create a pSEO project first.</p>
+            <a href="/admin/pseo/projects?action=new" class="btn btn-primary btn-sm mt-4">Create Project</a>
+        </div>
+    }
+    else
+    {
+        <!-- GSC Connection Status -->
+        @if (!Model.IsGscConnected)
+        {
+            <div class="card mb-6" style="border-left: 4px solid var(--color-warning);">
+                <div class="flex items-center gap-4">
+                    <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style="background-color: #fef3c7; color: #d97706;">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z"/>
+                        </svg>
+                    </div>
+                    <div class="flex-1">
+                        <p class="text-sm font-medium" style="color: var(--color-ink);">Google Search Console not connected</p>
+                        <p class="text-xs mt-0.5" style="color: var(--color-ash);">Connect GSC to track clicks, impressions, and indexing status for your pSEO pages.</p>
+                    </div>
+                    @if (Model.GscAuthUrl != null)
+                    {
+                        <a href="@Model.GscAuthUrl" class="btn btn-primary btn-sm">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/>
+                            </svg>
+                            Connect to GSC
+                        </a>
+                    }
+                    else
+                    {
+                        <span class="text-xs" style="color: var(--color-ash);">GSC client ID not configured in appsettings.</span>
+                    }
+                </div>
+            </div>
+        }
+        else if (Model.LastSyncTime != null)
+        {
+            <div class="mb-4">
+                <p class="text-xs" style="color: var(--color-ash);">
+                    Last synced: @(DateTime.TryParse(Model.LastSyncTime, out var ls) ? ls.ToString("MMM dd, yyyy h:mm tt") + " UTC" : Model.LastSyncTime)
+                </p>
+            </div>
+        }
+
+        <!-- Summary Stats Cards -->
+        @if (Model.Summary != null)
+        {
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
+                <div class="card">
+                    <div class="stat-label">Total Clicks</div>
+                    <div class="stat-value">@Model.Summary.TotalClicks.ToString("N0")</div>
+                </div>
+                <div class="card">
+                    <div class="stat-label">Impressions</div>
+                    <div class="stat-value">@Model.Summary.TotalImpressions.ToString("N0")</div>
+                </div>
+                <div class="card">
+                    <div class="stat-label">Avg CTR</div>
+                    <div class="stat-value">@((Model.Summary.AvgCtr * 100).ToString("F1"))%</div>
+                </div>
+                <div class="card">
+                    <div class="stat-label">Avg Position</div>
+                    <div class="stat-value">@Model.Summary.AvgPosition.ToString("F1")</div>
+                </div>
+                <div class="card">
+                    <div class="stat-label">Indexed Pages</div>
+                    <div class="stat-value">@Model.Summary.IndexedPages / @Model.Summary.PublishedPages</div>
+                </div>
+            </div>
+
+            <!-- Daily Traffic Chart (HTML/CSS bar chart) -->
+            @if (Model.Summary.DailyTraffic.Any())
+            {
+                <div class="card mb-8">
+                    <h3 class="text-base font-semibold mb-4" style="color: var(--color-ink);">Daily Traffic</h3>
+                    @{
+                        var maxImpressions = Model.Summary.DailyTraffic.Max(d => d.Impressions);
+                        var maxClicks = Model.Summary.DailyTraffic.Max(d => d.Clicks);
+                        var chartMax = Math.Max(maxImpressions, 1);
+                    }
+                    <div class="overflow-x-auto">
+                        <div class="flex items-end gap-1" style="min-width: @(Model.Summary.DailyTraffic.Count * 24)px; height: 160px;">
+                            @foreach (var day in Model.Summary.DailyTraffic)
+                            {
+                                var barHeight = (int)(((double)day.Impressions / chartMax) * 140);
+                                var clickHeight = (int)(((double)day.Clicks / chartMax) * 140);
+                                <div class="flex flex-col items-center flex-1" style="min-width: 20px;" title="@day.Date.ToString("MMM dd"): @day.Clicks clicks, @day.Impressions impressions">
+                                    <div class="w-full relative" style="height: 140px;">
+                                        <div class="absolute bottom-0 left-0 right-0 rounded-t" style="height: @(barHeight)px; background-color: var(--color-indigo-pale); opacity: 0.6;"></div>
+                                        <div class="absolute bottom-0 left-1 right-1 rounded-t" style="height: @(clickHeight)px; background-color: var(--color-indigo);"></div>
+                                    </div>
+                                    <span class="text-[9px] mt-1 rotate-[-45deg] origin-top-left" style="color: var(--color-ash);">@day.Date.ToString("dd")</span>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-6 mt-4 text-xs" style="color: var(--color-ash);">
+                        <div class="flex items-center gap-2">
+                            <div class="w-3 h-3 rounded" style="background-color: var(--color-indigo);"></div>
+                            <span>Clicks</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <div class="w-3 h-3 rounded" style="background-color: var(--color-indigo-pale); opacity: 0.6;"></div>
+                            <span>Impressions</span>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+
+        <!-- Top Performing Pages -->
+        @if (Model.TopPages.Any())
+        {
+            <div class="card mb-8">
+                <h3 class="text-base font-semibold mb-4" style="color: var(--color-ink);">Top 10 Performing Pages</h3>
+                <div class="overflow-x-auto">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Page</th>
+                                <th class="text-right">Clicks</th>
+                                <th class="text-right">Impressions</th>
+                                <th class="text-right">CTR</th>
+                                <th class="text-right">Position</th>
+                                <th class="text-center">Indexed</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{ var topPageList = Model.TopPages; }
+                            @foreach (var pg in topPageList)
+                            {
+                                <tr>
+                                    <td>
+                                        <div class="max-w-xs truncate">
+                                            <span class="text-sm font-medium" style="color: var(--color-ink);">@pg.Title</span>
+                                            <p class="text-xs truncate" style="color: var(--color-ash);">@pg.Slug</p>
+                                        </div>
+                                    </td>
+                                    <td class="text-right font-medium" style="color: var(--color-ink);">@pg.Clicks.ToString("N0")</td>
+                                    <td class="text-right" style="color: var(--color-stone);">@pg.Impressions.ToString("N0")</td>
+                                    <td class="text-right" style="color: var(--color-stone);">@((pg.Ctr * 100).ToString("F1"))%</td>
+                                    <td class="text-right" style="color: var(--color-stone);">@pg.Position.ToString("F1")</td>
+                                    <td class="text-center">
+                                        @if (pg.IsIndexed)
+                                        {
+                                            <span class="badge badge-success">Yes</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge badge-neutral">No</span>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        }
+
+        <!-- Niche Performance -->
+        @if (Model.NicheStats.Any())
+        {
+            <div class="card mb-8">
+                <h3 class="text-base font-semibold mb-4" style="color: var(--color-ink);">Niche Performance</h3>
+                <div class="overflow-x-auto">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Niche</th>
+                                <th class="text-right">Pages</th>
+                                <th class="text-right">Clicks</th>
+                                <th class="text-right">Impressions</th>
+                                <th class="text-right">Avg Position</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var niche in Model.NicheStats)
+                            {
+                                <tr>
+                                    <td>
+                                        <span class="text-sm font-medium" style="color: var(--color-ink);">@niche.NicheSlug</span>
+                                    </td>
+                                    <td class="text-right" style="color: var(--color-stone);">@niche.PageCount</td>
+                                    <td class="text-right font-medium" style="color: var(--color-ink);">@niche.TotalClicks.ToString("N0")</td>
+                                    <td class="text-right" style="color: var(--color-stone);">@niche.TotalImpressions.ToString("N0")</td>
+                                    <td class="text-right" style="color: var(--color-stone);">@niche.AvgPosition.ToString("F1")</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        }
+
+        <!-- Zero Traffic Pages Alert -->
+        @if (Model.ZeroTrafficPages.Any())
+        {
+            <div class="card" style="border-left: 4px solid var(--color-danger);">
+                <div class="flex items-start gap-3 mb-4">
+                    <div class="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0" style="background-color: #fee2e2; color: #dc2626;">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="text-base font-semibold" style="color: var(--color-ink);">Zero Traffic Pages (@Model.ZeroTrafficPages.Count)</h3>
+                        <p class="text-xs mt-0.5" style="color: var(--color-ash);">These pages have been published for 60+ days but have received no clicks. Consider regenerating or improving their content.</p>
+                    </div>
+                </div>
+                <div class="space-y-2 max-h-64 overflow-y-auto">
+                    @{ var zeroList = Model.ZeroTrafficPages.Take(20).ToList(); }
+                    @foreach (var zp in zeroList)
+                    {
+                        <div class="flex items-center justify-between py-2 px-3 rounded" style="background: var(--color-paper);">
+                            <div class="min-w-0 flex-1">
+                                <p class="text-sm truncate" style="color: var(--color-ink);">@zp.Title</p>
+                                <p class="text-xs truncate" style="color: var(--color-ash);">@zp.Slug &middot; Published @zp.PublishedAt?.ToString("MMM dd, yyyy")</p>
+                            </div>
+                            <a href="/admin/pseo/pages/@zp.Id" class="btn btn-secondary btn-sm ml-3 flex-shrink-0">View</a>
+                        </div>
+                    }
+                </div>
+                @if (Model.ZeroTrafficPages.Count > 20)
+                {
+                    <p class="text-xs mt-3" style="color: var(--color-ash);">... and @(Model.ZeroTrafficPages.Count - 20) more</p>
+                }
+            </div>
+        }
+
+        @if (!Model.IsGscConnected && Model.Summary == null)
+        {
+            <!-- Empty state when no data -->
+            <div class="card text-center py-12">
+                <svg class="w-10 h-10 mx-auto mb-3" style="color: var(--color-cloud);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                </svg>
+                <p style="color: var(--color-cloud);">Connect Google Search Console to start tracking your pSEO performance.</p>
+            </div>
+        }
+    }
+</div>
+
+<!-- Toast from TempData -->
+@section Scripts {
+    @if (TempData["Toast"] is string toast)
+    {
+        <script>
+            document.addEventListener('alpine:init', () => {
+                setTimeout(() => Alpine.store('toast').show('@toast', 'success'), 100);
+            });
+        </script>
+    }
+    @if (TempData["ToastError"] is string toastError)
+    {
+        <script>
+            document.addEventListener('alpine:init', () => {
+                setTimeout(() => Alpine.store('toast').show('@toastError', 'error'), 100);
+            });
+        </script>
+    }
+}

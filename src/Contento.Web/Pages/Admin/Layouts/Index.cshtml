@@ -1,0 +1,269 @@
+@page "/admin/layouts"
+@model Contento.Web.Pages.Admin.Layouts.IndexModel
+@{
+    ViewData["Title"] = "Layouts";
+}
+
+<div class="max-w-7xl mx-auto" x-data="aiLayoutGenerator()">
+    <!-- Header -->
+    <div class="flex items-center justify-between mb-6">
+        <div>
+            <h2 class="text-xl font-semibold" style="color: var(--color-ink);">Layouts</h2>
+            <p class="text-sm mt-1" style="color: var(--color-ash);">Page layout templates for your site</p>
+        </div>
+        <div class="flex gap-2">
+            <button x-on:click="showCreate = !showCreate" class="btn btn-secondary">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 4v16m8-8H4"/>
+                </svg>
+                New Layout
+            </button>
+            <button @@click="showModal = true" class="btn btn-primary">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z"/>
+                </svg>
+                Generate with AI
+            </button>
+        </div>
+    </div>
+
+    <!-- AI Layout Generator Modal -->
+    <div x-show="showModal" x-cloak class="fixed inset-0 z-50 flex items-center justify-center p-4" style="background: rgba(0,0,0,0.4);">
+        <div @@click.away="showModal = false" class="w-full max-w-lg rounded-xl shadow-2xl" style="background: var(--color-snow); border: 1px solid var(--color-mist);">
+            <div class="p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-base font-semibold flex items-center gap-2" style="color: var(--color-ink);">
+                        <svg class="w-5 h-5" style="color: var(--color-indigo);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z"/>
+                        </svg>
+                        Generate Layout with AI
+                    </h3>
+                    <button @@click="showModal = false" class="p-1 rounded hover:bg-stone-100">
+                        <svg class="w-5 h-5" style="color: var(--color-ash);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Prompt input -->
+                <div x-show="!preview">
+                    <label class="form-label">Describe your layout</label>
+                    <textarea x-model="prompt" rows="3" class="form-input" placeholder="e.g., A magazine-style layout with hero banner, two-column body with sidebar, and full-width footer..."></textarea>
+                    <div class="flex gap-2 mt-4">
+                        <button @@click="generate()" :disabled="loading || !prompt.trim()" class="btn btn-primary flex-1">
+                            <span x-show="!loading">Generate</span>
+                            <span x-show="loading" class="flex items-center gap-2">
+                                <svg class="animate-spin h-4 w-4" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                                Generating...
+                            </span>
+                        </button>
+                    </div>
+                    <div x-show="error" x-cloak class="mt-3 text-sm px-3 py-2 rounded bg-red-50 text-red-800 border border-red-200" x-text="error"></div>
+                </div>
+
+                <!-- Preview -->
+                <div x-show="preview" x-cloak>
+                    <!-- Wireframe preview -->
+                    <div class="rounded-lg p-4 mb-4" style="background: var(--color-paper); border: 1px solid var(--color-mist);">
+                        <template x-for="(row, ri) in previewRows" :key="ri">
+                            <div class="flex gap-1 mb-1">
+                                <template x-for="(region, ci) in row" :key="ci">
+                                    <div class="rounded px-2 py-1 text-[10px] text-center truncate" :style="'flex: ' + region.cols + '; background: var(--color-mist); color: var(--color-stone);'" x-text="region.region"></div>
+                                </template>
+                            </div>
+                        </template>
+                    </div>
+                    <div class="space-y-2 mb-4">
+                        <p class="text-sm font-semibold" style="color: var(--color-ink);" x-text="preview.name"></p>
+                        <p class="text-xs" style="color: var(--color-ash);" x-text="preview.description"></p>
+                    </div>
+                    <div class="flex gap-2">
+                        <button @@click="saveLayout()" :disabled="saving" class="btn btn-primary flex-1">
+                            <span x-show="!saving">Save Layout</span>
+                            <span x-show="saving">Saving...</span>
+                        </button>
+                        <button @@click="preview = null; previewRows = []" class="btn btn-secondary">Retry</button>
+                        <button @@click="showModal = false; preview = null; prompt = ''; error = ''" class="btn btn-ghost">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Create Form -->
+    <div x-show="showCreate" x-cloak
+         x-transition:enter="transition ease-out duration-200"
+         x-transition:enter-start="opacity-0 -translate-y-2"
+         x-transition:enter-end="opacity-100 translate-y-0"
+         class="card mb-6">
+        <h3 class="text-sm font-semibold mb-4" style="color: var(--color-ink);">Create Layout</h3>
+        <form method="post" asp-page-handler="Create">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label class="form-label">Name</label>
+                    <input type="text" name="Name" class="form-input" placeholder="Layout name" required />
+                </div>
+                <div>
+                    <label class="form-label">Description</label>
+                    <input type="text" name="Description" class="form-input" placeholder="Brief description" />
+                </div>
+            </div>
+            <div class="flex gap-2 mt-4">
+                <button type="submit" class="btn btn-primary btn-sm">Create</button>
+                <button type="button" x-on:click="showCreate = false" class="btn btn-ghost btn-sm">Cancel</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Layouts Grid -->
+    @if (Model.Layouts.Any())
+    {
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            @foreach (var layout in Model.Layouts)
+            {
+                <div class="card">
+                    <!-- Layout preview placeholder -->
+                    <div class="mb-4 p-4 rounded" style="background-color: var(--color-paper); border: 1px solid var(--color-mist);">
+                        <div class="flex gap-2">
+                            <div class="flex-1">
+                                <div class="h-2 rounded mb-2" style="background-color: var(--color-mist); width: 60%;"></div>
+                                <div class="h-2 rounded mb-2" style="background-color: var(--color-mist);"></div>
+                                <div class="h-2 rounded mb-2" style="background-color: var(--color-mist);"></div>
+                                <div class="h-2 rounded" style="background-color: var(--color-mist); width: 80%;"></div>
+                            </div>
+                            <div class="w-16">
+                                <div class="h-2 rounded mb-2" style="background-color: var(--color-mist);"></div>
+                                <div class="h-2 rounded" style="background-color: var(--color-mist);"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start justify-between">
+                        <div class="min-w-0">
+                            <div class="flex items-center gap-2">
+                                <h3 class="text-sm font-semibold truncate" style="color: var(--color-ink);">@layout.Name</h3>
+                                @if (layout.IsDefault)
+                                {
+                                    <span class="badge badge-info">Default</span>
+                                }
+                            </div>
+                            @if (!string.IsNullOrEmpty(layout.Description))
+                            {
+                                <p class="text-xs mt-1" style="color: var(--color-ash);">@layout.Description</p>
+                            }
+                            <p class="text-xs mt-2" style="color: var(--color-cloud);">
+                                Updated @layout.UpdatedAt.ToString("MMM d, yyyy")
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-2 mt-4 pt-4" style="border-top: 1px solid var(--color-mist);">
+                        @if (!layout.IsDefault)
+                        {
+                            <form method="post" asp-page-handler="SetDefault" class="inline">
+                                <input type="hidden" name="id" value="@layout.Id" />
+                                <button type="submit" class="btn btn-ghost btn-sm">Set Default</button>
+                            </form>
+                            <form method="post" asp-page-handler="Delete" class="inline ml-auto">
+                                <input type="hidden" name="id" value="@layout.Id" />
+                                <button type="submit" class="btn btn-ghost btn-sm" style="color: var(--color-danger);">Delete</button>
+                            </form>
+                        }
+                        else
+                        {
+                            <span class="text-xs" style="color: var(--color-ash);">Default layout cannot be deleted</span>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="card text-center py-16">
+            <svg class="w-12 h-12 mx-auto mb-3" style="color: var(--color-cloud);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z"/>
+            </svg>
+            <p style="color: var(--color-cloud);">No layouts yet.</p>
+            <button x-on:click="showCreate = true" class="btn btn-primary btn-sm mt-4">Create your first layout</button>
+        </div>
+    }
+</div>
+
+@section Scripts {
+<script>
+function aiLayoutGenerator() {
+    return {
+        showCreate: false,
+        showModal: false,
+        prompt: '',
+        loading: false,
+        saving: false,
+        error: '',
+        preview: null,
+        previewRows: [],
+
+        async generate() {
+            this.loading = true;
+            this.error = '';
+            this.preview = null;
+            this.previewRows = [];
+            try {
+                const token = document.querySelector('input[name="__RequestVerificationToken"]')?.value;
+                const response = await fetch('/api/v1/ai/generate-layout', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': token || '' },
+                    body: JSON.stringify({ prompt: this.prompt })
+                });
+                const data = await response.json();
+                if (response.ok && data.data) {
+                    this.preview = data.data;
+                    // Parse structure for wireframe preview
+                    try {
+                        const struct = typeof data.data.structure === 'string'
+                            ? JSON.parse(data.data.structure) : data.data.structure;
+                        this.previewRows = (struct.rows || []).map(r => r.regions || []);
+                    } catch { this.previewRows = []; }
+                } else {
+                    this.error = data.error?.message || 'Failed to generate layout.';
+                }
+            } catch (e) {
+                this.error = 'Request failed: ' + e.message;
+            }
+            this.loading = false;
+        },
+
+        async saveLayout() {
+            if (!this.preview) return;
+            this.saving = true;
+            try {
+                const token = document.querySelector('input[name="__RequestVerificationToken"]')?.value;
+                const structure = typeof this.preview.structure === 'string'
+                    ? this.preview.structure : JSON.stringify(this.preview.structure);
+                const response = await fetch('/api/v1/layouts', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': token || '' },
+                    body: JSON.stringify({
+                        name: this.preview.name,
+                        slug: this.preview.slug,
+                        description: this.preview.description,
+                        structure: structure,
+                        customCss: this.preview.customCss || '',
+                        headContent: this.preview.headContent || ''
+                    })
+                });
+                if (response.ok) {
+                    window.location.reload();
+                } else {
+                    const data = await response.json();
+                    this.error = data.error?.message || 'Failed to save layout.';
+                }
+            } catch (e) {
+                this.error = 'Save failed: ' + e.message;
+            }
+            this.saving = false;
+        }
+    };
+}
+</script>
+}

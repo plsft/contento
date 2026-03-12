@@ -1,0 +1,873 @@
+@page "/admin/media"
+@model Contento.Web.Pages.Admin.Media.IndexModel
+@{
+    ViewData["Title"] = "Media";
+}
+
+<div class="max-w-7xl mx-auto" x-data="mediaLibrary()">
+    <!-- Header -->
+    <div class="flex items-center justify-between mb-6">
+        <div>
+            <h2 class="text-xl font-semibold" style="color: var(--color-ink);">Media Library</h2>
+            <p class="text-sm mt-1" style="color: var(--color-ash);">
+                <span x-text="totalCount">@Model.TotalCount</span> files
+            </p>
+        </div>
+        <div class="flex items-center gap-3">
+            <!-- View Toggle -->
+            <div class="flex border rounded-lg overflow-hidden" style="border-color: var(--color-mist);">
+                <button x-on:click="viewMode = 'grid'"
+                        :style="viewMode === 'grid' ? 'background-color: var(--color-indigo); color: white;' : 'color: var(--color-ash);'"
+                        class="px-2.5 py-1.5 transition-colors">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/>
+                    </svg>
+                </button>
+                <button x-on:click="viewMode = 'list'"
+                        :style="viewMode === 'list' ? 'background-color: var(--color-indigo); color: white;' : 'color: var(--color-ash);'"
+                        class="px-2.5 py-1.5 transition-colors">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                </button>
+            </div>
+            <!-- Bulk Actions (visible when items selected) -->
+            <template x-if="selectedIds.length > 0">
+                <div class="flex items-center gap-2">
+                    <span class="text-sm" style="color: var(--color-ash);" x-text="selectedIds.length + ' selected'"></span>
+                    <button x-on:click="bulkMove()" class="btn btn-ghost btn-sm">Move</button>
+                    <button x-on:click="bulkDelete()" class="btn btn-ghost btn-sm" style="color: var(--color-danger);">Delete</button>
+                </div>
+            </template>
+        </div>
+    </div>
+
+    <!-- Upload Area -->
+    <div class="card mb-6"
+         x-on:dragover.prevent="dragging = true"
+         x-on:dragleave.prevent="dragging = false"
+         x-on:drop.prevent="handleDrop($event)"
+         :style="dragging ? 'border-color: var(--color-indigo); background-color: var(--color-indigo-pale);' : ''">
+        <div class="flex flex-col items-center justify-center py-6">
+            <svg class="w-8 h-8 mb-2" style="color: var(--color-cloud);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
+            </svg>
+            <p class="text-sm font-medium mb-1" style="color: var(--color-stone);">Drag and drop files here</p>
+            <label class="btn btn-primary btn-sm mt-2" style="cursor: pointer;">
+                Browse Files
+                <input type="file" multiple class="hidden" x-ref="fileInput" x-on:change="handleFiles($event)" />
+            </label>
+        </div>
+        <template x-if="uploading">
+            <div class="mt-2 px-4 pb-4">
+                <div class="flex items-center gap-3">
+                    <div class="flex-1 h-1.5 rounded-full" style="background-color: var(--color-mist);">
+                        <div class="h-1.5 rounded-full transition-all duration-300" style="background-color: var(--color-indigo);"
+                             :style="'width: ' + uploadProgress + '%'"></div>
+                    </div>
+                    <span class="text-xs" style="color: var(--color-ash);" x-text="uploadProgress + '%'"></span>
+                </div>
+            </div>
+        </template>
+    </div>
+
+    <!-- Search & Filters -->
+    <div class="flex gap-3 mb-6 flex-wrap items-center">
+        <input type="text" x-model="searchQuery" x-on:input.debounce.400ms="loadMedia(true)"
+               placeholder="Search files..." class="form-input max-w-xs" />
+        <select x-model="typeFilter" x-on:change="loadMedia(true)" class="form-input max-w-xs">
+            <option value="">All Types</option>
+            <option value="image/">Images</option>
+            <option value="application/">Documents</option>
+            <option value="video/">Videos</option>
+        </select>
+        <select x-model="folderFilter" x-on:change="loadMedia(true)" class="form-input max-w-xs">
+            <option value="">All Folders</option>
+            <template x-for="f in folders" :key="f">
+                <option :value="f" x-text="f"></option>
+            </template>
+        </select>
+        <template x-if="searchQuery || typeFilter || folderFilter">
+            <button x-on:click="clearFilters()" class="btn btn-ghost btn-sm">Clear</button>
+        </template>
+    </div>
+
+    <div class="flex gap-6">
+        <!-- Folder Sidebar -->
+        <div class="w-48 flex-shrink-0 hidden lg:block">
+            <h3 class="text-xs font-semibold uppercase tracking-wider mb-3" style="color: var(--color-ash);">Folders</h3>
+            <ul class="space-y-1">
+                <li>
+                    <button x-on:click="folderFilter = ''; loadMedia(true)"
+                            class="w-full text-left px-3 py-2 rounded-lg text-sm transition-colors"
+                            :style="!folderFilter ? 'background-color: var(--color-indigo-pale); color: var(--color-indigo);' : 'color: var(--color-stone);'">
+                        All Files
+                    </button>
+                </li>
+                <li>
+                    <button x-on:click="folderFilter = '__none__'; loadMedia(true)"
+                            class="w-full text-left px-3 py-2 rounded-lg text-sm transition-colors"
+                            :style="folderFilter === '__none__' ? 'background-color: var(--color-indigo-pale); color: var(--color-indigo);' : 'color: var(--color-stone);'">
+                        Unfiled
+                    </button>
+                </li>
+                <template x-for="f in folders" :key="f">
+                    <li>
+                        <button x-on:click="folderFilter = f; loadMedia(true)"
+                                class="w-full text-left px-3 py-2 rounded-lg text-sm transition-colors truncate"
+                                :style="folderFilter === f ? 'background-color: var(--color-indigo-pale); color: var(--color-indigo);' : 'color: var(--color-stone);'"
+                                x-text="f"></button>
+                    </li>
+                </template>
+                <li class="pt-2">
+                    <button x-on:click="createFolder()" class="w-full text-left px-3 py-2 rounded-lg text-xs transition-colors" style="color: var(--color-ash);">
+                        + New Folder
+                    </button>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1 min-w-0">
+            <!-- Select All -->
+            <div class="flex items-center gap-3 mb-4">
+                <label class="flex items-center gap-2 text-sm cursor-pointer" style="color: var(--color-ash);">
+                    <input type="checkbox" x-on:change="toggleSelectAll($event)" :checked="selectedIds.length > 0 && selectedIds.length === mediaItems.length" class="rounded" />
+                    Select All
+                </label>
+            </div>
+
+            <!-- Grid View -->
+            <template x-if="viewMode === 'grid'">
+                <div>
+                    <template x-if="mediaItems.length > 0">
+                        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                            <template x-for="item in mediaItems" :key="item.id">
+                                <div class="group relative">
+                                    <!-- Checkbox -->
+                                    <div class="absolute top-2 left-2 z-10">
+                                        <input type="checkbox" :value="item.id" x-model="selectedIds"
+                                               class="rounded opacity-0 group-hover:opacity-100 transition-opacity"
+                                               :class="selectedIds.includes(item.id) ? '!opacity-100' : ''" />
+                                    </div>
+                                    <div class="card p-0 overflow-hidden cursor-pointer" style="aspect-ratio: 1;"
+                                         x-on:click="openDetail(item)"
+                                         :style="selectedIds.includes(item.id) ? 'ring: 2px solid var(--color-indigo); outline: 2px solid var(--color-indigo);' : ''">
+                                        <template x-if="item.mimeType.startsWith('image/')">
+                                            <img :src="item.thumbnailUrl || item.url" :alt="item.altText || item.originalName"
+                                                 class="w-full h-full object-cover" loading="lazy" />
+                                        </template>
+                                        <template x-if="!item.mimeType.startsWith('image/')">
+                                            <div class="w-full h-full flex flex-col items-center justify-center" style="background-color: var(--color-paper);">
+                                                <svg class="w-10 h-10 mb-2" style="color: var(--color-cloud);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
+                                                </svg>
+                                                <p class="text-xs px-2 text-center truncate" style="color: var(--color-ash); max-width: 100%;"
+                                                   x-text="item.mimeType.split('/').pop().toUpperCase()"></p>
+                                            </div>
+                                        </template>
+                                        <!-- Hover overlay -->
+                                        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-2">
+                                            <div class="flex-1 min-w-0">
+                                                <p class="text-xs text-white truncate" x-text="item.originalName"></p>
+                                                <p class="text-xs text-white/70" x-text="formatSize(item.fileSize)"></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </template>
+                        </div>
+                    </template>
+                    <template x-if="mediaItems.length === 0 && !loading">
+                        <div class="text-center py-16">
+                            <svg class="w-12 h-12 mx-auto mb-3" style="color: var(--color-cloud);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                            </svg>
+                            <p style="color: var(--color-cloud);">No media files found.</p>
+                            <p class="text-sm mt-2" style="color: var(--color-ash);">Upload files by dragging them above or clicking Browse.</p>
+                        </div>
+                    </template>
+                </div>
+            </template>
+
+            <!-- List View -->
+            <template x-if="viewMode === 'list'">
+                <div>
+                    <template x-if="mediaItems.length > 0">
+                        <div class="table-container">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th class="w-8"></th>
+                                        <th class="w-12"></th>
+                                        <th>Name</th>
+                                        <th>Type</th>
+                                        <th>Size</th>
+                                        <th>Folder</th>
+                                        <th>Date</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <template x-for="item in mediaItems" :key="item.id">
+                                        <tr class="cursor-pointer hover:bg-stone-50" x-on:click="openDetail(item)">
+                                            <td x-on:click.stop>
+                                                <input type="checkbox" :value="item.id" x-model="selectedIds" class="rounded" />
+                                            </td>
+                                            <td>
+                                                <template x-if="item.mimeType.startsWith('image/')">
+                                                    <img :src="item.thumbnailUrl || item.url" class="w-10 h-10 rounded object-cover" />
+                                                </template>
+                                                <template x-if="!item.mimeType.startsWith('image/')">
+                                                    <div class="w-10 h-10 rounded flex items-center justify-center" style="background-color: var(--color-paper);">
+                                                        <svg class="w-5 h-5" style="color: var(--color-cloud);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
+                                                        </svg>
+                                                    </div>
+                                                </template>
+                                            </td>
+                                            <td>
+                                                <span class="text-sm font-medium truncate max-w-xs block" style="color: var(--color-ink);" x-text="item.originalName"></span>
+                                            </td>
+                                            <td>
+                                                <span class="text-xs" style="color: var(--color-ash);" x-text="item.mimeType.split('/').pop().toUpperCase()"></span>
+                                            </td>
+                                            <td>
+                                                <span class="text-xs" style="color: var(--color-ash);" x-text="formatSize(item.fileSize)"></span>
+                                            </td>
+                                            <td>
+                                                <span class="text-xs" style="color: var(--color-ash);" x-text="item.folder || '—'"></span>
+                                            </td>
+                                            <td>
+                                                <span class="text-xs" style="color: var(--color-ash);" x-text="formatDate(item.createdAt)"></span>
+                                            </td>
+                                            <td x-on:click.stop>
+                                                <button x-on:click="copyUrl(item.url)" class="btn btn-ghost btn-sm">Copy URL</button>
+                                            </td>
+                                        </tr>
+                                    </template>
+                                </tbody>
+                            </table>
+                        </div>
+                    </template>
+                </div>
+            </template>
+
+            <!-- Infinite Scroll Sentinel -->
+            <div x-ref="scrollSentinel" class="h-8 flex items-center justify-center">
+                <template x-if="loading">
+                    <span class="text-sm" style="color: var(--color-ash);">Loading...</span>
+                </template>
+                <template x-if="!hasMore && mediaItems.length > 0">
+                    <span class="text-xs" style="color: var(--color-cloud);">All files loaded</span>
+                </template>
+            </div>
+        </div>
+    </div>
+
+    <!-- Detail Panel (Slide-out) -->
+    <div x-show="detailItem" x-cloak
+         x-transition:enter="transition ease-out duration-200"
+         x-transition:enter-start="translate-x-full"
+         x-transition:enter-end="translate-x-0"
+         x-transition:leave="transition ease-in duration-150"
+         x-transition:leave-start="translate-x-0"
+         x-transition:leave-end="translate-x-full"
+         class="fixed inset-y-0 right-0 w-96 bg-white shadow-xl z-50 overflow-y-auto border-l"
+         style="border-color: var(--color-mist);">
+        <template x-if="detailItem">
+            <div class="p-6">
+                <!-- Header -->
+                <div class="flex items-center justify-between mb-6">
+                    <h3 class="text-lg font-semibold" style="color: var(--color-ink);">File Details</h3>
+                    <button x-on:click="closeDetail()" class="p-1 rounded hover:bg-stone-100">
+                        <svg class="w-5 h-5" style="color: var(--color-ash);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Preview -->
+                <div class="mb-6">
+                    <template x-if="detailItem.mimeType.startsWith('image/')">
+                        <div class="relative">
+                            <img :src="detailItem.url" :alt="detailItem.altText || detailItem.originalName"
+                                 class="w-full rounded-lg border cursor-crosshair" style="border-color: var(--color-mist);"
+                                 x-ref="focalImage"
+                                 x-on:click="setFocalPoint($event)" />
+                            <!-- Focal point marker -->
+                            <template x-if="detailItem.focalPointX != null && detailItem.focalPointY != null">
+                                <div class="absolute w-5 h-5 -translate-x-1/2 -translate-y-1/2 border-2 border-white rounded-full shadow-md pointer-events-none"
+                                     style="background-color: var(--color-indigo);"
+                                     :style="'left: ' + (detailItem.focalPointX * 100) + '%; top: ' + (detailItem.focalPointY * 100) + '%'">
+                                </div>
+                            </template>
+                            <p class="text-xs mt-1" style="color: var(--color-ash);">Click image to set focal point</p>
+                        </div>
+                    </template>
+                    <template x-if="!detailItem.mimeType.startsWith('image/')">
+                        <div class="w-full h-32 rounded-lg flex items-center justify-center" style="background-color: var(--color-paper);">
+                            <svg class="w-12 h-12" style="color: var(--color-cloud);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
+                            </svg>
+                        </div>
+                    </template>
+                </div>
+
+                <!-- File Info -->
+                <div class="space-y-2 mb-6 text-sm">
+                    <div class="flex justify-between">
+                        <span style="color: var(--color-ash);">Name</span>
+                        <span style="color: var(--color-ink);" x-text="detailItem.originalName" class="text-right truncate max-w-48"></span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span style="color: var(--color-ash);">Type</span>
+                        <span style="color: var(--color-ink);" x-text="detailItem.mimeType"></span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span style="color: var(--color-ash);">Size</span>
+                        <span style="color: var(--color-ink);" x-text="formatSize(detailItem.fileSize)"></span>
+                    </div>
+                    <template x-if="detailItem.width">
+                        <div class="flex justify-between">
+                            <span style="color: var(--color-ash);">Dimensions</span>
+                            <span style="color: var(--color-ink);" x-text="detailItem.width + ' x ' + detailItem.height + ' px'"></span>
+                        </div>
+                    </template>
+                    <div class="flex justify-between">
+                        <span style="color: var(--color-ash);">Uploaded</span>
+                        <span style="color: var(--color-ink);" x-text="formatDate(detailItem.createdAt)"></span>
+                    </div>
+                </div>
+
+                <!-- Copy URL -->
+                <div class="mb-6">
+                    <label class="text-xs font-medium mb-1 block" style="color: var(--color-ash);">URL</label>
+                    <div class="flex gap-2">
+                        <input type="text" :value="detailItem.url" readonly class="form-input text-xs flex-1" />
+                        <button x-on:click="copyUrl(detailItem.url)" class="btn btn-ghost btn-sm">Copy</button>
+                    </div>
+                </div>
+
+                <!-- Editable Fields -->
+                <div class="space-y-4 mb-6">
+                    <div>
+                        <label class="text-xs font-medium mb-1 block" style="color: var(--color-ash);">Alt Text</label>
+                        <input type="text" x-model="detailItem.altText" class="form-input" placeholder="Describe this image..." />
+                    </div>
+                    <div>
+                        <label class="text-xs font-medium mb-1 block" style="color: var(--color-ash);">Caption</label>
+                        <input type="text" x-model="detailItem.caption" class="form-input" placeholder="Optional caption..." />
+                    </div>
+                    <div>
+                        <label class="text-xs font-medium mb-1 block" style="color: var(--color-ash);">Folder</label>
+                        <input type="text" x-model="detailItem.folder" class="form-input" placeholder="e.g. blog-images" />
+                    </div>
+                    <div>
+                        <label class="text-xs font-medium mb-1 block" style="color: var(--color-ash);">Tags</label>
+                        <input type="text" x-model="detailTagsStr" class="form-input" placeholder="tag1, tag2, tag3" />
+                    </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="flex gap-3">
+                    <button x-on:click="saveDetail()" class="btn btn-primary flex-1">Save</button>
+                    <template x-if="detailItem.mimeType.startsWith('image/') && detailItem.mimeType !== 'image/svg+xml'">
+                        <button x-on:click="openCrop(detailItem)" class="btn btn-ghost">Crop</button>
+                    </template>
+                    <button x-on:click="deleteItem(detailItem.id)" class="btn btn-ghost" style="color: var(--color-danger);">Delete</button>
+                </div>
+            </div>
+        </template>
+    </div>
+    <!-- Backdrop for detail panel -->
+    <div x-show="detailItem" x-cloak x-on:click="closeDetail()"
+         class="fixed inset-0 bg-black/20 z-40"></div>
+
+    <!-- Move to Folder Modal -->
+    <div x-show="showMoveModal" x-cloak class="fixed inset-0 z-50 flex items-center justify-center">
+        <div x-on:click="showMoveModal = false" class="fixed inset-0 bg-black/30"></div>
+        <div class="relative bg-white rounded-xl shadow-xl p-6 w-96" style="border: 1px solid var(--color-mist);">
+            <h3 class="text-lg font-semibold mb-4" style="color: var(--color-ink);">Move to Folder</h3>
+            <input type="text" x-model="moveFolderName" class="form-input mb-4" placeholder="Folder name..." />
+            <div class="flex gap-3 justify-end">
+                <button x-on:click="showMoveModal = false" class="btn btn-ghost">Cancel</button>
+                <button x-on:click="confirmMove()" class="btn btn-primary">Move</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Crop Modal -->
+    <div x-show="showCropModal" x-cloak class="fixed inset-0 z-50 flex items-center justify-center">
+        <div x-on:click="closeCrop()" class="fixed inset-0 bg-black/30"></div>
+        <div class="relative bg-white rounded-xl shadow-xl p-6" style="border: 1px solid var(--color-mist); max-width: 90vw; max-height: 90vh; overflow: auto;">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-lg font-semibold" style="color: var(--color-ink);">Crop Image</h3>
+                <button x-on:click="closeCrop()" class="p-1 rounded hover:bg-stone-100">
+                    <svg class="w-5 h-5" style="color: var(--color-ash);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Crop canvas area -->
+            <div class="relative inline-block select-none" x-ref="cropContainer"
+                 x-on:mousedown.prevent="startCrop($event)"
+                 x-on:mousemove.prevent="moveCrop($event)"
+                 x-on:mouseup.prevent="endCrop()">
+                <img :src="cropImageUrl" x-ref="cropImage" class="block max-w-full" style="max-height: 60vh;"
+                     x-on:load="onCropImageLoad()" />
+                <!-- Dark overlay with cutout -->
+                <template x-if="cropRect.w > 0 && cropRect.h > 0">
+                    <div class="absolute inset-0 pointer-events-none">
+                        <!-- Top -->
+                        <div class="absolute bg-black/50" :style="'left:0;top:0;right:0;height:'+cropRect.y+'px'"></div>
+                        <!-- Bottom -->
+                        <div class="absolute bg-black/50" :style="'left:0;bottom:0;right:0;top:'+(cropRect.y+cropRect.h)+'px'"></div>
+                        <!-- Left -->
+                        <div class="absolute bg-black/50" :style="'left:0;top:'+cropRect.y+'px;width:'+cropRect.x+'px;height:'+cropRect.h+'px'"></div>
+                        <!-- Right -->
+                        <div class="absolute bg-black/50" :style="'top:'+cropRect.y+'px;left:'+(cropRect.x+cropRect.w)+'px;right:0;height:'+cropRect.h+'px'"></div>
+                        <!-- Selection border -->
+                        <div class="absolute border-2 border-white" :style="'left:'+cropRect.x+'px;top:'+cropRect.y+'px;width:'+cropRect.w+'px;height:'+cropRect.h+'px'">
+                            <!-- Corner handles -->
+                            <div class="absolute -top-1 -left-1 w-2.5 h-2.5 bg-white border border-gray-400"></div>
+                            <div class="absolute -top-1 -right-1 w-2.5 h-2.5 bg-white border border-gray-400"></div>
+                            <div class="absolute -bottom-1 -left-1 w-2.5 h-2.5 bg-white border border-gray-400"></div>
+                            <div class="absolute -bottom-1 -right-1 w-2.5 h-2.5 bg-white border border-gray-400"></div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+
+            <!-- Crop info -->
+            <div class="mt-4 flex items-center gap-4 text-sm" style="color: var(--color-ash);">
+                <template x-if="cropRect.w > 0 && cropRect.h > 0">
+                    <span x-text="'Selection: ' + Math.round(cropRect.w / cropScale) + ' x ' + Math.round(cropRect.h / cropScale) + ' px'"></span>
+                </template>
+                <template x-if="cropRect.w === 0 || cropRect.h === 0">
+                    <span>Click and drag on the image to select a crop area</span>
+                </template>
+            </div>
+
+            <!-- Optional resize -->
+            <div class="mt-3 flex items-center gap-3">
+                <label class="text-xs font-medium" style="color: var(--color-ash);">Resize to:</label>
+                <input type="number" x-model.number="cropOutputWidth" class="form-input w-24 text-sm" placeholder="Width" min="1" />
+                <span style="color: var(--color-ash);">x</span>
+                <input type="number" x-model.number="cropOutputHeight" class="form-input w-24 text-sm" placeholder="Height" min="1" />
+                <span class="text-xs" style="color: var(--color-ash);">(optional)</span>
+            </div>
+
+            <!-- Actions -->
+            <div class="flex gap-3 justify-end mt-4">
+                <button x-on:click="closeCrop()" class="btn btn-ghost">Cancel</button>
+                <button x-on:click="applyCrop()" class="btn btn-primary" :disabled="cropRect.w === 0 || cropRect.h === 0 || cropSaving">
+                    <span x-show="!cropSaving">Apply Crop</span>
+                    <span x-show="cropSaving">Cropping...</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+<script>
+function mediaLibrary() {
+    return {
+        // State
+        mediaItems: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.MediaItems.Select(m => new {
+            id = m.Id,
+            originalName = m.OriginalName,
+            mimeType = m.MimeType,
+            fileSize = m.FileSize,
+            width = m.Width,
+            height = m.Height,
+            altText = m.AltText,
+            caption = m.Caption,
+            folder = m.Folder,
+            tags = m.Tags,
+            focalPointX = m.FocalPointX,
+            focalPointY = m.FocalPointY,
+            url = Model.GetPublicUrl(m),
+            thumbnailUrl = Model.GetThumbnailUrl(m),
+            createdAt = m.CreatedAt.ToString("o")
+        }))),
+        folders: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.Folders)),
+        totalCount: @Model.TotalCount,
+        viewMode: localStorage.getItem('media-view') || 'grid',
+        selectedIds: [],
+        detailItem: null,
+        detailTagsStr: '',
+        loading: false,
+        hasMore: @(Model.HasMore ? "true" : "false"),
+        page: 1,
+        searchQuery: '',
+        typeFilter: '',
+        folderFilter: '',
+        dragging: false,
+        uploading: false,
+        uploadProgress: 0,
+        showMoveModal: false,
+        moveFolderName: '',
+        showCropModal: false,
+        cropItem: null,
+        cropImageUrl: '',
+        cropRect: { x: 0, y: 0, w: 0, h: 0 },
+        cropDragging: false,
+        cropStartX: 0,
+        cropStartY: 0,
+        cropScale: 1,
+        cropOutputWidth: null,
+        cropOutputHeight: null,
+        cropSaving: false,
+        observer: null,
+
+        init() {
+            this.$watch('viewMode', v => localStorage.setItem('media-view', v));
+            // Infinite scroll observer
+            this.observer = new IntersectionObserver(entries => {
+                if (entries[0].isIntersecting && this.hasMore && !this.loading) {
+                    this.loadMore();
+                }
+            }, { threshold: 0.1 });
+            this.$nextTick(() => {
+                if (this.$refs.scrollSentinel) {
+                    this.observer.observe(this.$refs.scrollSentinel);
+                }
+            });
+        },
+
+        destroy() {
+            if (this.observer) this.observer.disconnect();
+        },
+
+        async loadMedia(reset = false) {
+            if (reset) {
+                this.page = 1;
+                this.mediaItems = [];
+                this.hasMore = true;
+            }
+            this.loading = true;
+            try {
+                const params = new URLSearchParams({ page: this.page, pageSize: 30 });
+                if (this.searchQuery) params.set('q', this.searchQuery);
+                if (this.typeFilter) params.set('mimeTypeFilter', this.typeFilter);
+                if (this.folderFilter) params.set('folder', this.folderFilter);
+                const res = await fetch('/api/v1/media?' + params);
+                const json = await res.json();
+                const items = (json.data || []).map(m => ({
+                    ...m,
+                    url: m.url || ('/uploads/' + m.storagePath),
+                    thumbnailUrl: m.thumbnailUrl || m.url,
+                    createdAt: m.createdAt
+                }));
+                if (reset) {
+                    this.mediaItems = items;
+                } else {
+                    this.mediaItems = [...this.mediaItems, ...items];
+                }
+                this.totalCount = json.meta?.totalCount || this.mediaItems.length;
+                this.hasMore = items.length >= 30;
+            } catch (e) {
+                console.error('Failed to load media:', e);
+            }
+            this.loading = false;
+        },
+
+        async loadMore() {
+            this.page++;
+            await this.loadMedia(false);
+        },
+
+        clearFilters() {
+            this.searchQuery = '';
+            this.typeFilter = '';
+            this.folderFilter = '';
+            this.loadMedia(true);
+        },
+
+        toggleSelectAll(e) {
+            if (e.target.checked) {
+                this.selectedIds = this.mediaItems.map(m => m.id);
+            } else {
+                this.selectedIds = [];
+            }
+        },
+
+        openDetail(item) {
+            this.detailItem = { ...item };
+            this.detailTagsStr = (item.tags || []).join(', ');
+        },
+
+        closeDetail() {
+            this.detailItem = null;
+        },
+
+        setFocalPoint(e) {
+            const rect = e.target.getBoundingClientRect();
+            this.detailItem.focalPointX = Math.round(((e.clientX - rect.left) / rect.width) * 1000) / 1000;
+            this.detailItem.focalPointY = Math.round(((e.clientY - rect.top) / rect.height) * 1000) / 1000;
+        },
+
+        async saveDetail() {
+            const tags = this.detailTagsStr.split(',').map(t => t.trim()).filter(Boolean);
+            try {
+                await fetch('/api/v1/media/' + this.detailItem.id, {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        altText: this.detailItem.altText,
+                        caption: this.detailItem.caption,
+                        folder: this.detailItem.folder,
+                        tags: tags,
+                        focalPointX: this.detailItem.focalPointX,
+                        focalPointY: this.detailItem.focalPointY
+                    })
+                });
+                // Update in list
+                const idx = this.mediaItems.findIndex(m => m.id === this.detailItem.id);
+                if (idx >= 0) {
+                    this.mediaItems[idx] = { ...this.detailItem, tags };
+                }
+                this.closeDetail();
+                await this.refreshFolders();
+            } catch (e) {
+                console.error('Failed to save:', e);
+            }
+        },
+
+        async deleteItem(id) {
+            if (!confirm('Delete this file permanently?')) return;
+            try {
+                await fetch('/api/v1/media/' + id, { method: 'DELETE' });
+                this.mediaItems = this.mediaItems.filter(m => m.id !== id);
+                this.totalCount--;
+                this.closeDetail();
+            } catch (e) {
+                console.error('Delete failed:', e);
+            }
+        },
+
+        bulkMove() {
+            this.moveFolderName = '';
+            this.showMoveModal = true;
+        },
+
+        async confirmMove() {
+            try {
+                await fetch('/api/v1/media/move', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ ids: this.selectedIds, folder: this.moveFolderName })
+                });
+                this.mediaItems.forEach(m => {
+                    if (this.selectedIds.includes(m.id)) m.folder = this.moveFolderName;
+                });
+                this.selectedIds = [];
+                this.showMoveModal = false;
+                await this.refreshFolders();
+            } catch (e) {
+                console.error('Move failed:', e);
+            }
+        },
+
+        async bulkDelete() {
+            if (!confirm(`Delete ${this.selectedIds.length} files permanently?`)) return;
+            try {
+                await fetch('/api/v1/media/bulk', {
+                    method: 'DELETE',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ ids: this.selectedIds })
+                });
+                this.mediaItems = this.mediaItems.filter(m => !this.selectedIds.includes(m.id));
+                this.totalCount -= this.selectedIds.length;
+                this.selectedIds = [];
+            } catch (e) {
+                console.error('Bulk delete failed:', e);
+            }
+        },
+
+        createFolder() {
+            const name = prompt('Folder name:');
+            if (name && name.trim()) {
+                if (!this.folders.includes(name.trim())) {
+                    this.folders.push(name.trim());
+                }
+                this.folderFilter = name.trim();
+                this.loadMedia(true);
+            }
+        },
+
+        async refreshFolders() {
+            try {
+                const res = await fetch('/api/v1/media/folders');
+                const json = await res.json();
+                this.folders = json.data || [];
+            } catch (e) { /* ignore */ }
+        },
+
+        async handleDrop(event) {
+            this.dragging = false;
+            const files = event.dataTransfer.files;
+            if (files.length > 0) await this.uploadFiles(files);
+        },
+
+        async handleFiles(event) {
+            const files = event.target.files;
+            if (files.length > 0) await this.uploadFiles(files);
+        },
+
+        async uploadFiles(files) {
+            this.uploading = true;
+            this.uploadProgress = 0;
+            const total = files.length;
+            let completed = 0;
+
+            for (const file of files) {
+                const formData = new FormData();
+                formData.append('file', file);
+                try {
+                    const res = await fetch('/api/v1/media/upload', { method: 'POST', body: formData });
+                    const json = await res.json();
+                    if (json.data) {
+                        this.mediaItems.unshift({
+                            id: json.data.id,
+                            originalName: json.data.filename || file.name,
+                            mimeType: file.type,
+                            fileSize: file.size,
+                            url: json.data.url,
+                            thumbnailUrl: json.data.url,
+                            createdAt: new Date().toISOString(),
+                            altText: '', caption: '', folder: null, tags: null,
+                            focalPointX: null, focalPointY: null, width: null, height: null
+                        });
+                        this.totalCount++;
+                    }
+                } catch (e) {
+                    console.error('Upload failed:', e);
+                }
+                completed++;
+                this.uploadProgress = Math.round((completed / total) * 100);
+            }
+            this.uploading = false;
+            await this.refreshFolders();
+        },
+
+        openCrop(item) {
+            this.cropItem = { ...item };
+            this.cropImageUrl = item.url;
+            this.cropRect = { x: 0, y: 0, w: 0, h: 0 };
+            this.cropOutputWidth = null;
+            this.cropOutputHeight = null;
+            this.cropSaving = false;
+            this.cropDragging = false;
+            this.showCropModal = true;
+        },
+
+        closeCrop() {
+            this.showCropModal = false;
+            this.cropItem = null;
+        },
+
+        onCropImageLoad() {
+            const img = this.$refs.cropImage;
+            if (img && this.cropItem) {
+                const naturalWidth = this.cropItem.width || img.naturalWidth;
+                this.cropScale = img.clientWidth / naturalWidth;
+            }
+        },
+
+        startCrop(e) {
+            const container = this.$refs.cropContainer;
+            const rect = container.getBoundingClientRect();
+            this.cropStartX = e.clientX - rect.left;
+            this.cropStartY = e.clientY - rect.top;
+            this.cropRect = { x: this.cropStartX, y: this.cropStartY, w: 0, h: 0 };
+            this.cropDragging = true;
+        },
+
+        moveCrop(e) {
+            if (!this.cropDragging) return;
+            const container = this.$refs.cropContainer;
+            const rect = container.getBoundingClientRect();
+            const curX = Math.max(0, Math.min(e.clientX - rect.left, rect.width));
+            const curY = Math.max(0, Math.min(e.clientY - rect.top, rect.height));
+            const x = Math.min(this.cropStartX, curX);
+            const y = Math.min(this.cropStartY, curY);
+            const w = Math.abs(curX - this.cropStartX);
+            const h = Math.abs(curY - this.cropStartY);
+            this.cropRect = { x, y, w, h };
+        },
+
+        endCrop() {
+            this.cropDragging = false;
+        },
+
+        async applyCrop() {
+            if (!this.cropItem || this.cropRect.w === 0 || this.cropRect.h === 0) return;
+            this.cropSaving = true;
+            const scale = this.cropScale;
+            const body = {
+                x: Math.round(this.cropRect.x / scale),
+                y: Math.round(this.cropRect.y / scale),
+                width: Math.round(this.cropRect.w / scale),
+                height: Math.round(this.cropRect.h / scale)
+            };
+            if (this.cropOutputWidth > 0 && this.cropOutputHeight > 0) {
+                body.outputWidth = this.cropOutputWidth;
+                body.outputHeight = this.cropOutputHeight;
+            }
+            try {
+                const res = await fetch('/api/v1/media/' + this.cropItem.id + '/crop', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(body)
+                });
+                if (res.ok) {
+                    const json = await res.json();
+                    // Update in list
+                    const idx = this.mediaItems.findIndex(m => m.id === this.cropItem.id);
+                    if (idx >= 0) {
+                        this.mediaItems[idx].width = json.data.width;
+                        this.mediaItems[idx].height = json.data.height;
+                        this.mediaItems[idx].fileSize = json.data.fileSize;
+                        // Bust image cache
+                        this.mediaItems[idx].url = this.mediaItems[idx].url.split('?')[0] + '?t=' + Date.now();
+                        this.mediaItems[idx].thumbnailUrl = this.mediaItems[idx].url;
+                    }
+                    this.closeCrop();
+                    this.closeDetail();
+                } else {
+                    const err = await res.json();
+                    alert(err.error?.message || 'Crop failed');
+                }
+            } catch (e) {
+                console.error('Crop failed:', e);
+                alert('Crop failed');
+            }
+            this.cropSaving = false;
+        },
+
+        copyUrl(url) {
+            navigator.clipboard.writeText(window.location.origin + url).then(() => {
+                // Silent success
+            });
+        },
+
+        formatSize(bytes) {
+            if (!bytes) return '0 B';
+            if (bytes < 1024) return bytes + ' B';
+            if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+            return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+        },
+
+        formatDate(dateStr) {
+            if (!dateStr) return '—';
+            const d = new Date(dateStr);
+            return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+        }
+    };
+}
+</script>
+}

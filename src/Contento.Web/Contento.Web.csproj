@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <RootNamespace>Contento.Web</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Contento.Core\Contento.Core.csproj" />
+    <ProjectReference Include="..\Contento.Services\Contento.Services.csproj" />
+    <ProjectReference Include="..\Contento.Plugins\Contento.Plugins.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Docs\Ai\**\*.md" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.*" />
+    <PackageReference Include="Noundry.DotEnvX" Version="1.*" />
+    <PackageReference Include="Noundry.UI" Version="1.*" />
+    <PackageReference Include="Noundry.TagHelpers" Version="1.*" />
+    <PackageReference Include="Noundry.RazorHelpers" Version="1.*" />
+    <PackageReference Include="Noundry.Tailbreeze" Version="1.*" />
+    <PackageReference Include="Noundry.Tailbreeze.Build" Version="1.*" />
+    <PackageReference Include="Noundry.Authnz" Version="1.*" />
+    <PackageReference Include="Serilog.AspNetCore" Version="9.*" />
+    <PackageReference Include="Serilog.Sinks.Console" Version="6.*" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="10.*" />
+    <PackageReference Include="System.ServiceModel.Syndication" Version="9.*" />
+    <PackageReference Include="Stripe.net" Version="50.*" />
+    <PackageReference Include="Scalar.AspNetCore" Version="2.*" />
+    <PackageReference Include="SixLabors.ImageSharp" Version="3.*" />
+  </ItemGroup>
+
+</Project>

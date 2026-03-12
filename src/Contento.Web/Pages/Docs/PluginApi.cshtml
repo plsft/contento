@@ -1,0 +1,1100 @@
+@page "/docs/plugins/api"
+@{
+    ViewData["Title"] = "Plugin API Reference";
+    Layout = "_PublicLayout";
+    ViewData["SiteTitle"] = "Contento";
+    ViewData["MetaDescription"] = "Complete API reference for Contento CMS plugins — hooks, context objects, DOM manipulation, and settings.";
+}
+
+<style>
+    .api-ref h2 {
+        font-family: var(--font-serif);
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: var(--color-ink);
+        margin-bottom: 1rem;
+    }
+    .api-ref h3 {
+        font-family: var(--font-serif);
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: var(--color-ink);
+        margin-bottom: 0.75rem;
+    }
+    .api-ref p {
+        color: var(--color-stone);
+        line-height: 1.7;
+        margin-bottom: 1rem;
+    }
+    .api-ref pre {
+        font-family: var(--font-mono);
+        font-size: 13px;
+        background: var(--color-snow);
+        border: 1px solid var(--color-mist);
+        border-radius: 8px;
+        padding: 16px;
+        overflow-x: auto;
+        margin-bottom: 1.5rem;
+        line-height: 1.6;
+        color: var(--color-ink);
+    }
+    .api-ref code {
+        font-family: var(--font-mono);
+        font-size: 13px;
+    }
+    .api-ref :not(pre) > code {
+        background: var(--color-snow);
+        border: 1px solid var(--color-mist);
+        border-radius: 4px;
+        padding: 2px 6px;
+        color: var(--color-ink);
+    }
+    .api-ref table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 14px;
+        margin-bottom: 1.5rem;
+    }
+    .api-ref th {
+        font-weight: 600;
+        color: var(--color-ink);
+        background: var(--color-snow);
+        padding: 8px 12px;
+        border-bottom: 2px solid var(--color-mist);
+        text-align: left;
+    }
+    .api-ref td {
+        padding: 8px 12px;
+        border-bottom: 1px solid var(--color-mist);
+        text-align: left;
+        color: var(--color-stone);
+        vertical-align: top;
+    }
+    .api-ref td code {
+        color: var(--color-ink);
+    }
+    .api-section {
+        margin-top: 3rem;
+        padding-top: 2rem;
+        border-top: 1px solid var(--color-mist);
+    }
+    .method-sig {
+        font-family: var(--font-mono);
+        font-size: 15px;
+        margin-bottom: 0.75rem;
+    }
+    .method-sig .method-name {
+        color: var(--color-indigo);
+        font-weight: 600;
+    }
+    .method-sig .method-params {
+        color: var(--color-stone);
+    }
+    .param-list {
+        padding-left: 1.5rem;
+        margin-bottom: 1rem;
+    }
+    .param-list li {
+        color: var(--color-stone);
+        line-height: 1.7;
+        margin-bottom: 0.25rem;
+    }
+    .param-list li code {
+        color: var(--color-ink);
+    }
+    .hook-card {
+        background: var(--color-snow);
+        border: 1px solid var(--color-mist);
+        border-radius: 8px;
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+    .hook-card h4 {
+        font-family: var(--font-mono);
+        font-size: 15px;
+        color: var(--color-indigo);
+        font-weight: 600;
+        margin-bottom: 0.75rem;
+    }
+    .hook-meta {
+        font-size: 14px;
+        color: var(--color-stone);
+        line-height: 1.7;
+    }
+    .hook-meta strong {
+        color: var(--color-ink);
+        font-weight: 600;
+    }
+    .note-box {
+        background: var(--color-snow);
+        border-left: 3px solid var(--color-indigo);
+        border-radius: 0 8px 8px 0;
+        padding: 12px 16px;
+        margin-bottom: 1.5rem;
+        font-size: 14px;
+        color: var(--color-stone);
+    }
+    .toc-link {
+        color: var(--color-indigo);
+        text-decoration: none;
+        font-size: 14px;
+        font-family: var(--font-sans);
+    }
+    .toc-link:hover {
+        text-decoration: underline;
+    }
+</style>
+
+<div class="api-ref">
+
+    <!-- Navigation -->
+    <div style="background: var(--color-snow); border: 1px solid var(--color-mist); border-radius: 8px; padding: 12px 20px; margin-bottom: 2rem; display: flex; align-items: center; gap: 8px; font-size: 14px; font-family: var(--font-sans);">
+        <svg style="width: 16px; height: 16px; color: var(--color-ash); flex-shrink: 0;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+        </svg>
+        <a href="/docs/plugins" style="color: var(--color-indigo); text-decoration: none;">Plugin Guide</a>
+        <span style="color: var(--color-ash);">&middot;</span>
+        <a href="/docs/plugins/ideas" style="color: var(--color-indigo); text-decoration: none;">Plugin Ideas</a>
+    </div>
+
+    <!-- Page Header -->
+    <header style="margin-bottom: 2.5rem;">
+        <h1 style="font-family: var(--font-serif); font-size: 2rem; font-weight: 700; color: var(--color-ink); margin-bottom: 0.5rem; letter-spacing: -0.02em;">
+            Plugin API Reference
+        </h1>
+        <p style="font-size: 1.05rem; color: var(--color-stone); line-height: 1.7; margin-bottom: 1.5rem;">
+            Complete reference for the Contento plugin runtime. Plugins execute in a sandboxed
+            JavaScript environment powered by Jint, with access to hooks, DOM manipulation,
+            settings, and console logging.
+        </p>
+    </header>
+
+    <!-- Table of Contents -->
+    <nav style="background: var(--color-snow); border: 1px solid var(--color-mist); border-radius: 8px; padding: 20px 24px; margin-bottom: 2.5rem;">
+        <p style="font-weight: 600; color: var(--color-ink); margin-bottom: 0.75rem; font-size: 14px; font-family: var(--font-sans); text-transform: uppercase; letter-spacing: 0.05em;">
+            On this page
+        </p>
+        <ol style="list-style: none; padding: 0; margin: 0; columns: 2; column-gap: 2rem;">
+            <li style="margin-bottom: 0.4rem;"><a href="#global-api" class="toc-link">1. Global API</a></li>
+            <li style="margin-bottom: 0.4rem;"><a href="#hooks-reference" class="toc-link">2. Hooks Reference</a></li>
+            <li style="margin-bottom: 0.4rem;"><a href="#context-objects" class="toc-link">3. Context Objects</a></li>
+            <li style="margin-bottom: 0.4rem;"><a href="#plugin-settings" class="toc-link">4. Plugin Settings</a></li>
+            <li style="margin-bottom: 0.4rem;"><a href="#console-api" class="toc-link">5. Console API</a></li>
+            <li style="margin-bottom: 0.4rem;"><a href="#sandbox-limits" class="toc-link">6. Sandbox Limits</a></li>
+            <li style="margin-bottom: 0.4rem;"><a href="#plugin-manifest" class="toc-link">7. Plugin Manifest Schema</a></li>
+        </ol>
+    </nav>
+
+    <!-- ================================================================== -->
+    <!-- 1. Global API                                                      -->
+    <!-- ================================================================== -->
+    <section id="global-api">
+        <h2>1. Global API</h2>
+        <p>
+            The <code>contento</code> global object is the primary interface for plugin code.
+            It provides methods to register callbacks for lifecycle hooks.
+        </p>
+
+        <!-- contento.on() -->
+        <div style="margin-bottom: 2rem;">
+            <div class="method-sig">
+                <span class="method-name">contento.on</span><span class="method-params">(hookName, callback)</span>
+            </div>
+            <p>
+                Registers a callback function for a named hook. The callback receives a context
+                object whose shape depends on the hook being invoked.
+            </p>
+
+            <h3>Parameters</h3>
+            <ul class="param-list">
+                <li><code>hookName</code> <span style="color: var(--color-ash);">(string)</span> &mdash; The hook to listen for. Must match one of the supported hook names listed in the <a href="#hooks-reference" style="color: var(--color-indigo);">Hooks Reference</a>.</li>
+                <li><code>callback</code> <span style="color: var(--color-ash);">(function)</span> &mdash; Handler function that receives a context object. The shape of the context depends on the hook.</li>
+            </ul>
+
+            <h3>Returns</h3>
+            <p><code>void</code></p>
+
+            <h3>Example</h3>
+<pre><code>contento.on('post:render', function (context) {
+    var headings = context.document.querySelectorAll('h2, h3');
+    // Build a table of contents from headings
+});</code></pre>
+
+            <div class="note-box">
+                A plugin can register multiple callbacks for the same hook. They execute in registration order.
+                A plugin can also register callbacks for multiple different hooks.
+            </div>
+        </div>
+    </section>
+
+    <!-- ================================================================== -->
+    <!-- 2. Hooks Reference                                                 -->
+    <!-- ================================================================== -->
+    <section id="hooks-reference" class="api-section">
+        <h2>2. Hooks Reference</h2>
+        <p>
+            Hooks are named events fired at specific points during page rendering and content
+            lifecycle. Register a callback with <code>contento.on(hookName, callback)</code>
+            to respond to these events.
+        </p>
+
+        <!-- post:render -->
+        <div class="hook-card">
+            <h4>post:render</h4>
+            <div class="hook-meta">
+                <p><strong>Fired:</strong> When a post is rendered for display on the public site.</p>
+                <p><strong>Context:</strong> <code>{ post, document, site }</code></p>
+                <p><strong>Use cases:</strong> Add a table of contents, inject social share buttons, modify HTML output, add analytics scripts, insert reading progress bars.</p>
+                <p style="margin-bottom: 0;"><strong>Note:</strong> This is the most commonly used hook. It provides full DOM access via the <code>document</code> object, allowing you to query and manipulate the rendered HTML before it is sent to the browser.</p>
+            </div>
+        </div>
+
+<pre><code>contento.on('post:render', function (context) {
+    // Add a "Back to top" link after the post body
+    var link = context.document.createElement('a');
+    link.setAttribute('href', '#');
+    link.textContent = 'Back to top';
+    link.className = 'back-to-top';
+    context.document.body.appendChild(link);
+});</code></pre>
+
+        <!-- post:beforeSave -->
+        <div class="hook-card">
+            <h4>post:beforeSave</h4>
+            <div class="hook-meta">
+                <p><strong>Fired:</strong> Before a post is persisted to the database.</p>
+                <p><strong>Context:</strong> <code>{ post, content }</code></p>
+                <p><strong>Use cases:</strong> Content transformation, auto-tagging, word count validation, profanity filtering, slug generation.</p>
+                <p style="margin-bottom: 0;"><strong>Note:</strong> Modifications to <code>content</code> in this hook are saved to the database. The <code>document</code> object is not available in this hook.</p>
+            </div>
+        </div>
+
+<pre><code>contento.on('post:beforeSave', function (context) {
+    // Auto-generate excerpt from content if not provided
+    if (!context.post.excerpt && context.content) {
+        var plain = context.content.replace(/&lt;[^&gt;]*&gt;/g, '');
+        context.post.excerpt = plain.substring(0, 160) + '...';
+    }
+});</code></pre>
+
+        <!-- site:head -->
+        <div class="hook-card">
+            <h4>site:head</h4>
+            <div class="hook-meta">
+                <p><strong>Fired:</strong> When building the <code>&lt;head&gt;</code> section of any page.</p>
+                <p><strong>Context:</strong> <code>{ site, page }</code></p>
+                <p><strong>Return:</strong> HTML string to inject into <code>&lt;head&gt;</code>.</p>
+                <p><strong>Use cases:</strong> Custom meta tags, external stylesheets, font loading, preconnect hints, structured data (JSON-LD).</p>
+                <p style="margin-bottom: 0;"><strong>Note:</strong> The return value is inserted as raw HTML. Ensure it is well-formed.</p>
+            </div>
+        </div>
+
+<pre><code>contento.on('site:head', function (context) {
+    return '&lt;link rel="preconnect" href="https://fonts.googleapis.com"&gt;' +
+           '&lt;link href="https://fonts.googleapis.com/css2?family=Inter&amp;display=swap" rel="stylesheet"&gt;';
+});</code></pre>
+
+        <!-- site:footer -->
+        <div class="hook-card">
+            <h4>site:footer</h4>
+            <div class="hook-meta">
+                <p><strong>Fired:</strong> Before <code>&lt;/body&gt;</code> on any page.</p>
+                <p><strong>Context:</strong> <code>{ site, page }</code></p>
+                <p><strong>Return:</strong> HTML string to inject before <code>&lt;/body&gt;</code>.</p>
+                <p><strong>Use cases:</strong> Analytics scripts, chat widgets, notification bars, cookie consent banners.</p>
+                <p style="margin-bottom: 0;"><strong>Note:</strong> Scripts injected here execute after the page content has loaded.</p>
+            </div>
+        </div>
+
+<pre><code>contento.on('site:footer', function (context) {
+    var trackingId = PLUGIN_SETTINGS.trackingId || '';
+    if (!trackingId) return '';
+
+    return '&lt;script&gt;' +
+           '(function() { /* analytics snippet */ })();' +
+           '&lt;/script&gt;';
+});</code></pre>
+
+        <!-- Hook summary table -->
+        <h3 style="margin-top: 2rem;">Hook Summary</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Hook</th>
+                    <th>Context Properties</th>
+                    <th>Returns</th>
+                    <th>DOM Access</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>post:render</code></td>
+                    <td><code>post</code>, <code>document</code>, <code>site</code></td>
+                    <td>void</td>
+                    <td>Yes</td>
+                </tr>
+                <tr>
+                    <td><code>post:beforeSave</code></td>
+                    <td><code>post</code>, <code>content</code></td>
+                    <td>void</td>
+                    <td>No</td>
+                </tr>
+                <tr>
+                    <td><code>site:head</code></td>
+                    <td><code>site</code>, <code>page</code></td>
+                    <td>HTML string</td>
+                    <td>No</td>
+                </tr>
+                <tr>
+                    <td><code>site:footer</code></td>
+                    <td><code>site</code>, <code>page</code></td>
+                    <td>HTML string</td>
+                    <td>No</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <!-- ================================================================== -->
+    <!-- 3. Context Objects                                                 -->
+    <!-- ================================================================== -->
+    <section id="context-objects" class="api-section">
+        <h2>3. Context Objects</h2>
+        <p>
+            Every hook callback receives a context object. The properties available on that object
+            depend on which hook is being invoked. Below is a detailed reference for each context property.
+        </p>
+
+        <!-- Post Object -->
+        <h3 id="post-object" style="margin-top: 2rem;">
+            Post Object <span style="font-family: var(--font-mono); font-size: 14px; color: var(--color-ash); font-weight: 400;">context.post</span>
+        </h3>
+        <p>
+            Available in <code>post:render</code> and <code>post:beforeSave</code> hooks.
+            Represents the current post being rendered or saved.
+        </p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Property</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>title</code></td>
+                    <td><code>string</code></td>
+                    <td>Post title</td>
+                </tr>
+                <tr>
+                    <td><code>slug</code></td>
+                    <td><code>string</code></td>
+                    <td>URL slug (e.g. <code>"my-first-post"</code>)</td>
+                </tr>
+                <tr>
+                    <td><code>excerpt</code></td>
+                    <td><code>string</code></td>
+                    <td>Short excerpt / summary text</td>
+                </tr>
+                <tr>
+                    <td><code>url</code></td>
+                    <td><code>string</code></td>
+                    <td>Full canonical URL of the post</td>
+                </tr>
+                <tr>
+                    <td><code>featuredImage</code></td>
+                    <td><code>string</code></td>
+                    <td>Featured image URL</td>
+                </tr>
+                <tr>
+                    <td><code>coverImage</code></td>
+                    <td><code>string</code></td>
+                    <td>Cover image URL (alias for <code>featuredImage</code>)</td>
+                </tr>
+                <tr>
+                    <td><code>author</code></td>
+                    <td><code>string</code></td>
+                    <td>Author display name</td>
+                </tr>
+                <tr>
+                    <td><code>publishedAt</code></td>
+                    <td><code>string</code></td>
+                    <td>ISO 8601 publish date (e.g. <code>"2026-01-15T09:00:00Z"</code>)</td>
+                </tr>
+                <tr>
+                    <td><code>updatedAt</code></td>
+                    <td><code>string</code></td>
+                    <td>ISO 8601 last update timestamp</td>
+                </tr>
+                <tr>
+                    <td><code>createdAt</code></td>
+                    <td><code>string</code></td>
+                    <td>ISO 8601 creation timestamp</td>
+                </tr>
+                <tr>
+                    <td><code>tags</code></td>
+                    <td><code>string[]</code></td>
+                    <td>Array of tag strings</td>
+                </tr>
+                <tr>
+                    <td><code>category</code></td>
+                    <td><code>string</code></td>
+                    <td>Category name</td>
+                </tr>
+                <tr>
+                    <td><code>summary</code></td>
+                    <td><code>string</code></td>
+                    <td>Auto-generated summary (if AI features are enabled)</td>
+                </tr>
+            </tbody>
+        </table>
+
+<pre><code>contento.on('post:render', function (context) {
+    var post = context.post;
+    console.log('Rendering: ' + post.title);
+    console.log('Tags: ' + post.tags.join(', '));
+    console.log('Published: ' + post.publishedAt);
+});</code></pre>
+
+        <!-- Document Object -->
+        <h3 id="document-object" style="margin-top: 2.5rem;">
+            Document Object <span style="font-family: var(--font-mono); font-size: 14px; color: var(--color-ash); font-weight: 400;">context.document</span>
+        </h3>
+        <p>
+            Available only in the <code>post:render</code> hook. Provides a DOM-like interface
+            powered by the Jint JavaScript runtime. Supports element creation, querying, and manipulation.
+        </p>
+
+        <h3 style="font-size: 1rem;">Methods</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Method</th>
+                    <th>Returns</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>createElement(tag)</code></td>
+                    <td><code>Element</code></td>
+                    <td>Create a new HTML element with the given tag name</td>
+                </tr>
+                <tr>
+                    <td><code>querySelector(selector)</code></td>
+                    <td><code>Element|null</code></td>
+                    <td>Find the first element matching a CSS selector</td>
+                </tr>
+                <tr>
+                    <td><code>querySelectorAll(selector)</code></td>
+                    <td><code>NodeList</code></td>
+                    <td>Find all elements matching a CSS selector</td>
+                </tr>
+                <tr>
+                    <td><code>getElementById(id)</code></td>
+                    <td><code>Element|null</code></td>
+                    <td>Find an element by its <code>id</code> attribute</td>
+                </tr>
+                <tr>
+                    <td><code>getElementsByTagName(tag)</code></td>
+                    <td><code>HTMLCollection</code></td>
+                    <td>Find all elements with the given tag name</td>
+                </tr>
+                <tr>
+                    <td><code>getElementsByClassName(cls)</code></td>
+                    <td><code>HTMLCollection</code></td>
+                    <td>Find all elements with the given class name</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3 style="font-size: 1rem;">Properties</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Property</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>head</code></td>
+                    <td><code>Element</code></td>
+                    <td>The <code>&lt;head&gt;</code> element</td>
+                </tr>
+                <tr>
+                    <td><code>body</code></td>
+                    <td><code>Element</code></td>
+                    <td>The <code>&lt;body&gt;</code> element</td>
+                </tr>
+                <tr>
+                    <td><code>documentElement</code></td>
+                    <td><code>Element</code></td>
+                    <td>The <code>&lt;html&gt;</code> root element</td>
+                </tr>
+            </tbody>
+        </table>
+
+<pre><code>contento.on('post:render', function (context) {
+    var doc = context.document;
+
+    // Add an id to all h2 elements for anchor linking
+    var headings = doc.querySelectorAll('h2');
+    for (var i = 0; i &lt; headings.length; i++) {
+        var text = headings[i].textContent;
+        var id = text.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+        headings[i].setAttribute('id', id);
+    }
+});</code></pre>
+
+        <!-- Element Object -->
+        <h3 id="element-object" style="margin-top: 2.5rem;">
+            Element Object
+        </h3>
+        <p>
+            Elements returned by document query methods or created via <code>createElement()</code>.
+            Supports standard DOM properties and methods for reading and modifying the HTML tree.
+        </p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Property / Method</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>tagName</code></td>
+                    <td><code>string</code></td>
+                    <td>Tag name in uppercase (e.g. <code>"DIV"</code>, <code>"P"</code>)</td>
+                </tr>
+                <tr>
+                    <td><code>id</code></td>
+                    <td><code>string</code></td>
+                    <td>Element ID attribute (get/set)</td>
+                </tr>
+                <tr>
+                    <td><code>className</code></td>
+                    <td><code>string</code></td>
+                    <td>Space-separated CSS class string (get/set)</td>
+                </tr>
+                <tr>
+                    <td><code>textContent</code></td>
+                    <td><code>string</code></td>
+                    <td>Text content of the element and its descendants (get/set)</td>
+                </tr>
+                <tr>
+                    <td><code>innerHTML</code></td>
+                    <td><code>string</code></td>
+                    <td>Inner HTML markup (get/set)</td>
+                </tr>
+                <tr>
+                    <td><code>style</code></td>
+                    <td><code>object</code></td>
+                    <td>Inline style object (e.g. <code>el.style.color = 'red'</code>)</td>
+                </tr>
+                <tr>
+                    <td><code>setAttribute(name, value)</code></td>
+                    <td><code>void</code></td>
+                    <td>Set an HTML attribute</td>
+                </tr>
+                <tr>
+                    <td><code>getAttribute(name)</code></td>
+                    <td><code>string</code></td>
+                    <td>Get the value of an HTML attribute</td>
+                </tr>
+                <tr>
+                    <td><code>removeAttribute(name)</code></td>
+                    <td><code>void</code></td>
+                    <td>Remove an HTML attribute</td>
+                </tr>
+                <tr>
+                    <td><code>appendChild(child)</code></td>
+                    <td><code>Element</code></td>
+                    <td>Append a child element; returns the appended child</td>
+                </tr>
+                <tr>
+                    <td><code>insertBefore(newNode, refNode)</code></td>
+                    <td><code>Element</code></td>
+                    <td>Insert <code>newNode</code> before <code>refNode</code>; returns inserted node</td>
+                </tr>
+                <tr>
+                    <td><code>removeChild(child)</code></td>
+                    <td><code>Element</code></td>
+                    <td>Remove a child element; returns the removed child</td>
+                </tr>
+                <tr>
+                    <td><code>firstChild</code></td>
+                    <td><code>Element|null</code></td>
+                    <td>First child node</td>
+                </tr>
+                <tr>
+                    <td><code>lastChild</code></td>
+                    <td><code>Element|null</code></td>
+                    <td>Last child node</td>
+                </tr>
+                <tr>
+                    <td><code>parentNode</code></td>
+                    <td><code>Element|null</code></td>
+                    <td>Parent node</td>
+                </tr>
+                <tr>
+                    <td><code>nextSibling</code></td>
+                    <td><code>Element|null</code></td>
+                    <td>Next sibling node</td>
+                </tr>
+            </tbody>
+        </table>
+
+<pre><code>contento.on('post:render', function (context) {
+    var doc = context.document;
+
+    // Wrap all images in a figure element
+    var images = doc.querySelectorAll('img');
+    for (var i = 0; i &lt; images.length; i++) {
+        var img = images[i];
+        var figure = doc.createElement('figure');
+        figure.className = 'post-figure';
+        img.parentNode.insertBefore(figure, img);
+        figure.appendChild(img);
+    }
+});</code></pre>
+
+        <!-- Site Object -->
+        <h3 id="site-object" style="margin-top: 2.5rem;">
+            Site Object <span style="font-family: var(--font-mono); font-size: 14px; color: var(--color-ash); font-weight: 400;">context.site</span>
+        </h3>
+        <p>
+            Available in all hooks. Contains information about the current site.
+        </p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Property</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>name</code></td>
+                    <td><code>string</code></td>
+                    <td>Site display name</td>
+                </tr>
+                <tr>
+                    <td><code>url</code></td>
+                    <td><code>string</code></td>
+                    <td>Site base URL (e.g. <code>"https://example.com"</code>)</td>
+                </tr>
+                <tr>
+                    <td><code>tagline</code></td>
+                    <td><code>string</code></td>
+                    <td>Site tagline / subtitle</td>
+                </tr>
+            </tbody>
+        </table>
+
+<pre><code>contento.on('site:head', function (context) {
+    return '&lt;meta property="og:site_name" content="' + context.site.name + '"&gt;';
+});</code></pre>
+
+        <!-- Page Object -->
+        <h3 id="page-object" style="margin-top: 2.5rem;">
+            Page Object <span style="font-family: var(--font-mono); font-size: 14px; color: var(--color-ash); font-weight: 400;">context.page</span>
+        </h3>
+        <p>
+            Available in <code>site:head</code> and <code>site:footer</code> hooks. Describes the
+            current page being rendered.
+        </p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Property</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>url</code></td>
+                    <td><code>string</code></td>
+                    <td>Current page URL path</td>
+                </tr>
+                <tr>
+                    <td><code>title</code></td>
+                    <td><code>string</code></td>
+                    <td>Current page title</td>
+                </tr>
+                <tr>
+                    <td><code>type</code></td>
+                    <td><code>string</code></td>
+                    <td>Page type: <code>"post"</code>, <code>"page"</code>, <code>"index"</code>, <code>"tag"</code>, <code>"category"</code></td>
+                </tr>
+            </tbody>
+        </table>
+
+<pre><code>contento.on('site:footer', function (context) {
+    // Only inject on post pages
+    if (context.page.type !== 'post') return '';
+
+    return '&lt;script&gt;console.log("Viewing: " + document.title);&lt;/script&gt;';
+});</code></pre>
+    </section>
+
+    <!-- ================================================================== -->
+    <!-- 4. Plugin Settings                                                 -->
+    <!-- ================================================================== -->
+    <section id="plugin-settings" class="api-section">
+        <h2>4. Plugin Settings</h2>
+        <p>
+            The <code>PLUGIN_SETTINGS</code> global object contains the parsed JSON settings
+            configured for the current plugin. Settings are managed in the admin panel at
+            <strong>Admin &rarr; Plugins &rarr; [Plugin] &rarr; Settings</strong>.
+        </p>
+
+        <div class="method-sig">
+            <span class="method-name">PLUGIN_SETTINGS</span> <span class="method-params">&mdash; Global object (read-only)</span>
+        </div>
+
+        <p>
+            Properties on this object correspond to the keys defined in the plugin manifest's
+            <code>settings</code> block. Always use defensive defaults when accessing values, since
+            settings may not be configured.
+        </p>
+
+<pre><code>// Access settings with fallback defaults
+var apiKey    = PLUGIN_SETTINGS.apiKey || '';
+var maxItems  = PLUGIN_SETTINGS.maxItems || 10;
+var enabled   = PLUGIN_SETTINGS.showWidget !== false;
+var threshold = PLUGIN_SETTINGS.minScore || 0.5;</code></pre>
+
+        <div class="note-box">
+            <strong>Tip:</strong> Settings values are always strings, numbers, or booleans as defined
+            in the manifest schema. Complex objects are not supported. If you need structured data,
+            use a JSON string and parse it with <code>JSON.parse()</code>.
+        </div>
+
+        <h3>Manifest Definition</h3>
+        <p>
+            Settings are declared in the plugin manifest under the <code>settings</code> key.
+            The admin UI automatically generates form fields based on this schema.
+        </p>
+
+<pre><code>{
+  "settings": {
+    "apiKey": {
+      "type": "string",
+      "label": "API Key",
+      "default": "",
+      "description": "Your third-party API key"
+    },
+    "maxItems": {
+      "type": "number",
+      "label": "Maximum Items",
+      "default": 10,
+      "description": "Number of items to display"
+    },
+    "showWidget": {
+      "type": "boolean",
+      "label": "Show Widget",
+      "default": true,
+      "description": "Toggle the widget on or off"
+    }
+  }
+}</code></pre>
+    </section>
+
+    <!-- ================================================================== -->
+    <!-- 5. Console API                                                     -->
+    <!-- ================================================================== -->
+    <section id="console-api" class="api-section">
+        <h2>5. Console API</h2>
+        <p>
+            Plugins have access to a subset of the standard <code>console</code> API. All output
+            is captured server-side, prefixed with the plugin identifier, and written to the
+            application log.
+        </p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Method</th>
+                    <th>Log Level</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>console.log(msg)</code></td>
+                    <td><code>INFO</code></td>
+                    <td>General information logging</td>
+                </tr>
+                <tr>
+                    <td><code>console.warn(msg)</code></td>
+                    <td><code>WARNING</code></td>
+                    <td>Potential issues or deprecation notices</td>
+                </tr>
+                <tr>
+                    <td><code>console.error(msg)</code></td>
+                    <td><code>ERROR</code></td>
+                    <td>Errors and failures</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>Log Format</h3>
+        <p>
+            All console output is automatically prefixed with the plugin slug for traceability:
+        </p>
+
+<pre><code>// In a plugin with slug "reading-time"
+console.log('Calculated 5 min read');
+// Server log: [Plugin:reading-time] Calculated 5 min read
+
+console.warn('No headings found');
+// Server log: [Plugin:reading-time] WARNING No headings found
+
+console.error('Failed to parse content');
+// Server log: [Plugin:reading-time] ERROR Failed to parse content</code></pre>
+
+        <div class="note-box">
+            <strong>Note:</strong> Console output is for debugging and monitoring only. It is not
+            visible to site visitors. View logs in your server's application log or via the
+            deployment platform's log viewer.
+        </div>
+    </section>
+
+    <!-- ================================================================== -->
+    <!-- 6. Sandbox Limits                                                  -->
+    <!-- ================================================================== -->
+    <section id="sandbox-limits" class="api-section">
+        <h2>6. Sandbox Limits</h2>
+        <p>
+            Plugins execute in a sandboxed Jint JavaScript runtime with strict resource constraints.
+            These limits protect the host application from runaway or malicious plugin code.
+        </p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Constraint</th>
+                    <th>Value</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Memory</strong></td>
+                    <td><code>64 MB</code></td>
+                    <td>Maximum heap allocation per plugin execution</td>
+                </tr>
+                <tr>
+                    <td><strong>Timeout</strong></td>
+                    <td><code>5,000 ms</code></td>
+                    <td>Maximum execution time per hook invocation</td>
+                </tr>
+                <tr>
+                    <td><strong>Statements</strong></td>
+                    <td><code>100,000</code></td>
+                    <td>Maximum statement count per execution cycle</td>
+                </tr>
+                <tr>
+                    <td><strong>Mode</strong></td>
+                    <td><code>Strict</code></td>
+                    <td>JavaScript strict mode is enforced (<code>"use strict"</code>)</td>
+                </tr>
+                <tr>
+                    <td><strong>Network</strong></td>
+                    <td><code>None</code></td>
+                    <td>No <code>fetch</code>, <code>XMLHttpRequest</code>, or HTTP access</td>
+                </tr>
+                <tr>
+                    <td><strong>Filesystem</strong></td>
+                    <td><code>None</code></td>
+                    <td>No file read/write access</td>
+                </tr>
+                <tr>
+                    <td><strong>Timers</strong></td>
+                    <td><code>None</code></td>
+                    <td>No <code>setTimeout</code>, <code>setInterval</code>, or <code>requestAnimationFrame</code></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>What Happens When Limits Are Exceeded</h3>
+        <p>
+            If a plugin exceeds any of these limits, the current hook execution is terminated
+            immediately. The error is logged to the server console with the plugin slug, and the
+            page continues to render without the plugin's modifications. Other plugins are not
+            affected.
+        </p>
+
+<pre><code>// This will be terminated after 100,000 statements:
+contento.on('post:render', function (context) {
+    while (true) {
+        // Infinite loops are caught by the statement limit
+    }
+});</code></pre>
+
+        <div class="note-box">
+            <strong>Best practice:</strong> Keep plugin logic focused and efficient. Avoid deep
+            recursion, large string concatenations in loops, and unnecessary DOM traversals.
+            If you approach the statement limit, consider simplifying your algorithm.
+        </div>
+    </section>
+
+    <!-- ================================================================== -->
+    <!-- 7. Plugin Manifest Schema                                          -->
+    <!-- ================================================================== -->
+    <section id="plugin-manifest" class="api-section">
+        <h2>7. Plugin Manifest Schema</h2>
+        <p>
+            Every plugin requires a <code>manifest.json</code> file that describes the plugin's
+            metadata, entry point, required permissions, and configurable settings.
+        </p>
+
+        <h3>Full Schema</h3>
+
+<pre><code>{
+  "name": "string (required)",
+  "slug": "string (required, kebab-case)",
+  "version": "string (required, semver)",
+  "author": "string",
+  "description": "string",
+  "entryPoint": "string (default: index.js)",
+  "permissions": ["string"],
+  "hooks": ["string"],
+  "settings": {
+    "propertyName": {
+      "type": "string | number | boolean",
+      "label": "Human-readable label",
+      "default": "default value",
+      "description": "Help text"
+    }
+  }
+}</code></pre>
+
+        <h3>Field Reference</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Field</th>
+                    <th>Required</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>name</code></td>
+                    <td>Yes</td>
+                    <td><code>string</code></td>
+                    <td>Human-readable plugin name (e.g. <code>"Reading Time"</code>)</td>
+                </tr>
+                <tr>
+                    <td><code>slug</code></td>
+                    <td>Yes</td>
+                    <td><code>string</code></td>
+                    <td>Unique identifier in kebab-case (e.g. <code>"reading-time"</code>). Used in log prefixes and file paths.</td>
+                </tr>
+                <tr>
+                    <td><code>version</code></td>
+                    <td>Yes</td>
+                    <td><code>string</code></td>
+                    <td>Semantic version string (e.g. <code>"1.0.0"</code>, <code>"2.1.3"</code>)</td>
+                </tr>
+                <tr>
+                    <td><code>author</code></td>
+                    <td>No</td>
+                    <td><code>string</code></td>
+                    <td>Author name or organization</td>
+                </tr>
+                <tr>
+                    <td><code>description</code></td>
+                    <td>No</td>
+                    <td><code>string</code></td>
+                    <td>Brief description shown in the admin plugin list</td>
+                </tr>
+                <tr>
+                    <td><code>entryPoint</code></td>
+                    <td>No</td>
+                    <td><code>string</code></td>
+                    <td>Path to the main JavaScript file. Defaults to <code>"index.js"</code></td>
+                </tr>
+                <tr>
+                    <td><code>permissions</code></td>
+                    <td>No</td>
+                    <td><code>string[]</code></td>
+                    <td>Reserved for future use. Declare capabilities the plugin requires.</td>
+                </tr>
+                <tr>
+                    <td><code>hooks</code></td>
+                    <td>No</td>
+                    <td><code>string[]</code></td>
+                    <td>List of hooks this plugin uses (e.g. <code>["post:render", "site:head"]</code>). Informational; the runtime discovers hooks from <code>contento.on()</code> calls.</td>
+                </tr>
+                <tr>
+                    <td><code>settings</code></td>
+                    <td>No</td>
+                    <td><code>object</code></td>
+                    <td>Key-value map of configurable settings. Each key becomes a property on <code>PLUGIN_SETTINGS</code>.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>Complete Example</h3>
+
+<pre><code>{
+  "name": "Reading Time",
+  "slug": "reading-time",
+  "version": "1.2.0",
+  "author": "Contento",
+  "description": "Adds estimated reading time to blog posts",
+  "entryPoint": "index.js",
+  "permissions": [],
+  "hooks": ["post:render"],
+  "settings": {
+    "wordsPerMinute": {
+      "type": "number",
+      "label": "Words Per Minute",
+      "default": 200,
+      "description": "Average reading speed for time calculation"
+    },
+    "position": {
+      "type": "string",
+      "label": "Display Position",
+      "default": "top",
+      "description": "Where to show the reading time: top or bottom"
+    },
+    "showIcon": {
+      "type": "boolean",
+      "label": "Show Clock Icon",
+      "default": true,
+      "description": "Display a clock icon next to the reading time"
+    }
+  }
+}</code></pre>
+    </section>
+
+    <!-- ================================================================== -->
+    <!-- Footer Navigation                                                  -->
+    <!-- ================================================================== -->
+    <div style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--color-mist); display: flex; justify-content: space-between; align-items: center;">
+        <a href="/docs/plugins" style="color: var(--color-indigo); text-decoration: none; font-size: 14px; font-family: var(--font-sans); display: flex; align-items: center; gap: 6px;">
+            <svg style="width: 16px; height: 16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+            </svg>
+            Plugin Guide
+        </a>
+        <a href="/docs/plugins/ideas" style="color: var(--color-indigo); text-decoration: none; font-size: 14px; font-family: var(--font-sans); display: flex; align-items: center; gap: 6px;">
+            Plugin Ideas
+            <svg style="width: 16px; height: 16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+            </svg>
+        </a>
+    </div>
+
+</div>

@@ -1,0 +1,247 @@
+@page "/admin/posts/{id}/metrics"
+@model Contento.Web.Pages.Admin.Posts.MetricsModel
+@{
+    ViewData["Title"] = "Post Metrics";
+}
+
+<div class="max-w-5xl mx-auto">
+    <!-- Header -->
+    <div class="flex items-center gap-3 mb-6">
+        @if (Model.CurrentPost != null)
+        {
+            <a href="/admin/posts/@Model.CurrentPost.Id/edit" class="p-2 rounded hover:bg-stone-100 transition-colors" style="color: var(--color-ash);">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+                </svg>
+            </a>
+        }
+        <div>
+            <h2 class="text-xl font-semibold" style="color: var(--color-ink);">Post Metrics</h2>
+            @if (Model.CurrentPost != null)
+            {
+                <p class="text-sm mt-1" style="color: var(--color-ash);">@Model.CurrentPost.Title</p>
+            }
+        </div>
+    </div>
+
+    @if (Model.CurrentPost != null)
+    {
+        <!-- Date Filter -->
+        <div class="card mb-6">
+            <form method="get" class="flex flex-wrap items-end gap-4">
+                <div>
+                    <label class="form-label">From</label>
+                    <input type="date" name="DateFrom" value="@Model.DateFrom" class="form-input" />
+                </div>
+                <div>
+                    <label class="form-label">To</label>
+                    <input type="date" name="DateTo" value="@Model.DateTo" class="form-input" />
+                </div>
+                <div class="flex gap-2">
+                    <button type="submit" class="btn btn-primary btn-sm">Filter</button>
+                    <a href="/admin/posts/@Model.CurrentPost.Id/metrics" class="btn btn-ghost btn-sm">Reset</a>
+                </div>
+            </form>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+            <!-- Total Views -->
+            <div class="card">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded flex items-center justify-center" style="background-color: var(--color-indigo-pale); color: var(--color-indigo);">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <p class="text-xs" style="color: var(--color-ash);">Total Views</p>
+                        <p class="text-xl font-semibold" style="color: var(--color-ink);">@Model.TotalViews.ToString("N0")</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Unique Visitors -->
+            <div class="card">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded flex items-center justify-center" style="background-color: #E8F5E9; color: #2E7D32;">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <p class="text-xs" style="color: var(--color-ash);">Unique Visitors</p>
+                        <p class="text-xl font-semibold" style="color: var(--color-ink);">@Model.UniqueVisitors.ToString("N0")</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Avg Time on Page -->
+            <div class="card">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded flex items-center justify-center" style="background-color: #FFF3E0; color: #E65100;">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <p class="text-xs" style="color: var(--color-ash);">Avg Time on Page</p>
+                        <p class="text-xl font-semibold" style="color: var(--color-ink);">
+                            @if (Model.AvgTimeOnPageSeconds.HasValue)
+                            {
+                                var minutes = Model.AvgTimeOnPageSeconds.Value / 60;
+                                var seconds = Model.AvgTimeOnPageSeconds.Value % 60;
+                                @($"{minutes}m {seconds}s")
+                            }
+                            else
+                            {
+                                <text>--</text>
+                            }
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bounce Rate -->
+            <div class="card">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded flex items-center justify-center" style="background-color: #FCE4EC; color: #C62828;">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <p class="text-xs" style="color: var(--color-ash);">Bounce Rate</p>
+                        <p class="text-xl font-semibold" style="color: var(--color-ink);">
+                            @(Model.BounceRate.HasValue ? $"{Model.BounceRate.Value:F1}%" : "--")
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <!-- Top Referrers -->
+            <div class="card">
+                <h3 class="text-sm font-semibold mb-4" style="color: var(--color-ink);">Top Referrers</h3>
+                @if (Model.TopReferrers.Any())
+                {
+                    <div class="space-y-3">
+                        @{
+                            var maxReferrerCount = Model.TopReferrers.Max(r => r.Count);
+                        }
+                        @foreach (var referrer in Model.TopReferrers)
+                        {
+                            <div>
+                                <div class="flex items-center justify-between mb-1">
+                                    <span class="text-sm truncate" style="color: var(--color-stone); max-width: 70%;">
+                                        @(string.IsNullOrEmpty(referrer.Referrer) ? "Direct" : referrer.Referrer)
+                                    </span>
+                                    <span class="text-sm font-medium" style="color: var(--color-ink);">@referrer.Count</span>
+                                </div>
+                                <div class="w-full h-1.5 rounded-full" style="background-color: var(--color-mist);">
+                                    <div class="h-1.5 rounded-full" style="background-color: var(--color-indigo); width: @(maxReferrerCount > 0 ? (referrer.Count * 100 / maxReferrerCount) : 0)%;"></div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                }
+                else
+                {
+                    <p class="text-sm py-6 text-center" style="color: var(--color-cloud);">No referrer data yet.</p>
+                }
+            </div>
+
+            <!-- Device Breakdown -->
+            <div class="card">
+                <h3 class="text-sm font-semibold mb-4" style="color: var(--color-ink);">Device Breakdown</h3>
+                @if (Model.DeviceBreakdown.Any())
+                {
+                    <div class="space-y-3">
+                        @{
+                            var totalDeviceViews = Model.DeviceBreakdown.Sum(d => d.Count);
+                        }
+                        @foreach (var device in Model.DeviceBreakdown)
+                        {
+                            var percentage = totalDeviceViews > 0 ? (device.Count * 100.0 / totalDeviceViews) : 0;
+                            <div>
+                                <div class="flex items-center justify-between mb-1">
+                                    <span class="text-sm" style="color: var(--color-stone);">
+                                        @(device.DeviceType switch {
+                                            "desktop" => "Desktop",
+                                            "mobile" => "Mobile",
+                                            "tablet" => "Tablet",
+                                            _ => device.DeviceType
+                                        })
+                                    </span>
+                                    <span class="text-sm font-medium" style="color: var(--color-ink);">@($"{percentage:F1}%") <span class="text-xs" style="color: var(--color-ash);">(@device.Count)</span></span>
+                                </div>
+                                <div class="w-full h-1.5 rounded-full" style="background-color: var(--color-mist);">
+                                    <div class="h-1.5 rounded-full" style="background-color: @(device.DeviceType switch { "desktop" => "var(--color-indigo)", "mobile" => "#2E7D32", "tablet" => "#E65100", _ => "var(--color-stone)" }); width: @($"{percentage:F1}")%;"></div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                }
+                else
+                {
+                    <p class="text-sm py-6 text-center" style="color: var(--color-cloud);">No device data yet.</p>
+                }
+            </div>
+        </div>
+
+        <!-- Daily Traffic Chart Placeholder -->
+        <div class="card mt-6">
+            <h3 class="text-sm font-semibold mb-4" style="color: var(--color-ink);">Daily Traffic</h3>
+            @if (Model.DailyStats.Any())
+            {
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Views</th>
+                                <th>Unique Visitors</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var day in Model.DailyStats.OrderByDescending(d => d.Date))
+                            {
+                                <tr>
+                                    <td style="white-space: nowrap;">
+                                        <span class="text-sm" style="color: var(--color-stone);">@day.Date.ToString("MMM d, yyyy")</span>
+                                    </td>
+                                    <td>
+                                        <span class="text-sm font-medium" style="color: var(--color-ink);">@day.Views</span>
+                                    </td>
+                                    <td>
+                                        <span class="text-sm" style="color: var(--color-ash);">@day.UniqueVisitors</span>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <div class="flex items-center justify-center py-12">
+                    <div class="text-center">
+                        <svg class="w-10 h-10 mx-auto mb-3" style="color: var(--color-cloud);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                        </svg>
+                        <p style="color: var(--color-cloud);">No traffic data available for this period.</p>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="card text-center py-16">
+            <p style="color: var(--color-cloud);">Post not found.</p>
+            <a href="/admin/posts" class="btn btn-primary btn-sm mt-4">Back to Posts</a>
+        </div>
+    }
+</div>

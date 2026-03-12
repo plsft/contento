@@ -1,0 +1,138 @@
+@page "/admin/post-types"
+@model Contento.Web.Pages.Admin.PostTypes.IndexModel
+@{
+    ViewData["Title"] = "Post Types";
+}
+
+<div class="max-w-5xl mx-auto" x-data="{ showCreate: false }">
+    <!-- Header -->
+    <div class="flex items-center justify-between mb-6">
+        <div>
+            <h2 class="text-xl font-semibold" style="color: var(--color-ink);">Post Types</h2>
+            <p class="text-sm mt-1" style="color: var(--color-ash);">Define custom content types for your site</p>
+        </div>
+        <button @@click="showCreate = !showCreate" class="btn btn-primary btn-sm">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 4v16m8-8H4"/>
+            </svg>
+            New Post Type
+        </button>
+    </div>
+
+    <!-- Create Form -->
+    <div x-show="showCreate" x-cloak x-transition class="card mb-6">
+        <div class="flex items-center justify-between mb-4">
+            <h3 class="text-base font-semibold" style="color: var(--color-ink);">New Post Type</h3>
+            <button @@click="showCreate = false" class="p-1 rounded hover:bg-stone-100" style="color: var(--color-ash);">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+            </button>
+        </div>
+
+        <form method="post" asp-page-handler="Create">
+            <div class="space-y-4">
+                <div>
+                    <label class="form-label">Name</label>
+                    <input type="text" name="Name" class="form-input" placeholder="e.g. Blog Post" required />
+                </div>
+                <div>
+                    <label class="form-label">Slug</label>
+                    <input type="text" name="Slug" class="form-input" placeholder="e.g. blog-post" required />
+                </div>
+                <div>
+                    <label class="form-label">Icon</label>
+                    <input type="text" name="Icon" class="form-input" placeholder="e.g. document-text (optional)" />
+                </div>
+                <div class="flex items-center gap-3">
+                    <button type="submit" class="btn btn-primary btn-sm">Create Post Type</button>
+                    <button type="button" @@click="showCreate = false" class="btn btn-ghost btn-sm">Cancel</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- Post Types Table -->
+    @if (Model.PostTypes.Any())
+    {
+        <div class="table-container">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Icon</th>
+                        <th>Name</th>
+                        <th>Slug</th>
+                        <th>Fields</th>
+                        <th>System</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var pt in Model.PostTypes)
+                    {
+                        var fieldCount = 0;
+                            try
+                            {
+                                var fields = System.Text.Json.JsonDocument.Parse(pt.Fields);
+                                if (fields.RootElement.ValueKind == System.Text.Json.JsonValueKind.Array)
+                                {
+                                    fieldCount = fields.RootElement.GetArrayLength();
+                                }
+                            }
+                            catch { }
+                        <tr>
+                            <td>
+                                @if (!string.IsNullOrEmpty(pt.Icon))
+                                {
+                                    <span class="text-sm" style="color: var(--color-ash);">@pt.Icon</span>
+                                }
+                                else
+                                {
+                                    <span class="text-sm" style="color: var(--color-cloud);">--</span>
+                                }
+                            </td>
+                            <td>
+                                <span class="font-medium" style="color: var(--color-ink);">@pt.Name</span>
+                            </td>
+                            <td>
+                                <span class="text-xs font-mono" style="color: var(--color-ash);">@pt.Slug</span>
+                            </td>
+                            <td>
+                                <span class="badge badge-neutral">@fieldCount</span>
+                            </td>
+                            <td>
+                                @if (pt.IsSystem)
+                                {
+                                    <span class="badge badge-info">System</span>
+                                }
+                            </td>
+                            <td>
+                                @if (!pt.IsSystem)
+                                {
+                                    <form method="post" asp-page-handler="Delete" class="inline">
+                                        <input type="hidden" name="id" value="@pt.Id" />
+                                        <button type="submit" class="btn btn-ghost btn-sm" style="color: var(--color-danger);" title="Delete">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                                            </svg>
+                                        </button>
+                                    </form>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <div class="card text-center py-12">
+            <svg class="w-10 h-10 mx-auto mb-3" style="color: var(--color-cloud);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+            </svg>
+            <p style="color: var(--color-cloud);">No post types defined.</p>
+            <p class="text-sm mt-2" style="color: var(--color-ash);">Create your first post type to start organizing content.</p>
+        </div>
+    }
+</div>

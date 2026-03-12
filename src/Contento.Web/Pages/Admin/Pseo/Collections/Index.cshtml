@@ -1,0 +1,120 @@
+@page "/admin/pseo/collections"
+@model Contento.Web.Pages.Admin.Pseo.Collections.IndexModel
+@{
+    ViewData["Title"] = "Collections";
+}
+
+<div class="max-w-7xl mx-auto">
+    <!-- Header -->
+    <div class="flex items-center justify-between mb-6">
+        <div>
+            <div class="flex items-center gap-2">
+                <a href="/admin/pseo" class="text-sm" style="color: var(--color-ash);">pSEO</a>
+                <span style="color: var(--color-cloud);">/</span>
+                <h2 class="text-xl font-semibold" style="color: var(--color-ink);">Collections</h2>
+            </div>
+            <p class="text-sm mt-1" style="color: var(--color-ash);">@Model.Collections.Count collections</p>
+        </div>
+        <a href="/admin/pseo/collections/new" class="btn btn-primary">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 4v16m8-8H4"/>
+            </svg>
+            New Collection
+        </a>
+    </div>
+
+    <!-- Collections Table -->
+    <div class="table-container">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Project</th>
+                    <th>Schema</th>
+                    <th>Niches</th>
+                    <th>Pages</th>
+                    <th>Progress</th>
+                    <th>Status</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Collections.Any())
+                {
+                    @foreach (var col in Model.Collections)
+                    {
+                        var totalPages = col.PageCount;
+                        var genPercent = totalPages > 0 ? (int)((col.GeneratedCount + col.PublishedCount) * 100.0 / totalPages) : 0;
+                        <tr>
+                            <td>
+                                <a href="/admin/pseo/collections/@col.Id" class="font-medium hover:underline" style="color: var(--color-ink);">
+                                    @col.Name
+                                </a>
+                            </td>
+                            <td style="color: var(--color-ash); font-size: 0.8125rem;">
+                                @(Model.ProjectNames.GetValueOrDefault(col.ProjectId, "—"))
+                            </td>
+                            <td style="color: var(--color-ash); font-size: 0.8125rem;">
+                                @(Model.SchemaNames.GetValueOrDefault(col.SchemaId, "—"))
+                            </td>
+                            <td style="color: var(--color-ash); font-size: 0.8125rem;">
+                                @(Model.CollectionNicheCounts.GetValueOrDefault(col.Id))
+                            </td>
+                            <td style="font-size: 0.8125rem;">
+                                <div class="flex items-center gap-2" style="color: var(--color-ash);">
+                                    <span>@totalPages total</span>
+                                </div>
+                                <div class="flex gap-3 text-xs mt-0.5" style="color: var(--color-stone);">
+                                    <span class="text-green-600">@col.PublishedCount pub</span>
+                                    <span>@col.GeneratedCount gen</span>
+                                    @if (col.FailedCount > 0)
+                                    {
+                                        <span class="text-red-600">@col.FailedCount fail</span>
+                                    }
+                                </div>
+                            </td>
+                            <td>
+                                @if (totalPages > 0)
+                                {
+                                    <div class="w-20">
+                                        <div class="h-1.5 rounded-full" style="background: var(--color-mist);">
+                                            <div class="h-1.5 rounded-full" style="background: var(--color-indigo); width: @(genPercent)%;"></div>
+                                        </div>
+                                        <span class="text-xs" style="color: var(--color-ash);">@genPercent%</span>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <span class="text-xs" style="color: var(--color-cloud);">—</span>
+                                }
+                            </td>
+                            <td>
+                                <span class="badge @(col.Status switch { "published" => "badge-success", "generating" => "badge-warning", "draft" => "badge-neutral", "paused" => "badge-neutral", "error" => "badge-danger", _ => "badge-neutral" })">
+                                    @col.Status
+                                </span>
+                            </td>
+                            <td>
+                                <div class="flex items-center gap-1">
+                                    <a href="/admin/pseo/collections/@col.Id" class="btn btn-ghost btn-sm">Edit</a>
+                                    <form method="post" asp-page-handler="Delete" asp-route-id="@col.Id"
+                                          onsubmit="return confirm('Delete this collection?');" class="inline">
+                                        <button type="submit" class="btn btn-ghost btn-sm" style="color: var(--color-danger);">Delete</button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="8" class="text-center py-12">
+                            <p style="color: var(--color-cloud);">No collections found.</p>
+                            <a href="/admin/pseo/collections/new" class="btn btn-primary btn-sm mt-4">Create your first collection</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

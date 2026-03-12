@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Content Schemas — Contento pSEO</title>
+    <meta name="description" content="Understand content schemas in Contento pSEO: the 10 built-in schemas, validation rules, prompt architecture, and how to create custom schemas for AI generation." />
+    <script type="module" src="/src/main.js"></script>
+</head>
+<body class="bg-white text-gray-900 antialiased" x-data="{ mobileMenuOpen: false }">
+
+    <%nav-docs%>
+
+    <div class="max-w-[90rem] mx-auto flex">
+        <%sidebar-docs%>
+
+        <main class="flex-1 min-w-0 px-4 sm:px-6 lg:px-12 py-12">
+            <div class="max-w-3xl">
+
+                <!-- Breadcrumb -->
+                <div class="flex items-center gap-2 text-sm text-gray-400 mb-8">
+                    <a href="index.html" class="hover:text-gray-600">Docs</a>
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                    <span class="text-gray-600">Content Schemas</span>
+                </div>
+
+                <h1 style="font-size: 2.25rem; font-weight: 700; color: #1A1A1A; margin-bottom: 0.5rem; letter-spacing: -0.02em;">Content Schemas</h1>
+                <p style="font-size: 1.125rem; color: #6B7280; margin-bottom: 2.5rem;">Schemas define the JSON structure that AI fills to produce validated, consistent pages.</p>
+
+                <!-- What is a schema -->
+                <h2>What Is a Content Schema?</h2>
+
+                <p>A <strong>content schema</strong> is a JSON structure definition that tells the AI exactly what to generate for each page.
+                Instead of producing free-form prose, the AI fills in a structured JSON object with specific fields, item counts,
+                and validation constraints. The renderer then transforms this JSON into HTML using a template.</p>
+
+                <p>This approach ensures:</p>
+                <ul>
+                    <li><strong>Consistency</strong> &mdash; Every page follows the same structure within a collection</li>
+                    <li><strong>Validation</strong> &mdash; Output is checked against strict rules (item counts, string lengths, required fields)</li>
+                    <li><strong>Deterministic titles</strong> &mdash; Page titles follow a pattern, never AI-improvised</li>
+                    <li><strong>Predictable rendering</strong> &mdash; Each schema has a matched renderer that knows the field layout</li>
+                </ul>
+
+                <!-- 10 built-in schemas -->
+                <h2>The 10 Built-in Schemas</h2>
+
+                <table>
+                    <thead><tr><th>Schema</th><th>Title Pattern</th><th>Traffic Potential</th><th>Renderer</th></tr></thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Idea List</strong></td>
+                            <td>{count} {subtopic} Ideas for {year}</td>
+                            <td>High</td>
+                            <td><code>idea-list</code></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Comparison</strong></td>
+                            <td>{toolA} vs {toolB}: Which {subtopic} Tool Is Better?</td>
+                            <td>High</td>
+                            <td><code>comparison</code></td>
+                        </tr>
+                        <tr>
+                            <td><strong>How-To Guide</strong></td>
+                            <td>How to {action} with {subtopic} in {year}</td>
+                            <td>High</td>
+                            <td><code>how-to</code></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Best-Of Roundup</strong></td>
+                            <td>{count} Best {subtopic} Tools in {year}</td>
+                            <td>Very High</td>
+                            <td><code>best-of</code></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Beginner Guide</strong></td>
+                            <td>{subtopic} for Beginners: A Complete Guide ({year})</td>
+                            <td>Medium</td>
+                            <td><code>beginner-guide</code></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Checklist</strong></td>
+                            <td>The Ultimate {subtopic} Checklist ({count} Items)</td>
+                            <td>Medium</td>
+                            <td><code>checklist</code></td>
+                        </tr>
+                        <tr>
+                            <td><strong>FAQ</strong></td>
+                            <td>{count} Common {subtopic} Questions Answered</td>
+                            <td>Medium</td>
+                            <td><code>faq</code></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Alternatives</strong></td>
+                            <td>{count} Best {tool} Alternatives in {year}</td>
+                            <td>High</td>
+                            <td><code>alternatives</code></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Statistics</strong></td>
+                            <td>{count} {subtopic} Statistics You Should Know ({year})</td>
+                            <td>Medium</td>
+                            <td><code>statistics</code></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Use Cases</strong></td>
+                            <td>{count} {subtopic} Use Cases for {audience}</td>
+                            <td>Medium</td>
+                            <td><code>use-cases</code></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <!-- Schema structure -->
+                <h2>Schema Structure</h2>
+
+                <p>Each schema record has these key fields:</p>
+
+                <table>
+                    <thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>SchemaJson</code></td><td>jsonb</td><td>The JSON structure definition that the AI must fill</td></tr>
+                        <tr><td><code>PromptTemplate</code></td><td>text</td><td>The prompt template sent to the AI, with <code>{niche}</code>, <code>{subtopic}</code>, <code>{schema}</code> placeholders</td></tr>
+                        <tr><td><code>TitlePattern</code></td><td>varchar</td><td>Deterministic title template (e.g., "{count} Best {subtopic} Tools in {year}")</td></tr>
+                        <tr><td><code>MetaDescPattern</code></td><td>varchar</td><td>Meta description template with the same token syntax</td></tr>
+                        <tr><td><code>RendererSlug</code></td><td>varchar</td><td>The slug of the HTML renderer that transforms the JSON to a page</td></tr>
+                    </tbody>
+                </table>
+
+                <!-- Validation rules -->
+                <h2>Schema Validation Rules</h2>
+
+                <p>After the AI generates JSON content, it is validated against the schema's rules before publishing. Validation ensures quality and catches hallucinated or malformed output.</p>
+
+                <table>
+                    <thead><tr><th>Rule</th><th>Example</th><th>Failure Behavior</th></tr></thead>
+                    <tbody>
+                        <tr><td><strong>Exact item count</strong></td><td>Schema says <code>"items": 10</code>, AI must produce exactly 10</td><td>Rejected</td></tr>
+                        <tr><td><strong>String min/max length</strong></td><td><code>"description": { "minLength": 50, "maxLength": 300 }</code></td><td>Rejected</td></tr>
+                        <tr><td><strong>Enum values</strong></td><td><code>"difficulty": ["easy", "medium", "hard"]</code></td><td>Rejected</td></tr>
+                        <tr><td><strong>Required fields</strong></td><td><code>"required": ["title", "description", "items"]</code></td><td>Rejected</td></tr>
+                        <tr><td><strong>JSON parse</strong></td><td>Output must be valid JSON</td><td>Retry (1 attempt)</td></tr>
+                    </tbody>
+                </table>
+
+                <p>When validation fails, the generator retries once with an adjusted prompt. If the second attempt also fails, the page is marked as <code>failed</code> and logged for manual review.</p>
+
+                <!-- Creating custom schema -->
+                <h2>Creating a Custom Schema</h2>
+
+<pre><span class="function">curl</span> -X POST https://app.contentocms.com/api/v1/pseo/schemas \
+  -H <span class="string">"Authorization: Bearer &lt;token&gt;"</span> \
+  -H <span class="string">"Content-Type: application/json"</span> \
+  -d <span class="string">'{
+    "name": "Idea List",
+    "slug": "idea-list",
+    "titlePattern": "{count} {subtopic} Ideas for {year}",
+    "metaDescPattern": "Discover {count} actionable {subtopic} ideas for {year}. Curated for {audience}.",
+    "rendererSlug": "idea-list",
+    "promptTemplate": "Generate a JSON object with exactly {count} creative, actionable ideas about {subtopic} for the {niche} audience. Each idea must have a title (5-12 words), description (50-200 chars), and difficulty (easy/medium/hard). Return ONLY valid JSON matching this schema: {schema}",
+    "schemaJson": {
+      "type": "object",
+      "required": ["intro", "items", "conclusion"],
+      "properties": {
+        "intro": {
+          "type": "string",
+          "minLength": 100,
+          "maxLength": 500,
+          "description": "Engaging introduction paragraph"
+        },
+        "items": {
+          "type": "array",
+          "exactCount": 10,
+          "items": {
+            "type": "object",
+            "required": ["title", "description", "difficulty"],
+            "properties": {
+              "title": { "type": "string", "minLength": 20, "maxLength": 80 },
+              "description": { "type": "string", "minLength": 50, "maxLength": 200 },
+              "difficulty": { "type": "string", "enum": ["easy", "medium", "hard"] }
+            }
+          }
+        },
+        "conclusion": {
+          "type": "string",
+          "minLength": 80,
+          "maxLength": 400,
+          "description": "Wrap-up paragraph with next steps"
+        }
+      }
+    }
+  }'</span></pre>
+
+                <!-- How AI uses the schema -->
+                <h2>How AI Uses the Schema</h2>
+
+                <p>The generation prompt is assembled from three pieces:</p>
+
+                <ol>
+                    <li><strong>Niche context</strong> &mdash; Audience, pain points, monetization model (from the niche)</li>
+                    <li><strong>Prompt template</strong> &mdash; The schema's <code>PromptTemplate</code> with tokens replaced</li>
+                    <li><strong>Schema JSON</strong> &mdash; The <code>SchemaJson</code> is serialized and included so the AI knows the exact structure to produce</li>
+                </ol>
+
+                <p>The AI receives a single prompt that combines all three, returns JSON, and the validator checks it against the schema rules.
+                This architecture means the AI never decides the page structure &mdash; it only fills in the content within a pre-defined shape.</p>
+
+                <div class="callout callout-tip">
+                    <strong>Tip:</strong> The title is never AI-generated. It is deterministically built from the <code>TitlePattern</code>
+                    by replacing tokens like <code>{subtopic}</code>, <code>{count}</code>, and <code>{year}</code>. This ensures
+                    SERP-optimized titles that are predictable and consistent across all pages in a collection.
+                </div>
+
+                <!-- API Reference -->
+                <h2>API Reference</h2>
+
+                <table>
+                    <thead><tr><th>Method</th><th>Endpoint</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>GET</code></td><td><code>/api/v1/pseo/schemas</code></td><td>List all schemas</td></tr>
+                        <tr><td><code>GET</code></td><td><code>/api/v1/pseo/schemas/{id}</code></td><td>Get schema by ID with full SchemaJson</td></tr>
+                        <tr><td><code>POST</code></td><td><code>/api/v1/pseo/schemas</code></td><td>Create a custom schema</td></tr>
+                        <tr><td><code>PUT</code></td><td><code>/api/v1/pseo/schemas/{id}</code></td><td>Update a schema</td></tr>
+                        <tr><td><code>DELETE</code></td><td><code>/api/v1/pseo/schemas/{id}</code></td><td>Delete a schema (not if used by active collections)</td></tr>
+                    </tbody>
+                </table>
+
+                <p>See the <a href="api.html" style="color: #3D5A80; font-weight: 500;">full API reference</a> for request/response details.</p>
+
+            </div>
+        </main>
+    </div>
+
+    <%footer-docs%>
+
+</body>
+</html>

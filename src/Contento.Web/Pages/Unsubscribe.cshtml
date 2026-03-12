@@ -1,0 +1,37 @@
+@page "/unsubscribe"
+@model Contento.Web.Pages.UnsubscribeModel
+@{
+    ViewData["Title"] = "Unsubscribe";
+    Layout = "_PublicLayout";
+    ViewData["SiteTitle"] = Model.SiteName;
+    ViewData["SiteTagline"] = Model.SiteTagline;
+}
+
+<div class="max-w-lg mx-auto text-center py-16">
+    @if (Model.Success)
+    {
+        <div class="w-16 h-16 rounded-full mx-auto mb-6 flex items-center justify-center" style="background-color: var(--color-indigo-pale);">
+            <svg class="w-8 h-8" style="color: var(--color-indigo);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 13l4 4L19 7"/>
+            </svg>
+        </div>
+        <h1 class="text-2xl font-semibold mb-3" style="color: var(--color-ink); font-family: var(--font-serif);">Unsubscribed</h1>
+        <p class="text-sm leading-relaxed" style="color: var(--color-stone);">@Model.Message</p>
+        <a href="/" class="inline-block mt-8 px-6 py-2.5 rounded-lg text-sm font-medium text-white" style="background: var(--color-indigo);">
+            Back to Home
+        </a>
+    }
+    else
+    {
+        <div class="w-16 h-16 rounded-full mx-auto mb-6 flex items-center justify-center" style="background-color: #fef2f2;">
+            <svg class="w-8 h-8" style="color: #dc2626;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+        </div>
+        <h1 class="text-2xl font-semibold mb-3" style="color: var(--color-ink); font-family: var(--font-serif);">Unsubscribe</h1>
+        <p class="text-sm leading-relaxed" style="color: var(--color-stone);">@Model.Message</p>
+        <a href="/" class="inline-block mt-8 px-6 py-2.5 rounded-lg text-sm font-medium text-white" style="background: var(--color-indigo);">
+            Back to Home
+        </a>
+    }
+</div>

@@ -1,0 +1,116 @@
+@page "/admin/menus"
+@model Contento.Web.Pages.Admin.Menus.IndexModel
+@{
+    ViewData["Title"] = "Menus";
+}
+
+<div class="max-w-5xl mx-auto">
+    <!-- Header -->
+    <div class="flex items-center justify-between mb-6">
+        <div>
+            <h2 class="text-xl font-semibold" style="color: var(--color-ink);">Navigation Menus</h2>
+            <p class="text-sm mt-1" style="color: var(--color-ash);">@Model.Menus.Count menus</p>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <!-- Create Form -->
+        <div class="lg:col-span-1">
+            <div class="card">
+                <h3 class="text-sm font-semibold mb-4" style="color: var(--color-ink);">Add Menu</h3>
+
+                <form method="post" asp-page-handler="Create">
+                    <div class="space-y-4">
+                        <div>
+                            <label class="form-label">Name</label>
+                            <input type="text" name="Name" class="form-input" placeholder="e.g. Main Navigation" required />
+                        </div>
+                        <div>
+                            <label class="form-label">Location</label>
+                            <select name="Location" class="form-input">
+                                <option value="header">Header</option>
+                                <option value="footer">Footer</option>
+                                <option value="custom">Custom</option>
+                            </select>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <input type="checkbox" name="IsActive" value="true" checked class="rounded" />
+                            <label class="form-label mb-0">Active</label>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-sm w-full">Add Menu</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Menus List -->
+        <div class="lg:col-span-2">
+            @if (Model.Menus.Any())
+            {
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Location</th>
+                                <th>Items</th>
+                                <th>Status</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var vm in Model.Menus)
+                            {
+                                <tr>
+                                    <td>
+                                        <a asp-page="Edit" asp-route-id="@vm.Menu.Id" class="font-medium" style="color: var(--color-indigo);">
+                                            @vm.Menu.Name
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium"
+                                              style="background: var(--color-mist); color: var(--color-stone);">
+                                            @vm.Menu.Location
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span class="text-sm" style="color: var(--color-ash);">@vm.ItemCount items</span>
+                                    </td>
+                                    <td>
+                                        @if (vm.Menu.IsActive)
+                                        {
+                                            <span class="text-xs font-medium" style="color: var(--color-indigo);">Active</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="text-xs" style="color: var(--color-ash);">Inactive</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        <div class="flex items-center gap-1">
+                                            <a asp-page="Edit" asp-route-id="@vm.Menu.Id" class="btn btn-ghost btn-sm">Edit</a>
+                                            <form method="post" asp-page-handler="Delete" class="inline">
+                                                <input type="hidden" name="id" value="@vm.Menu.Id" />
+                                                <button type="submit" class="btn btn-ghost btn-sm" style="color: var(--color-danger);">Delete</button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <div class="card text-center py-12">
+                    <svg class="w-10 h-10 mx-auto mb-3" style="color: var(--color-cloud);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h7"/>
+                    </svg>
+                    <p style="color: var(--color-cloud);">No menus yet.</p>
+                    <p class="text-sm mt-2" style="color: var(--color-ash);">Create your first menu using the form.</p>
+                </div>
+            }
+        </div>
+    </div>
+</div>

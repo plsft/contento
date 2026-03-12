@@ -1,0 +1,287 @@
+@page "/admin/pseo/collections/{id:guid?}"
+@model Contento.Web.Pages.Admin.Pseo.Collections.EditModel
+@{
+    ViewData["Title"] = Model.IsNew ? "New Collection" : $"Edit Collection — {Model.Collection?.Name}";
+}
+
+<div class="max-w-4xl mx-auto" x-data="collectionWizard()">
+    <!-- Header -->
+    <div class="flex items-center justify-between mb-6">
+        <div>
+            <div class="flex items-center gap-2">
+                <a href="/admin/pseo" class="text-sm" style="color: var(--color-ash);">pSEO</a>
+                <span style="color: var(--color-cloud);">/</span>
+                <a href="/admin/pseo/collections" class="text-sm" style="color: var(--color-ash);">Collections</a>
+                <span style="color: var(--color-cloud);">/</span>
+                <h2 class="text-xl font-semibold" style="color: var(--color-ink);">
+                    @(Model.IsNew ? "New Collection" : Model.Collection?.Name)
+                </h2>
+            </div>
+        </div>
+        @if (!Model.IsNew && Model.Collection != null)
+        {
+            <span class="badge @(Model.Collection.Status switch { "published" => "badge-success", "generating" => "badge-warning", "draft" => "badge-neutral", _ => "badge-neutral" })">
+                @Model.Collection.Status
+            </span>
+        }
+    </div>
+
+    <!-- Step Indicators -->
+    <div class="flex items-center gap-2 mb-8">
+        @for (var i = 1; i <= 5; i++)
+        {
+            var step = i;
+            <button type="button" @@click="goToStep(@step)"
+                    :class="currentStep === @step ? 'bg-[var(--color-indigo)] text-white' : currentStep > @step ? 'bg-green-100 text-green-700' : 'bg-[var(--color-mist)] text-[var(--color-ash)]'"
+                    class="w-8 h-8 rounded-full text-sm font-medium flex items-center justify-center transition-colors">
+                @step
+            </button>
+            @if (i < 5)
+            {
+                <div class="flex-1 h-0.5" :class="currentStep > @step ? 'bg-green-300' : 'bg-[var(--color-mist)]'"
+                     style="max-width: 4rem;"></div>
+            }
+        }
+    </div>
+
+    <form method="post" asp-page-handler="Save" asp-route-id="@Model.Collection?.Id">
+        <!-- Step 1: Name + Schema -->
+        <div x-show="currentStep === 1">
+            <div class="card">
+                <h3 class="text-sm font-semibold mb-4" style="color: var(--color-ink);">Step 1: Basic Info</h3>
+                <div class="space-y-4">
+                    <div>
+                        <label class="form-label">Collection Name</label>
+                        <input type="text" name="CollectionName" x-model="collectionName" class="form-input"
+                               placeholder="e.g. US City Guides" required />
+                    </div>
+                    <div>
+                        <label class="form-label">Project</label>
+                        <select name="ProjectId" x-model="projectId" class="form-input" required>
+                            <option value="">Select a project...</option>
+                            @foreach (var project in Model.Projects)
+                            {
+                                <option value="@project.Id" selected="@(Model.ProjectId == project.Id)">@project.Name (@project.Fqdn)</option>
+                            }
+                        </select>
+                    </div>
+                    <div>
+                        <label class="form-label">Content Schema</label>
+                        <select name="SchemaId" x-model="schemaId" class="form-input" required>
+                            <option value="">Select a schema...</option>
+                            @foreach (var schema in Model.Schemas)
+                            {
+                                <option value="@schema.Id" selected="@(Model.SchemaId == schema.Id)">@schema.Name — @schema.RendererSlug</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 2: Select Niches -->
+        <div x-show="currentStep === 2" x-cloak>
+            <div class="card">
+                <h3 class="text-sm font-semibold mb-4" style="color: var(--color-ink);">Step 2: Select Niches</h3>
+                <div class="mb-4">
+                    <input type="text" x-model="nicheSearch" class="form-input" placeholder="Search niches..." />
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-2 max-h-96 overflow-y-auto">
+                    @foreach (var niche in Model.AvailableNiches)
+                    {
+                        <label class="flex items-center gap-3 p-3 rounded-lg border cursor-pointer hover:bg-stone-50 transition-colors"
+                               style="border-color: var(--color-mist);"
+                               x-show="!nicheSearch || '@niche.Name.ToLower()'.includes(nicheSearch.toLowerCase()) || '@niche.Category.ToLower()'.includes(nicheSearch.toLowerCase())">
+                            <input type="checkbox" name="SelectedNicheIds" value="@niche.Id"
+                                   class="rounded"
+                                   @(Model.SelectedNicheIds.Contains(niche.Id) ? "checked" : "") />
+                            <div>
+                                <span class="text-sm font-medium" style="color: var(--color-ink);">@niche.Name</span>
+                                <span class="text-xs ml-2" style="color: var(--color-ash);">@niche.Category</span>
+                            </div>
+                        </label>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 3: URL Pattern + Title Template -->
+        <div x-show="currentStep === 3" x-cloak>
+            <div class="card">
+                <h3 class="text-sm font-semibold mb-4" style="color: var(--color-ink);">Step 3: URL &amp; Title Templates</h3>
+                <div class="space-y-4">
+                    <div>
+                        <label class="form-label">URL Pattern</label>
+                        <input type="text" name="UrlPattern" x-model="urlPattern" class="form-input"
+                               placeholder="/{{niche-slug}}/{{subtopic-slug}}" required />
+                        <p class="text-xs mt-1" style="color: var(--color-ash);">
+                            Available variables: <code>@("{{niche-slug}}")</code>, <code>@("{{subtopic-slug}}")</code>, <code>@("{{niche-name}}")</code>
+                        </p>
+                    </div>
+                    <div>
+                        <label class="form-label">Title Template</label>
+                        <input type="text" name="TitleTemplate" x-model="titleTemplate" class="form-input"
+                               placeholder="{{niche-name}} — {{subtopic}} Guide" required />
+                    </div>
+                    <div>
+                        <label class="form-label">Meta Description Template (optional)</label>
+                        <textarea name="MetaDescTemplate" x-model="metaDescTemplate" rows="2" class="form-input"
+                                  placeholder="Learn about {{subtopic}} in {{niche-name}}..."></textarea>
+                    </div>
+                    <!-- Live Preview -->
+                    <div class="rounded-lg p-4" style="background: var(--color-paper); border: 1px solid var(--color-mist);">
+                        <p class="text-xs font-medium mb-2" style="color: var(--color-ash);">Live Preview:</p>
+                        <p class="text-sm" style="color: var(--color-indigo);" x-text="previewUrl()"></p>
+                        <p class="text-sm font-medium mt-1" style="color: var(--color-ink);" x-text="previewTitle()"></p>
+                        <p class="text-xs mt-1" style="color: var(--color-ash);" x-text="previewMeta()"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 4: Publish Schedule -->
+        <div x-show="currentStep === 4" x-cloak>
+            <div class="card">
+                <h3 class="text-sm font-semibold mb-4" style="color: var(--color-ink);">Step 4: Publish Schedule</h3>
+                <div class="space-y-4">
+                    <div>
+                        <label class="form-label">Schedule</label>
+                        <select name="PublishSchedule" x-model="publishSchedule" class="form-input">
+                            <option value="manual">Manual — publish pages yourself</option>
+                            <option value="daily">Daily — publish a batch each day</option>
+                            <option value="hourly">Hourly — publish a batch each hour</option>
+                            <option value="immediate">Immediate — publish as soon as generated</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="form-label">Batch Size</label>
+                        <input type="number" name="BatchSize" x-model="batchSize" class="form-input max-w-xs"
+                               min="1" max="500" />
+                        <p class="text-xs mt-1" style="color: var(--color-ash);">
+                            Number of pages to publish per batch cycle.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 5: Review -->
+        <div x-show="currentStep === 5" x-cloak>
+            <div class="card">
+                <h3 class="text-sm font-semibold mb-4" style="color: var(--color-ink);">Step 5: Review &amp; Generate</h3>
+                <div class="space-y-3">
+                    <div class="flex items-center justify-between py-2 border-b" style="border-color: var(--color-mist);">
+                        <span class="text-sm" style="color: var(--color-ash);">Name</span>
+                        <span class="text-sm font-medium" style="color: var(--color-ink);" x-text="collectionName"></span>
+                    </div>
+                    <div class="flex items-center justify-between py-2 border-b" style="border-color: var(--color-mist);">
+                        <span class="text-sm" style="color: var(--color-ash);">URL Pattern</span>
+                        <span class="text-sm font-medium" style="color: var(--color-ink);" x-text="urlPattern"></span>
+                    </div>
+                    <div class="flex items-center justify-between py-2 border-b" style="border-color: var(--color-mist);">
+                        <span class="text-sm" style="color: var(--color-ash);">Title Template</span>
+                        <span class="text-sm font-medium" style="color: var(--color-ink);" x-text="titleTemplate"></span>
+                    </div>
+                    <div class="flex items-center justify-between py-2 border-b" style="border-color: var(--color-mist);">
+                        <span class="text-sm" style="color: var(--color-ash);">Publish Schedule</span>
+                        <span class="text-sm font-medium" style="color: var(--color-ink);" x-text="publishSchedule"></span>
+                    </div>
+                    <div class="flex items-center justify-between py-2">
+                        <span class="text-sm" style="color: var(--color-ash);">Batch Size</span>
+                        <span class="text-sm font-medium" style="color: var(--color-ink);" x-text="batchSize"></span>
+                    </div>
+                </div>
+
+                <div class="flex justify-end gap-3 mt-6 border-t pt-4" style="border-color: var(--color-mist);">
+                    <button type="submit" class="btn btn-primary">
+                        Save Collection
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Buttons -->
+        <div class="flex items-center justify-between mt-6">
+            <button type="button" x-show="currentStep > 1" @@click="prevStep()" class="btn btn-ghost">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 19l-7-7 7-7"/>
+                </svg>
+                Previous
+            </button>
+            <div x-show="currentStep <= 1"></div>
+
+            <button type="button" x-show="currentStep < 5" @@click="nextStep()" class="btn btn-primary">
+                Next
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5l7 7-7 7"/>
+                </svg>
+            </button>
+        </div>
+    </form>
+
+    @if (!Model.IsNew && Model.Collection != null)
+    {
+        <!-- Generate Button (below wizard for existing collections) -->
+        <div class="card mt-8">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h3 class="text-sm font-semibold" style="color: var(--color-ink);">Generate Pages</h3>
+                    <p class="text-xs mt-1" style="color: var(--color-ash);">
+                        Expand niches and subtopics, then generate AI content for all pages.
+                    </p>
+                </div>
+                <form method="post" asp-page-handler="Generate" asp-route-id="@Model.Collection.Id">
+                    <button type="submit" class="btn btn-primary"
+                            onclick="return confirm('Start generating pages? This may take a while.');">
+                        Generate Pages
+                    </button>
+                </form>
+            </div>
+        </div>
+    }
+</div>
+
+@section Scripts {
+<script>
+function collectionWizard() {
+    return {
+        currentStep: 1,
+        collectionName: '@(Model.CollectionName?.Replace("'", "\\'") ?? "")',
+        projectId: '@Model.ProjectId',
+        schemaId: '@Model.SchemaId',
+        urlPattern: '@(Model.UrlPattern?.Replace("'", "\\'") ?? "")',
+        titleTemplate: '@(Model.TitleTemplate?.Replace("'", "\\'") ?? "")',
+        metaDescTemplate: '@(Model.MetaDescTemplate?.Replace("'", "\\'") ?? "")',
+        publishSchedule: '@Model.PublishSchedule',
+        batchSize: @Model.BatchSize,
+        nicheSearch: '',
+
+        nextStep() {
+            if (this.currentStep < 5) this.currentStep++;
+        },
+        prevStep() {
+            if (this.currentStep > 1) this.currentStep--;
+        },
+        goToStep(step) {
+            this.currentStep = step;
+        },
+        previewUrl() {
+            return (this.urlPattern || '/{{niche-slug}}/{{subtopic-slug}}')
+                .replace('{{niche-slug}}', 'plumbing')
+                .replace('{{subtopic-slug}}', 'drain-repair');
+        },
+        previewTitle() {
+            return (this.titleTemplate || '{{niche-name}} — {{subtopic}} Guide')
+                .replace('{{niche-name}}', 'Plumbing')
+                .replace('{{subtopic}}', 'Drain Repair');
+        },
+        previewMeta() {
+            if (!this.metaDescTemplate) return '(no meta description template)';
+            return this.metaDescTemplate
+                .replace('{{niche-name}}', 'Plumbing')
+                .replace('{{subtopic}}', 'Drain Repair');
+        }
+    };
+}
+</script>
+}

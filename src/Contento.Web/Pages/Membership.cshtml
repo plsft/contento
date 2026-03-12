@@ -1,0 +1,213 @@
+@page "/membership"
+@model Contento.Web.Pages.MembershipModel
+@{
+    ViewData["Title"] = "Membership";
+    Layout = "_PublicLayout";
+    ViewData["SiteTitle"] = Model.SiteName;
+    ViewData["SiteTagline"] = Model.SiteTagline;
+}
+
+<div class="max-w-4xl mx-auto">
+    <h1 class="text-3xl font-semibold mb-2" style="font-family: var(--font-serif); color: var(--color-ink);">Membership</h1>
+    <p class="text-sm mb-8" style="color: var(--color-ash);">Support our work and get access to exclusive content.</p>
+
+    @if (Model.Success == true)
+    {
+        <div class="rounded-lg p-4 mb-8 border" style="background: var(--color-snow); border-color: var(--color-indigo); color: var(--color-indigo);">
+            <div class="flex items-center gap-3">
+                <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+                <p class="text-sm font-medium">Welcome! Your membership is now active.</p>
+            </div>
+        </div>
+    }
+
+    @if (Model.Canceled == true)
+    {
+        <div class="rounded-lg p-4 mb-8 border" style="background: var(--color-snow); border-color: var(--color-mist); color: var(--color-stone);">
+            <p class="text-sm">Checkout was canceled. You can try again whenever you are ready.</p>
+        </div>
+    }
+
+    @if (!Model.IsConfigured)
+    {
+        <div class="card text-center py-12">
+            <svg class="w-10 h-10 mx-auto mb-3" style="color: var(--color-cloud);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/>
+            </svg>
+            <p class="font-medium" style="color: var(--color-stone);">Membership coming soon</p>
+            <p class="text-sm mt-2" style="color: var(--color-ash);">We are working on setting up memberships. Check back later!</p>
+        </div>
+    }
+    else
+    {
+        <!-- Plan Cards -->
+        <div class="grid grid-cols-1 @(Model.Plans.Count() > 1 ? "md:grid-cols-2 lg:grid-cols-3" : "max-w-lg mx-auto") gap-6 mb-10"
+             x-data="membershipCheckout()">
+            @foreach (var plan in Model.Plans.OrderBy(p => p.SortOrder).ThenBy(p => p.Price))
+            {
+                var features = System.Text.Json.JsonSerializer.Deserialize<string[]>(plan.Features ?? "[]") ?? [];
+                var intervalLabel = plan.BillingInterval switch
+                {
+                    "yearly" => "/year",
+                    "lifetime" => " one-time",
+                    _ => "/month"
+                };
+                <div class="rounded-lg border p-6 flex flex-col" style="border-color: var(--color-indigo); background: var(--color-snow);">
+                    <div class="flex items-center gap-2 mb-3">
+                        <span class="px-2 py-0.5 rounded text-xs font-semibold text-white" style="background: var(--color-indigo);">@plan.Name</span>
+                        @if (plan.TrialDays > 0)
+                        {
+                            <span class="text-xs" style="color: var(--color-ash);">@plan.TrialDays-day trial</span>
+                        }
+                    </div>
+
+                    <div class="mb-2">
+                        <span class="text-3xl font-bold" style="color: var(--color-ink); font-family: var(--font-serif);">
+                            $@plan.Price.ToString("F2")
+                        </span>
+                        <span class="text-sm" style="color: var(--color-ash);">@intervalLabel</span>
+                    </div>
+
+                    @if (!string.IsNullOrEmpty(plan.Description))
+                    {
+                        <p class="text-sm mb-4" style="color: var(--color-stone);">@plan.Description</p>
+                    }
+
+                    @if (features.Length > 0)
+                    {
+                        <ul class="space-y-2 mb-6 flex-1">
+                            @foreach (var feature in features)
+                            {
+                                <li class="flex items-start gap-2 text-sm" style="color: var(--color-stone);">
+                                    <svg class="w-4 h-4 flex-shrink-0 mt-0.5" style="color: var(--color-indigo);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                    </svg>
+                                    @feature
+                                </li>
+                            }
+                        </ul>
+                    }
+                    else
+                    {
+                        <div class="flex-1"></div>
+                    }
+
+                    <div class="space-y-3 mt-auto">
+                        <div>
+                            <label class="block text-xs font-medium mb-1" style="color: var(--color-stone);">Email address</label>
+                            <input type="email" x-model="email" required placeholder="your@@email.com"
+                                   class="w-full px-3 py-2 rounded-md border text-sm"
+                                   style="border-color: var(--color-mist); background: var(--color-paper); color: var(--color-ink);" />
+                        </div>
+                        <button x-on:click="startCheckout('@plan.StripePriceId', '@plan.Slug')"
+                                :disabled="loading || !email"
+                                class="w-full px-4 py-2.5 rounded-md text-sm font-medium text-white transition-opacity"
+                                :class="loading ? 'opacity-50 cursor-not-allowed' : ''"
+                                style="background: var(--color-indigo);">
+                            <span x-show="activePlan !== '@plan.Slug'">Subscribe</span>
+                            <span x-show="activePlan === '@plan.Slug' && loading">Redirecting...</span>
+                        </button>
+                    </div>
+                </div>
+            }
+
+            <p x-show="errorMsg" x-text="errorMsg" class="text-sm col-span-full" style="color: #dc2626;"></p>
+        </div>
+
+        <!-- Check Membership Status -->
+        <div class="max-w-lg mx-auto rounded-lg border p-6" style="border-color: var(--color-mist); background: var(--color-snow);"
+             x-data="membershipStatus()">
+            <h3 class="text-lg font-semibold mb-1" style="color: var(--color-ink); font-family: var(--font-serif);">Already a member?</h3>
+            <p class="text-sm mb-4" style="color: var(--color-ash);">Check your membership status below.</p>
+
+            <div class="flex gap-2">
+                <input type="email" x-model="email" placeholder="your@@email.com"
+                       class="flex-1 px-3 py-2 rounded-md border text-sm"
+                       style="border-color: var(--color-mist); background: var(--color-paper); color: var(--color-ink);" />
+                <button x-on:click="checkStatus()" :disabled="loading || !email"
+                        class="px-4 py-2 rounded-md text-sm font-medium"
+                        style="background: var(--color-snow); border: 1px solid var(--color-mist); color: var(--color-ink);">
+                    <span x-show="!loading">Check</span>
+                    <span x-show="loading">Checking...</span>
+                </button>
+            </div>
+
+            <div x-show="result !== null" x-cloak class="mt-4">
+                <template x-if="result && result.active">
+                    <div class="rounded-md p-3 border" style="border-color: var(--color-indigo); background: var(--color-snow);">
+                        <p class="text-sm font-medium" style="color: var(--color-indigo);">
+                            Active membership: <span x-text="result.tier" class="uppercase"></span>
+                        </p>
+                    </div>
+                </template>
+                <template x-if="result && !result.active">
+                    <div class="rounded-md p-3 border" style="border-color: var(--color-mist);">
+                        <p class="text-sm" style="color: var(--color-stone);">No active membership found for this email.</p>
+                    </div>
+                </template>
+            </div>
+        </div>
+    }
+</div>
+
+@section Scripts {
+<script>
+function membershipCheckout() {
+    return {
+        email: '',
+        loading: false,
+        errorMsg: '',
+        activePlan: '',
+        async startCheckout(priceId, slug) {
+            if (!this.email) return;
+            this.loading = true;
+            this.errorMsg = '';
+            this.activePlan = slug;
+            try {
+                const resp = await fetch('/api/v1/membership/checkout', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: this.email, priceId: priceId })
+                });
+                const data = await resp.json();
+                if (data.error) {
+                    this.errorMsg = data.error.message;
+                } else if (data.data?.url) {
+                    window.location.href = data.data.url;
+                    return;
+                }
+            } catch {
+                this.errorMsg = 'Something went wrong. Please try again.';
+            }
+            this.loading = false;
+            this.activePlan = '';
+        }
+    };
+}
+
+function membershipStatus() {
+    return {
+        email: '',
+        loading: false,
+        result: null,
+        async checkStatus() {
+            if (!this.email) return;
+            this.loading = true;
+            this.result = null;
+            try {
+                const resp = await fetch(`/api/v1/membership/status?email=${encodeURIComponent(this.email)}`);
+                const data = await resp.json();
+                if (data.data) {
+                    this.result = data.data;
+                }
+            } catch {
+                this.result = { active: false, tier: 'free' };
+            }
+            this.loading = false;
+        }
+    };
+}
+</script>
+}

@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Deployment — Contento pSEO</title>
+    <meta name="description" content="Deploy Contento pSEO to production with Docker Compose. Configure PostgreSQL 17, Redis 7, Cloudflare DNS, Nginx, health checks, and scaling." />
+    <script type="module" src="/src/main.js"></script>
+</head>
+<body class="bg-white text-gray-900 antialiased" x-data="{ mobileMenuOpen: false }">
+
+    <%nav-docs%>
+
+    <div class="max-w-[90rem] mx-auto flex">
+        <%sidebar-docs%>
+
+        <main class="flex-1 min-w-0 px-4 sm:px-6 lg:px-12 py-12">
+            <div class="max-w-3xl">
+
+                <!-- Breadcrumb -->
+                <div class="flex items-center gap-2 text-sm text-gray-400 mb-8">
+                    <a href="index.html" class="hover:text-gray-600">Docs</a>
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                    <span class="text-gray-600">Deployment</span>
+                </div>
+
+                <h1 style="font-size: 2.25rem; font-weight: 700; color: #1A1A1A; margin-bottom: 0.5rem; letter-spacing: -0.02em;">Deployment</h1>
+                <p style="font-size: 1.125rem; color: #6B7280; margin-bottom: 2.5rem;">Production deployment with Docker Compose, Cloudflare, and Nginx.</p>
+
+                <!-- Docker Compose -->
+                <h2>Docker Compose (Production)</h2>
+
+                <p>The recommended production setup uses Docker Compose with three services: the Contento application, PostgreSQL 17, and Redis 7.</p>
+
+<pre><span class="comment"># docker-compose.yml (production)</span>
+version: "3.8"
+services:
+  app:
+    build: .
+    ports:
+      - "5000:5000"
+    environment:
+      - DATABASE_CONNECTION_STRING=Host=postgres;Port=5432;Database=contento;Username=contento;Password=${DB_PASSWORD}
+      - REDIS_CONNECTION_STRING=redis:6379
+      - CONTENTO_ADMIN_PASSWORD=${ADMIN_PASSWORD}
+      - GSC_CLIENT_ID=${GSC_CLIENT_ID}
+      - GSC_CLIENT_SECRET=${GSC_CLIENT_SECRET}
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:5000
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  postgres:
+    image: postgres:17
+    environment:
+      POSTGRES_DB: contento
+      POSTGRES_USER: contento
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U contento"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  redis:
+    image: redis:7-alpine
+    command: redis-server --maxmemory 256mb --maxmemory-policy allkeys-lru
+    volumes:
+      - redisdata:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+volumes:
+  pgdata:
+  redisdata:</pre>
+
+                <p>Create a <code>.env</code> file alongside the compose file:</p>
+
+<pre>DB_PASSWORD=your-strong-database-password
+ADMIN_PASSWORD=your-admin-password
+GSC_CLIENT_ID=your-google-client-id
+GSC_CLIENT_SECRET=your-google-client-secret</pre>
+
+                <!-- Environment variables -->
+                <h2>Environment Variables</h2>
+
+                <table>
+                    <thead><tr><th>Variable</th><th>Description</th><th>Required</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>DATABASE_CONNECTION_STRING</code></td><td>PostgreSQL 17 connection string</td><td>Yes</td></tr>
+                        <tr><td><code>REDIS_CONNECTION_STRING</code></td><td>Redis 7 connection string (host:port)</td><td>Yes</td></tr>
+                        <tr><td><code>CONTENTO_ADMIN_PASSWORD</code></td><td>Default admin account password</td><td>Yes</td></tr>
+                        <tr><td><code>GSC_CLIENT_ID</code></td><td>Google Search Console OAuth client ID</td><td>No (analytics disabled)</td></tr>
+                        <tr><td><code>GSC_CLIENT_SECRET</code></td><td>Google Search Console OAuth client secret</td><td>No (analytics disabled)</td></tr>
+                        <tr><td><code>ASPNETCORE_ENVIRONMENT</code></td><td>Runtime environment (<code>Production</code> recommended)</td><td>No</td></tr>
+                        <tr><td><code>ASPNETCORE_URLS</code></td><td>Listening URLs</td><td>No (default: <code>http://+:5000</code>)</td></tr>
+                        <tr><td><code>Serilog__MinimumLevel__Default</code></td><td>Log level (Information, Warning, Error)</td><td>No</td></tr>
+                    </tbody>
+                </table>
+
+                <!-- PostgreSQL setup -->
+                <h2>PostgreSQL 17 &amp; Redis 7</h2>
+
+                <p>If running outside of Docker Compose:</p>
+
+                <h3>PostgreSQL 17</h3>
+<pre><span class="comment"># Create the database</span>
+createdb -U postgres contento
+
+<span class="comment"># Verify version</span>
+psql -U postgres -c "SELECT version();"
+<span class="comment"># Should show PostgreSQL 17.x</span></pre>
+
+                <h3>Redis 7</h3>
+<pre><span class="comment"># Verify Redis is running</span>
+redis-cli ping
+<span class="comment"># Should return PONG</span>
+
+<span class="comment"># Verify version</span>
+redis-cli INFO server | grep redis_version
+<span class="comment"># Should show 7.x</span></pre>
+
+                <div class="callout callout-warning">
+                    <strong>Important:</strong> Redis is <strong>required</strong> for Contento pSEO (not optional). It powers the
+                    generation job queue, SSE progress streaming, and caching layer.
+                </div>
+
+                <!-- Cloudflare configuration -->
+                <h2>Cloudflare Configuration</h2>
+
+                <p>Cloudflare is the recommended DNS and proxy provider for Contento pSEO.</p>
+
+                <h3>1. Add your app domain</h3>
+                <p>Add an A or CNAME record for your Contento application domain:</p>
+                <table>
+                    <thead><tr><th>Type</th><th>Name</th><th>Content</th><th>Proxy</th></tr></thead>
+                    <tbody>
+                        <tr><td>A</td><td><code>app</code></td><td><code>your.server.ip.address</code></td><td>Proxied (orange cloud)</td></tr>
+                    </tbody>
+                </table>
+
+                <h3>2. Add pSEO subdomain support</h3>
+                <p>For each project, add a CNAME record pointing to your app domain:</p>
+                <table>
+                    <thead><tr><th>Type</th><th>Name</th><th>Content</th><th>Proxy</th></tr></thead>
+                    <tbody>
+                        <tr><td>CNAME</td><td><code>resources</code></td><td><code>app.contentocms.com</code></td><td>Proxied (orange cloud)</td></tr>
+                    </tbody>
+                </table>
+                <p>Alternatively, use a wildcard CNAME (<code>*</code>) if you plan to create many projects and want to avoid adding individual records.</p>
+
+                <h3>3. SSL/TLS mode</h3>
+                <p>Set SSL/TLS encryption mode to <strong>Full (strict)</strong> in the Cloudflare dashboard under SSL/TLS settings. This ensures end-to-end encryption between Cloudflare and your origin.</p>
+
+                <h3>4. DNS proxy</h3>
+                <p>Keep all records in <strong>Proxied</strong> mode (orange cloud icon) to benefit from Cloudflare's CDN caching, DDoS protection, and performance optimizations.</p>
+
+                <!-- Nginx -->
+                <h2>Nginx Reverse Proxy</h2>
+
+                <p>If running Contento behind Nginx on a VPS or bare-metal server:</p>
+
+<pre>server {
+    listen 443 ssl http2;
+    server_name app.contentocms.com *.contentocms.com;
+
+    ssl_certificate     /etc/ssl/certs/contentocms.pem;
+    ssl_certificate_key /etc/ssl/private/contentocms.key;
+
+    location / {
+        proxy_pass http://127.0.0.1:5000;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+
+        <span class="comment"># SSE support (for generation progress streaming)</span>
+        proxy_buffering off;
+        proxy_cache off;
+        proxy_read_timeout 3600s;
+    }
+
+    <span class="comment"># Health check (no proxy overhead)</span>
+    location = /health {
+        proxy_pass http://127.0.0.1:5000/health;
+    }
+}</pre>
+
+                <div class="callout callout-info">
+                    <strong>SSE support:</strong> The <code>proxy_buffering off</code> directive is critical for the real-time generation progress
+                    SSE endpoint. Without it, Nginx buffers the event stream and clients see no updates until the connection closes.
+                </div>
+
+                <!-- Health check -->
+                <h2>Health Check</h2>
+
+                <p>Contento exposes a health check endpoint at <code>/health</code> that returns:</p>
+
+<pre><span class="comment"># Healthy response (200 OK)</span>
+{
+  <span class="property">"status"</span>: <span class="string">"healthy"</span>,
+  <span class="property">"database"</span>: <span class="string">"connected"</span>,
+  <span class="property">"redis"</span>: <span class="string">"connected"</span>,
+  <span class="property">"uptime"</span>: <span class="string">"3d 14h 22m"</span>
+}
+
+<span class="comment"># Unhealthy response (503)</span>
+{
+  <span class="property">"status"</span>: <span class="string">"unhealthy"</span>,
+  <span class="property">"database"</span>: <span class="string">"disconnected"</span>,
+  <span class="property">"redis"</span>: <span class="string">"connected"</span>
+}</pre>
+
+                <p>Use this endpoint for load balancer health checks, Docker health checks, and uptime monitoring.</p>
+
+                <!-- Database migrations -->
+                <h2>Database Migrations</h2>
+
+                <p>Contento uses <strong>Bowtie</strong> for automatic schema management. On every startup, the application:</p>
+
+                <ol>
+                    <li>Compares the current database schema against the expected schema derived from C# entity models.</li>
+                    <li>Generates and executes any necessary migration SQL (CREATE TABLE, ALTER TABLE, etc.).</li>
+                    <li>Logs all schema changes to the application log.</li>
+                </ol>
+
+                <p>No manual migration commands are needed. Just deploy a new version and restart.</p>
+
+                <!-- Seed data -->
+                <h2>Seed Data</h2>
+
+                <p>On first run (when the database is empty), Contento automatically seeds:</p>
+
+                <ul>
+                    <li><strong>150 niches</strong> across 8 categories with full context (audience, pain points, subtopics)</li>
+                    <li><strong>10 content schemas</strong> (idea-list, comparison, how-to, best-of, beginner-guide, checklist, FAQ, alternatives, statistics, use-cases)</li>
+                    <li><strong>1 admin user</strong> with the password from <code>CONTENTO_ADMIN_PASSWORD</code></li>
+                </ul>
+
+                <p>Seed data is idempotent &mdash; running the app again does not duplicate existing seed records.</p>
+
+                <!-- Scaling -->
+                <h2>Scaling Considerations</h2>
+
+                <ul>
+                    <li>
+                        <strong>Horizontal scaling</strong> &mdash; Contento is stateless (all state lives in PostgreSQL and Redis).
+                        You can run multiple app instances behind a load balancer. Use sticky sessions for SSE connections.
+                    </li>
+                    <li>
+                        <strong>Database</strong> &mdash; For 100k+ pages, consider PostgreSQL connection pooling (PgBouncer) and
+                        read replicas for analytics queries.
+                    </li>
+                    <li>
+                        <strong>Redis</strong> &mdash; The default 256 MB memory limit handles up to ~50k queued jobs. Increase
+                        for very large generation batches.
+                    </li>
+                    <li>
+                        <strong>AI rate limits</strong> &mdash; The concurrent workers setting in collections controls how many
+                        parallel AI requests are made. Tune this to stay within your AI provider's rate limits.
+                    </li>
+                    <li>
+                        <strong>Disk</strong> &mdash; Generated HTML pages are stored in the database, not on disk. The main disk
+                        usage is PostgreSQL's data directory. Budget ~1 KB per page for storage estimates.
+                    </li>
+                    <li>
+                        <strong>CDN caching</strong> &mdash; With Cloudflare proxied mode, generated pages are cached at the edge.
+                        Set appropriate Cache-Control headers to reduce origin load.
+                    </li>
+                </ul>
+
+                <div class="callout callout-tip">
+                    <strong>Tip:</strong> For a typical pSEO deployment with 10,000 pages, a single 2-CPU / 4 GB RAM instance
+                    with managed PostgreSQL and Redis is more than sufficient. Scale horizontally only when you exceed 100k pages
+                    or need higher generation throughput.
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <%footer-docs%>
+
+</body>
+</html>
