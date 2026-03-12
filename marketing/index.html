@@ -43,17 +43,25 @@
                     <span class="ml-2 text-xs text-gray-500 font-mono">terminal</span>
                 </div>
                 <div class="p-6 text-sm leading-relaxed font-mono">
+                    <p class="comment"># Install &amp; authenticate</p>
                     <p><span class="prompt">$</span> npm install -g contento</p>
                     <p><span class="prompt">$</span> contento login --api-key ck_live_abc123</p>
                     <p class="output">&gt; <span class="text-accent">&#10003;</span> Authenticated</p>
-                    <p class="mt-4"><span class="prompt">$</span> contento projects create --name "Articles" --domain worktale.org --subdomain articles</p>
+                    <p class="mt-4 comment"># Create a project on your subdomain</p>
+                    <p><span class="prompt">$</span> contento projects create --name <span class="string">"Articles"</span> --domain worktale.org --subdomain articles</p>
                     <p class="output">&gt; <span class="text-accent">&#10003;</span> Project created: <span class="url">articles.worktale.org</span></p>
-                    <p class="output">&gt; Add CNAME: articles &rarr; pseo.contentocms.com</p>
-                    <p class="mt-4"><span class="prompt">$</span> contento collections generate coll_a1b2c3</p>
-                    <p class="output">&gt; Generating 48 pages across 3 niches...</p>
-                    <p class="output">&gt; [&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9601;&#9601;&#9601;&#9601;] 36/48 (75%) | 2 retried | ETA 8s</p>
+                    <p class="mt-4 comment"># Browse niches &amp; pick a content schema</p>
+                    <p><span class="prompt">$</span> contento niches list --category <span class="string">"Technology"</span></p>
+                    <p class="output">&gt; 20 niches found: Web Dev, DevOps, AI/ML, ...</p>
+                    <p class="mt-4 comment"># Create a collection (niches &times; schema = pages)</p>
+                    <p><span class="prompt">$</span> contento collections create --project proj_8f3a \</p>
+                    <p>    --schema <span class="string">idea-list</span> --niches <span class="string">niche_01,niche_02,niche_03</span></p>
+                    <p class="output">&gt; <span class="text-accent">&#10003;</span> Collection coll_a1b2c3 created (48 pages queued)</p>
+                    <p class="mt-4 comment"># Generate with AI &amp; publish</p>
+                    <p><span class="prompt">$</span> contento collections generate coll_a1b2c3</p>
+                    <p class="output">&gt; [&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;] 48/48 (100%)</p>
                     <p class="output">&gt; <span class="text-accent">&#10003;</span> 48 pages generated, 46 validated, 2 retried</p>
-                    <p class="mt-4"><span class="prompt">$</span> contento publish coll_a1b2c3</p>
+                    <p class="mt-3"><span class="prompt">$</span> contento publish coll_a1b2c3</p>
                     <p class="output">&gt; <span class="text-accent">&#10003;</span> Published 48 pages to <span class="url">articles.worktale.org</span></p>
                 </div>
             </div>
@@ -85,28 +93,252 @@
 </section>
 <div class="section-divider"></div>
 
-<!-- How It Works -->
+<!-- How It Works — Full Workflow -->
 <section class="py-24 px-4 sm:px-6">
-    <div class="max-w-6xl mx-auto">
-        <div class="text-center mb-16">
-            <h2 class="text-3xl sm:text-4xl font-bold tracking-tight mb-4">How it works</h2>
-            <p class="text-gray-500 max-w-2xl mx-auto">Three steps from zero to thousands of indexed pages.</p>
+    <div class="max-w-5xl mx-auto">
+        <div class="text-center mb-20">
+            <h2 class="text-3xl sm:text-4xl font-bold tracking-tight mb-4">The complete workflow</h2>
+            <p class="text-gray-500 max-w-2xl mx-auto">From install to indexed pages in six steps. Every step runs through the <code>contento</code> CLI &mdash; or fully automated by an AI agent with <code>--json</code>.</p>
         </div>
-        <div class="grid md:grid-cols-3 gap-6">
-            <div class="card p-6">
-                <div class="stat-number text-4xl text-gray-200 mb-4">01</div>
-                <h3 class="font-semibold text-lg mb-2">Install the CLI</h3>
-                <p class="text-sm text-gray-500 leading-relaxed">Run <code>npm install -g contento</code> and authenticate with your API key. Create a project, add a CNAME record, and your subdomain goes live in minutes.</p>
+
+        <!-- Step 1: Install & Auth -->
+        <div class="grid lg:grid-cols-2 gap-10 items-start mb-20">
+            <div>
+                <div class="flex items-center gap-3 mb-4">
+                    <span class="stat-number text-3xl text-gray-200">01</span>
+                    <h3 class="text-xl font-bold">Install &amp; authenticate</h3>
+                </div>
+                <p class="text-gray-500 leading-relaxed mb-4">Install the CLI globally via npm. Authenticate with an API key from your <a href="https://app.contentocms.com" class="text-accent hover:underline">contentocms.com</a> dashboard. Your key is stored locally at <code class="text-xs">~/.contento/config.json</code> &mdash; one-time setup.</p>
+                <ul class="space-y-2 text-sm text-gray-600">
+                    <li class="flex items-center gap-2"><span class="text-accent">&#10003;</span> Works on macOS, Linux, and Windows</li>
+                    <li class="flex items-center gap-2"><span class="text-accent">&#10003;</span> Also runs via <code class="text-xs">npx contento</code> (zero install)</li>
+                    <li class="flex items-center gap-2"><span class="text-accent">&#10003;</span> Agents use <code class="text-xs">CONTENTO_API_KEY</code> env var</li>
+                </ul>
             </div>
-            <div class="card p-6">
-                <div class="stat-number text-4xl text-gray-200 mb-4">02</div>
-                <h3 class="font-semibold text-lg mb-2">Choose niches + schemas</h3>
-                <p class="text-sm text-gray-500 leading-relaxed">Pick from 150+ niche taxonomies with rich context (audience, pain points, subtopics). Select content types: idea lists, checklists, how-to guides, comparisons, FAQs.</p>
+            <div class="console overflow-hidden">
+                <div class="flex items-center gap-2 px-4 py-3 border-b border-[#2a2b3d]">
+                    <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
+                    <div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
+                    <div class="w-3 h-3 rounded-full bg-green-500/80"></div>
+                    <span class="ml-2 text-xs text-gray-500 font-mono">step-1</span>
+                </div>
+                <div class="p-5 text-sm leading-relaxed font-mono">
+                    <p><span class="prompt">$</span> npm install -g contento</p>
+                    <p class="output">added 1 package in 3s</p>
+                    <p class="mt-3"><span class="prompt">$</span> contento login --api-key ck_live_abc123def456</p>
+                    <p class="output"><span class="text-accent">&#10003;</span> Authenticated as team@worktale.org</p>
+                    <p class="output">Config saved to ~/.contento/config.json</p>
+                </div>
             </div>
-            <div class="card p-6">
-                <div class="stat-number text-4xl text-gray-200 mb-4">03</div>
-                <h3 class="font-semibold text-lg mb-2">Generate + publish</h3>
-                <p class="text-sm text-gray-500 leading-relaxed">AI fills your JSON schemas (not blank pages). 10 concurrent workers, schema validation, deterministic titles. Progressive publishing with batch control.</p>
+        </div>
+
+        <!-- Step 2: Create Project -->
+        <div class="grid lg:grid-cols-2 gap-10 items-start mb-20">
+            <div class="order-2 lg:order-1">
+                <div class="console overflow-hidden">
+                    <div class="flex items-center gap-2 px-4 py-3 border-b border-[#2a2b3d]">
+                        <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
+                        <div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
+                        <div class="w-3 h-3 rounded-full bg-green-500/80"></div>
+                        <span class="ml-2 text-xs text-gray-500 font-mono">step-2</span>
+                    </div>
+                    <div class="p-5 text-sm leading-relaxed font-mono">
+                        <p><span class="prompt">$</span> contento projects create \</p>
+                        <p>    --name <span class="string">"Developer Resources"</span> \</p>
+                        <p>    --domain worktale.org \</p>
+                        <p>    --subdomain articles</p>
+                        <p class="output mt-2"><span class="text-accent">&#10003;</span> Project created: <span class="url">articles.worktale.org</span></p>
+                        <p class="output">&rarr; Add CNAME: articles &rarr; pseo.contentocms.com</p>
+                        <p class="mt-3"><span class="prompt">$</span> contento domains verify proj_8f3a</p>
+                        <p class="output"><span class="text-accent">&#10003;</span> DNS verified | SSL active (Cloudflare)</p>
+                    </div>
+                </div>
+            </div>
+            <div class="order-1 lg:order-2">
+                <div class="flex items-center gap-3 mb-4">
+                    <span class="stat-number text-3xl text-gray-200">02</span>
+                    <h3 class="text-xl font-bold">Create a project &amp; subdomain</h3>
+                </div>
+                <p class="text-gray-500 leading-relaxed mb-4">A project maps to one subdomain on your domain. Add a CNAME record pointing to <code class="text-xs">pseo.contentocms.com</code> and Contento verifies it automatically (polling every 5 minutes). SSL is handled by Cloudflare &mdash; zero certificate management.</p>
+                <ul class="space-y-2 text-sm text-gray-600">
+                    <li class="flex items-center gap-2"><span class="text-accent">&#10003;</span> One CNAME record, done in your DNS panel</li>
+                    <li class="flex items-center gap-2"><span class="text-accent">&#10003;</span> Auto-verified with 48-hour timeout</li>
+                    <li class="flex items-center gap-2"><span class="text-accent">&#10003;</span> Multiple subdomains per domain</li>
+                    <li class="flex items-center gap-2"><span class="text-accent">&#10003;</span> SSL termination at Cloudflare edge</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Step 3: Select Niches -->
+        <div class="grid lg:grid-cols-2 gap-10 items-start mb-20">
+            <div>
+                <div class="flex items-center gap-3 mb-4">
+                    <span class="stat-number text-3xl text-gray-200">03</span>
+                    <h3 class="text-xl font-bold">Browse &amp; select niches</h3>
+                </div>
+                <p class="text-gray-500 leading-relaxed mb-4">Contento ships with 150+ niches across 8 categories, each with rich context: target audience, pain points, monetization strategies, and 10&ndash;20 subtopics. The subtopics are what become your pages. Browse interactively or filter by category.</p>
+                <ul class="space-y-2 text-sm text-gray-600">
+                    <li class="flex items-center gap-2"><span class="text-accent">&#10003;</span> 8 categories: Tech, Business, Health, Finance, etc.</li>
+                    <li class="flex items-center gap-2"><span class="text-accent">&#10003;</span> Each niche has audience + pain points + subtopics</li>
+                    <li class="flex items-center gap-2"><span class="text-accent">&#10003;</span> Fork any niche to customize context</li>
+                    <li class="flex items-center gap-2"><span class="text-accent">&#10003;</span> Interactive selection: <code class="text-xs">contento niches select</code></li>
+                </ul>
+            </div>
+            <div class="console overflow-hidden">
+                <div class="flex items-center gap-2 px-4 py-3 border-b border-[#2a2b3d]">
+                    <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
+                    <div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
+                    <div class="w-3 h-3 rounded-full bg-green-500/80"></div>
+                    <span class="ml-2 text-xs text-gray-500 font-mono">step-3</span>
+                </div>
+                <div class="p-5 text-sm leading-relaxed font-mono">
+                    <p><span class="prompt">$</span> contento niches list --category <span class="string">"Technology"</span></p>
+                    <p class="output mt-2"> ID           Name                  Subtopics</p>
+                    <p class="output"> &#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;</p>
+                    <p class="output"> niche_01     Web Development        16</p>
+                    <p class="output"> niche_02     DevOps &amp; CI/CD         14</p>
+                    <p class="output"> niche_03     AI &amp; Machine Learning  18</p>
+                    <p class="output"> niche_04     Cybersecurity           12</p>
+                    <p class="output"> niche_05     Mobile Development      15</p>
+                    <p class="output"> <span class="comment">... 15 more</span></p>
+                    <p class="mt-3"><span class="prompt">$</span> contento niches view niche_01</p>
+                    <p class="output mt-1"><span class="text-white font-bold">Web Development</span> <span class="comment">(web-development)</span></p>
+                    <p class="output"><span class="text-[#7aa2f7]">Audience:</span> full-stack devs, frontend engineers</p>
+                    <p class="output"><span class="text-[#7aa2f7]">Pain Points:</span> framework fatigue, performance, SEO</p>
+                    <p class="output"><span class="text-[#7aa2f7]">Subtopics:</span> React patterns, CSS architecture,</p>
+                    <p class="output">  API design, testing strategies, ...</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 4: Pick Schema + Create Collection -->
+        <div class="grid lg:grid-cols-2 gap-10 items-start mb-20">
+            <div class="order-2 lg:order-1">
+                <div class="console overflow-hidden">
+                    <div class="flex items-center gap-2 px-4 py-3 border-b border-[#2a2b3d]">
+                        <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
+                        <div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
+                        <div class="w-3 h-3 rounded-full bg-green-500/80"></div>
+                        <span class="ml-2 text-xs text-gray-500 font-mono">step-4</span>
+                    </div>
+                    <div class="p-5 text-sm leading-relaxed font-mono">
+                        <p><span class="prompt">$</span> contento schemas list</p>
+                        <p class="output mt-2"> Slug           Title Pattern</p>
+                        <p class="output"> &#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;</p>
+                        <p class="output"> idea-list      "100 {subtopic} Ideas..."</p>
+                        <p class="output"> checklist      "The Ultimate {subtopic}..."</p>
+                        <p class="output"> how-to         "How to {subtopic}: A..."</p>
+                        <p class="output"> comparison     "{A} vs {B}: Which Is..."</p>
+                        <p class="output"> faq            "{subtopic} FAQ: {n}..."</p>
+                        <p class="output"> <span class="comment">... 5 more</span></p>
+                        <p class="mt-3"><span class="prompt">$</span> contento collections create \</p>
+                        <p>    --project proj_8f3a \</p>
+                        <p>    --schema <span class="string">idea-list</span> \</p>
+                        <p>    --niches <span class="string">niche_01,niche_02,niche_03</span> \</p>
+                        <p>    --url-pattern <span class="string">"/{slug}"</span> \</p>
+                        <p>    --title-template <span class="string">"{subtopic} Ideas for Developers"</span></p>
+                        <p class="output mt-2"><span class="text-accent">&#10003;</span> Collection coll_a1b2c3 created</p>
+                        <p class="output">48 pages queued (3 niches &times; 16 subtopics avg)</p>
+                    </div>
+                </div>
+            </div>
+            <div class="order-1 lg:order-2">
+                <div class="flex items-center gap-3 mb-4">
+                    <span class="stat-number text-3xl text-gray-200">04</span>
+                    <h3 class="text-xl font-bold">Choose a schema &amp; create a collection</h3>
+                </div>
+                <p class="text-gray-500 leading-relaxed mb-4">A <em>collection</em> combines a content schema with one or more niches. The schema defines the page structure (idea list, checklist, FAQ, etc.) and the niches provide the subtopics. Contento cross-products them: 3 niches &times; 16 subtopics = 48 pages.</p>
+                <p class="text-gray-500 leading-relaxed mb-4">Titles are <strong>deterministic</strong> &mdash; built from patterns like <code class="text-xs">"100 {subtopic} Ideas for {niche}"</code>, never AI-generated. This ensures predictable, SERP-optimized titles at scale.</p>
+                <ul class="space-y-2 text-sm text-gray-600">
+                    <li class="flex items-center gap-2"><span class="text-accent">&#10003;</span> 10 built-in schemas with strict JSON validation</li>
+                    <li class="flex items-center gap-2"><span class="text-accent">&#10003;</span> Subtopic expansion: niches &times; subtopics = pages</li>
+                    <li class="flex items-center gap-2"><span class="text-accent">&#10003;</span> URL and title patterns with token replacement</li>
+                    <li class="flex items-center gap-2"><span class="text-accent">&#10003;</span> Interactive mode prompts for schema + niches</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Step 5: Generate -->
+        <div class="grid lg:grid-cols-2 gap-10 items-start mb-20">
+            <div>
+                <div class="flex items-center gap-3 mb-4">
+                    <span class="stat-number text-3xl text-gray-200">05</span>
+                    <h3 class="text-xl font-bold">Generate pages with AI</h3>
+                </div>
+                <p class="text-gray-500 leading-relaxed mb-4">Contento sends each page to an AI model with three inputs: the <strong>content schema</strong> (exact JSON structure to fill), the <strong>niche context</strong> (audience, pain points, expertise level), and the <strong>subtopic</strong>. The AI fills the schema &mdash; it doesn't write blank pages.</p>
+                <p class="text-gray-500 leading-relaxed mb-4">10 concurrent workers generate pages in parallel. Each result is validated against the schema: item counts, string lengths, enum values, required fields. Failed pages are retried once. Progress streams live to your terminal via SSE.</p>
+                <ul class="space-y-2 text-sm text-gray-600">
+                    <li class="flex items-center gap-2"><span class="text-accent">&#10003;</span> AI fills structured JSON, not blank pages</li>
+                    <li class="flex items-center gap-2"><span class="text-accent">&#10003;</span> 10 concurrent workers, ~3s per page</li>
+                    <li class="flex items-center gap-2"><span class="text-accent">&#10003;</span> Schema validation: item counts, lengths, enums</li>
+                    <li class="flex items-center gap-2"><span class="text-accent">&#10003;</span> Auto-retry on validation failure (1 attempt)</li>
+                    <li class="flex items-center gap-2"><span class="text-accent">&#10003;</span> Live progress bar or NDJSON for agents</li>
+                </ul>
+            </div>
+            <div class="console overflow-hidden">
+                <div class="flex items-center gap-2 px-4 py-3 border-b border-[#2a2b3d]">
+                    <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
+                    <div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
+                    <div class="w-3 h-3 rounded-full bg-green-500/80"></div>
+                    <span class="ml-2 text-xs text-gray-500 font-mono">step-5</span>
+                </div>
+                <div class="p-5 text-sm leading-relaxed font-mono">
+                    <p><span class="prompt">$</span> contento collections generate coll_a1b2c3</p>
+                    <p class="output mt-2">Generating 48 pages across 3 niches...</p>
+                    <p class="output">Workers: 10 concurrent</p>
+                    <p class="output mt-2">[&#9608;&#9608;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;]  6/48  (12%)  0:04</p>
+                    <p class="output">[&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;] 22/48  (46%)  0:12</p>
+                    <p class="output">[&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9601;&#9601;&#9601;&#9601;] 36/48  (75%)  0:20</p>
+                    <p class="output">[&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;] 48/48 (100%)  0:26</p>
+                    <p class="output mt-2"><span class="text-accent">&#10003;</span> Generation complete</p>
+                    <p class="output">  Validated: <span class="text-accent">46 passed</span></p>
+                    <p class="output">  Retried:   2 (both passed on retry)</p>
+                    <p class="output">  Failed:    0</p>
+                    <p class="output">  Avg time:  3.2s per page</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 6: Publish & Monitor -->
+        <div class="grid lg:grid-cols-2 gap-10 items-start">
+            <div class="order-2 lg:order-1">
+                <div class="console overflow-hidden">
+                    <div class="flex items-center gap-2 px-4 py-3 border-b border-[#2a2b3d]">
+                        <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
+                        <div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
+                        <div class="w-3 h-3 rounded-full bg-green-500/80"></div>
+                        <span class="ml-2 text-xs text-gray-500 font-mono">step-6</span>
+                    </div>
+                    <div class="p-5 text-sm leading-relaxed font-mono">
+                        <p><span class="prompt">$</span> contento publish coll_a1b2c3 --mode batched --batch-size 25</p>
+                        <p class="output mt-2">[batch 1/2] Publishing 25 pages...</p>
+                        <p class="output">  <span class="text-accent">&#10003;</span> HTML rendered with your chrome</p>
+                        <p class="output">  <span class="text-accent">&#10003;</span> Internal linking: 68 cross-links</p>
+                        <p class="output">  <span class="text-accent">&#10003;</span> Schema markup: Article + BreadcrumbList</p>
+                        <p class="output">  <span class="text-accent">&#10003;</span> Sitemap updated: 25 URLs</p>
+                        <p class="output mt-1"><span class="text-accent">&#10003;</span> Batch 1 live at <span class="url">articles.worktale.org</span></p>
+                        <p class="output comment">Batch 2 available in 24h (indexing cooldown)</p>
+                        <p class="mt-3"><span class="prompt">$</span> contento analytics top-pages --days 30</p>
+                        <p class="output mt-2"> /react-patterns-ideas     2,340 clicks  4.2%</p>
+                        <p class="output"> /api-design-checklist      1,892 clicks  3.8%</p>
+                        <p class="output"> /css-architecture-faq      1,104 clicks  5.1%</p>
+                    </div>
+                </div>
+            </div>
+            <div class="order-1 lg:order-2">
+                <div class="flex items-center gap-3 mb-4">
+                    <span class="stat-number text-3xl text-gray-200">06</span>
+                    <h3 class="text-xl font-bold">Publish &amp; monitor</h3>
+                </div>
+                <p class="text-gray-500 leading-relaxed mb-4">Four publish modes: <strong>immediate</strong> (all at once), <strong>batched</strong> (controlled rollout with indexing cooldowns), <strong>scheduled</strong> (cron), or <strong>manual</strong> (admin approval). Every batch triggers an internal linking pass &mdash; related pages cross-link automatically.</p>
+                <p class="text-gray-500 leading-relaxed mb-4">Each published page gets your custom chrome (header/footer/CSS), canonical URLs, JSON-LD structured data (Article + BreadcrumbList + FAQPage), Open Graph tags, and an auto-updated XML sitemap. Connect Google Search Console for daily analytics sync &mdash; track clicks, impressions, CTR, and position per page.</p>
+                <ul class="space-y-2 text-sm text-gray-600">
+                    <li class="flex items-center gap-2"><span class="text-accent">&#10003;</span> 4 publish modes for different strategies</li>
+                    <li class="flex items-center gap-2"><span class="text-accent">&#10003;</span> Auto internal linking across related pages</li>
+                    <li class="flex items-center gap-2"><span class="text-accent">&#10003;</span> Full SEO: canonical, JSON-LD, OG, sitemap</li>
+                    <li class="flex items-center gap-2"><span class="text-accent">&#10003;</span> GSC analytics: clicks, CTR, position tracking</li>
+                    <li class="flex items-center gap-2"><span class="text-accent">&#10003;</span> Zero-traffic page detection for pruning</li>
+                </ul>
             </div>
         </div>
     </div>

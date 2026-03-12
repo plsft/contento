@@ -4,6 +4,8 @@ import { output, isJsonMode } from '../output.js';
 import { createSpinner } from '../ui/spinner.js';
 import { createProgressBar } from '../ui/progress.js';
 import { connectSSE } from '../sse-client.js';
+import { checkbox, select, input } from '@inquirer/prompts';
+import chalk from 'chalk';
 import type { SSEProgress } from '../sse-client.js';
 
 interface Collection {
@@ -79,32 +81,154 @@ export function registerCollectionsCommand(program: Command): void {
   // Create collection
   collections
     .command('create')
-    .description('Create a new collection')
+    .description('Create a new collection (interactive niche selection if --niches omitted)')
     .requiredOption('--project <id>', 'Project ID')
-    .requiredOption('--schema <slug>', 'Schema slug')
-    .requiredOption('--niches <ids>', 'Comma-separated niche IDs')
-    .requiredOption('--url-pattern <pattern>', 'URL pattern (e.g., /blog/{slug})')
-    .requiredOption('--title-template <template>', 'Title template (e.g., "{keyword} Guide")')
+    .option('--schema <slug>', 'Schema slug')
+    .option('--niches <ids>', 'Comma-separated niche IDs (interactive if omitted)')
+    .option('--url-pattern <pattern>', 'URL pattern (e.g., /{slug})')
+    .option('--title-template <template>', 'Title template (e.g., "{keyword} Guide")')
     .action(
       async (opts: {
         project: string;
-        schema: string;
-        niches: string;
-        urlPattern: string;
-        titleTemplate: string;
+        schema?: string;
+        niches?: string;
+        urlPattern?: string;
+        titleTemplate?: string;
       }) => {
-        const spinner = createSpinner('Creating collection...').start();
         try {
           const client = createClient({ baseUrl: program.opts().apiUrl });
-          const nicheIds = opts.niches.split(',').map((s) => s.trim());
+          const isTTY = process.stdout.isTTY && !isJsonMode();
 
+          // --- Resolve schema ---
+          let schemaSlug = opts.schema;
+          if (!schemaSlug) {
+            if (!isTTY) {
+              output.error('--schema is required in non-interactive mode');
+              process.exit(1);
+            }
+            const spinner = createSpinner('Loading schemas...').start();
+            const schemasData = await client.get<{ schemas: { slug: string; name: string; titlePattern: string }[] }>('/pseo/schemas');
+            spinner.stop();
+
+            schemaSlug = await select({
+              message: 'Select a content schema',
+              choices: schemasData.schemas.map((s) => ({
+                name: `${s.name} ${chalk.dim(`— ${s.titlePattern}`)}`,
+                value: s.slug,
+              })),
+            });
+          }
+
+          // --- Resolve niches ---
+          let nicheIds: string[];
+          if (opts.niches) {
+            nicheIds = opts.niches.split(',').map((s) => s.trim());
+          } else {
+            if (!isTTY) {
+              output.error('--niches is required in non-interactive mode');
+              process.exit(1);
+            }
+
+            // Fetch all niches and let user select interactively
+            const spinner = createSpinner('Loading niches...').start();
+            const nichesData = await client.get<{ niches: { id: string; name: string; slug: string; category?: string; keywords?: string[] }[] }>('/pseo/niches');
+            spinner.stop();
+
+            const niches = nichesData.niches ?? [];
+            const categories = new Map<string, typeof niches>();
+            for (const n of niches) {
+              const cat = n.category ?? 'Uncategorized';
+              if (!categories.has(cat)) categories.set(cat, []);
+              categories.get(cat)!.push(n);
+            }
+
+            // Pick category first
+            const selectedCat = await select({
+              message: 'Select a niche category',
+              choices: [...categories.keys()].sort().map((cat) => ({
+                name: `${cat} ${chalk.dim(`(${categories.get(cat)!.length} niches)`)}`,
+                value: cat,
+              })),
+            });
+
+            // Pick niches from category
+            nicheIds = await checkbox({
+              message: `Select niches from ${selectedCat}`,
+              choices: categories.get(selectedCat)!.map((n) => ({
+                name: `${n.name}${n.keywords?.length ? chalk.dim(` — ${n.keywords.slice(0, 3).join(', ')}`) : ''}`,
+                value: n.id,
+              })),
+              required: true,
+            });
+
+            // Offer to add from other categories
+            let addMore = true;
+            while (addMore) {
+              addMore = await select({
+                message: `${nicheIds.length} niche(s) selected. Add from another category?`,
+                choices: [
+                  { name: 'No, continue', value: false },
+                  { name: 'Yes, browse another category', value: true },
+                ],
+              });
+
+              if (addMore) {
+                const anotherCat = await select({
+                  message: 'Select another category',
+                  choices: [...categories.keys()]
+                    .sort()
+                    .filter((c) => c !== selectedCat)
+                    .map((cat) => ({
+                      name: `${cat} ${chalk.dim(`(${categories.get(cat)!.length})`)}`,
+                      value: cat,
+                    })),
+                });
+
+                const moreIds = await checkbox({
+                  message: `Select niches from ${anotherCat}`,
+                  choices: categories.get(anotherCat)!.map((n) => ({
+                    name: `${n.name}${n.keywords?.length ? chalk.dim(` — ${n.keywords.slice(0, 3).join(', ')}`) : ''}`,
+                    value: n.id,
+                    checked: nicheIds.includes(n.id),
+                  })),
+                });
+
+                for (const id of moreIds) {
+                  if (!nicheIds.includes(id)) nicheIds.push(id);
+                }
+              }
+            }
+          }
+
+          // --- Resolve URL pattern ---
+          let urlPattern = opts.urlPattern;
+          if (!urlPattern && isTTY) {
+            urlPattern = await input({
+              message: 'URL pattern (e.g., /{slug})',
+              default: '/{slug}',
+            });
+          }
+          urlPattern = urlPattern ?? '/{slug}';
+
+          // --- Resolve title template ---
+          let titleTemplate = opts.titleTemplate;
+          if (!titleTemplate && isTTY) {
+            titleTemplate = await input({
+              message: 'Title template (use {subtopic}, {niche} tokens)',
+              default: '{subtopic} — Complete Guide',
+            });
+          }
+          titleTemplate = titleTemplate ?? '{subtopic} — Complete Guide';
+
+          // --- Create collection ---
+          const spinner = createSpinner('Creating collection...').start();
           const data = await client.post<CollectionResponse>(
             `/pseo/projects/${opts.project}/collections`,
             {
-              schemaSlug: opts.schema,
+              schemaSlug,
               nicheIds,
-              urlPattern: opts.urlPattern,
-              titleTemplate: opts.titleTemplate,
+              urlPattern,
+              titleTemplate,
             },
           );
           spinner.succeed('Collection created');
@@ -117,13 +241,17 @@ export function registerCollectionsCommand(program: Command): void {
             [
               ['ID', c.id],
               ['Schema', c.schemaSlug],
+              ['Niches', `${nicheIds.length} selected`],
               ['URL Pattern', c.urlPattern],
               ['Title Template', c.titleTemplate],
               ['Status', c.status],
             ],
           );
         } catch (err) {
-          spinner.fail('Failed to create collection');
+          if (err instanceof Error && err.message.includes('ExitPrompt')) {
+            output.info('Cancelled.');
+            process.exit(0);
+          }
           handleError(err);
         }
       },
