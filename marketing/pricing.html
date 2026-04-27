@@ -3,8 +3,8 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Pricing — Contento pSEO Engine</title>
-    <meta name="description" content="Contento pricing: Starter (free), Growth ($79/mo), and Scale ($299/mo). Cloud-hosted programmatic SEO with no infrastructure to manage." />
+    <title>Pricing — Contento pSEO</title>
+    <meta name="description" content="Contento is a free, open-source CLI. Bring your own AI provider key — pay OpenAI, Anthropic, or any other provider directly. No subscriptions, no usage caps, no Contento server in the loop." />
     <script type="module" src="/src/main.js"></script>
 </head>
 <body class="bg-white text-gray-900 antialiased">
@@ -15,158 +15,44 @@
 <section class="pt-32 pb-16 px-4 sm:px-6 dot-bg">
     <div class="max-w-4xl mx-auto text-center">
         <p class="font-mono text-sm text-accent mb-6">&gt; pricing</p>
-        <h1 class="text-4xl sm:text-5xl font-bold tracking-tight mb-4">Simple, transparent pricing.</h1>
-        <p class="text-lg text-gray-500 max-w-2xl mx-auto">Start free. Scale when you need to. Every plan includes the full CLI, all 150+ niches, and cloud hosting.</p>
+        <h1 class="text-4xl sm:text-5xl font-bold tracking-tight mb-4">Free. Open source.<br>Bring your own AI keys.</h1>
+        <p class="text-lg text-gray-500 max-w-2xl mx-auto">Contento is an MIT-licensed CLI you install from npm. Every feature ships in the package. The only money you spend on a generation run goes straight to your AI provider &mdash; no subscription, no markup, no usage caps from us.</p>
     </div>
 </section>
 
 <div class="section-divider"></div>
 
-<!-- Pricing cards -->
+<!-- Single plan card -->
 <section class="py-24 px-4 sm:px-6">
-    <div class="max-w-6xl mx-auto">
-        <div class="grid md:grid-cols-3 gap-8">
-            <!-- Starter -->
-            <div class="card p-8">
-                <div class="flex items-center gap-3 mb-4">
-                    <span class="tag tag-green">Free forever</span>
-                </div>
-                <h2 class="text-2xl font-bold mb-2">Starter</h2>
-                <p class="font-mono text-4xl font-bold tracking-tight mb-1">$0</p>
-                <p class="text-sm text-gray-500 mb-6">For trying out pSEO</p>
-                <ul class="space-y-3 text-sm text-gray-600 mb-8">
-                    <li class="flex items-center gap-3">
-                        <span class="text-accent font-mono text-xs">&#10003;</span>
-                        1 project
-                    </li>
-                    <li class="flex items-center gap-3">
-                        <span class="text-accent font-mono text-xs">&#10003;</span>
-                        100 generated pages
-                    </li>
-                    <li class="flex items-center gap-3">
-                        <span class="text-accent font-mono text-xs">&#10003;</span>
-                        All 150+ niches and 10 schemas
-                    </li>
-                    <li class="flex items-center gap-3">
-                        <span class="text-accent font-mono text-xs">&#10003;</span>
-                        Full CLI access
-                    </li>
-                    <li class="flex items-center gap-3">
-                        <span class="text-accent font-mono text-xs">&#10003;</span>
-                        Custom domain (CNAME)
-                    </li>
-                    <li class="flex items-center gap-3">
-                        <span class="text-accent font-mono text-xs">&#10003;</span>
-                        SSL included
-                    </li>
-                    <li class="flex items-center gap-3">
-                        <span class="text-accent font-mono text-xs">&#10003;</span>
-                        Community support
-                    </li>
-                </ul>
-                <a href="docs/index.html" class="btn-secondary inline-flex items-center justify-center gap-2 w-full">
-                    Get Started
+    <div class="max-w-3xl mx-auto">
+        <div class="card p-10" style="border-color: #10b981; border-width: 2px;">
+            <div class="flex items-center gap-3 mb-4">
+                <span class="tag tag-green">Free forever &middot; MIT licensed</span>
+            </div>
+            <h2 class="text-3xl font-bold mb-2">Contento CLI</h2>
+            <p class="font-mono text-5xl font-bold tracking-tight mb-1">$0</p>
+            <p class="text-sm text-gray-500 mb-8">No account, no subscription, no telemetry</p>
+            <div class="grid sm:grid-cols-2 gap-x-8 gap-y-3 text-sm text-gray-600 mb-10">
+                <div class="flex items-start gap-2"><span class="text-accent font-mono text-xs mt-1">&#10003;</span> Unlimited projects</div>
+                <div class="flex items-start gap-2"><span class="text-accent font-mono text-xs mt-1">&#10003;</span> Unlimited pages</div>
+                <div class="flex items-start gap-2"><span class="text-accent font-mono text-xs mt-1">&#10003;</span> All 150+ niches included</div>
+                <div class="flex items-start gap-2"><span class="text-accent font-mono text-xs mt-1">&#10003;</span> All 10 content schemas</div>
+                <div class="flex items-start gap-2"><span class="text-accent font-mono text-xs mt-1">&#10003;</span> Custom niches and schemas</div>
+                <div class="flex items-start gap-2"><span class="text-accent font-mono text-xs mt-1">&#10003;</span> Custom chrome (header / footer / CSS)</div>
+                <div class="flex items-start gap-2"><span class="text-accent font-mono text-xs mt-1">&#10003;</span> Local schema validation &amp; retries</div>
+                <div class="flex items-start gap-2"><span class="text-accent font-mono text-xs mt-1">&#10003;</span> Static HTML output to your dist/</div>
+                <div class="flex items-start gap-2"><span class="text-accent font-mono text-xs mt-1">&#10003;</span> Internal linking + sitemap pass</div>
+                <div class="flex items-start gap-2"><span class="text-accent font-mono text-xs mt-1">&#10003;</span> JSON-LD, Open Graph, canonicals</div>
+                <div class="flex items-start gap-2"><span class="text-accent font-mono text-xs mt-1">&#10003;</span> GSC OAuth + local analytics cache</div>
+                <div class="flex items-start gap-2"><span class="text-accent font-mono text-xs mt-1">&#10003;</span> <code class="text-xs">--json</code> agent mode on every command</div>
+            </div>
+            <div class="flex flex-col sm:flex-row gap-3">
+                <a href="docs/installation.html" class="btn-primary inline-flex items-center justify-center gap-2 flex-1">
+                    Install the CLI
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
                 </a>
-            </div>
-
-            <!-- Growth -->
-            <div class="card p-8" style="border-color: #10b981; border-width: 2px;">
-                <div class="flex items-center gap-3 mb-4">
-                    <span class="tag tag-green">Most popular</span>
-                </div>
-                <h2 class="text-2xl font-bold mb-2">Growth</h2>
-                <p class="font-mono text-4xl font-bold tracking-tight mb-1">$79<span class="text-lg text-gray-400 font-normal">/mo</span></p>
-                <p class="text-sm text-gray-500 mb-6">For serious pSEO campaigns</p>
-                <ul class="space-y-3 text-sm text-gray-600 mb-8">
-                    <li class="flex items-center gap-3">
-                        <span class="text-accent font-mono text-xs">&#10003;</span>
-                        5 projects
-                    </li>
-                    <li class="flex items-center gap-3">
-                        <span class="text-accent font-mono text-xs">&#10003;</span>
-                        5,000 generated pages
-                    </li>
-                    <li class="flex items-center gap-3">
-                        <span class="text-accent font-mono text-xs">&#10003;</span>
-                        All 150+ niches and 10 schemas
-                    </li>
-                    <li class="flex items-center gap-3">
-                        <span class="text-accent font-mono text-xs">&#10003;</span>
-                        Full CLI + <code>--json</code> agent mode
-                    </li>
-                    <li class="flex items-center gap-3">
-                        <span class="text-accent font-mono text-xs">&#10003;</span>
-                        Custom domains (CNAME)
-                    </li>
-                    <li class="flex items-center gap-3">
-                        <span class="text-accent font-mono text-xs">&#10003;</span>
-                        Google Search Console integration
-                    </li>
-                    <li class="flex items-center gap-3">
-                        <span class="text-accent font-mono text-xs">&#10003;</span>
-                        Custom chrome (header/footer/CSS)
-                    </li>
-                    <li class="flex items-center gap-3">
-                        <span class="text-accent font-mono text-xs">&#10003;</span>
-                        Email support
-                    </li>
-                </ul>
-                <a href="docs/index.html" class="btn-primary inline-flex items-center justify-center gap-2 w-full">
-                    Get Started
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
-                </a>
-            </div>
-
-            <!-- Scale -->
-            <div class="card p-8">
-                <div class="flex items-center gap-3 mb-4">
-                    <span class="tag tag-blue">Enterprise</span>
-                </div>
-                <h2 class="text-2xl font-bold mb-2">Scale</h2>
-                <p class="font-mono text-4xl font-bold tracking-tight mb-1">$299<span class="text-lg text-gray-400 font-normal">/mo</span></p>
-                <p class="text-sm text-gray-500 mb-6">For agencies and large sites</p>
-                <ul class="space-y-3 text-sm text-gray-600 mb-8">
-                    <li class="flex items-center gap-3">
-                        <span class="text-accent font-mono text-xs">&#10003;</span>
-                        Unlimited projects
-                    </li>
-                    <li class="flex items-center gap-3">
-                        <span class="text-accent font-mono text-xs">&#10003;</span>
-                        50,000 generated pages
-                    </li>
-                    <li class="flex items-center gap-3">
-                        <span class="text-accent font-mono text-xs">&#10003;</span>
-                        All 150+ niches and 10 schemas
-                    </li>
-                    <li class="flex items-center gap-3">
-                        <span class="text-accent font-mono text-xs">&#10003;</span>
-                        Full CLI + <code>--json</code> agent mode
-                    </li>
-                    <li class="flex items-center gap-3">
-                        <span class="text-accent font-mono text-xs">&#10003;</span>
-                        Custom domains (CNAME)
-                    </li>
-                    <li class="flex items-center gap-3">
-                        <span class="text-accent font-mono text-xs">&#10003;</span>
-                        Google Search Console integration
-                    </li>
-                    <li class="flex items-center gap-3">
-                        <span class="text-accent font-mono text-xs">&#10003;</span>
-                        Custom chrome (header/footer/CSS)
-                    </li>
-                    <li class="flex items-center gap-3">
-                        <span class="text-accent font-mono text-xs">&#10003;</span>
-                        Priority support + onboarding call
-                    </li>
-                    <li class="flex items-center gap-3">
-                        <span class="text-accent font-mono text-xs">&#10003;</span>
-                        Team seats (up to 10)
-                    </li>
-                </ul>
-                <a href="docs/index.html" class="btn-secondary inline-flex items-center justify-center gap-2 w-full">
-                    Get Started
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+                <a href="https://github.com/plsft/contento" class="btn-secondary inline-flex items-center justify-center gap-2 flex-1">
+                    View on GitHub
                 </a>
             </div>
         </div>
@@ -175,29 +61,50 @@
 
 <div class="section-divider"></div>
 
-<!-- What's included -->
+<!-- AI cost calculator / examples -->
 <section class="py-24 px-4 sm:px-6">
     <div class="max-w-4xl mx-auto">
         <div class="text-center mb-12">
-            <h2 class="text-3xl font-bold tracking-tight mb-4">Every plan includes</h2>
-            <p class="text-gray-500">Cloud-hosted infrastructure. No servers, no Docker, no DevOps.</p>
+            <h2 class="text-3xl font-bold tracking-tight mb-4">What does generation actually cost?</h2>
+            <p class="text-gray-500">You pay your AI provider directly, at their published rates. Rough estimates per 1,000 pages on a typical idea-list schema:</p>
         </div>
-        <div class="grid sm:grid-cols-3 gap-4">
-            <div class="card p-6 text-center">
-                <p class="font-mono text-xs text-accent mb-2">hosting</p>
-                <h3 class="font-semibold mb-2">Cloud Infrastructure</h3>
-                <p class="text-sm text-gray-500">Hosted at <code>contentocms.com</code>. Global CDN, automatic SSL, and zero server management.</p>
+        <div class="grid md:grid-cols-3 gap-4">
+            <div class="card p-6">
+                <p class="font-mono text-xs text-accent mb-2">openai &middot; gpt-4o-mini</p>
+                <h3 class="font-semibold mb-2">~$1 &ndash; $3</h3>
+                <p class="text-sm text-gray-500">Cheapest production-quality option. Good default for first runs.</p>
             </div>
-            <div class="card p-6 text-center">
-                <p class="font-mono text-xs text-accent mb-2">cli</p>
-                <h3 class="font-semibold mb-2">Full CLI Access</h3>
-                <p class="text-sm text-gray-500">Install via <code>npm install -g contento</code>. All 21 commands available on every plan.</p>
+            <div class="card p-6">
+                <p class="font-mono text-xs text-accent mb-2">anthropic &middot; claude haiku</p>
+                <h3 class="font-semibold mb-2">~$2 &ndash; $5</h3>
+                <p class="text-sm text-gray-500">Strong instruction-following on schema constraints. Low retry rate.</p>
             </div>
-            <div class="card p-6 text-center">
-                <p class="font-mono text-xs text-accent mb-2">ai</p>
-                <h3 class="font-semibold mb-2">AI Generation</h3>
-                <p class="text-sm text-gray-500">AI generation included in your plan. No separate API keys or third-party billing to manage.</p>
+            <div class="card p-6">
+                <p class="font-mono text-xs text-accent mb-2">groq / openrouter</p>
+                <h3 class="font-semibold mb-2">~$0.50 &ndash; $2</h3>
+                <p class="text-sm text-gray-500">High throughput open-weight models. Cheapest at scale.</p>
             </div>
+        </div>
+        <p class="text-xs text-gray-400 text-center mt-6">Estimates assume ~2k input + 1.5k output tokens per page and one retry on 5% of pages. Your run will vary with schema, niche, and model choice.</p>
+    </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- Supported providers -->
+<section class="py-24 px-4 sm:px-6" style="background: #FAFBFC;">
+    <div class="max-w-4xl mx-auto">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold tracking-tight mb-4">Works with any AI provider</h2>
+            <p class="text-gray-500">Switch between providers with one command. Mix providers across projects. Use a local model when you don't want to send a single token over the network.</p>
+        </div>
+        <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-3 text-sm">
+            <div class="card p-4 text-center"><p class="font-semibold">OpenAI</p><p class="text-gray-500 text-xs mt-1">gpt-4o, gpt-4o-mini, gpt-4.1</p></div>
+            <div class="card p-4 text-center"><p class="font-semibold">Anthropic</p><p class="text-gray-500 text-xs mt-1">Claude Sonnet, Haiku</p></div>
+            <div class="card p-4 text-center"><p class="font-semibold">Google</p><p class="text-gray-500 text-xs mt-1">Gemini 2.x</p></div>
+            <div class="card p-4 text-center"><p class="font-semibold">Groq</p><p class="text-gray-500 text-xs mt-1">Llama, Qwen, GPT-OSS</p></div>
+            <div class="card p-4 text-center"><p class="font-semibold">OpenRouter</p><p class="text-gray-500 text-xs mt-1">200+ models, one key</p></div>
+            <div class="card p-4 text-center"><p class="font-semibold">Ollama / local</p><p class="text-gray-500 text-xs mt-1">Any OpenAI-compatible endpoint</p></div>
         </div>
     </div>
 </section>
@@ -205,33 +112,33 @@
 <div class="section-divider"></div>
 
 <!-- FAQ -->
-<section class="py-24 px-4 sm:px-6" style="background: #FAFBFC;">
+<section class="py-24 px-4 sm:px-6">
     <div class="max-w-3xl mx-auto">
         <h2 class="text-3xl font-bold tracking-tight mb-10 text-center">Frequently asked</h2>
         <div class="space-y-6">
             <div class="card p-6">
-                <h3 class="font-semibold mb-2">Can I start free and upgrade later?</h3>
-                <p class="text-sm text-gray-500">Yes. The Starter plan is free with no credit card required. When you need more projects or pages, upgrade to Growth or Scale from the dashboard.</p>
+                <h3 class="font-semibold mb-2">Why is it free?</h3>
+                <p class="text-sm text-gray-500">Contento is a CLI, not a SaaS. The hard work &mdash; AI generation &mdash; is delegated to your provider. We don't host pages, we don't store your content, we don't run a server. There's nothing to charge for.</p>
             </div>
             <div class="card p-6">
-                <h3 class="font-semibold mb-2">What happens if I exceed my page limit?</h3>
-                <p class="text-sm text-gray-500">You will not be able to generate new pages until you upgrade or the next billing cycle. Existing pages remain live and accessible.</p>
+                <h3 class="font-semibold mb-2">Do I need a Contento account?</h3>
+                <p class="text-sm text-gray-500">No. There's no contento.sh login, no API key to provision, no dashboard. <code>npm install -g contento</code>, configure your AI provider key, and go.</p>
             </div>
             <div class="card p-6">
-                <h3 class="font-semibold mb-2">Is the AI generation included or do I need my own API key?</h3>
-                <p class="text-sm text-gray-500">AI generation is included in all plans. The page limits on each plan reflect the total AI-generated pages you can create. No separate OpenAI or Anthropic API key is needed.</p>
+                <h3 class="font-semibold mb-2">Where does my data live?</h3>
+                <p class="text-sm text-gray-500">On your machine. Generated pages, niche customizations, GSC analytics caches &mdash; everything sits in <code>~/.contento/</code> as plain JSON or SQLite. Easy to back up, easy to commit, easy to delete.</p>
             </div>
             <div class="card p-6">
-                <h3 class="font-semibold mb-2">Can I use Contento for client projects?</h3>
-                <p class="text-sm text-gray-500">Yes. The Scale plan supports unlimited projects and team seats, making it ideal for agencies managing multiple client domains.</p>
+                <h3 class="font-semibold mb-2">How are you funded?</h3>
+                <p class="text-sm text-gray-500">Right now: GitHub sponsors and community contributions. We may offer paid niche packs or a hosted GSC aggregation service later, but the core CLI will stay free and open source.</p>
             </div>
             <div class="card p-6">
-                <h3 class="font-semibold mb-2">Do I need to manage servers or infrastructure?</h3>
-                <p class="text-sm text-gray-500">No. Contento is fully cloud-hosted. You install the CLI, create projects, and publish pages. We handle all hosting, SSL, CDN, and infrastructure.</p>
+                <h3 class="font-semibold mb-2">Can I use it on client projects?</h3>
+                <p class="text-sm text-gray-500">Yes. MIT license. Use it for your own sites, your clients' sites, your agency's whole portfolio. Same CLI, same AI provider key (or your client's), unlimited projects.</p>
             </div>
             <div class="card p-6">
-                <h3 class="font-semibold mb-2">Can AI agents use Contento?</h3>
-                <p class="text-sm text-gray-500">Yes. Every CLI command supports a <code>--json</code> flag for machine-readable output. AI agents like Claude Code, Codex, and others can drive the entire pSEO workflow programmatically.</p>
+                <h3 class="font-semibold mb-2">Can AI agents drive Contento?</h3>
+                <p class="text-sm text-gray-500">Yes. Every command supports <code>--json</code> for machine-readable output and reads provider keys from env vars. Claude Code, Codex, and similar agents can run the entire pSEO workflow end-to-end without a human in the loop.</p>
             </div>
         </div>
     </div>
@@ -240,11 +147,11 @@
 <!-- CTA -->
 <section class="py-24 px-4 sm:px-6">
     <div class="max-w-3xl mx-auto text-center">
-        <h2 class="text-3xl sm:text-4xl font-bold tracking-tight mb-4">Start generating pages today.</h2>
-        <p class="text-gray-500 mb-8">Install the CLI and publish your first batch of pages in under 10 minutes.</p>
+        <h2 class="text-3xl sm:text-4xl font-bold tracking-tight mb-4">Generate your first batch in under ten minutes.</h2>
+        <p class="text-gray-500 mb-8">Install, configure your AI provider, pick a niche, build to your dist/ &mdash; that's the whole loop.</p>
         <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
             <a href="docs/index.html" class="btn-primary inline-flex items-center gap-2">
-                Get Started Free
+                Get Started
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
             </a>
             <a href="docs/cli.html" class="btn-secondary inline-flex items-center gap-2">

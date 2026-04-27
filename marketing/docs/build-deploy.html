@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Build &amp; Deploy — Contento Docs</title>
+    <meta name="description" content="Build static HTML pages locally and deploy to your existing site. On-domain paths, your deploy pipeline, zero DNS configuration." />
+    <script type="module" src="/src/main.js"></script>
+</head>
+<body class="bg-white text-gray-900 antialiased" x-data="{ mobileMenuOpen: false }">
+
+    <%nav-docs%>
+
+    <div class="max-w-[90rem] mx-auto flex">
+        <%sidebar-docs%>
+
+        <main class="flex-1 min-w-0 px-4 sm:px-6 lg:px-12 py-12">
+            <div class="max-w-3xl">
+
+                <!-- Breadcrumb -->
+                <div class="flex items-center gap-2 text-sm text-gray-400 mb-8">
+                    <a href="index.html" class="hover:text-gray-600">Docs</a>
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                    <span class="text-gray-600">Build &amp; Deploy</span>
+                </div>
+
+                <h1 style="font-size: 2.25rem; font-weight: 700; color: #1A1A1A; margin-bottom: 0.5rem; letter-spacing: -0.02em;">Build &amp; Deploy</h1>
+                <p style="font-size: 1.125rem; color: #6B7280; margin-bottom: 2.5rem;">Build static HTML pages locally and deploy them to your existing site. On-domain paths, your pipeline, zero DNS configuration.</p>
+
+                <!-- How it works -->
+                <h2>How It Works</h2>
+
+                <p>Contento generates static HTML files locally into an output directory. You deploy those files to your existing site using whatever deploy pipeline you already have. Pages live at on-domain paths like <code>example.com/articles/topic-slug</code> &mdash; no subdomains, no CNAME records, no third-party hosting.</p>
+
+                <ol>
+                    <li>Run <code>contento build</code> to generate HTML pages into a local output directory</li>
+                    <li>Each page is wrapped in your chrome templates (header, footer, CSS) from <code>contento.yaml</code></li>
+                    <li>A sitemap and internal links are generated automatically</li>
+                    <li>Deploy the output directory to your site using your existing workflow</li>
+                </ol>
+
+                <!-- Building pages -->
+                <h2>Building Pages</h2>
+
+                <p>The <code>contento build</code> command reads your project configuration from <code>contento.yaml</code>, pulls generated content, wraps each page in your chrome templates, and writes static HTML files to the output directory.</p>
+
+<pre><span class="prompt">$</span> <span class="function">contento</span> build --output ./dist/articles
+
+<span class="output">  Building pages...</span>
+<span class="output">  &#10003; 248 pages built</span>
+<span class="output">  &#10003; Sitemap generated (sitemap.xml)</span>
+<span class="output">  &#10003; Internal links added (avg 4.2 links per page)</span>
+<span class="output">  Output: ./dist/articles/</span></pre>
+
+                <p>The build reads your chrome templates from <code>contento.yaml</code> and wraps each page with your site's header, footer, and styles. The result is plain HTML that matches your existing site design.</p>
+
+                <div class="callout callout-tip">
+                    <strong>Tip:</strong> Run <code>contento build</code> in your CI pipeline to keep pages up to date automatically whenever you push changes to your chrome templates or generate new content.
+                </div>
+
+                <!-- Output structure -->
+                <h2>Output Structure</h2>
+
+                <p>The build command produces a flat directory of HTML files and a sitemap:</p>
+
+<pre><span class="output">dist/articles/</span>
+<span class="output">&#9500;&#9472;&#9472; 100-api-testing-ideas-2026.html</span>
+<span class="output">&#9500;&#9472;&#9472; best-cicd-tools-comparison.html</span>
+<span class="output">&#9500;&#9472;&#9472; devops-checklist-2026.html</span>
+<span class="output">&#9500;&#9472;&#9472; sitemap.xml</span>
+<span class="output">&#9492;&#9472;&#9472; ...</span></pre>
+
+                <p>Each HTML file is a self-contained page ready to serve. The sitemap includes all generated pages with their canonical URLs based on your domain configuration.</p>
+
+                <!-- Deploying -->
+                <h2>Deploying</h2>
+
+                <p>Deploy the output directory using whatever method your site already uses. Here are examples for common platforms:</p>
+
+                <h3>Netlify</h3>
+
+<pre><span class="prompt">$</span> <span class="function">netlify</span> deploy --prod --dir=./dist</pre>
+
+                <h3>Rsync to a Server</h3>
+
+<pre><span class="prompt">$</span> <span class="function">rsync</span> -avz ./dist/articles/ user@server:/var/www/example.com/articles/</pre>
+
+                <h3>Git-Based Deploys (GitHub Pages, Vercel, etc.)</h3>
+
+<pre><span class="prompt">$</span> <span class="function">git</span> add dist/ &amp;&amp; git commit -m <span class="string">"Add pSEO pages"</span> &amp;&amp; git push</pre>
+
+                <h3>AWS S3</h3>
+
+<pre><span class="prompt">$</span> <span class="function">aws</span> s3 sync ./dist/articles/ s3://my-bucket/articles/</pre>
+
+                <div class="callout callout-tip">
+                    <strong>Automate it:</strong> Add <code>contento build</code> and your deploy command to a CI/CD pipeline (GitHub Actions, GitLab CI, etc.) so pages are rebuilt and deployed automatically on every push or on a schedule.
+                </div>
+
+                <!-- On-domain paths -->
+                <h2>On-Domain Paths</h2>
+
+                <p>Contento generates pages that live at paths on your own domain &mdash; for example, <code>example.com/articles/100-api-testing-ideas-2026</code>. This is a deliberate design choice over the subdomain approach (<code>articles.example.com</code>).</p>
+
+                <p>Why on-domain paths matter:</p>
+
+                <ul>
+                    <li><strong>Domain authority:</strong> Pages on your root domain inherit and contribute to your existing domain authority, rather than starting from zero on a new subdomain</li>
+                    <li><strong>Natural integration:</strong> On-domain paths look and feel like a natural part of your site to both visitors and search engines</li>
+                    <li><strong>No subdomain penalty signal:</strong> Search engines can treat subdomains as separate sites, diluting ranking signals. On-domain paths avoid this entirely</li>
+                    <li><strong>Zero DNS configuration:</strong> No CNAME records, no DNS propagation delays, no SSL certificates to manage. Deploy files and they are live</li>
+                </ul>
+
+                <div class="callout callout-warning">
+                    <strong>Important:</strong> Make sure your web server or hosting platform is configured to serve HTML files from the output path. For example, if you deploy to <code>/articles/</code>, requests to <code>example.com/articles/devops-checklist-2026</code> should serve <code>devops-checklist-2026.html</code> from that directory.
+                </div>
+
+                <!-- Integrating with your site -->
+                <h2>Integrating with Your Site</h2>
+
+                <p>Once your pages are deployed, connect them to the rest of your site:</p>
+
+                <ul>
+                    <li><strong>Navigation:</strong> Add a link to your articles section (e.g., <code>/articles/</code>) in your site's main navigation or footer</li>
+                    <li><strong>Chrome templates:</strong> Make sure your chrome templates in <code>contento.yaml</code> match your existing site's header, footer, and CSS so that generated pages are visually consistent</li>
+                    <li><strong>Internal links:</strong> Contento automatically adds internal links between generated pages. You can also link to these pages from your existing blog posts, documentation, or landing pages to strengthen their authority</li>
+                </ul>
+
+                <p>See <a href="chrome.html" style="color: #3D5A80; font-weight: 500;">Chrome Templates</a> for details on configuring your site's header, footer, and styles.</p>
+
+            </div>
+        </main>
+    </div>
+
+    <%footer-docs%>
+
+</body>
+</html>

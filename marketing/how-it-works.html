@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>How It Works — Contento pSEO Engine</title>
-    <meta name="description" content="Learn the Contento pSEO workflow: Install the CLI, create a project, configure DNS, choose niches, pick schemas, generate pages with AI, and publish to your subdomain." />
+    <meta name="description" content="The Contento pSEO workflow: install the CLI, configure any AI provider, initialize a project, point it at your chrome, pick niches and a schema, generate locally, and build static HTML to your dist/ — all from the command line." />
     <script type="module" src="/src/main.js"></script>
 </head>
 <body class="bg-white text-gray-900 antialiased">
@@ -15,33 +15,33 @@
 <section class="pt-32 pb-16 px-4 sm:px-6 dot-bg">
     <div class="max-w-4xl mx-auto text-center">
         <p class="font-mono text-sm text-accent mb-6">&gt; workflow</p>
-        <h1 class="text-4xl sm:text-5xl font-bold tracking-tight mb-4">Six steps to thousands of pages.</h1>
-        <p class="text-lg text-gray-500 max-w-2xl mx-auto">Install the CLI, create a project, point your DNS, select niches and schemas, generate content with AI, and publish &mdash; all from the command line.</p>
+        <h1 class="text-4xl sm:text-5xl font-bold tracking-tight mb-4">Six steps to pages that rank.</h1>
+        <p class="text-lg text-gray-500 max-w-2xl mx-auto">Initialize a project, configure your chrome, select niches and schemas, generate content with AI, and build static HTML &mdash; all from the command line.</p>
     </div>
 </section>
 
 <div class="section-divider"></div>
 
-<!-- Step 1: Create Project -->
+<!-- Step 1: Initialize Project -->
 <section class="py-24 px-4 sm:px-6">
     <div class="max-w-6xl mx-auto">
         <div class="grid lg:grid-cols-2 gap-16 items-start">
             <div>
                 <div class="stat-number text-5xl text-gray-200 mb-4">01</div>
-                <h2 class="text-2xl sm:text-3xl font-bold tracking-tight mb-4">Create a Project</h2>
-                <p class="text-gray-500 leading-relaxed mb-6">A project maps to a single subdomain. It owns all collections, pages, chrome (branding), and analytics for that domain. Create as many projects as you need from your Contento account.</p>
+                <h2 class="text-2xl sm:text-3xl font-bold tracking-tight mb-4">Initialize your project</h2>
+                <p class="text-gray-500 leading-relaxed mb-6">Run <code>contento init</code> in any directory to create a project. Contento writes a <code>contento.config.json</code> next to your existing site code &mdash; commit it to git, share it with your team, and reference its project ID for every later command.</p>
                 <ul class="space-y-3 text-sm text-gray-600">
                     <li class="flex items-center gap-3">
                         <span class="text-accent font-mono text-xs">&#9632;</span>
-                        One project = one subdomain (e.g., <code>resources.example.com</code>)
+                        One project per site or section &mdash; lives in a local config file
                     </li>
                     <li class="flex items-center gap-3">
                         <span class="text-accent font-mono text-xs">&#9632;</span>
-                        Upload header/footer HTML and CSS to match your main site
+                        Set name, domain, and output path in a single command
                     </li>
                     <li class="flex items-center gap-3">
                         <span class="text-accent font-mono text-xs">&#9632;</span>
-                        Configure back-link URL and CTA injection
+                        No Contento account, no remote server &mdash; the CLI is the whole product
                     </li>
                 </ul>
             </div>
@@ -53,19 +53,15 @@
                     <span class="ml-2 text-xs text-gray-500 font-mono">terminal</span>
                 </div>
                 <div class="p-6 text-sm leading-relaxed font-mono overflow-x-auto">
-<pre class="!bg-transparent !border-0 !p-0 !m-0"><code><span class="prompt">$</span> <span class="function">contento</span> projects create \
-    --name <span class="string">"DevTools Resources"</span> \
-    --domain <span class="string">"worktale.org"</span> \
-    --subdomain <span class="string">"articles.worktale.org"</span>
+<pre class="!bg-transparent !border-0 !p-0 !m-0"><code><span class="prompt">$</span> <span class="function">contento</span> init \
+    --name <span class="string">"DevTools Resources"</span>
 
-<span class="output">  Project created: proj_8f3a...</span>
-<span class="output">  Status: pending_dns</span>
-<span class="output">  Subdomain: articles.worktale.org</span>
+<span class="output">  &#10003; Project created</span>
 <span class="output"></span>
-<span class="output">  Add this DNS record:</span>
-<span class="output">    Type:   CNAME</span>
-<span class="output">    Name:   articles</span>
-<span class="output">    Target: pseo.contentocms.com</span></code></pre>
+<span class="output">  ID       proj_8f3a...</span>
+<span class="output">  Name     DevTools Resources</span>
+<span class="output">  Domain   example.com</span>
+<span class="output">  Status   active</span></code></pre>
                 </div>
             </div>
         </div>
@@ -74,7 +70,7 @@
 
 <div class="section-divider"></div>
 
-<!-- Step 2: Configure DNS -->
+<!-- Step 2: Configure Chrome -->
 <section class="py-24 px-4 sm:px-6 grid-bg">
     <div class="max-w-6xl mx-auto">
         <div class="grid lg:grid-cols-2 gap-16 items-start">
@@ -87,43 +83,36 @@
                         <span class="ml-2 text-xs text-gray-500 font-mono">terminal</span>
                     </div>
                     <div class="p-6 text-sm leading-relaxed font-mono overflow-x-auto">
-<pre class="!bg-transparent !border-0 !p-0 !m-0"><code><span class="comment"># Add this CNAME record in your DNS provider:</span>
-<span class="comment">#</span>
-<span class="comment">#   Type:   CNAME</span>
-<span class="comment">#   Name:   articles</span>
-<span class="comment">#   Target: pseo.contentocms.com</span>
-<span class="comment">#   Proxy:  Enabled (Cloudflare orange cloud)</span>
+<pre class="!bg-transparent !border-0 !p-0 !m-0"><code><span class="prompt">$</span> <span class="function">contento</span> projects chrome proj_8f3a... \
+    --header <span class="string">chrome/header.html</span> \
+    --footer <span class="string">chrome/footer.html</span> \
+    --css <span class="string">chrome/styles.css</span>
 
-<span class="comment"># Check verification status</span>
-<span class="prompt">$</span> <span class="function">contento</span> domains verify --project proj_8f3a...
-
-<span class="output">  articles.worktale.org</span>
-<span class="output">    DNS:  <span class="text-accent">&#10003; verified</span></span>
-<span class="output">    SSL:  <span class="text-accent">&#10003; active</span> (Cloudflare)</span>
-<span class="output">    Status: active</span></code></pre>
+<span class="output">  &#10003; Chrome updated</span>
+<span class="output">  Project chrome updated successfully.</span></code></pre>
                     </div>
                 </div>
             </div>
             <div class="order-1 lg:order-2">
                 <div class="stat-number text-5xl text-gray-200 mb-4">02</div>
-                <h2 class="text-2xl sm:text-3xl font-bold tracking-tight mb-4">Configure DNS</h2>
-                <p class="text-gray-500 leading-relaxed mb-6">Add a single CNAME record pointing your subdomain to <code>pseo.contentocms.com</code>. Contento polls for verification every 5 minutes. Once verified, SSL is handled automatically via Cloudflare.</p>
+                <h2 class="text-2xl sm:text-3xl font-bold tracking-tight mb-4">Configure your chrome</h2>
+                <p class="text-gray-500 leading-relaxed mb-6">Upload your site's header, footer, and CSS via the <code>contento projects chrome</code> command. Point it at your local HTML and CSS files, and generated pages will look like native pages on your existing site.</p>
                 <ul class="space-y-3 text-sm text-gray-600">
                     <li class="flex items-center gap-3">
                         <span class="text-accent font-mono text-xs">&#9632;</span>
-                        Single CNAME record &mdash; no A records, no TXT verification
+                        Upload your existing header/footer HTML &mdash; pages match your site
                     </li>
                     <li class="flex items-center gap-3">
                         <span class="text-accent font-mono text-xs">&#9632;</span>
-                        Automatic SSL via Cloudflare (Full strict mode)
+                        Upload from files or pass inline HTML strings
                     </li>
                     <li class="flex items-center gap-3">
                         <span class="text-accent font-mono text-xs">&#9632;</span>
-                        DNS verification polling every 5 minutes
+                        Paths to header / footer / CSS files saved in your project config
                     </li>
                     <li class="flex items-center gap-3">
                         <span class="text-accent font-mono text-xs">&#9632;</span>
-                        Project transitions from <code>pending_dns</code> to <code>active</code>
+                        Templates re-read on every build &mdash; edit in place, rebuild to apply
                     </li>
                 </ul>
             </div>
@@ -256,11 +245,11 @@
             <div>
                 <div class="stat-number text-5xl text-gray-200 mb-4">05</div>
                 <h2 class="text-2xl sm:text-3xl font-bold tracking-tight mb-4">Generate Content</h2>
-                <p class="text-gray-500 leading-relaxed mb-6">Create a collection that combines your project, niches, and schema. Kick off a generation job and Contento's concurrent AI workers expand subtopics, build prompts, generate JSON, validate output, and retry failures.</p>
+                <p class="text-gray-500 leading-relaxed mb-6">Create a collection that combines your niches and schema, then kick off a generation job. Contento's concurrent AI workers expand subtopics, build prompts, generate JSON, validate output, and retry failures &mdash; all streamed to your terminal in real time.</p>
                 <ul class="space-y-3 text-sm text-gray-600">
                     <li class="flex items-center gap-3">
                         <span class="text-accent font-mono text-xs">&#9632;</span>
-                        10 concurrent AI workers (configurable)
+                        Concurrent AI workers for fast generation
                     </li>
                     <li class="flex items-center gap-3">
                         <span class="text-accent font-mono text-xs">&#9632;</span>
@@ -284,22 +273,17 @@
                     <span class="ml-2 text-xs text-gray-500 font-mono">terminal</span>
                 </div>
                 <div class="p-6 text-sm leading-relaxed font-mono overflow-x-auto">
-<pre class="!bg-transparent !border-0 !p-0 !m-0"><code><span class="prompt">$</span> <span class="function">contento</span> collections generate \
-    --project proj_8f3a... \
-    --schema <span class="string">"idea-list"</span> \
-    --niches <span class="string">"niche_01...,niche_02..."</span> \
-    --workers <span class="number">10</span>
+<pre class="!bg-transparent !border-0 !p-0 !m-0"><code><span class="prompt">$</span> <span class="function">contento</span> collections generate col_9d2f...
 
-<span class="output">  Generating 48 pages across 2 niches...</span>
+<span class="output">  &#10003; Generation started (Job: job_4a1b...)</span>
 <span class="output"></span>
-<span class="output">  [00:03] Worker pool: 10 concurrent</span>
 <span class="output">  [00:04] &#9608;&#9608;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;  6/48  (12%)</span>
 <span class="output">  [00:12] &#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601; 22/48  (46%)</span>
 <span class="output">  [00:20] &#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9601;&#9601;&#9601;&#9601; 36/48  (75%)</span>
 <span class="output">  [00:26] &#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608; 48/48 (100%)</span>
 <span class="output"></span>
 <span class="output">  Validation: <span class="text-accent">46 passed</span>, 2 retried, 0 failed</span>
-<span class="output">  Collection: col_9d2f...</span></code></pre>
+<span class="output">  &#10003; Generation complete!</span></code></pre>
                 </div>
             </div>
         </div>
@@ -308,7 +292,7 @@
 
 <div class="section-divider"></div>
 
-<!-- Step 6: Publish -->
+<!-- Step 6: Build -->
 <section class="py-24 px-4 sm:px-6 grid-bg">
     <div class="max-w-6xl mx-auto">
         <div class="grid lg:grid-cols-2 gap-16 items-start">
@@ -321,34 +305,28 @@
                         <span class="ml-2 text-xs text-gray-500 font-mono">terminal</span>
                     </div>
                     <div class="p-6 text-sm leading-relaxed font-mono overflow-x-auto">
-<pre class="!bg-transparent !border-0 !p-0 !m-0"><code><span class="prompt">$</span> <span class="function">contento</span> publish \
-    --collection col_9d2f... \
-    --mode batched \
-    --batch-size <span class="number">50</span>
+<pre class="!bg-transparent !border-0 !p-0 !m-0"><code><span class="prompt">$</span> <span class="function">contento</span> build proj_8f3a... --output <span class="string">./dist</span>
 
-<span class="output">  [batch 1/1] Publishing 48 pages...</span>
-<span class="output">  &#10003; Internal linking pass: 142 cross-links added</span>
-<span class="output">  &#10003; Sitemap rebuilt: 48 URLs</span>
-<span class="output">  &#10003; Schema markup injected (Article + BreadcrumbList)</span>
-<span class="output">  &#10003; OG meta tags generated</span>
+<span class="output">  &#10003; Built 48 pages to ./dist/</span>
+<span class="output">  HTML files:  48</span>
+<span class="output">  Sitemap:     ./dist/sitemap.xml</span>
 <span class="output"></span>
-<span class="output">  Published to: <span class="url">articles.worktale.org</span></span>
+<span class="output">  Deploy with your existing pipeline: git push, netlify deploy, rsync, etc.</span>
 
-<span class="comment"># Your pages are now live:</span>
-<span class="comment"># https://articles.worktale.org/100-api-testing-ideas-2026</span>
-<span class="comment"># https://articles.worktale.org/100-cicd-pipeline-ideas-2026</span>
-<span class="comment"># https://articles.worktale.org/sitemap.xml</span></code></pre>
+<span class="comment"># Deploy with your existing pipeline:</span>
+<span class="comment"># rsync, Netlify, Vercel, S3, GitHub Pages, etc.</span>
+<span class="prompt">$</span> <span class="function">netlify</span> deploy --dir=./dist --prod</code></pre>
                     </div>
                 </div>
             </div>
             <div class="order-1 lg:order-2">
                 <div class="stat-number text-5xl text-gray-200 mb-4">06</div>
-                <h2 class="text-2xl sm:text-3xl font-bold tracking-tight mb-4">Publish</h2>
-                <p class="text-gray-500 leading-relaxed mb-6">Publish pages in one of four modes: immediate, batched, scheduled, or manual. Every publish triggers an internal linking pass (cross-links related pages) and a sitemap rebuild. Pages go live on your subdomain instantly.</p>
+                <h2 class="text-2xl sm:text-3xl font-bold tracking-tight mb-4">Build &amp; Deploy</h2>
+                <p class="text-gray-500 leading-relaxed mb-6">Run <code>contento build &lt;project-id&gt; --output ./dist</code> and Contento renders every published page locally &mdash; chrome applied, internal links inserted, sitemap written. The output is plain HTML in your dist/ directory. Deploy with whatever pipeline you already use.</p>
                 <ul class="space-y-3 text-sm text-gray-600">
                     <li class="flex items-center gap-3">
                         <span class="text-accent font-mono text-xs">&#9632;</span>
-                        4 modes: immediate, batched, scheduled, manual
+                        Static HTML output &mdash; no runtime dependency
                     </li>
                     <li class="flex items-center gap-3">
                         <span class="text-accent font-mono text-xs">&#9632;</span>
@@ -356,11 +334,11 @@
                     </li>
                     <li class="flex items-center gap-3">
                         <span class="text-accent font-mono text-xs">&#9632;</span>
-                        Sitemap auto-rebuilt per batch
+                        Sitemap and JSON-LD + OG tags auto-generated
                     </li>
                     <li class="flex items-center gap-3">
                         <span class="text-accent font-mono text-xs">&#9632;</span>
-                        Schema markup (JSON-LD) and OG tags injected
+                        Deploy anywhere: Netlify, Vercel, S3, GitHub Pages, rsync
                     </li>
                 </ul>
             </div>
@@ -386,10 +364,10 @@
             </div>
             <div class="p-6 text-xs sm:text-sm leading-relaxed font-mono overflow-x-auto">
 <pre class="!bg-transparent !border-0 !p-0 !m-0"><code>
-  <span class="function">Create Project</span>          <span class="comment">contento projects create</span>
+  <span class="function">Initialize</span>              <span class="comment">contento init</span>
        &#9474;
        &#9660;
-  <span class="function">Configure DNS</span>           <span class="comment">CNAME &rarr; pseo.contentocms.com</span>
+  <span class="function">Configure Chrome</span>        <span class="comment">contento projects chrome</span>
        &#9474;
        &#9660;
   <span class="function">Select Niches</span>           <span class="comment">contento niches list</span>
@@ -402,14 +380,13 @@
        &#9474;                       <span class="comment">  &#x2514; subtopic expansion</span>
        &#9474;                       <span class="comment">  &#x2514; concurrent AI workers</span>
        &#9474;                       <span class="comment">  &#x2514; schema validation</span>
-       &#9474;                       <span class="comment">  &#x2514; retry on failure</span>
        &#9660;
-  <span class="function">Publish</span>                 <span class="comment">contento publish</span>
+  <span class="function">Build</span>                   <span class="comment">contento build &lt;project-id&gt; --output ./dist</span>
+       &#9474;                       <span class="comment">  &#x2514; chrome applied</span>
        &#9474;                       <span class="comment">  &#x2514; internal linking pass</span>
-       &#9474;                       <span class="comment">  &#x2514; sitemap rebuild</span>
-       &#9474;                       <span class="comment">  &#x2514; JSON-LD + OG injection</span>
+       &#9474;                       <span class="comment">  &#x2514; sitemap + JSON-LD + OG</span>
        &#9660;
-  <span class="text-accent">Live on your subdomain</span>  <span class="comment">https://articles.worktale.org</span>
+  <span class="text-accent">Deploy with your pipeline</span>  <span class="comment">Netlify, Vercel, S3, rsync...</span>
 </code></pre>
             </div>
         </div>
@@ -420,7 +397,7 @@
 <section class="py-24 px-4 sm:px-6">
     <div class="max-w-3xl mx-auto text-center">
         <h2 class="text-3xl sm:text-4xl font-bold tracking-tight mb-4">Ready to start?</h2>
-        <p class="text-gray-500 mb-8">Install the CLI and publish your first batch of pages in under 10 minutes.</p>
+        <p class="text-gray-500 mb-8">Install the CLI and build your first batch of pages in under 10 minutes.</p>
         <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
             <a href="docs/index.html" class="btn-primary inline-flex items-center gap-2">
                 Get Started

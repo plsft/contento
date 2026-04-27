@@ -121,23 +121,18 @@ as part of your deployment strategy.<span class="tag">&lt;/p&gt;</span>
                 <!-- Monitoring -->
                 <h2>Monitoring Internal Links</h2>
 
-<pre><span class="comment"># Get internal link stats for a project</span>
-<span class="prompt">$</span> <span class="function">contento</span> projects link-stats --project proj_8f3a... --json
+                <p>Internal link statistics are generated automatically during <code>contento build</code>. When you build your project, the build output includes a summary of internal links created:</p>
 
-{
-  <span class="property">"totalPages"</span>: <span class="number">248</span>,
-  <span class="property">"totalInternalLinks"</span>: <span class="number">892</span>,
-  <span class="property">"avgLinksPerPage"</span>: <span class="number">3.6</span>,
-  <span class="property">"orphanedPages"</span>: <span class="number">0</span>,
-  <span class="property">"underlinkedPages"</span>: <span class="number">4</span>,
-  <span class="property">"linksByNiche"</span>: [
-    { <span class="property">"niche"</span>: <span class="string">"Developer Tools"</span>, <span class="property">"links"</span>: <span class="number">342</span> },
-    { <span class="property">"niche"</span>: <span class="string">"DevOps"</span>, <span class="property">"links"</span>: <span class="number">284</span> },
-    { <span class="property">"niche"</span>: <span class="string">"Cloud Computing"</span>, <span class="property">"links"</span>: <span class="number">266</span> }
-  ]
-}</pre>
+<pre><span class="prompt">$</span> <span class="function">contento</span> build --output ./dist/articles
 
-                <p><strong>Orphaned pages</strong> (zero inbound links) should always be zero in a healthy Contento installation. If the count is non-zero, it usually means pages were manually unpublished, leaving dangling references. Re-running the linking pass fixes this.</p>
+<span class="output">  Building 248 pages...</span>
+<span class="output">  &#10003; Internal linking pass: 892 cross-links across 248 pages</span>
+<span class="output">  &#10003; Avg links per page: 3.6</span>
+<span class="output">  &#10003; Orphaned pages: 0</span>
+<span class="output">  &#10003; Sitemap rebuilt: 248 URLs</span>
+<span class="output">  Built to: ./dist/articles/</span></pre>
+
+                <p><strong>Orphaned pages</strong> (zero inbound links) should always be zero in a healthy Contento installation. If the count is non-zero, it usually means pages were manually unpublished, leaving dangling references. Re-running the build fixes this.</p>
 
             </div>
         </main>

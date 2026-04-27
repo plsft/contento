@@ -30,7 +30,7 @@
                 <!-- Overview -->
                 <h2>Overview</h2>
 
-                <p>Publishing takes generated pages from the <code>ready</code> state and makes them live on your subdomain. Every publish operation triggers two automatic passes:</p>
+                <p>Publishing takes generated pages from the <code>ready</code> state and builds them as static HTML to your output directory. Every build operation triggers two automatic passes:</p>
 
                 <ol>
                     <li><strong>Internal linking pass</strong> &mdash; Cross-links related pages within the same niche</li>
@@ -62,7 +62,7 @@
                         </tr>
                         <tr>
                             <td><strong>Manual</strong></td>
-                            <td>Pages require admin approval before publishing</td>
+                            <td>Pages stay in draft until you run <code>contento publish &lt;page-id&gt;</code> on each one</td>
                             <td>Quality control, high-stakes content</td>
                         </tr>
                     </tbody>
@@ -73,30 +73,22 @@
 
                 <p>Publishes all pages in the collection that have a <code>ready</code> status:</p>
 
-<pre><span class="prompt">$</span> <span class="function">contento</span> publish \
-    --collection col_9d2f... \
-    --mode immediate
+<pre><span class="prompt">$</span> <span class="function">contento</span> publish col_9d2f... --mode immediate
 
 <span class="output">  Publishing 48 pages...</span>
 <span class="output">  &#10003; Internal linking pass: 142 cross-links added</span>
-<span class="output">  &#10003; Sitemap rebuilt: 48 URLs</span>
-<span class="output">  &#10003; Schema markup injected</span>
-<span class="output">  Published to: resources.example.com</span></pre>
+<span class="output">  &#10003; Published 48 pages immediately.</span></pre>
 
                 <!-- Batched -->
                 <h3>Batched Publishing</h3>
 
                 <p>Publishes a fixed number of pages per batch. Useful for monitoring indexing before publishing more:</p>
 
-<pre><span class="prompt">$</span> <span class="function">contento</span> publish \
-    --collection col_9d2f... \
+<pre><span class="prompt">$</span> <span class="function">contento</span> publish col_9d2f... \
     --mode batched \
     --batch-size 25
 
-<span class="output">  Publishing batch 1 of 2 (25 pages)...</span>
-<span class="output">  &#10003; Internal linking pass: 68 cross-links added</span>
-<span class="output">  &#10003; Sitemap rebuilt: 25 URLs</span>
-<span class="output">  Published 25 of 48 pages. Run again to publish the next batch.</span></pre>
+<span class="output">  Batched publishing started. 48 pages queued in batches of 25.</span></pre>
 
                 <div class="callout callout-tip">
                     <strong>Indexing strategy:</strong> Google indexes new pages more reliably when they appear gradually. Start with 25&ndash;50 pages, monitor indexing in GSC for a few days, then publish the next batch.
@@ -107,30 +99,20 @@
 
                 <p>Set up a schedule to publish batches automatically:</p>
 
-<pre><span class="prompt">$</span> <span class="function">contento</span> publish \
-    --collection col_9d2f... \
+<pre><span class="prompt">$</span> <span class="function">contento</span> publish col_9d2f... \
     --mode scheduled \
-    --batch-size 10 \
-    --cron <span class="string">"0 6 * * *"</span>
+    --batch-size 10
 
-<span class="output">  Schedule created: 10 pages daily at 06:00 UTC</span>
-<span class="output">  Stops automatically when all ready pages are published.</span></pre>
+<span class="output">  10 pages scheduled for publishing.</span></pre>
 
                 <!-- Manual -->
                 <h3>Manual Publishing</h3>
 
                 <p>In manual mode, each page must be individually approved before it goes live. This is useful for sensitive niches where you want to review every page:</p>
 
-<pre><span class="comment"># Set collection to manual mode</span>
-<span class="prompt">$</span> <span class="function">contento</span> publish \
-    --collection col_9d2f... \
-    --mode manual
+<pre><span class="prompt">$</span> <span class="function">contento</span> publish col_9d2f... --mode manual
 
-<span class="comment"># Approve individual pages</span>
-<span class="prompt">$</span> <span class="function">contento</span> pages approve page_01...
-
-<span class="comment"># Or approve in bulk</span>
-<span class="prompt">$</span> <span class="function">contento</span> pages approve page_01... page_02... page_03...</pre>
+<span class="output">  Pages marked for manual review. List drafts with: contento collections show col_9d2f... --status draft</span></pre>
 
                 <!-- Internal linking -->
                 <h2>Internal Linking Pass</h2>
@@ -160,31 +142,14 @@
 
                 <p>For sites with more than 50,000 URLs, Contento generates a sitemap index with multiple sitemap files (50,000 URLs per file).</p>
 
-                <!-- Batch history -->
-                <h2>Batch History</h2>
-
-<pre><span class="prompt">$</span> <span class="function">contento</span> publish history --project proj_8f3a... --json
-
-[
-  {
-    <span class="property">"batchId"</span>: <span class="string">"batch_1a3c..."</span>,
-    <span class="property">"publishedAt"</span>: <span class="string">"2026-03-11T14:30:00Z"</span>,
-    <span class="property">"pagesPublished"</span>: <span class="number">48</span>,
-    <span class="property">"crossLinksAdded"</span>: <span class="number">142</span>,
-    <span class="property">"mode"</span>: <span class="string">"immediate"</span>
-  }
-]</pre>
-
                 <!-- CLI Commands -->
                 <h2>CLI Commands</h2>
 
                 <table>
                     <thead><tr><th>Command</th><th>Description</th></tr></thead>
                     <tbody>
-                        <tr><td><code>contento publish</code></td><td>Publish pages (all modes: immediate, batched, scheduled, manual)</td></tr>
-                        <tr><td><code>contento publish history</code></td><td>List publish batches for a project</td></tr>
-                        <tr><td><code>contento pages approve</code></td><td>Approve one or more pages for manual publishing</td></tr>
-                        <tr><td><code>contento pages unpublish</code></td><td>Remove a page from the live site</td></tr>
+                        <tr><td><code>contento publish &lt;collection-id&gt; [--mode] [--batch-size]</code></td><td>Publish pages (modes: immediate, batched, scheduled, manual)</td></tr>
+                        <tr><td><code>contento build &lt;project-id&gt; --output &lt;dir&gt;</code></td><td>Build published pages to static HTML</td></tr>
                     </tbody>
                 </table>
 

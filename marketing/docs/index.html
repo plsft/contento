@@ -31,15 +31,14 @@
                 <h2>What is Contento pSEO?</h2>
 
                 <p>
-                    Contento pSEO is a <strong>cloud-hosted programmatic SEO engine</strong> that generates thousands of high-quality, niche-targeted pages
-                    using AI and structured content schemas. Unlike a traditional CMS where you write each page by hand, Contento automates the
-                    entire pipeline: you define a content schema (e.g., "10 Best Tools for {subtopic}"), select your target niches, and the engine
-                    cross-multiplies niches with subtopics to produce unique, validated pages at scale.
+                    Contento pSEO is a <strong>local CLI tool</strong> that generates high-quality, niche-targeted pages
+                    using AI and structured content schemas. You define a content schema (e.g., "10 Best Tools for {subtopic}"), select your target niches, and the engine
+                    cross-multiplies niches with subtopics to produce unique, validated pages &mdash; built as static HTML and deployed to your own site on direct, on-domain paths.
                 </p>
                 <p>
-                    Contento is <strong>not a CMS</strong>. It is a purpose-built tool for programmatic SEO. Every generated page includes
+                    Contento is <strong>not a CMS</strong>. It is a purpose-built tool for safe programmatic SEO. Every generated page includes
                     structured JSON-LD, deterministic title patterns for SERP targeting, custom chrome (your branding header/footer), and a
-                    feedback loop from Google Search Console analytics. The entire platform is driven through the <code>contento</code> CLI,
+                    feedback loop from Google Search Console analytics. Every operation runs through the <code>contento</code> CLI on your machine,
                     with a <code>--json</code> flag on every command for AI agent integration.
                 </p>
 
@@ -76,86 +75,57 @@
 
 <span class="comment"># Verify the installation</span>
 <span class="function">contento</span> --version
-<span class="output">contento v1.0.0</span></pre>
+<span class="output">contento v0.1.0</span></pre>
 
-                <!-- Login -->
-                <h2>Log In</h2>
+                <!-- Configure AI -->
+                <h2>Configure Your AI Provider (BYOK)</h2>
 
-<pre><span class="comment"># Interactive login (opens browser)</span>
-<span class="function">contento</span> login
+                <p>Contento has no login or central account. The CLI generates pages by talking directly to your chosen AI provider with your own API key &mdash; OpenAI, Anthropic, Google, Groq, OpenRouter, or any OpenAI-compatible endpoint (including local models).</p>
 
-<span class="comment"># Or non-interactive login with API key</span>
-<span class="function">contento</span> login --api-key ck_live_your_key_here
+<pre><span class="comment"># Interactive setup — pick a provider, model, and paste your key</span>
+<span class="function">contento</span> config set
 
-<span class="output">Authenticated as george@example.com</span>
-<span class="output">API key saved to ~/.contento/config.json</span></pre>
+<span class="output">  ? AI Provider: OpenAI</span>
+<span class="output">  ? Model: gpt-4o-mini (default)</span>
+<span class="output">  ? API Key: ************************************</span>
+<span class="output">  &#10003; AI configuration saved to ~/.contento/config.json</span></pre>
 
                 <div class="callout callout-tip">
-                    <strong>Tip:</strong> For CI/CD and AI agent environments, set the <code>CONTENTO_API_KEY</code> environment variable instead of using <code>contento login</code>. The CLI will automatically use it.
+                    <strong>Tip:</strong> One-time setup. For CI and agents, set the provider's environment variable directly (<code>OPENAI_API_KEY</code>, <code>ANTHROPIC_API_KEY</code>, etc.) and skip <code>config set</code>. See <a href="cli.html" style="color: #065f46; font-weight: 500;">CLI Reference</a> for all supported providers and models.
                 </div>
 
                 <!-- First Project -->
                 <h2>First Project Setup</h2>
 
-<pre><span class="comment"># Create a project</span>
-<span class="function">contento</span> projects create \
-    --name <span class="string">"DevTools Resources"</span> \
-    --domain <span class="string">"example.com"</span> \
-    --subdomain <span class="string">"resources.example.com"</span>
+<pre><span class="comment"># Initialize a project</span>
+<span class="function">contento</span> init \
+    --name <span class="string">"DevTools Resources"</span>
 
-<span class="output">  Project created: proj_8f3a...</span>
-<span class="output">  Status: pending_dns</span>
-<span class="output"></span>
-<span class="output">  Add this DNS record:</span>
-<span class="output">    Type:   CNAME</span>
-<span class="output">    Name:   resources</span>
-<span class="output">    Target: pseo.contentocms.com</span>
+<span class="output">  &#10003; Project created</span>
+<span class="output">  Project "DevTools Resources" created with ID: proj_8f3a...</span>
 
 <span class="comment"># Browse niches</span>
 <span class="function">contento</span> niches list --category <span class="string">"Technology"</span>
 
-<span class="comment"># Generate pages</span>
-<span class="function">contento</span> collections generate \
+<span class="comment"># Create a collection and generate pages</span>
+<span class="function">contento</span> collections create \
     --project proj_8f3a... \
     --schema <span class="string">"idea-list"</span> \
     --niches <span class="string">"niche_01...,niche_02..."</span>
 
-<span class="comment"># Publish</span>
-<span class="function">contento</span> publish --collection col_9d2f... --mode immediate</pre>
+<span class="comment"># Generate content for the collection</span>
+<span class="function">contento</span> collections generate col_9d2f...
 
-                <p>The generation pipeline expands subtopics, deduplicates, queues AI generation jobs, validates the output, and publishes.
-                You can monitor real-time progress directly in the terminal.</p>
+<span class="comment"># Build static HTML</span>
+<span class="function">contento</span> build proj_8f3a... --output ./dist/articles</pre>
+
+                <p>The generation pipeline expands subtopics, deduplicates, queues AI generation jobs, validates the output, and builds static HTML.
+                You can monitor real-time progress directly in the terminal, then deploy with your existing pipeline.</p>
 
                 <!-- Configuration -->
                 <h2>Configuration</h2>
 
-                <p>The CLI stores configuration in <code>~/.contento/config.json</code>:</p>
-
-<pre>{
-  <span class="property">"apiKey"</span>: <span class="string">"ck_live_..."</span>,
-  <span class="property">"baseUrl"</span>: <span class="string">"https://app.contentocms.com"</span>
-}</pre>
-
-                <p>You can also set configuration via environment variables:</p>
-
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Variable</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><code>CONTENTO_API_KEY</code></td>
-                            <td>API key for authentication (overrides config file)</td>
-                        </tr>
-                        <tr>
-                            <td><code>CONTENTO_API_URL</code></td>
-                            <td>Base URL override (default: <code>https://app.contentocms.com</code>)</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <p>The CLI stores AI configuration in <code>~/.contento/config.json</code> and per-project state in a <code>contento.config.json</code> next to your site code. See <a href="installation.html" style="color: #3D5A80; font-weight: 500;">Install CLI &rarr; Configuration Files</a> for the full layout and all environment variables.</p>
 
                 <!-- Next Steps -->
                 <h2>Next Steps</h2>
@@ -165,7 +135,7 @@
                     <li><a href="first-project.html" style="color: #3D5A80; font-weight: 500;">First Project</a> &mdash; End-to-end walkthrough of creating your first pSEO campaign</li>
                     <li><a href="niches.html" style="color: #3D5A80; font-weight: 500;">Niche Taxonomy</a> &mdash; Browse 150 built-in niches or create custom ones</li>
                     <li><a href="schemas.html" style="color: #3D5A80; font-weight: 500;">Content Schemas</a> &mdash; Understand the 10 built-in schemas and create your own</li>
-                    <li><a href="cli.html" style="color: #3D5A80; font-weight: 500;">CLI Reference</a> &mdash; All 21 commands with flags and examples</li>
+                    <li><a href="cli.html" style="color: #3D5A80; font-weight: 500;">CLI Reference</a> &mdash; All commands with flags and examples</li>
                     <li><a href="agents.html" style="color: #3D5A80; font-weight: 500;">Agent Integration</a> &mdash; Use Contento with Claude Code, Codex, and other AI agents</li>
                     <li><a href="analytics.html" style="color: #3D5A80; font-weight: 500;">Analytics &amp; GSC</a> &mdash; Connect Google Search Console and optimize</li>
                 </ul>

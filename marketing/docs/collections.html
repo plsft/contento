@@ -46,7 +46,7 @@
                 <!-- Creating a collection -->
                 <h2>Creating a Collection</h2>
 
-                <p>The admin UI provides a multi-step wizard:</p>
+                <p>Run the interactive wizard or pass flags directly. The wizard walks you through:</p>
 
                 <ol>
                     <li><strong>Choose a schema</strong> &mdash; Select from the 10 built-in schemas or your custom ones.</li>
@@ -57,13 +57,14 @@
                     <li><strong>Review &amp; generate</strong> &mdash; Preview the expected page count and confirm.</li>
                 </ol>
 
-                <p>Via the CLI:</p>
+                <p>Or pass the flags directly for non-interactive use (CI, agents):</p>
 
-<pre><span class="function">contento</span> collections generate \
+<pre><span class="function">contento</span> collections create \
     --project proj_8f3a... \
     --schema <span class="string">"idea-list"</span> \
-    --niches <span class="string">"niche_01...,niche_02..."</span> \
-    --workers <span class="number">10</span>
+    --niches <span class="string">"niche_01...,niche_02..."</span>
+
+<span class="function">contento</span> collections generate col_9d2f...
 
 <span class="output">  Generating 40 pages across 2 niches...</span>
 <span class="output">  [00:26] &#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608; 40/40 (100%)</span>
@@ -166,7 +167,7 @@ schema: Idea List
                 <ol>
                     <li>The generator retries <strong>once</strong> with an adjusted prompt (including the validation error message).</li>
                     <li>If the retry also fails, the page is marked as <code>failed</code> and logged with the error details.</li>
-                    <li>Failed pages appear in the admin dashboard for manual review and re-generation.</li>
+                    <li>Failed pages can be inspected with <code>contento collections show &lt;id&gt; --status failed</code> and re-run with <code>contento collections regenerate &lt;page-id&gt;</code>.</li>
                 </ol>
 
                 <!-- Monitoring progress -->
@@ -175,7 +176,7 @@ schema: Idea List
                 <p>The CLI shows a real-time progress bar during generation. For machine-readable output, use <code>--json</code>
                 to get NDJSON streaming:</p>
 
-<pre><span class="function">contento</span> collections generate --project proj_8f3a... --schema <span class="string">"idea-list"</span> --json
+<pre><span class="function">contento</span> collections generate col_9d2f... --json
 
 <span class="output">{"type":"progress","current":12,"total":40,"done":false}</span>
 <span class="output">{"type":"progress","current":28,"total":40,"done":false}</span>

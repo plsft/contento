@@ -38,7 +38,7 @@
                     <li><strong>Custom CSS</strong> &mdash; Styles for your chrome elements, scoped to avoid conflicts with generated content</li>
                 </ul>
 
-                <p>Chrome is configured per-project. Each project can have different chrome, allowing you to run multiple brands from a single Contento account.</p>
+                <p>Chrome is configured per-project. Each project can point at different header / footer / CSS files, so you can run multiple brands or sites from a single CLI install.</p>
 
                 <!-- How pages render -->
                 <h2>How Pages Render</h2>
@@ -72,26 +72,12 @@
 &lt;/body&gt;
 &lt;/html&gt;</pre>
 
-                <!-- Uploading via admin UI -->
-                <h2>Uploading Chrome via Admin UI</h2>
+                <!-- Configuring chrome via CLI -->
+                <h2>Configuring Chrome</h2>
 
-                <ol>
-                    <li>Navigate to <strong>Admin &rarr; pSEO &rarr; Projects</strong>.</li>
-                    <li>Click <strong>Edit</strong> on your project.</li>
-                    <li>Scroll to the <strong>Chrome</strong> section.</li>
-                    <li>Paste your header HTML into the <strong>Header HTML</strong> field.</li>
-                    <li>Paste your footer HTML into the <strong>Footer HTML</strong> field.</li>
-                    <li>Paste your CSS into the <strong>Custom CSS</strong> field.</li>
-                    <li>Click <strong>Save</strong>. Changes are applied immediately to all pages in the project.</li>
-                </ol>
+                <p>Point Contento at your existing site's header, footer, and CSS files using the <code>projects chrome</code> command. The paths are stored in your project config and read fresh on every build &mdash; edit your templates in place and rebuild to apply changes.</p>
 
-                <!-- Uploading via CLI -->
-                <h2>Uploading Chrome via CLI</h2>
-
-                <p>Use the <code>projects chrome</code> command to upload chrome from local files:</p>
-
-<pre><span class="prompt">$</span> <span class="function">contento</span> projects chrome \
-    --project proj_8f3a... \
+<pre><span class="prompt">$</span> <span class="function">contento</span> projects chrome proj_8f3a... \
     --header ./chrome/header.html \
     --footer ./chrome/footer.html \
     --css ./chrome/styles.css
@@ -101,8 +87,7 @@
 
                 <p>Or pass inline HTML directly:</p>
 
-<pre><span class="prompt">$</span> <span class="function">contento</span> projects chrome \
-    --project proj_8f3a... \
+<pre><span class="prompt">$</span> <span class="function">contento</span> projects chrome proj_8f3a... \
     --header-inline <span class="string">'&lt;nav&gt;&lt;a href="https://example.com"&gt;Home&lt;/a&gt;&lt;/nav&gt;'</span> \
     --footer-inline <span class="string">'&lt;footer&gt;&amp;copy; 2026 Example Inc&lt;/footer&gt;'</span></pre>
 
@@ -170,12 +155,12 @@
                     <li>Save each to a file (e.g., <code>header.html</code>, <code>footer.html</code>).</li>
                     <li>Copy the relevant CSS rules from your site's stylesheet into a <code>styles.css</code> file.</li>
                     <li>Update any relative URLs (e.g., <code>/images/logo.svg</code>) to absolute URLs (e.g., <code>https://example.com/images/logo.svg</code>).</li>
-                    <li>Upload with the CLI: <code>contento projects chrome --project proj_... --header ./header.html --footer ./footer.html --css ./styles.css</code></li>
+                    <li>Upload with the CLI: <code>contento projects chrome proj_... --header ./header.html --footer ./footer.html --css ./styles.css</code></li>
                 </ol>
 
                 <div class="callout callout-warning">
-                    <strong>Important:</strong> Make sure all asset URLs (images, fonts, icons) in your chrome HTML are
-                    <strong>absolute URLs</strong> pointing to your main site. Relative paths will not resolve on the pSEO subdomain.
+                    <strong>Important:</strong> Make sure all asset URLs (images, fonts, icons) in your chrome HTML use
+                    <strong>correct paths</strong> relative to your site's structure. Since pages are built locally and deployed on your domain, relative paths work as long as they resolve correctly from your output directory.
                 </div>
 
                 <!-- CSS considerations -->
@@ -195,8 +180,8 @@
                 <p>After uploading chrome, you can preview it in two ways:</p>
 
                 <ul>
-                    <li><strong>Admin preview</strong> &mdash; The project edit page shows a live preview of your chrome wrapping sample content.</li>
-                    <li><strong>Live page</strong> &mdash; Navigate to any published page on your subdomain. Chrome changes take effect immediately (no cache delay).</li>
+                    <li><strong>Local preview</strong> &mdash; Run <code>contento build &lt;project-id&gt; --output ./dist</code> and open any generated HTML file in your browser to preview chrome rendering.</li>
+                    <li><strong>Live page</strong> &mdash; After deploying to your site, navigate to any generated page on your domain to verify chrome rendering.</li>
                 </ul>
 
                 <div class="callout callout-tip">

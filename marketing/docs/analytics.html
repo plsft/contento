@@ -38,28 +38,21 @@
                 <!-- Connecting GSC -->
                 <h2>Connecting Google Search Console</h2>
 
-                <p>Connect your GSC property via the CLI or admin UI:</p>
+                <p>Connect your GSC property directly from the CLI &mdash; the CLI runs the OAuth flow in your default browser, then stores the refresh token locally next to your AI provider config.</p>
 
-<pre><span class="prompt">$</span> <span class="function">contento</span> analytics connect-gsc --project proj_8f3a...
+<pre><span class="prompt">$</span> <span class="function">contento</span> analytics connect proj_8f3a...
 
-<span class="output">  Opening browser for Google OAuth authorization...</span>
-<span class="output">  &#10003; Connected to property: sc-domain:example.com</span>
-<span class="output">  Syncing data... this may take a few minutes.</span></pre>
+<span class="output">  Opening browser for Google OAuth...</span>
+<span class="output">  ? Select Search Console property: https://example.com/</span>
+<span class="output">  &#10003; GSC connected. Token saved to ~/.contento/gsc.json</span>
+<span class="output">  Run "contento analytics sync proj_8f3a..." to pull the last 28 days.</span></pre>
 
-                <p>Or connect via the admin UI:</p>
-
-                <ol>
-                    <li>Navigate to <strong>Admin &rarr; pSEO &rarr; Analytics &rarr; Connect GSC</strong>.</li>
-                    <li>Click <strong>Authorize with Google</strong>. You will be redirected to Google's OAuth consent screen.</li>
-                    <li>Grant Contento read-only access to your Search Console data.</li>
-                    <li>After redirect, select the <strong>property</strong> (domain) to connect.</li>
-                    <li>Contento begins syncing data immediately.</li>
-                </ol>
+                <p>OAuth uses Google's standard read-only Search Console scope. Contento never sees your token &mdash; everything stays on your machine.</p>
 
                 <!-- Daily sync -->
-                <h2>Daily Sync</h2>
+                <h2>Pulling Data</h2>
 
-                <p>Once connected, Contento runs a daily background job that syncs the following data from GSC:</p>
+                <p>Run <code>contento analytics sync</code> to pull the latest GSC data into a local SQLite cache. Schedule it via cron (or your CI) for a daily refresh:</p>
 
                 <ul>
                     <li><strong>Clicks</strong> &mdash; Number of times users clicked through to your page from search results</li>
@@ -70,14 +63,14 @@
                     <li><strong>Queries</strong> &mdash; Top search queries driving traffic to each page</li>
                 </ul>
 
-                <p>Data is pulled for the last 28 days (GSC's default reporting window) and stored per-page in the Contento database.</p>
+                <p>Data is pulled for the last 28 days (GSC's default reporting window) and stored locally in <code>~/.contento/analytics.db</code> &mdash; a plain SQLite file you can query directly if you want.</p>
 
                 <!-- Dashboard metrics -->
-                <h2>Dashboard Metrics</h2>
+                <h2>Summary Metrics</h2>
 
-                <p>View the analytics summary from the CLI or admin dashboard:</p>
+                <p>View the analytics summary from the CLI:</p>
 
-<pre><span class="prompt">$</span> <span class="function">contento</span> analytics summary --project proj_8f3a...
+<pre><span class="prompt">$</span> <span class="function">contento</span> analytics summary proj_8f3a...
 
 <span class="output">  Project: DevTools Resources</span>
 <span class="output">  Period:  Last 28 days</span>
@@ -105,7 +98,7 @@
 
                 <p>The leaderboard ranks all pages in a project by performance:</p>
 
-<pre><span class="prompt">$</span> <span class="function">contento</span> analytics top-pages --project proj_8f3a... --limit 5
+<pre><span class="prompt">$</span> <span class="function">contento</span> analytics top-pages proj_8f3a... --limit 5
 
 <span class="output">  #  Title                              Clicks  Impr    CTR    Pos</span>
 <span class="output">  1  100 Remote Work Ideas              2,340   55,714  4.2%   14.2</span>
@@ -137,7 +130,7 @@
 
                 <p>Pages that receive <strong>zero clicks for 60 consecutive days</strong> after publishing are flagged as underperformers:</p>
 
-<pre><span class="prompt">$</span> <span class="function">contento</span> analytics zero-traffic --project proj_8f3a...
+<pre><span class="prompt">$</span> <span class="function">contento</span> analytics zero-traffic proj_8f3a...
 
 <span class="output">  12 pages with zero traffic (60+ days)</span>
 <span class="output">  ──────────────────────────────────────</span>
@@ -158,10 +151,7 @@
 
                 <p>Export analytics data as CSV for use in spreadsheets or BI tools:</p>
 
-<pre><span class="prompt">$</span> <span class="function">contento</span> analytics export \
-    --project proj_8f3a... \
-    --format csv \
-    --output analytics.csv
+<pre><span class="prompt">$</span> <span class="function">contento</span> analytics export proj_8f3a... --format csv > analytics.csv
 
 <span class="output">  &#10003; Exported 1,024 pages to analytics.csv</span></pre>
 
@@ -182,8 +172,6 @@
                         <tr><td><code>contento analytics top-pages</code></td><td>Top pages ranked by performance</td></tr>
                         <tr><td><code>contento analytics zero-traffic</code></td><td>Pages with zero clicks in 60+ days</td></tr>
                         <tr><td><code>contento analytics export</code></td><td>CSV export of analytics data</td></tr>
-                        <tr><td><code>contento analytics connect-gsc</code></td><td>Connect Google Search Console</td></tr>
-                        <tr><td><code>contento analytics sync</code></td><td>Trigger manual GSC data sync</td></tr>
                     </tbody>
                 </table>
 
@@ -203,7 +191,7 @@
 
                 <div class="callout callout-tip">
                     <strong>Tip:</strong> Wait at least 30 days after publishing before evaluating page performance. Google can take
-                    2-4 weeks to index and start showing pages in search results, especially for new subdomains.
+                    2-4 weeks to index and start showing pages in search results, especially for new content sections.
                 </div>
 
             </div>

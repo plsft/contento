@@ -15,8 +15,8 @@
 <section class="pt-32 pb-16 px-4 sm:px-6 dot-bg">
     <div class="max-w-4xl mx-auto text-center">
         <p class="font-mono text-sm text-accent mb-6">&gt; features</p>
-        <h1 class="text-4xl sm:text-5xl font-bold tracking-tight mb-4">Every feature, built for scale.</h1>
-        <p class="text-lg text-gray-500 max-w-2xl mx-auto">Niche taxonomy, schema validation, concurrent generation, custom domains, analytics &mdash; everything you need to run programmatic SEO at 50,000 pages.</p>
+        <h1 class="text-4xl sm:text-5xl font-bold tracking-tight mb-4">Every feature, built for quality.</h1>
+        <p class="text-lg text-gray-500 max-w-2xl mx-auto">Niche taxonomy, schema validation, quality gates, editorial review, analytics &mdash; everything you need to run programmatic SEO that earns its place on your domain.</p>
     </div>
 </section>
 
@@ -163,15 +163,11 @@
                 <ul class="space-y-3 text-sm text-gray-600">
                     <li class="flex items-center gap-3">
                         <span class="text-accent font-mono text-xs">&#9632;</span>
-                        Concurrent AI workers (configurable parallelism)
+                        Concurrent AI workers
                     </li>
                     <li class="flex items-center gap-3">
                         <span class="text-accent font-mono text-xs">&#9632;</span>
                         Prompt builder: schema + niche context injection
-                    </li>
-                    <li class="flex items-center gap-3">
-                        <span class="text-accent font-mono text-xs">&#9632;</span>
-                        Retry logic with exponential backoff
                     </li>
                     <li class="flex items-center gap-3">
                         <span class="text-accent font-mono text-xs">&#9632;</span>
@@ -191,13 +187,14 @@
                     <span class="ml-2 text-xs text-gray-500 font-mono">terminal</span>
                 </div>
                 <div class="p-6 text-sm leading-relaxed font-mono overflow-x-auto">
-<pre class="!bg-transparent !border-0 !p-0 !m-0"><code><span class="prompt">$</span> <span class="function">contento</span> collections generate \
+<pre class="!bg-transparent !border-0 !p-0 !m-0"><code><span class="prompt">$</span> <span class="function">contento</span> collections create \
     --project proj_8f3a... \
     --schema <span class="string">"idea-list"</span> \
     --niches <span class="string">"niche_01...,niche_02...,niche_03..."</span>
 
+<span class="prompt">$</span> <span class="function">contento</span> collections generate col_9d2f...
+
 <span class="output">[00:02] 48 pages queued across 3 niches</span>
-<span class="output">[00:03] Worker pool: 10 concurrent</span>
 <span class="output">[00:04] &#9608;&#9608;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;  6/48  (12%)</span>
 <span class="output">[00:12] &#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601; 22/48  (46%)</span>
 <span class="output">[00:20] &#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9601;&#9601;&#9601;&#9601; 36/48  (75%)</span>
@@ -226,36 +223,36 @@
                         <span class="ml-2 text-xs text-gray-500 font-mono">terminal</span>
                     </div>
                     <div class="p-6 text-sm leading-relaxed font-mono overflow-x-auto">
-<pre class="!bg-transparent !border-0 !p-0 !m-0"><code><span class="prompt">$</span> <span class="function">contento</span> publish \
-    --collection col_9d2f... \
-    --mode batched \
-    --batch-size <span class="number">50</span>
+<pre class="!bg-transparent !border-0 !p-0 !m-0"><code><span class="prompt">$</span> <span class="function">contento</span> build proj_8f3a... \
+    --output <span class="string">./dist/resources</span>
 
-<span class="output">[batch 1/1] Publishing 48 pages...</span>
+<span class="output">Building 48 pages to ./dist/resources/...</span>
 <span class="output">  &#10003; Internal linking pass: 142 cross-links added</span>
-<span class="output">  &#10003; Sitemap rebuilt: 48 URLs</span>
+<span class="output">  &#10003; Sitemap fragment: 48 URLs</span>
 <span class="output">  &#10003; Schema markup injected (Article + BreadcrumbList)</span>
 <span class="output">  &#10003; Canonical URLs set</span>
 <span class="output">  &#10003; OG meta tags generated</span>
 <span class="output"></span>
-<span class="output">Published to: <span class="url">articles.worktale.org</span></span>
+<span class="output">Output: ./dist/resources/remote-work-ideas/index.html</span>
+<span class="output">        ./dist/resources/home-office-checklist/index.html</span>
+<span class="output">        ... 46 more files</span>
 
-<span class="comment"># Publish modes: immediate, batched, scheduled, manual</span></code></pre>
+<span class="comment"># Drop into your existing deploy pipeline (Vercel, Netlify, S3, etc.)</span></code></pre>
                     </div>
                 </div>
             </div>
             <div class="order-1 lg:order-2">
-                <span class="tag tag-blue mb-4 inline-block">publishing</span>
-                <h2 class="text-2xl sm:text-3xl font-bold tracking-tight mb-4">Publishing Pipeline</h2>
-                <p class="text-gray-500 leading-relaxed mb-6">Four publish modes for different strategies. Batched publishing lets you control rollout speed for indexing monitoring. Every batch triggers an internal linking pass and sitemap rebuild.</p>
+                <span class="tag tag-blue mb-4 inline-block">build</span>
+                <h2 class="text-2xl sm:text-3xl font-bold tracking-tight mb-4">Static Build Pipeline</h2>
+                <p class="text-gray-500 leading-relaxed mb-6">Builds static HTML files locally and drops them into your existing deploy pipeline. Every build triggers an internal linking pass and sitemap fragment generation. You deploy on your terms &mdash; Vercel, Netlify, S3, or plain <code>rsync</code>.</p>
                 <ul class="space-y-3 text-sm text-gray-600">
                     <li class="flex items-center gap-3">
                         <span class="text-accent font-mono text-xs">&#9632;</span>
-                        4 publish modes: immediate, batched, scheduled, manual
+                        Static HTML output to any directory
                     </li>
                     <li class="flex items-center gap-3">
                         <span class="text-accent font-mono text-xs">&#9632;</span>
-                        Progressive rollout for indexing monitoring
+                        On-domain paths: <code>/resources/topic/</code>, not subdomains
                     </li>
                     <li class="flex items-center gap-3">
                         <span class="text-accent font-mono text-xs">&#9632;</span>
@@ -263,7 +260,7 @@
                     </li>
                     <li class="flex items-center gap-3">
                         <span class="text-accent font-mono text-xs">&#9632;</span>
-                        Sitemap auto-rebuild per batch
+                        Sitemap fragment generation (merge into your existing sitemap)
                     </li>
                     <li class="flex items-center gap-3">
                         <span class="text-accent font-mono text-xs">&#9632;</span>
@@ -424,7 +421,7 @@
                 <ul class="space-y-3 text-sm text-gray-600">
                     <li class="flex items-center gap-3">
                         <span class="text-accent font-mono text-xs">&#9632;</span>
-                        21 commands across 7 resource types
+                        30 commands across 10 resource types
                     </li>
                     <li class="flex items-center gap-3">
                         <span class="text-accent font-mono text-xs">&#9632;</span>
@@ -469,7 +466,7 @@
 <span class="output">]</span>
 
 <span class="comment"># NDJSON streaming for generation</span>
-<span class="prompt">$</span> <span class="function">contento</span> collections generate --json
+<span class="prompt">$</span> <span class="function">contento</span> collections generate col_9d2f... --json
 
 <span class="output">{"type":"progress","current":6,"total":48,"done":false}</span>
 <span class="output">{"type":"progress","current":22,"total":48,"done":false}</span>
@@ -504,7 +501,7 @@
             <div class="card p-6">
                 <p class="font-mono text-xs text-accent mb-3">authentication</p>
                 <h3 class="font-semibold mb-2">Non-Interactive Login</h3>
-                <p class="text-sm text-gray-500">Set <code>CONTENTO_API_KEY</code> as an environment variable. No interactive prompts in CI or agent environments.</p>
+                <p class="text-sm text-gray-500">Set your AI provider key (<code>OPENAI_API_KEY</code>, <code>ANTHROPIC_API_KEY</code>, etc.) as an environment variable. No login, no interactive prompts in CI or agent environments.</p>
             </div>
         </div>
     </div>
@@ -512,30 +509,34 @@
 
 <div class="section-divider"></div>
 
-<!-- DNS & Custom Domains -->
+<!-- Safe pSEO Architecture -->
 <section class="py-24 px-4 sm:px-6">
     <div class="max-w-6xl mx-auto">
         <div class="grid lg:grid-cols-2 gap-16 items-start">
             <div>
-                <span class="tag tag-green mb-4 inline-block">domains</span>
-                <h2 class="text-2xl sm:text-3xl font-bold tracking-tight mb-4">DNS &amp; Custom Domains</h2>
-                <p class="text-gray-500 leading-relaxed mb-6">CNAME-based subdomain routing with automatic SSL via Cloudflare. Add a DNS record and your subdomain is live in minutes. Run multiple subdomains per project for different content verticals.</p>
+                <span class="tag tag-green mb-4 inline-block">architecture</span>
+                <h2 class="text-2xl sm:text-3xl font-bold tracking-tight mb-4">Safe pSEO Architecture</h2>
+                <p class="text-gray-500 leading-relaxed mb-6">On-domain paths, not throwaway subdomains. Schema validation on every page. Zero-traffic detection to find underperformers. Pages that are useful because they exist, not pages that exist only because they can rank.</p>
                 <ul class="space-y-3 text-sm text-gray-600">
                     <li class="flex items-center gap-3">
                         <span class="text-accent font-mono text-xs">&#9632;</span>
-                        CNAME-based subdomain routing
+                        On-domain paths: lives at <code>yourdomain.com/resources/</code>
                     </li>
                     <li class="flex items-center gap-3">
                         <span class="text-accent font-mono text-xs">&#9632;</span>
-                        Cloudflare SSL termination
+                        Static HTML output to your deploy pipeline
                     </li>
                     <li class="flex items-center gap-3">
                         <span class="text-accent font-mono text-xs">&#9632;</span>
-                        Automatic DNS verification (5-min polling)
+                        Schema validation on every generated page
                     </li>
                     <li class="flex items-center gap-3">
                         <span class="text-accent font-mono text-xs">&#9632;</span>
-                        Multi-subdomain per project support
+                        Zero-traffic page detection via GSC analytics
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <span class="text-accent font-mono text-xs">&#9632;</span>
+                        No CNAME, no subdomains, no third-party hosting
                     </li>
                 </ul>
             </div>
@@ -547,22 +548,22 @@
                     <span class="ml-2 text-xs text-gray-500 font-mono">terminal</span>
                 </div>
                 <div class="p-6 text-sm leading-relaxed font-mono overflow-x-auto">
-<pre class="!bg-transparent !border-0 !p-0 !m-0"><code><span class="prompt">$</span> <span class="function">contento</span> domains status
+<pre class="!bg-transparent !border-0 !p-0 !m-0"><code><span class="comment"># Build static HTML into your site's directory</span>
+<span class="prompt">$</span> <span class="function">contento</span> build proj_8f3a... --output <span class="string">./public/resources</span>
 
-<span class="output">  articles.worktale.org</span>
-<span class="output">    DNS:  <span class="text-accent">&#10003; verified</span></span>
-<span class="output">    SSL:  <span class="text-accent">&#10003; active</span> (Cloudflare)</span>
-<span class="output">    Pages: 48 published</span>
+<span class="output">  worktale.com/resources/remote-work-ideas/</span>
+<span class="output">  worktale.com/resources/home-office-checklist/</span>
+<span class="output">  worktale.com/resources/async-tools-comparison/</span>
+<span class="output">  ... 45 more pages</span>
 <span class="output"></span>
-<span class="output">  tips.worktale.org</span>
-<span class="output">    DNS:  <span class="text-accent">&#10003; verified</span></span>
-<span class="output">    SSL:  <span class="text-accent">&#10003; active</span> (Cloudflare)</span>
-<span class="output">    Pages: 120 published</span>
+<span class="output">  Validation:</span>
+<span class="output">    <span class="text-accent">&#10003;</span> Schema validation: 48/48 passed</span>
 
-<span class="prompt">$</span> <span class="function">contento</span> domains add \
-    --subdomain <span class="string">"guides.worktale.org"</span>
+<span class="comment"># Detect underperformers after launch</span>
+<span class="prompt">$</span> <span class="function">contento</span> analytics zero-traffic
 
-<span class="output">  Add CNAME: guides -> pseo.contentocms.com</span></code></pre>
+<span class="output">  &#9888; 3 pages with zero traffic (30d)</span>
+<span class="output">  &#9888; 1 page dropped &gt;10 positions</span></code></pre>
                 </div>
             </div>
         </div>
@@ -574,8 +575,8 @@
 <!-- CTA -->
 <section class="py-24 px-4 sm:px-6">
     <div class="max-w-3xl mx-auto text-center">
-        <h2 class="text-3xl sm:text-4xl font-bold tracking-tight mb-4">Deploy your first 500 pages today.</h2>
-        <p class="text-gray-500 mb-8">Install the CLI, pick a niche, choose a schema, and publish. No infrastructure to manage.</p>
+        <h2 class="text-3xl sm:text-4xl font-bold tracking-tight mb-4">Build pages worth keeping.</h2>
+        <p class="text-gray-500 mb-8">Install the CLI, pick a niche, choose a schema, and build static HTML that lives on your domain.</p>
         <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
             <a href="docs/index.html" class="btn-primary inline-flex items-center gap-2">
                 Get Started

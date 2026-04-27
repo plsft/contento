@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Renderers — Contento Docs</title>
-    <meta name="description" content="How content renderers transform JSON schema output into HTML pages in Contento pSEO. Built-in renderers for all 10 content types, with customization options." />
+    <meta name="description" content="How content renderers transform JSON schema output into HTML pages in Contento pSEO. 8 dedicated renderers plus a generic fallback, with customization options." />
     <script type="module" src="/src/main.js"></script>
 </head>
 <body class="bg-white text-gray-900 antialiased" x-data="{ mobileMenuOpen: false }">
@@ -30,7 +30,7 @@
                 <!-- What is a renderer -->
                 <h2>What Is a Renderer?</h2>
 
-                <p>A <strong>renderer</strong> is the component that transforms a page's validated JSON content into HTML. Each of the 10 built-in content schemas has a matching renderer that knows the exact field layout and produces purpose-built UI components.</p>
+                <p>A <strong>renderer</strong> is the component that transforms a page's validated JSON content into HTML. There are 8 dedicated renderers for the most common content schemas, each producing purpose-built UI components. The remaining schemas (alternatives, resource-list, tool-page, glossary, template-pack) use a generic renderer that adapts to the schema's field structure.</p>
 
                 <p>The rendering pipeline works like this:</p>
 
@@ -45,7 +45,9 @@
                 <!-- Built-in renderers -->
                 <h2>Built-in Renderers</h2>
 
-                <p>Each renderer is designed for its content type's specific layout and interaction patterns:</p>
+                <h3>Dedicated Renderers</h3>
+
+                <p>These 8 renderers are purpose-built for their content type's specific layout and interaction patterns:</p>
 
                 <table>
                     <thead><tr><th>Renderer</th><th>Schema</th><th>Key UI Elements</th></tr></thead>
@@ -71,14 +73,9 @@
                             <td>Feature comparison table, scoring, verdict summary</td>
                         </tr>
                         <tr>
-                            <td><code>alternatives</code></td>
-                            <td>Alternatives</td>
-                            <td>Ranked list with pros/cons, pricing, feature highlights</td>
-                        </tr>
-                        <tr>
-                            <td><code>resource-list</code></td>
-                            <td>Resource List</td>
-                            <td>Category filters, link cards with descriptions</td>
+                            <td><code>listicle</code></td>
+                            <td>Listicle</td>
+                            <td>Ranked entries with images, descriptions, and highlights</td>
                         </tr>
                         <tr>
                             <td><code>faq</code></td>
@@ -86,22 +83,21 @@
                             <td>Accordion layout, FAQPage schema markup</td>
                         </tr>
                         <tr>
-                            <td><code>glossary</code></td>
-                            <td>Glossary</td>
-                            <td>Alphabetical navigation, anchor links, cross-references</td>
+                            <td><code>guide</code></td>
+                            <td>Guide</td>
+                            <td>Long-form sections with table of contents, anchor navigation</td>
                         </tr>
                         <tr>
-                            <td><code>template-pack</code></td>
-                            <td>Template Pack</td>
-                            <td>Download/copy buttons, preview cards</td>
-                        </tr>
-                        <tr>
-                            <td><code>tool-page</code></td>
-                            <td>Tool Page</td>
-                            <td>Embedded interactive widget, input/output areas</td>
+                            <td><code>review</code></td>
+                            <td>Review</td>
+                            <td>Rating scores, pros/cons, verdict summary</td>
                         </tr>
                     </tbody>
                 </table>
+
+                <h3>Generic Renderer</h3>
+
+                <p>The remaining schemas &mdash; alternatives, resource-list, tool-page, glossary, and template-pack &mdash; use a generic renderer that adapts to the schema's field structure. The generic renderer inspects the JSON fields and produces appropriate HTML sections automatically.</p>
 
                 <!-- Renderer anatomy -->
                 <h2>Renderer Anatomy</h2>

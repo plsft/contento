@@ -45,19 +45,23 @@
                 <!-- Non-interactive auth -->
                 <h2>Non-Interactive Authentication</h2>
 
-                <p>Agents cannot complete interactive login flows. Use the <code>CONTENTO_API_KEY</code> environment variable instead:</p>
+                <p>Agents cannot complete interactive prompts. Configure the AI provider key once via environment variables &mdash; the CLI reads them automatically with no further setup:</p>
 
-<pre><span class="comment"># Set once in the agent's environment</span>
-<span class="prompt">$</span> <span class="function">export</span> CONTENTO_API_KEY=ck_live_abc123...
+<pre><span class="comment"># Set the provider key in the agent's environment</span>
+<span class="prompt">$</span> <span class="function">export</span> OPENAI_API_KEY=sk-proj-...
+<span class="comment"># or ANTHROPIC_API_KEY, GOOGLE_API_KEY, GROQ_API_KEY, OPENROUTER_API_KEY</span>
 
-<span class="comment"># All commands will use this key automatically</span>
-<span class="prompt">$</span> <span class="function">contento</span> whoami --json
-<span class="output">{"email":"admin@example.com","authMethod":"api_key"}</span></pre>
+<span class="comment"># Confirm the active configuration</span>
+<span class="prompt">$</span> <span class="function">contento</span> config show --json
+<span class="output">{"provider":"openai","model":"gpt-4o-mini","enabled":true}</span>
 
-                <p>API keys are prefixed with <code>ck_live_</code> (production) or <code>ck_test_</code> (sandbox). Generate keys in the admin panel under <strong>Settings &rarr; API Keys</strong>.</p>
+<span class="comment"># Override per-run if the agent wants a different model</span>
+<span class="prompt">$</span> <span class="function">contento</span> collections generate col_9d2f... --provider anthropic --model <span class="string">"claude-3-5-haiku"</span> --json</pre>
+
+                <p>Contento has no central server &mdash; the only credentials it ever holds are the AI provider keys you configure. Set them per-shell, in your CI secret store, or in the agent's environment.</p>
 
                 <div class="callout callout-warning">
-                    <strong>Security:</strong> Never commit API keys to version control. Use environment variables or secret management tools (e.g., <code>.env</code> files excluded from git, CI/CD secrets).
+                    <strong>Security:</strong> Never commit AI provider keys to version control. Use environment variables or secret management tools (e.g., <code>.env</code> files excluded from git, CI/CD secrets).
                 </div>
 
                 <!-- JSON output mode -->
@@ -73,7 +77,7 @@
   {
     <span class="property">"id"</span>: <span class="string">"proj_8f3a..."</span>,
     <span class="property">"name"</span>: <span class="string">"DevTools Resources"</span>,
-    <span class="property">"subdomain"</span>: <span class="string">"resources.example.com"</span>,
+    <span class="property">"outputPath"</span>: <span class="string">"./dist/resources"</span>,
     <span class="property">"status"</span>: <span class="string">"active"</span>,
     <span class="property">"pageCount"</span>: <span class="number">248</span>
   }
@@ -81,7 +85,7 @@
 
                 <h3>Show commands return objects</h3>
 
-<pre><span class="prompt">$</span> <span class="function">contento</span> niches show niche_01... --json
+<pre><span class="prompt">$</span> <span class="function">contento</span> niches view niche_01... --json
 
 {
   <span class="property">"id"</span>: <span class="string">"niche_01..."</span>,
@@ -93,7 +97,7 @@
 
                 <h3>Action commands return result objects</h3>
 
-<pre><span class="prompt">$</span> <span class="function">contento</span> publish --collection col_9d2f... --mode immediate --json
+<pre><span class="prompt">$</span> <span class="function">contento</span> publish col_9d2f... --mode immediate --json
 
 {
   <span class="property">"batchId"</span>: <span class="string">"batch_1a3c..."</span>,
@@ -107,12 +111,7 @@
 
                 <p>The <code>collections generate</code> command with <code>--json</code> outputs newline-delimited JSON (NDJSON) for real-time progress tracking. Each line is a complete JSON object:</p>
 
-<pre><span class="prompt">$</span> <span class="function">contento</span> collections generate \
-    --project proj_8f3a... \
-    --schema idea-list \
-    --niches niche_01...,niche_02... \
-    --workers 10 \
-    --json
+<pre><span class="prompt">$</span> <span class="function">contento</span> collections generate col_9d2f... --json
 
 <span class="output">{"type":"progress","current":0,"total":40,"done":false}</span>
 <span class="output">{"type":"page","id":"page_01...","status":"passed","title":"100 CI/CD Ideas"}</span>
@@ -140,10 +139,9 @@
 
                 <p>An agent can execute the entire pSEO workflow as a sequence of CLI commands:</p>
 
-<pre><span class="comment"># 1. Create project</span>
-<span class="prompt">$</span> <span class="function">contento</span> projects create \
+<pre><span class="comment"># 1. Initialize project</span>
+<span class="prompt">$</span> <span class="function">contento</span> init \
     --name "DevTools Resources" \
-    --subdomain resources.example.com \
     --json
 
 <span class="comment"># 2. List available niches and schemas</span>
@@ -151,48 +149,39 @@
 <span class="prompt">$</span> <span class="function">contento</span> schemas list --json
 
 <span class="comment"># 3. Generate pages</span>
-<span class="prompt">$</span> <span class="function">contento</span> collections generate \
-    --project proj_8f3a... \
-    --schema idea-list \
-    --niches niche_01...,niche_02... \
-    --workers 10 \
-    --json
+<span class="prompt">$</span> <span class="function">contento</span> collections generate col_9d2f... --json
 
 <span class="comment"># 4. Publish</span>
-<span class="prompt">$</span> <span class="function">contento</span> publish \
-    --collection col_9d2f... \
+<span class="prompt">$</span> <span class="function">contento</span> publish col_9d2f... \
     --mode immediate \
     --json
 
 <span class="comment"># 5. Check analytics (after 30+ days)</span>
-<span class="prompt">$</span> <span class="function">contento</span> analytics summary --project proj_8f3a... --json
-<span class="prompt">$</span> <span class="function">contento</span> analytics top-pages --project proj_8f3a... --json
-<span class="prompt">$</span> <span class="function">contento</span> analytics zero-traffic --project proj_8f3a... --json</pre>
+<span class="prompt">$</span> <span class="function">contento</span> analytics summary proj_8f3a... --json
+<span class="prompt">$</span> <span class="function">contento</span> analytics top-pages proj_8f3a... --json
+<span class="prompt">$</span> <span class="function">contento</span> analytics zero-traffic proj_8f3a... --json</pre>
 
                 <h3>Optimization Loop</h3>
 
                 <p>Agents can implement an automated optimization cycle:</p>
 
 <pre><span class="comment"># 1. Check which niches perform best</span>
-<span class="prompt">$</span> <span class="function">contento</span> analytics summary --project proj_8f3a... --json
+<span class="prompt">$</span> <span class="function">contento</span> analytics summary proj_8f3a... --json
 
 <span class="comment"># 2. Find underperforming pages</span>
-<span class="prompt">$</span> <span class="function">contento</span> analytics zero-traffic --project proj_8f3a... --json
+<span class="prompt">$</span> <span class="function">contento</span> analytics zero-traffic proj_8f3a... --json
 
-<span class="comment"># 3. Expand winning niches with new schemas</span>
-<span class="prompt">$</span> <span class="function">contento</span> collections generate \
-    --project proj_8f3a... \
-    --schema faq \
-    --niches niche_01... \
-    --json
+<span class="comment"># 3. Create and generate new collection with different schema</span>
+<span class="prompt">$</span> <span class="function">contento</span> collections create --project proj_8f3a... --schema faq --niches niche_01... --json
+<span class="prompt">$</span> <span class="function">contento</span> collections generate col_new... --json
 
 <span class="comment"># 4. Publish the new batch</span>
-<span class="prompt">$</span> <span class="function">contento</span> publish --collection col_new... --mode batched --batch-size 25 --json</pre>
+<span class="prompt">$</span> <span class="function">contento</span> publish col_new... --mode batched --batch-size 25 --json</pre>
 
                 <!-- MCP integration -->
                 <h2>MCP Tool-Use Pattern</h2>
 
-                <p>For MCP-compatible agents, Contento commands map directly to tool calls. Each CLI command is a tool, and flags are parameters:</p>
+                <p>Contento ships with built-in MCP server support &mdash; run <code>contento mcp serve</code> to expose every command as a typed tool to any MCP-compatible agent (Claude Code, Codex, Cursor). Each CLI command becomes a tool; each flag becomes a typed parameter:</p>
 
 <pre><span class="comment">// MCP tool definition (conceptual)</span>
 {
@@ -208,19 +197,15 @@
 
                 <p>The agent translates this into:</p>
 
-<pre><span class="prompt">$</span> <span class="function">contento</span> collections generate \
-    --project proj_8f3a... \
-    --schema idea-list \
-    --niches niche_01...,niche_02... \
-    --workers 10 \
-    --json</pre>
+<pre><span class="prompt">$</span> <span class="function">contento</span> collections create --project proj_8f3a... --schema idea-list --niches niche_01...,niche_02... --json
+<span class="prompt">$</span> <span class="function">contento</span> collections generate col_9d2f... --json</pre>
 
                 <!-- Error handling -->
                 <h2>Error Handling</h2>
 
                 <p>When a command fails, the CLI exits with a non-zero code and outputs a JSON error object (when <code>--json</code> is used):</p>
 
-<pre><span class="prompt">$</span> <span class="function">contento</span> projects status --project proj_invalid... --json
+<pre><span class="prompt">$</span> <span class="function">contento</span> projects status proj_invalid... --json
 <span class="output">{"error":"NOT_FOUND","message":"Project not found: proj_invalid..."}</span>
 <span class="comment"># Exit code: 1</span></pre>
 
@@ -239,7 +224,7 @@
 
                 <ul>
                     <li><strong>Always use <code>--json</code></strong> &mdash; Human-formatted tables are not parseable. JSON output is stable and versioned.</li>
-                    <li><strong>Use <code>CONTENTO_API_KEY</code></strong> &mdash; Never attempt interactive login from an agent context.</li>
+                    <li><strong>Set the provider env var</strong> &mdash; e.g., <code>OPENAI_API_KEY</code> or <code>ANTHROPIC_API_KEY</code>. Never attempt interactive prompts from an agent context.</li>
                     <li><strong>Check exit codes</strong> &mdash; A zero exit code means success. Non-zero means the command failed.</li>
                     <li><strong>Parse NDJSON line by line</strong> &mdash; Generation output is streamed. Process each line as an independent JSON object.</li>
                     <li><strong>Wait before analytics</strong> &mdash; GSC data takes 2-4 weeks to populate for new pages. Do not evaluate performance before 30 days.</li>

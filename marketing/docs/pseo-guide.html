@@ -36,6 +36,8 @@
 
                 <p>Done poorly, pSEO produces thin, repetitive pages that Google penalizes. The difference is <strong>content quality</strong> and <strong>structural uniqueness</strong> &mdash; which is exactly what Contento's schema validation and niche context system are designed to ensure.</p>
 
+                <p>The core rule of safe pSEO: <strong>build pages that are useful because they exist, not pages that exist only because they can rank.</strong> Google's current position is clear &mdash; automation and AI are not the issue. The issue is scaled content created primarily to manipulate search rankings. If every page you publish genuinely helps someone answer a question or make a decision, the method of production is irrelevant. If pages exist only to cover keyword permutations, no amount of technical SEO will protect them.</p>
+
                 <!-- Phase 1: Niche selection -->
                 <h2>Phase 1: Niche Selection</h2>
 
@@ -51,14 +53,14 @@
                 <p>Your pSEO pages should attract visitors who are relevant to your business. There is no value in traffic from an audience you cannot monetize.</p>
 
                 <div class="callout callout-tip">
-                    <strong>Start narrow.</strong> Pick 2&ndash;3 niches for your first project. Generate 50&ndash;100 pages, monitor indexing and traffic for 2&ndash;4 weeks, then expand to more niches. Broad launches (500+ pages on day one) often get slower indexing.
+                    <strong>Start narrow.</strong> Pick 2&ndash;3 niches for your first project. Generate 50&ndash;100 pages, monitor indexing and traffic for 2&ndash;4 weeks, then expand to more niches. Broad launches (500+ pages on day one) often get slower indexing. Most importantly, every page you generate should answer a <strong>distinct query</strong> with meaningful unique value &mdash; if two pages would satisfy the same search intent, merge them into one.
                 </div>
 
 <pre><span class="comment"># Browse niches to find your starting point</span>
 <span class="prompt">$</span> <span class="function">contento</span> niches list --category <span class="string">"Technology"</span>
 
 <span class="comment"># Get full context for a niche you are considering</span>
-<span class="prompt">$</span> <span class="function">contento</span> niches show niche_01... --json
+<span class="prompt">$</span> <span class="function">contento</span> niches view niche_01... --json
 
 <span class="comment"># Check subtopics — these become your page titles</span>
 <span class="comment"># A niche with 20 subtopics × 1 schema = 20 pages</span>
@@ -111,6 +113,24 @@
                 <h3>Post-generation review</h3>
                 <p>Use manual publish mode for your first few batches. Review the generated pages and look for patterns: Are descriptions too generic? Are examples relevant to the audience? Adjust the niche context and schema constraints based on what you find.</p>
 
+                <h3>The safety test</h3>
+                <p>Before publishing any batch, run every page through these four questions:</p>
+                <ol>
+                    <li><strong>What is unique here besides the keyword?</strong> &mdash; If you swap the keyword and the page reads identically, it has no real value.</li>
+                    <li><strong>What would a user lose if this page did not exist?</strong> &mdash; If the answer is "nothing", do not publish it.</li>
+                    <li><strong>Could this page be the best result for that exact query?</strong> &mdash; If not, improve it until it can be, or skip the query entirely.</li>
+                    <li><strong>Is this a destination, or just a doorway?</strong> &mdash; A useful page answers the query on the page itself. A doorway page exists only to funnel users somewhere else.</li>
+                </ol>
+
+                <h3>Pruning rules</h3>
+                <p>Not every generated page deserves to be published. Apply <code>noindex</code>, merge into a stronger page, or do not publish at all if any of the following are true:</p>
+                <ul>
+                    <li>The page is <strong>mostly template text</strong> &mdash; the unique content is a small fraction of the total word count.</li>
+                    <li>The <strong>unique content is trivial</strong> &mdash; a swapped keyword, a single changed sentence, or a reshuffled list.</li>
+                    <li><strong>Multiple pages satisfy the same intent</strong> &mdash; consolidate them into one comprehensive page.</li>
+                    <li>The page <strong>exists mainly to capture keyword variants</strong> rather than to help a reader.</li>
+                </ul>
+
                 <!-- Phase 4: Publishing strategy -->
                 <h2>Phase 4: Publishing Strategy</h2>
 
@@ -120,24 +140,23 @@
                 <p>Do not publish 1,000 pages on day one. Use batched publishing to release 25&ndash;50 pages at a time. Wait 3&ndash;5 days between batches and monitor indexing via Google Search Console.</p>
 
 <pre><span class="comment"># First batch: 25 pages</span>
-<span class="prompt">$</span> <span class="function">contento</span> publish \
-    --collection col_9d2f... \
+<span class="prompt">$</span> <span class="function">contento</span> publish col_9d2f... \
     --mode batched \
     --batch-size 25
 
 <span class="comment"># Wait 3-5 days, check indexing</span>
-<span class="prompt">$</span> <span class="function">contento</span> analytics top-pages --project proj_8f3a... --limit 10
+<span class="prompt">$</span> <span class="function">contento</span> analytics top-pages proj_8f3a... --limit 10
 
 <span class="comment"># If pages are being indexed, publish the next batch</span>
-<span class="prompt">$</span> <span class="function">contento</span> publish --collection col_9d2f... --mode batched --batch-size 25</pre>
+<span class="prompt">$</span> <span class="function">contento</span> publish col_9d2f... --mode batched --batch-size 25</pre>
 
                 <h3>Indexing signals</h3>
                 <p>After publishing, submit your sitemap to Google Search Console. Contento auto-rebuilds the sitemap on every publish, but you should verify it is submitted:</p>
 
                 <ol>
-                    <li>Go to Google Search Console for your subdomain property</li>
+                    <li>Go to Google Search Console</li>
                     <li>Navigate to <strong>Sitemaps</strong></li>
-                    <li>Submit <code>https://articles.example.com/sitemap.xml</code></li>
+                    <li>Submit <code>https://example.com/articles/sitemap.xml</code></li>
                     <li>Monitor the "Discovered" and "Indexed" counts</li>
                 </ol>
 
@@ -180,7 +199,7 @@
                 </table>
 
 <pre><span class="comment"># Niche performance breakdown</span>
-<span class="prompt">$</span> <span class="function">contento</span> analytics summary --project proj_8f3a... --json
+<span class="prompt">$</span> <span class="function">contento</span> analytics summary proj_8f3a... --json
 
 {
   <span class="property">"totalClicks"</span>: <span class="number">11520</span>,
@@ -199,21 +218,16 @@
                 <ol>
                     <li><strong>Expand winning niches</strong> &mdash; If "Developer Tools" pages get 3x the traffic of "DevOps" pages, fork the DevTools niche and add more subtopics</li>
                     <li><strong>Switch schemas for underperformers</strong> &mdash; If idea lists are not ranking in a niche, try comparisons or FAQs instead</li>
-                    <li><strong>Prune zero-traffic pages</strong> &mdash; Pages with zero clicks after 60 days are hurting your crawl budget. Unpublish them</li>
+                    <li><strong>Prune zero-traffic pages</strong> &mdash; Pages with zero clicks after 60 days are hurting your crawl budget and diluting site quality. Mark them <code>noindex</code>, merge their content into a stronger related page, or remove them entirely. Simply unpublishing is not enough if Google has already indexed low-quality URLs</li>
                     <li><strong>Refresh stale content</strong> &mdash; Re-generate pages from last year with updated year tokens and new AI output</li>
                     <li><strong>Add custom niches</strong> &mdash; As you learn your audience, create custom niches with hyper-specific context</li>
                 </ol>
 
-<pre><span class="comment"># Re-generate a single underperforming page</span>
-<span class="prompt">$</span> <span class="function">contento</span> pages regenerate page_01...
-
-<span class="comment"># Unpublish zero-traffic pages</span>
-<span class="prompt">$</span> <span class="function">contento</span> pages unpublish page_02...
+<pre><span class="comment"># Find zero-traffic pages</span>
+<span class="prompt">$</span> <span class="function">contento</span> analytics zero-traffic proj_8f3a...
 
 <span class="comment"># Export analytics data for external analysis</span>
-<span class="prompt">$</span> <span class="function">contento</span> analytics export \
-    --project proj_8f3a... \
-    --output analytics.csv</pre>
+<span class="prompt">$</span> <span class="function">contento</span> analytics export proj_8f3a... > analytics.csv</pre>
 
                 <!-- Common mistakes -->
                 <h2>Common Mistakes</h2>
@@ -245,6 +259,11 @@
                             <td>Too many schemas per niche</td>
                             <td>Pages compete with each other for the same keywords</td>
                             <td>Stick to 2&ndash;3 schemas per niche with different search intents</td>
+                        </tr>
+                        <tr>
+                            <td>Using subdomains for pSEO content</td>
+                            <td>Tell-tale sign of pSEO, subdomain doesn't inherit root domain authority</td>
+                            <td>Use on-domain paths (<code>/articles/</code>, <code>/resources/</code>) instead</td>
                         </tr>
                     </tbody>
                 </table>

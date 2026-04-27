@@ -121,20 +121,20 @@
                 <!-- Forking -->
                 <h2>Forking a Niche</h2>
 
-                <p>To customize a system niche without losing the original:</p>
+                <p>To customize a system niche without losing the original, run <code>contento niches fork &lt;id&gt;</code>. A new custom niche is created with the same context data; edit it with <code>contento niches edit</code> and reference it by its new ID in your collections.</p>
 
-                <ol>
-                    <li>Navigate to <strong>Admin &rarr; pSEO &rarr; Niches</strong>.</li>
-                    <li>Find the niche you want to customize and click <strong>Fork</strong>.</li>
-                    <li>A new custom niche is created with all the same context data, prefixed with "[Custom]".</li>
-                    <li>Edit the audience, pain points, subtopics, or any other field.</li>
-                    <li>Use the forked niche in your collections instead of the system original.</li>
-                </ol>
+<pre><span class="prompt">$</span> <span class="function">contento</span> niches fork niche_01... --name <span class="string">"My DevTools"</span>
+<span class="output">  &#10003; Forked "Developer Tools" as "My DevTools" (niche_4f2a...)</span>
+
+<span class="prompt">$</span> <span class="function">contento</span> niches edit niche_4f2a... --add-subtopic <span class="string">"WASM toolchains"</span>
+<span class="output">  &#10003; Subtopic added (21 total)</span></pre>
+
+                <p>Custom niches are stored locally in <code>~/.contento/niches/</code> as plain JSON &mdash; you can edit the files directly or commit them to a repo for team use.</p>
 
                 <!-- Creating custom -->
                 <h2>Creating a Custom Niche</h2>
 
-                <p>To create a niche from scratch via the admin UI or API:</p>
+                <p>Create a niche from scratch via the CLI:</p>
 
 <pre><span class="comment"># Create a custom niche via the CLI</span>
 <span class="function">contento</span> niches list --category <span class="string">"Software"</span>
@@ -259,9 +259,12 @@
                 <table>
                     <thead><tr><th>Command</th><th>Description</th></tr></thead>
                     <tbody>
-                        <tr><td><code>contento niches list</code></td><td>List all niches (filterable by category)</td></tr>
-                        <tr><td><code>contento niches list --id &lt;id&gt;</code></td><td>Get niche by ID with full context</td></tr>
-                        <tr><td><code>contento niches fork --id &lt;id&gt;</code></td><td>Fork a system niche for customization</td></tr>
+                        <tr><td><code>contento niches list</code></td><td>List all niches (filterable by --category, --search)</td></tr>
+                        <tr><td><code>contento niches view &lt;id&gt;</code></td><td>View niche details with full context</td></tr>
+                        <tr><td><code>contento niches fork &lt;id&gt;</code></td><td>Fork a system niche for customization</td></tr>
+                        <tr><td><code>contento niches create</code></td><td>Create a custom niche</td></tr>
+                        <tr><td><code>contento niches edit &lt;id&gt;</code></td><td>Edit a niche (subtopics, keywords, audience)</td></tr>
+                        <tr><td><code>contento niches select</code></td><td>Interactively browse and select niches</td></tr>
                     </tbody>
                 </table>
 

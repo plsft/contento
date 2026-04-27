@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Projects & Domains — Contento pSEO</title>
-    <meta name="description" content="Learn how to create pSEO projects, configure subdomains and DNS, upload custom chrome, and manage project lifecycles in Contento." />
+    <meta name="description" content="Learn how to initialize pSEO projects, configure chrome, and manage project lifecycles in Contento." />
     <script type="module" src="/src/main.js"></script>
 </head>
 <body class="bg-white text-gray-900 antialiased" x-data="{ mobileMenuOpen: false }">
@@ -25,77 +25,41 @@
                 </div>
 
                 <h1 style="font-size: 2.25rem; font-weight: 700; color: #1A1A1A; margin-bottom: 0.5rem; letter-spacing: -0.02em;">Projects &amp; Domains</h1>
-                <p style="font-size: 1.125rem; color: #6B7280; margin-bottom: 2.5rem;">Every pSEO campaign starts with a project tied to a subdomain.</p>
+                <p style="font-size: 1.125rem; color: #6B7280; margin-bottom: 2.5rem;">Every pSEO campaign starts with a local project.</p>
 
                 <!-- What is a project -->
                 <h2>What Is a pSEO Project?</h2>
 
-                <p>A <strong>project</strong> is the top-level unit in Contento pSEO. It maps to a single subdomain (e.g.,
-                <code>resources.example.com</code>) and owns all the collections, pages, chrome, and analytics data generated
-                under that domain. You can run multiple projects from a single Contento installation, each targeting different
+                <p>A <strong>project</strong> is the top-level unit in Contento pSEO. It maps to a local directory
+                with a <code>contento.yaml</code> config file and owns all the niches, schemas, chrome templates, and
+                build output for a campaign. You can run multiple projects on the same machine, each targeting different
                 audiences or brands.</p>
 
                 <p>Each project stores:</p>
                 <ul>
-                    <li><strong>Domain and subdomain</strong> &mdash; Where generated pages are served</li>
+                    <li><strong>Output path</strong> &mdash; Where built pages are written (e.g., <code>./dist/articles</code>)</li>
                     <li><strong>Custom chrome</strong> &mdash; Header HTML, footer HTML, and CSS that wrap every page</li>
                     <li><strong>Back-link and CTA configuration</strong> &mdash; Links injected into generated content</li>
-                    <li><strong>Collections</strong> &mdash; Generation jobs that produce pages</li>
+                    <li><strong>Niches &amp; schemas</strong> &mdash; Topic definitions and data schemas that drive page generation</li>
                     <li><strong>Analytics</strong> &mdash; GSC data, click/impression metrics, and performance rankings</li>
                 </ul>
 
                 <!-- Creating a project -->
                 <h2>Creating a Project</h2>
 
-                <h3>Via the Admin UI</h3>
-                <ol>
-                    <li>Navigate to <strong>Admin &rarr; pSEO &rarr; Projects</strong>.</li>
-                    <li>Click <strong>New Project</strong>.</li>
-                    <li>Enter a project name, domain, and subdomain.</li>
-                    <li>Optionally upload header/footer HTML and CSS.</li>
-                    <li>Save. The project starts in <code>pending_dns</code> status.</li>
-                </ol>
+                <p>Run <code>contento init</code> inside the directory where you want to manage your pSEO project:</p>
 
-                <h3>Via the CLI</h3>
-
-<pre><span class="function">contento</span> projects create \
+<pre><span class="function">contento</span> init \
     --name <span class="string">"DevTools Resources"</span> \
-    --domain <span class="string">"example.com"</span> \
-    --subdomain <span class="string">"resources.example.com"</span>
+    --output <span class="string">"./dist/articles"</span>
 
-<span class="output">  Project created: proj_8f3a...</span>
-<span class="output">  Status: pending_dns</span>
+<span class="output">  Project initialized: devtools-resources</span>
+<span class="output">  Created: contento.yaml</span>
+<span class="output">  Output:  ./dist/articles</span>
 <span class="output"></span>
-<span class="output">  Add this DNS record:</span>
-<span class="output">    Type:   CNAME</span>
-<span class="output">    Name:   resources</span>
-<span class="output">    Target: pseo.contentocms.com</span></pre>
-
-                <!-- DNS / CNAME -->
-                <h2>DNS &amp; CNAME Setup</h2>
-
-                <p>After creating a project, you need to point the subdomain to Contento:</p>
-
-                <ol>
-                    <li>Log in to your DNS provider (Cloudflare recommended).</li>
-                    <li>Add a <strong>CNAME record</strong>:
-                        <table>
-                            <thead><tr><th>Type</th><th>Name</th><th>Target</th><th>Proxy</th></tr></thead>
-                            <tbody>
-                                <tr><td>CNAME</td><td><code>resources</code></td><td><code>pseo.contentocms.com</code></td><td>Proxied (orange cloud)</td></tr>
-                            </tbody>
-                        </table>
-                    </li>
-                    <li>Wait for DNS propagation (usually seconds with Cloudflare).</li>
-                    <li>Contento detects the CNAME and transitions the project from <code>pending_dns</code> to <code>active</code>.</li>
-                </ol>
-
-                <!-- SSL -->
-                <h2>SSL Configuration</h2>
-
-                <p>When using Cloudflare as your DNS provider, SSL is handled automatically. Set your Cloudflare SSL/TLS mode
-                to <strong>Full (strict)</strong>. No certificates need to be provisioned or configured in Contento &mdash;
-                Cloudflare terminates TLS at the edge and proxies to your origin over HTTPS.</p>
+<span class="output">  Next steps:</span>
+<span class="output">    1. Run `contento projects chrome` to set header/footer/CSS</span>
+<span class="output">    2. Run `contento collections generate` to generate pages</span></pre>
 
                 <!-- Custom Chrome -->
                 <h2>Custom Chrome</h2>
@@ -109,9 +73,9 @@
                     <li><strong>Custom CSS</strong> &mdash; Styles scoped to your chrome elements</li>
                 </ul>
 
-                <p>Upload chrome via the dashboard on the project edit page, or via the CLI. See <a href="chrome.html" style="color: #3D5A80; font-weight: 500;">Custom Chrome</a> for the full guide.</p>
-
-                <p>See <a href="chrome.html" style="color: #3D5A80; font-weight: 500;">Custom Chrome</a> for the full guide.</p>
+                <p>Chrome templates are defined as local files and referenced in your <code>contento.yaml</code>
+                configuration. During generation, Contento reads these templates and wraps every output page
+                automatically. See <a href="chrome.html" style="color: #3D5A80; font-weight: 500;">Custom Chrome</a> for the full guide.</p>
 
                 <!-- Back-link and CTA -->
                 <h2>Back-link &amp; CTA Configuration</h2>
@@ -135,24 +99,24 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td><code>pending_dns</code></td>
-                            <td>Project created, waiting for CNAME verification. Pages are not served.</td>
+                            <td><code>initialized</code></td>
+                            <td>Project created, ready for generation. Config and chrome are in place.</td>
                         </tr>
                         <tr>
                             <td><code>active</code></td>
-                            <td>DNS verified. Pages are live and served on the subdomain. Generation and analytics are enabled.</td>
+                            <td>Pages have been generated and written to the output path.</td>
                         </tr>
                         <tr>
-                            <td><code>suspended</code></td>
-                            <td>Manually paused by the admin. Pages return a 503. No generation or analytics sync runs.</td>
+                            <td><code>archived</code></td>
+                            <td>Project paused. Build is skipped during generation runs.</td>
                         </tr>
                     </tbody>
                 </table>
 
-                <p>Transition between states via the dashboard or the CLI:</p>
+                <p>Check the current state via the CLI:</p>
 
 <pre><span class="comment"># Check project status</span>
-<span class="function">contento</span> projects status --project proj_8f3a...
+<span class="function">contento</span> status
 
 <span class="comment"># List all projects</span>
 <span class="function">contento</span> projects list</pre>
@@ -163,9 +127,10 @@
                 <table>
                     <thead><tr><th>Command</th><th>Description</th></tr></thead>
                     <tbody>
+                        <tr><td><code>contento init</code></td><td>Create a new project (alias for projects create)</td></tr>
                         <tr><td><code>contento projects list</code></td><td>List all projects</td></tr>
-                        <tr><td><code>contento projects create</code></td><td>Create a new project</td></tr>
-                        <tr><td><code>contento projects status</code></td><td>Get project status and page count</td></tr>
+                        <tr><td><code>contento projects status &lt;id&gt;</code></td><td>Get project status and page count</td></tr>
+                        <tr><td><code>contento projects chrome &lt;id&gt;</code></td><td>Upload custom chrome (header, footer, CSS)</td></tr>
                     </tbody>
                 </table>
 

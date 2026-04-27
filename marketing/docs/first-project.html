@@ -31,66 +31,38 @@
                     <strong>Prerequisite:</strong> Make sure the CLI is installed. See <a href="installation.html" style="color: #065f46; font-weight: 500;">Install CLI</a> if you have not set it up yet.
                 </div>
 
-                <!-- Step 1: Authenticate -->
-                <h2>Step 1: Authenticate</h2>
+                <!-- Step 1: Configure AI -->
+                <h2>Step 1: Configure Your AI Provider</h2>
 
-<pre><span class="function">contento</span> login
+                <p>Contento has no login or central account. The CLI calls your AI provider directly using your own key. If you haven't set one yet, run <code>contento config set</code> to pick a provider, model, and paste your API key &mdash; or set the provider env var (<code>OPENAI_API_KEY</code>, <code>ANTHROPIC_API_KEY</code>, etc.) and skip the prompt entirely.</p>
 
-<span class="output">Opening browser for authentication...</span>
-<span class="output">Authenticated as george@example.com</span>
+<pre><span class="function">contento</span> config show
 
-<span class="comment"># Verify you're logged in</span>
-<span class="function">contento</span> whoami
-<span class="output">george@example.com (Growth plan)</span></pre>
+<span class="output">  Provider:  openai</span>
+<span class="output">  Model:     gpt-4o-mini</span>
+<span class="output">  API Key:   sk-proj-A...xkN9</span>
+<span class="output">  Enabled:   yes</span></pre>
 
                 <!-- Step 2: Create a project -->
                 <h2>Step 2: Create a Project</h2>
 
-                <p>A project defines your subdomain, branding, and back-link configuration:</p>
+                <p>A project ties together your domain, chrome templates, output path, and any per-project overrides. Initialize one with <code>contento init</code> in any directory &mdash; it writes a <code>contento.config.json</code> you can commit to git:</p>
 
-<pre><span class="function">contento</span> projects create \
-    --name <span class="string">"My First Project"</span> \
-    --domain <span class="string">"example.com"</span> \
-    --subdomain <span class="string">"resources.example.com"</span>
+<pre><span class="function">contento</span> init \
+    --name <span class="string">"DevTools Resources"</span>
 
-<span class="output">  Project created: proj_8f3a...</span>
-<span class="output">  Status: pending_dns</span>
-<span class="output">  Subdomain: resources.example.com</span>
+<span class="output">  &#10003; Project created</span>
+<span class="output">  Project "DevTools Resources" created with ID: proj_8f3a...</span>
 <span class="output"></span>
-<span class="output">  Add this DNS record:</span>
-<span class="output">    Type:   CNAME</span>
-<span class="output">    Name:   resources</span>
-<span class="output">    Target: pseo.contentocms.com</span></pre>
+<span class="output">  ID       proj_8f3a...</span>
+<span class="output">  Name     DevTools Resources</span>
+<span class="output">  Domain   example.com</span>
+<span class="output">  Status   active</span></pre>
 
-                <p>The project starts in <code>pending_dns</code> status. You need to add a CNAME record before pages can be served.</p>
+                <p>This writes <code>contento.config.json</code> in the working directory and returns a project ID you'll use for every later command.</p>
 
-                <!-- Step 3: Configure DNS -->
-                <h2>Step 3: Configure DNS</h2>
-
-                <p>Add a CNAME record in your DNS provider:</p>
-
-                <table>
-                    <thead><tr><th>Type</th><th>Name</th><th>Target</th><th>Proxy</th></tr></thead>
-                    <tbody>
-                        <tr><td>CNAME</td><td><code>resources</code></td><td><code>pseo.contentocms.com</code></td><td>Proxied (Cloudflare)</td></tr>
-                    </tbody>
-                </table>
-
-                <p>Contento polls DNS every 5 minutes. Once verified, the project transitions to <code>active</code>. Check status:</p>
-
-<pre><span class="function">contento</span> domains verify --project proj_8f3a...
-
-<span class="output">  resources.example.com</span>
-<span class="output">    DNS:  &#10003; verified</span>
-<span class="output">    SSL:  &#10003; active (Cloudflare)</span>
-<span class="output">    Status: active</span></pre>
-
-                <div class="callout callout-info">
-                    <strong>Tip:</strong> You can proceed with generation while DNS is propagating. Pages will be stored and ready to serve once DNS is verified.
-                </div>
-
-                <!-- Step 4: Browse niches -->
-                <h2>Step 4: Browse Niches</h2>
+                <!-- Step 3: Browse niches -->
+                <h2>Step 3: Browse Niches</h2>
 
                 <p>Contento ships with 150+ niches. Browse them to find your target audience:</p>
 
@@ -105,8 +77,8 @@
 
                 <p>Note the niche IDs &mdash; you will use them when generating. Use <code>--json</code> to get IDs in machine-readable format.</p>
 
-                <!-- Step 5: Choose a schema -->
-                <h2>Step 5: Choose a Schema</h2>
+                <!-- Step 4: Choose a schema -->
+                <h2>Step 4: Choose a Schema</h2>
 
                 <p>Pick a content type for your first batch. The <code>idea-list</code> schema is a good starting point:</p>
 
@@ -119,57 +91,69 @@
 <span class="output">  comparison       {A} vs {B}: Which Is Better?</span>
 <span class="output">  ... 7 more</span></pre>
 
-                <!-- Step 6: Generate -->
-                <h2>Step 6: Generate Pages</h2>
+                <!-- Step 5: Generate -->
+                <h2>Step 5: Generate Pages</h2>
 
                 <p>Start a generation job that combines your project, selected niches, and schema:</p>
 
-<pre><span class="function">contento</span> collections generate \
+<pre><span class="comment"># First, create a collection</span>
+<span class="function">contento</span> collections create \
     --project proj_8f3a... \
     --schema <span class="string">"idea-list"</span> \
-    --niches <span class="string">"niche_01...,niche_02..."</span> \
-    --workers <span class="number">5</span>
+    --niches <span class="string">"niche_01...,niche_02..."</span>
 
-<span class="output">  Generating 38 pages across 2 niches...</span>
+<span class="output">  &#10003; Collection created</span>
+<span class="output">  Collection created with ID: col_9d2f...</span>
+
+<span class="comment"># Then, generate content</span>
+<span class="function">contento</span> collections generate col_9d2f...
+
+<span class="output">  &#10003; Generation started (Job: job_4a1b...)</span>
 <span class="output"></span>
 <span class="output">  [00:04] &#9608;&#9608;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;  5/38  (13%)</span>
 <span class="output">  [00:12] &#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601; 20/38  (53%)</span>
 <span class="output">  [00:20] &#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608; 38/38 (100%)</span>
 <span class="output"></span>
-<span class="output">  Validation: 36 passed, 2 retried, 0 failed</span>
-<span class="output">  Collection: col_9d2f...</span></pre>
+<span class="output">  &#10003; Generation complete!</span></pre>
 
                 <p>The engine expands subtopics from each niche, deduplicates titles, generates JSON content via AI, validates against the schema, and retries failures automatically.</p>
 
-                <!-- Step 7: Publish -->
-                <h2>Step 7: Publish</h2>
+                <!-- Step 6: Build & Deploy -->
+                <h2>Step 6: Build &amp; Deploy</h2>
 
-                <p>Once generation completes, publish the pages to your subdomain:</p>
+                <p>Once generation completes, build the static HTML output:</p>
 
-<pre><span class="function">contento</span> publish \
-    --collection col_9d2f... \
-    --mode immediate
+<pre><span class="function">contento</span> build proj_8f3a... --output <span class="string">./dist/articles</span>
 
-<span class="output">  Publishing 36 pages...</span>
-<span class="output">  &#10003; Internal linking pass: 108 cross-links added</span>
-<span class="output">  &#10003; Sitemap rebuilt: 36 URLs</span>
-<span class="output">  &#10003; Schema markup injected</span>
-<span class="output">  &#10003; OG meta tags generated</span>
+<span class="output">  &#10003; Built 36 pages to ./dist/articles/</span>
+<span class="output">  HTML files:  36</span>
+<span class="output">  Sitemap:     ./dist/articles/sitemap.xml</span>
 <span class="output"></span>
-<span class="output">  Published to: resources.example.com</span></pre>
+<span class="output">  Deploy with your existing pipeline: git push, netlify deploy, rsync, etc.</span></pre>
 
-                <p>Your pages are now live. Visit your subdomain to see them:</p>
+                <p>Then deploy the output to your existing static site using whatever method you prefer:</p>
+
+<pre><span class="comment"># Netlify</span>
+<span class="function">netlify</span> deploy --prod
+
+<span class="comment"># Or rsync to your server</span>
+<span class="function">rsync</span> -avz ./dist/articles/ user@server:/var/www/example.com/articles/
+
+<span class="comment"># Or commit and push (e.g. GitHub Pages)</span>
+<span class="function">git</span> add dist/ && git commit -m <span class="string">"Add generated articles"</span> && git push</pre>
+
+                <p>Your pages are now live on your own domain at on-domain paths:</p>
 
                 <ul>
-                    <li><code>https://resources.example.com/100-api-testing-ideas-2026</code></li>
-                    <li><code>https://resources.example.com/100-cicd-pipeline-ideas-2026</code></li>
-                    <li><code>https://resources.example.com/sitemap.xml</code></li>
+                    <li><code>https://example.com/articles/100-api-testing-ideas-2026</code></li>
+                    <li><code>https://example.com/articles/100-cicd-pipeline-ideas-2026</code></li>
+                    <li><code>https://example.com/articles/sitemap.xml</code></li>
                 </ul>
 
                 <!-- What happened -->
                 <h2>What Happened Behind the Scenes</h2>
 
-                <p>During the generate and publish steps, Contento:</p>
+                <p>During the generate and build steps, Contento:</p>
 
                 <ol>
                     <li><strong>Expanded subtopics</strong> &mdash; Pulled 10&ndash;20 subtopics from each selected niche</li>
@@ -181,7 +165,7 @@
                     <li><strong>Rendered HTML</strong> &mdash; Transformed validated JSON through the schema's renderer</li>
                     <li><strong>Applied chrome</strong> &mdash; Wrapped each page in your header/footer/CSS</li>
                     <li><strong>Cross-linked</strong> &mdash; Added internal links between related pages in the same niche</li>
-                    <li><strong>Built sitemap</strong> &mdash; Generated <code>sitemap.xml</code> with all published URLs</li>
+                    <li><strong>Built sitemap</strong> &mdash; Generated <code>sitemap.xml</code> with all page URLs</li>
                 </ol>
 
                 <!-- Next steps -->

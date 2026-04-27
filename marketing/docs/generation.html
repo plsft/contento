@@ -45,22 +45,9 @@
                 <!-- Concurrent workers -->
                 <h2>Concurrent Workers</h2>
 
-                <p>The generation engine runs multiple AI requests in parallel using a worker pool. The <code>workers</code> parameter controls the concurrency level. Higher values generate faster but consume more AI API quota.</p>
+                <p>The generation engine runs multiple AI requests in parallel from your local machine. Concurrency defaults to 5 workers and can be tuned with <code>--workers &lt;n&gt;</code> to stay within your AI provider's rate limits.</p>
 
-                <table>
-                    <thead><tr><th>Workers</th><th>Throughput</th><th>Use Case</th></tr></thead>
-                    <tbody>
-                        <tr><td><code>1</code></td><td>~15 pages/min</td><td>Rate-limited API keys, debugging</td></tr>
-                        <tr><td><code>5</code></td><td>~60 pages/min</td><td>Standard usage</td></tr>
-                        <tr><td><code>10</code></td><td>~100 pages/min</td><td>Large batches, production</td></tr>
-                    </tbody>
-                </table>
-
-<pre><span class="function">contento</span> collections generate \
-    --project proj_8f3a... \
-    --schema <span class="string">"idea-list"</span> \
-    --niches <span class="string">"niche_01...,niche_02...,niche_03..."</span> \
-    --workers <span class="number">10</span></pre>
+<pre><span class="function">contento</span> collections generate col_8f3a...</pre>
 
                 <!-- Prompt building -->
                 <h2>Prompt Building</h2>
@@ -120,12 +107,12 @@
 
                 <ol>
                     <li>The original prompt is resent with an additional instruction: <em>"Your previous response failed validation: [error details]. Please fix and return valid JSON."</em></li>
-                    <li>If the retry also fails, the page is marked as <code>failed</code> and logged for manual review in the admin dashboard.</li>
+                    <li>If the retry also fails, the page is marked as <code>failed</code> and logged with the validation error to <code>~/.contento/logs/</code>.</li>
                     <li>Failed pages do not block the rest of the batch from completing.</li>
                 </ol>
 
 <pre><span class="comment"># Check generation job status</span>
-<span class="function">contento</span> collections generate --project proj_8f3a... --json
+<span class="function">contento</span> collections generate col_8f3a... --json
 
 {
   <span class="property">"jobId"</span>: <span class="string">"gen_4b7e..."</span>,
@@ -143,8 +130,7 @@
 
                 <p>The CLI displays a real-time progress bar during generation. For programmatic monitoring (agents, CI/CD), use the <code>--json</code> flag to get NDJSON streaming output:</p>
 
-<pre><span class="function">contento</span> collections generate \
-    --project proj_8f3a... \
+<pre><span class="function">contento</span> collections generate col_8f3a... \
     --schema <span class="string">"idea-list"</span> \
     --niches <span class="string">"niche_01..."</span> \
     --json

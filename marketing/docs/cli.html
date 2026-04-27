@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>CLI Reference — Contento Docs</title>
-    <meta name="description" content="Complete CLI reference for the Contento pSEO platform. All commands, flags, configuration, and examples for managing projects, niches, schemas, collections, publishing, and analytics." />
+    <meta name="description" content="Complete CLI reference for Contento pSEO. All commands, flags, configuration, and examples for managing projects, niches, schemas, collections, generation, publishing, build, and analytics — all locally from the command line." />
     <script type="module" src="/src/main.js"></script>
 </head>
 <body class="bg-white text-gray-900 antialiased" x-data="{ mobileMenuOpen: false }">
@@ -32,7 +32,7 @@
 
 <pre><span class="prompt">$</span> <span class="function">npm</span> install -g contento
 <span class="prompt">$</span> <span class="function">contento</span> --version
-<span class="output">  contento/1.0.0</span></pre>
+<span class="output">  contento/0.1.0</span></pre>
 
                 <p>Requires <strong>Node.js 18+</strong> and <strong>npm 9+</strong>. See <a href="installation.html" style="color: #3D5A80; font-weight: 500;">Install CLI</a> for detailed setup.</p>
 
@@ -43,7 +43,6 @@
                     <thead><tr><th>Flag</th><th>Description</th></tr></thead>
                     <tbody>
                         <tr><td><code>--json</code></td><td>Output as JSON (machine-readable). Required for agent integration.</td></tr>
-                        <tr><td><code>--api-url &lt;url&gt;</code></td><td>Override the API base URL. Default: <code>https://app.contentocms.com</code></td></tr>
                         <tr><td><code>--no-color</code></td><td>Disable colored output</td></tr>
                         <tr><td><code>-v, --verbose</code></td><td>Show detailed request/response logging</td></tr>
                         <tr><td><code>-V, --version</code></td><td>Print version number</td></tr>
@@ -51,48 +50,21 @@
                     </tbody>
                 </table>
 
-                <!-- Authentication -->
-                <h2>Authentication</h2>
-
-                <h3>contento login</h3>
-                <p>Authenticate interactively. Opens a browser for OAuth or prompts for email/password.</p>
-
-<pre><span class="prompt">$</span> <span class="function">contento</span> login
-
-<span class="output">  ? Email: admin@example.com</span>
-<span class="output">  ? Password: ********</span>
-<span class="output">  &#10003; Logged in. Credentials saved to ~/.contento/config.json</span></pre>
-
-                <h3>contento logout</h3>
-                <p>Remove stored credentials.</p>
-
-<pre><span class="prompt">$</span> <span class="function">contento</span> logout
-<span class="output">  &#10003; Logged out. Credentials removed.</span></pre>
-
-                <h3>contento whoami</h3>
-                <p>Show the currently authenticated user.</p>
-
-<pre><span class="prompt">$</span> <span class="function">contento</span> whoami
-<span class="output">  admin@example.com (DevTools Resources)</span></pre>
-
-                <h3>Non-Interactive Authentication</h3>
-                <p>For CI/CD and AI agents, set the <code>CONTENTO_API_KEY</code> environment variable:</p>
-
-<pre><span class="prompt">$</span> <span class="function">export</span> CONTENTO_API_KEY=ck_live_abc123...
-<span class="prompt">$</span> <span class="function">contento</span> whoami
-<span class="output">  admin@example.com (API key auth)</span></pre>
+                <div class="callout callout-tip">
+                    <strong>No login.</strong> Contento has no central account or authentication system. The CLI runs entirely on your machine. The only credentials it ever holds are the AI provider keys you configure with <code>contento config set</code> (see <a href="#ai-configuration-byok" style="color: #065f46; font-weight: 500;">AI Configuration</a> below) and, optionally, a Google OAuth token for GSC analytics.
+                </div>
 
                 <!-- Projects -->
                 <h2>Projects</h2>
 
                 <h3>contento projects list</h3>
-                <p>List all projects in your account.</p>
+                <p>List all projects discoverable from the current directory (any directory containing a <code>contento.config.json</code>).</p>
 
 <pre><span class="prompt">$</span> <span class="function">contento</span> projects list
 
-<span class="output">  ID            Name                 Subdomain                  Status   Pages</span>
-<span class="output">  proj_8f3a...  DevTools Resources   resources.example.com      active   248</span>
-<span class="output">  proj_2b1c...  Marketing Blog       blog.example.com           active   120</span></pre>
+<span class="output">  ID            Name                 Output Path                Status   Pages</span>
+<span class="output">  proj_8f3a...  DevTools Resources   ./dist/articles            active   248</span>
+<span class="output">  proj_2b1c...  Marketing Blog       ./dist/blog                active   120</span></pre>
 
                 <h3>contento projects create</h3>
                 <p>Create a new pSEO project.</p>
@@ -101,48 +73,91 @@
                     <thead><tr><th>Flag</th><th>Description</th></tr></thead>
                     <tbody>
                         <tr><td><code>--name &lt;name&gt;</code></td><td>Project name (required)</td></tr>
-                        <tr><td><code>--domain &lt;domain&gt;</code></td><td>Root domain (e.g., <code>example.com</code>)</td></tr>
-                        <tr><td><code>--subdomain &lt;sub&gt;</code></td><td>Full subdomain (e.g., <code>resources.example.com</code>)</td></tr>
-                        <tr><td><code>--backlink-url &lt;url&gt;</code></td><td>Backlink destination URL</td></tr>
-                        <tr><td><code>--backlink-text &lt;text&gt;</code></td><td>Backlink anchor text</td></tr>
                     </tbody>
                 </table>
 
-<pre><span class="prompt">$</span> <span class="function">contento</span> projects create \
-    --name <span class="string">"DevTools Resources"</span> \
-    --domain example.com \
-    --subdomain resources.example.com \
-    --backlink-url <span class="string">"https://example.com"</span> \
-    --backlink-text <span class="string">"Example Inc"</span>
+<pre><span class="prompt">$</span> <span class="function">contento</span> init \
+    --name <span class="string">"DevTools Resources"</span>
 
-<span class="output">  &#10003; Project created: proj_8f3a...</span>
-<span class="output">  Status: pending_dns</span>
-<span class="output">  Add a CNAME record: resources -> pseo.contentocms.com</span></pre>
+<span class="output">  &#10003; Project created</span>
+<span class="output">  Project "DevTools Resources" created with ID: proj_8f3a...</span>
+<span class="output"></span>
+<span class="output">  ID       proj_8f3a...</span>
+<span class="output">  Name     DevTools Resources</span>
+<span class="output">  Status   active</span></pre>
 
-                <h3>contento projects status</h3>
-                <p>Show detailed project status including DNS, SSL, and page counts.</p>
+                <h3>contento projects status &lt;id&gt;</h3>
+                <p>Show detailed project status including page counts and build info.</p>
 
-<pre><span class="prompt">$</span> <span class="function">contento</span> projects status --project proj_8f3a...</pre>
+<pre><span class="prompt">$</span> <span class="function">contento</span> projects status proj_8f3a...</pre>
 
-                <h3>contento projects verify</h3>
-                <p>Trigger immediate DNS verification for a project.</p>
-
-<pre><span class="prompt">$</span> <span class="function">contento</span> projects verify --project proj_8f3a...</pre>
-
-                <h3>contento projects chrome</h3>
-                <p>Upload custom chrome (header, footer, CSS) from files or inline.</p>
+                <h3>contento projects chrome &lt;id&gt;</h3>
+                <p>Upload custom chrome (header, footer, CSS) from files or inline. Takes a project ID as the first argument.</p>
 
                 <table>
                     <thead><tr><th>Flag</th><th>Description</th></tr></thead>
                     <tbody>
-                        <tr><td><code>--project &lt;id&gt;</code></td><td>Project ID (required)</td></tr>
                         <tr><td><code>--header &lt;file&gt;</code></td><td>Path to header HTML file</td></tr>
                         <tr><td><code>--footer &lt;file&gt;</code></td><td>Path to footer HTML file</td></tr>
                         <tr><td><code>--css &lt;file&gt;</code></td><td>Path to custom CSS file</td></tr>
-                        <tr><td><code>--header-inline &lt;html&gt;</code></td><td>Inline header HTML string</td></tr>
-                        <tr><td><code>--footer-inline &lt;html&gt;</code></td><td>Inline footer HTML string</td></tr>
+                        <tr><td><code>--header-html &lt;html&gt;</code></td><td>Inline header HTML string</td></tr>
+                        <tr><td><code>--footer-html &lt;html&gt;</code></td><td>Inline footer HTML string</td></tr>
+                        <tr><td><code>--css-inline &lt;css&gt;</code></td><td>Inline CSS string</td></tr>
                     </tbody>
                 </table>
+
+<pre><span class="prompt">$</span> <span class="function">contento</span> projects chrome proj_8f3a... \
+    --header <span class="string">chrome/header.html</span> \
+    --footer <span class="string">chrome/footer.html</span> \
+    --css <span class="string">chrome/styles.css</span>
+
+<span class="output">  &#10003; Chrome updated</span>
+<span class="output">  Project chrome updated successfully.</span></pre>
+
+                <!-- Init -->
+                <h2>Init</h2>
+
+                <h3>contento init</h3>
+                <p>Top-level alias for <code>contento projects create</code>. Initializes a new project in the current directory and writes <code>contento.config.json</code>.</p>
+
+                <table>
+                    <thead><tr><th>Flag</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>--name &lt;name&gt;</code></td><td>Project name (required)</td></tr>
+                    </tbody>
+                </table>
+
+<pre><span class="prompt">$</span> <span class="function">contento</span> init \
+    --name <span class="string">"DevTools Resources"</span>
+
+<span class="output">  &#10003; Project created</span>
+<span class="output">  Project "DevTools Resources" created with ID: proj_8f3a...</span>
+<span class="output"></span>
+<span class="output">  ID       proj_8f3a...</span>
+<span class="output">  Name     DevTools Resources</span>
+<span class="output">  Status   active</span></pre>
+
+                <!-- Build -->
+                <h2>Build</h2>
+
+                <h3>contento build &lt;project-id&gt;</h3>
+                <p>Render published pages to static HTML files locally. Applies your chrome, runs the internal linking pass, and writes a sitemap into the output directory.</p>
+
+                <table>
+                    <thead><tr><th>Flag</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>--output &lt;dir&gt;</code></td><td>Output directory for static HTML files (required)</td></tr>
+                        <tr><td><code>--flat</code></td><td>Write files as <code>slug.html</code> instead of <code>slug/index.html</code></td></tr>
+                    </tbody>
+                </table>
+
+<pre><span class="prompt">$</span> <span class="function">contento</span> build proj_8f3a... --output <span class="string">./dist</span>
+
+<span class="output">  &#10003; Built 48 pages to ./dist/</span>
+<span class="output">  HTML files:  48</span>
+<span class="output">  Sitemap:     ./dist/sitemap.xml</span>
+<span class="output"></span>
+<span class="output">  Deploy with your existing pipeline: git push, netlify deploy, rsync, etc.</span></pre>
 
                 <!-- Niches -->
                 <h2>Niches</h2>
@@ -157,12 +172,12 @@
 <span class="output">  niche_02...   DevOps             Technology   18         system</span>
 <span class="output">  niche_03...   Cloud Computing    Technology   22         system</span></pre>
 
-                <h3>contento niches show</h3>
-                <p>Show full niche context (audience, pain points, subtopics).</p>
+                <h3>contento niches view &lt;id&gt;</h3>
+                <p>View detailed information about a niche (audience, pain points, subtopics).</p>
 
-<pre><span class="prompt">$</span> <span class="function">contento</span> niches show niche_01... --json</pre>
+<pre><span class="prompt">$</span> <span class="function">contento</span> niches view niche_01... --json</pre>
 
-                <h3>contento niches fork</h3>
+                <h3>contento niches fork &lt;id&gt;</h3>
                 <p>Create a custom copy of a system niche for editing.</p>
 
 <pre><span class="prompt">$</span> <span class="function">contento</span> niches fork niche_01... --name <span class="string">"Custom DevTools"</span>
@@ -185,11 +200,6 @@
 <span class="output">  best-of          Best-Of List      Best {subtopic} Tools & Resources</span>
 <span class="output">  faq              FAQ               {subtopic} FAQ: Common Questions</span></pre>
 
-                <h3>contento schemas show</h3>
-                <p>Show full schema definition including SchemaJson and PromptTemplate.</p>
-
-<pre><span class="prompt">$</span> <span class="function">contento</span> schemas show idea-list --json</pre>
-
                 <!-- Collections -->
                 <h2>Collections</h2>
 
@@ -198,146 +208,219 @@
 
 <pre><span class="prompt">$</span> <span class="function">contento</span> collections list --project proj_8f3a...</pre>
 
-                <h3>contento collections generate</h3>
-                <p>Create a collection and start AI generation. This is the core command.</p>
+                <h3>contento collections generate &lt;id&gt;</h3>
+                <p>Start AI generation for a collection. Takes the collection ID as an argument. Streams real-time progress by default.</p>
 
                 <table>
                     <thead><tr><th>Flag</th><th>Description</th></tr></thead>
                     <tbody>
-                        <tr><td><code>--project &lt;id&gt;</code></td><td>Project ID (required)</td></tr>
-                        <tr><td><code>--schema &lt;slug&gt;</code></td><td>Schema slug (e.g., <code>idea-list</code>) (required)</td></tr>
-                        <tr><td><code>--niches &lt;ids&gt;</code></td><td>Comma-separated niche IDs (required)</td></tr>
-                        <tr><td><code>--workers &lt;n&gt;</code></td><td>Concurrent AI workers. Default: 5</td></tr>
-                        <tr><td><code>--json</code></td><td>Output NDJSON progress stream</td></tr>
+                        <tr><td><code>--no-wait</code></td><td>Return job ID immediately without streaming progress</td></tr>
+                        <tr><td><code>--json</code></td><td>Output NDJSON progress stream (for agent consumption)</td></tr>
                     </tbody>
                 </table>
 
-<pre><span class="prompt">$</span> <span class="function">contento</span> collections generate \
-    --project proj_8f3a... \
-    --schema <span class="string">"idea-list"</span> \
-    --niches <span class="string">"niche_01...,niche_02..."</span> \
-    --workers <span class="number">10</span>
+<pre><span class="prompt">$</span> <span class="function">contento</span> collections generate col_9d2f...
 
-<span class="output">  Generating 40 pages across 2 niches...</span>
+<span class="output">  &#10003; Generation started (Job: job_4a1b...)</span>
 <span class="output">  [00:26] ████████████████████ 40/40 (100%)</span>
-<span class="output">  Validation: 38 passed, 2 retried, 0 failed</span></pre>
+<span class="output">  &#10003; Generation complete!</span></pre>
 
-                <p>With <code>--json</code>, outputs NDJSON for agent consumption:</p>
+                <p>With <code>--no-wait</code>, returns the job ID immediately:</p>
 
-<pre><span class="prompt">$</span> <span class="function">contento</span> collections generate --project proj_8f3a... --schema idea-list --niches niche_01... --json
+<pre><span class="prompt">$</span> <span class="function">contento</span> collections generate col_9d2f... --no-wait
 
-<span class="output">{"type":"progress","current":0,"total":40,"done":false}</span>
-<span class="output">{"type":"page","id":"page_01...","status":"passed","title":"100 CI/CD Ideas"}</span>
-<span class="output">{"type":"progress","current":20,"total":40,"done":false}</span>
-<span class="output">{"type":"progress","current":40,"total":40,"done":true}</span>
-<span class="output">{"type":"done","passed":38,"retried":2,"failed":0}</span></pre>
+<span class="output">  &#10003; Generation started (Job: job_4a1b...)</span>
+<span class="output">  Job started: job_4a1b...</span></pre>
 
                 <!-- Publishing -->
                 <h2>Publishing</h2>
 
-                <h3>contento publish</h3>
-                <p>Publish generated pages with one of four modes.</p>
+                <h3>contento publish &lt;collection-id&gt;</h3>
+                <p>Publish a collection. Takes the collection ID as the first argument.</p>
 
                 <table>
                     <thead><tr><th>Flag</th><th>Description</th></tr></thead>
                     <tbody>
-                        <tr><td><code>--collection &lt;id&gt;</code></td><td>Collection ID (required)</td></tr>
-                        <tr><td><code>--mode &lt;mode&gt;</code></td><td><code>immediate</code>, <code>batched</code>, <code>scheduled</code>, or <code>manual</code></td></tr>
-                        <tr><td><code>--batch-size &lt;n&gt;</code></td><td>Pages per batch (for batched/scheduled modes)</td></tr>
-                        <tr><td><code>--cron &lt;expr&gt;</code></td><td>Cron expression (for scheduled mode)</td></tr>
+                        <tr><td><code>--mode &lt;mode&gt;</code></td><td><code>immediate</code>, <code>batched</code>, <code>scheduled</code>, or <code>manual</code>. Default: <code>immediate</code></td></tr>
+                        <tr><td><code>--batch-size &lt;n&gt;</code></td><td>Pages per batch (for batched mode). Default: 50</td></tr>
                     </tbody>
                 </table>
 
-<pre><span class="prompt">$</span> <span class="function">contento</span> publish --collection col_9d2f... --mode immediate</pre>
+<pre><span class="prompt">$</span> <span class="function">contento</span> publish col_9d2f... --mode immediate
 
-                <h3>contento publish history</h3>
-                <p>View publish batch history for a project.</p>
-
-<pre><span class="prompt">$</span> <span class="function">contento</span> publish history --project proj_8f3a...</pre>
-
-                <h3>contento pages approve</h3>
-                <p>Approve pages for manual publishing mode.</p>
-
-<pre><span class="prompt">$</span> <span class="function">contento</span> pages approve page_01... page_02... page_03...</pre>
-
-                <h3>contento pages unpublish</h3>
-                <p>Remove a published page from the live site.</p>
-
-<pre><span class="prompt">$</span> <span class="function">contento</span> pages unpublish page_01...</pre>
+<span class="output">  &#10003; Publish initiated</span>
+<span class="output">  Published all pages immediately.</span></pre>
 
                 <!-- Analytics -->
                 <h2>Analytics</h2>
 
-                <h3>contento analytics summary</h3>
+                <h3>contento analytics summary &lt;project-id&gt;</h3>
                 <p>Project-level analytics summary (clicks, impressions, CTR, position).</p>
 
-<pre><span class="prompt">$</span> <span class="function">contento</span> analytics summary --project proj_8f3a...</pre>
+                <table>
+                    <thead><tr><th>Flag</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>--days &lt;n&gt;</code></td><td>Number of days to look back. Default: 30</td></tr>
+                    </tbody>
+                </table>
 
-                <h3>contento analytics top-pages</h3>
+<pre><span class="prompt">$</span> <span class="function">contento</span> analytics summary proj_8f3a...</pre>
+
+                <h3>contento analytics top-pages &lt;project-id&gt;</h3>
                 <p>Top pages ranked by performance.</p>
 
                 <table>
                     <thead><tr><th>Flag</th><th>Description</th></tr></thead>
                     <tbody>
-                        <tr><td><code>--project &lt;id&gt;</code></td><td>Project ID (required)</td></tr>
+                        <tr><td><code>--days &lt;n&gt;</code></td><td>Number of days to look back. Default: 30</td></tr>
                         <tr><td><code>--limit &lt;n&gt;</code></td><td>Number of pages to show. Default: 20</td></tr>
-                        <tr><td><code>--sort &lt;field&gt;</code></td><td>Sort by: <code>clicks</code>, <code>impressions</code>, <code>ctr</code>, <code>position</code></td></tr>
                     </tbody>
                 </table>
 
-<pre><span class="prompt">$</span> <span class="function">contento</span> analytics top-pages --project proj_8f3a... --limit 10 --sort clicks</pre>
+<pre><span class="prompt">$</span> <span class="function">contento</span> analytics top-pages proj_8f3a... --limit 10</pre>
 
-                <h3>contento analytics zero-traffic</h3>
-                <p>Pages with zero clicks for 60+ consecutive days.</p>
+                <h3>contento analytics zero-traffic &lt;project-id&gt;</h3>
+                <p>Pages with zero traffic.</p>
 
-<pre><span class="prompt">$</span> <span class="function">contento</span> analytics zero-traffic --project proj_8f3a...</pre>
+                <table>
+                    <thead><tr><th>Flag</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>--days &lt;n&gt;</code></td><td>Minimum age in days before flagging. Default: 14</td></tr>
+                    </tbody>
+                </table>
 
-                <h3>contento analytics export</h3>
+<pre><span class="prompt">$</span> <span class="function">contento</span> analytics zero-traffic proj_8f3a...</pre>
+
+                <h3>contento analytics export &lt;project-id&gt;</h3>
                 <p>Export analytics data as CSV.</p>
 
                 <table>
                     <thead><tr><th>Flag</th><th>Description</th></tr></thead>
                     <tbody>
-                        <tr><td><code>--project &lt;id&gt;</code></td><td>Project ID (required)</td></tr>
-                        <tr><td><code>--format &lt;fmt&gt;</code></td><td><code>csv</code> or <code>json</code>. Default: <code>csv</code></td></tr>
-                        <tr><td><code>--output &lt;file&gt;</code></td><td>Output file path. Default: stdout</td></tr>
+                        <tr><td><code>--format &lt;fmt&gt;</code></td><td>Export format. Default: <code>csv</code></td></tr>
+                        <tr><td><code>--days &lt;n&gt;</code></td><td>Number of days to look back. Default: 30</td></tr>
                     </tbody>
                 </table>
 
-<pre><span class="prompt">$</span> <span class="function">contento</span> analytics export --project proj_8f3a... --output analytics.csv</pre>
+<pre><span class="prompt">$</span> <span class="function">contento</span> analytics export proj_8f3a...</pre>
 
-                <h3>contento analytics connect-gsc</h3>
-                <p>Connect Google Search Console via OAuth.</p>
+                <h3>contento analytics connect &lt;project-id&gt;</h3>
+                <p>Run the GSC OAuth flow in your default browser and store the refresh token locally. One-time setup per project.</p>
 
-<pre><span class="prompt">$</span> <span class="function">contento</span> analytics connect-gsc --project proj_8f3a...</pre>
+                <h3>contento analytics sync &lt;project-id&gt;</h3>
+                <p>Pull the last 28 days of GSC data into the local SQLite cache at <code>~/.contento/analytics.db</code>. Schedule via cron for a daily refresh.</p>
 
-                <h3>contento analytics sync</h3>
-                <p>Trigger a manual GSC data sync (normally runs daily).</p>
+                <!-- AI Configuration (BYOK) -->
+                <h2>AI Configuration (BYOK)</h2>
 
-<pre><span class="prompt">$</span> <span class="function">contento</span> analytics sync --project proj_8f3a...</pre>
+                <p>Contento uses <strong>Bring Your Own Key (BYOK)</strong> &mdash; you provide your own AI provider API key for content generation.
+                Configure it once before running your first generation.</p>
+
+                <h3>contento config show</h3>
+                <p>Display your current AI provider, model, and key status.</p>
+
+<pre><span class="prompt">$</span> <span class="function">contento</span> config show
+
+<span class="output">  Provider:  openai</span>
+<span class="output">  Model:     openai/gpt-4o-mini</span>
+<span class="output">  Enabled:   yes</span>
+<span class="output">  API Key:   sk-proj-A...xkN9</span></pre>
+
+                <h3>contento config set</h3>
+                <p>Set or update your AI provider, model, and API key. Run without flags for interactive mode.</p>
+
+                <table>
+                    <thead><tr><th>Flag</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>--provider &lt;provider&gt;</code></td><td>AI provider: <code>openai</code> or <code>anthropic</code></td></tr>
+                        <tr><td><code>--model &lt;model&gt;</code></td><td>Model identifier (e.g., <code>openai/gpt-4o-mini</code>, <code>anthropic/claude-sonnet-4-20250514</code>)</td></tr>
+                        <tr><td><code>--api-key &lt;key&gt;</code></td><td>Your AI provider API key</td></tr>
+                    </tbody>
+                </table>
+
+                <p><strong>Interactive mode</strong> (recommended for first-time setup):</p>
+
+<pre><span class="prompt">$</span> <span class="function">contento</span> config set
+
+<span class="output">  Configure your AI provider for content generation (BYOK).</span>
+<span class="output"></span>
+<span class="output">  ? AI Provider: OpenAI</span>
+<span class="output">  ? Model: GPT-4o Mini (default)</span>
+<span class="output">  ? API Key: ************************************</span>
+<span class="output"></span>
+<span class="output">  &#10003; AI configuration updated</span>
+<span class="output">  Provider:  openai</span>
+<span class="output">  Model:     openai/gpt-4o-mini</span>
+<span class="output">  API Key:   sk-proj-A...xkN9</span>
+<span class="output">  Enabled:   yes</span></pre>
+
+                <p><strong>Non-interactive mode</strong> (for CI/CD and scripts):</p>
+
+<pre><span class="prompt">$</span> <span class="function">contento</span> config set \
+    --provider openai \
+    --model <span class="string">"openai/gpt-4o-mini"</span> \
+    --api-key <span class="string">"sk-proj-your-key-here"</span></pre>
+
+                <h4>Supported Providers &amp; Models</h4>
+
+                <table>
+                    <thead><tr><th>Provider</th><th>Model</th><th>Identifier</th></tr></thead>
+                    <tbody>
+                        <tr><td>OpenAI</td><td>GPT-4o</td><td><code>openai/gpt-4o</code></td></tr>
+                        <tr><td>OpenAI</td><td>GPT-4o Mini (default)</td><td><code>openai/gpt-4o-mini</code></td></tr>
+                        <tr><td>OpenAI</td><td>GPT-4.1</td><td><code>openai/gpt-4.1</code></td></tr>
+                        <tr><td>OpenAI</td><td>GPT-4.1 Mini</td><td><code>openai/gpt-4.1-mini</code></td></tr>
+                        <tr><td>OpenAI</td><td>GPT-4.1 Nano</td><td><code>openai/gpt-4.1-nano</code></td></tr>
+                        <tr><td>Anthropic</td><td>Claude Sonnet 4</td><td><code>anthropic/claude-sonnet-4-20250514</code></td></tr>
+                        <tr><td>Anthropic</td><td>Claude Haiku 3.5</td><td><code>anthropic/claude-3-5-haiku-20241022</code></td></tr>
+                    </tbody>
+                </table>
+
+                <h3>contento config clear</h3>
+                <p>Remove your AI API key and disable content generation.</p>
+
+<pre><span class="prompt">$</span> <span class="function">contento</span> config clear
+
+<span class="output">  &#10003; AI configuration cleared</span></pre>
 
                 <!-- Configuration -->
-                <h2>Configuration</h2>
+                <h2>Configuration Files</h2>
 
-                <p>The CLI stores configuration in <code>~/.contento/config.json</code>:</p>
+                <p>Contento stores everything in <code>~/.contento/</code> on your machine:</p>
 
-<pre>{
-  <span class="property">"apiUrl"</span>: <span class="string">"https://app.contentocms.com"</span>,
-  <span class="property">"token"</span>: <span class="string">"ck_live_abc123..."</span>
-}</pre>
+                <table>
+                    <thead><tr><th>Path</th><th>Contents</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>~/.contento/config.json</code></td><td>AI provider, model, and key</td></tr>
+                        <tr><td><code>~/.contento/niches/</code></td><td>Custom and forked niches as JSON files</td></tr>
+                        <tr><td><code>~/.contento/projects/</code></td><td>Generated content cache per project</td></tr>
+                        <tr><td><code>~/.contento/analytics.db</code></td><td>SQLite cache of GSC data</td></tr>
+                        <tr><td><code>~/.contento/gsc.json</code></td><td>Google OAuth refresh token (per project)</td></tr>
+                        <tr><td><code>~/.contento/logs/</code></td><td>Per-run generation logs</td></tr>
+                    </tbody>
+                </table>
+
+                <p>Each project also has a <code>contento.config.json</code> in its working directory containing the project ID, domain, output path, and chrome file paths. Commit it to git so your team uses the same configuration.</p>
 
                 <h3>Environment Variables</h3>
+
+                <p>AI provider keys can be supplied via environment variables instead of <code>contento config set</code> &mdash; useful in CI and agent environments:</p>
 
                 <table>
                     <thead><tr><th>Variable</th><th>Description</th></tr></thead>
                     <tbody>
-                        <tr><td><code>CONTENTO_API_KEY</code></td><td>API key for non-interactive auth (overrides stored token)</td></tr>
-                        <tr><td><code>CONTENTO_API_URL</code></td><td>Override API base URL (overrides config file)</td></tr>
+                        <tr><td><code>OPENAI_API_KEY</code></td><td>OpenAI API key (used when provider is <code>openai</code>)</td></tr>
+                        <tr><td><code>ANTHROPIC_API_KEY</code></td><td>Anthropic API key</td></tr>
+                        <tr><td><code>GOOGLE_API_KEY</code></td><td>Google AI key</td></tr>
+                        <tr><td><code>GROQ_API_KEY</code></td><td>Groq API key</td></tr>
+                        <tr><td><code>OPENROUTER_API_KEY</code></td><td>OpenRouter key</td></tr>
+                        <tr><td><code>CONTENTO_PROVIDER</code></td><td>Override the configured provider (e.g., <code>openai</code>, <code>anthropic</code>)</td></tr>
+                        <tr><td><code>CONTENTO_MODEL</code></td><td>Override the configured model identifier</td></tr>
                         <tr><td><code>NO_COLOR</code></td><td>Disable colored output (standard convention)</td></tr>
                     </tbody>
                 </table>
 
-                <p>Precedence: environment variables > config file > defaults.</p>
+                <p>Precedence: environment variables &gt; config file &gt; defaults.</p>
 
                 <!-- Command summary -->
                 <h2>Command Summary</h2>
@@ -345,31 +428,31 @@
                 <table>
                     <thead><tr><th>Command</th><th>Description</th></tr></thead>
                     <tbody>
-                        <tr><td><code>contento login</code></td><td>Authenticate interactively</td></tr>
-                        <tr><td><code>contento logout</code></td><td>Remove stored credentials</td></tr>
-                        <tr><td><code>contento whoami</code></td><td>Show current user</td></tr>
-                        <tr><td><code>contento projects list</code></td><td>List all projects</td></tr>
-                        <tr><td><code>contento projects create</code></td><td>Create a new project</td></tr>
+                        <tr><td><code>contento init</code></td><td>Create a new project in the current directory</td></tr>
+                        <tr><td><code>contento config show</code></td><td>Show AI provider configuration</td></tr>
+                        <tr><td><code>contento config set</code></td><td>Configure AI provider, model, and key (BYOK)</td></tr>
+                        <tr><td><code>contento config clear</code></td><td>Remove the AI key and disable generation</td></tr>
+                        <tr><td><code>contento projects list</code></td><td>List all projects in the current workspace</td></tr>
                         <tr><td><code>contento projects status</code></td><td>Show project status</td></tr>
-                        <tr><td><code>contento projects verify</code></td><td>Trigger DNS verification</td></tr>
-                        <tr><td><code>contento projects chrome</code></td><td>Upload custom chrome</td></tr>
-                        <tr><td><code>contento niches list</code></td><td>List available niches</td></tr>
-                        <tr><td><code>contento niches show</code></td><td>Show niche details</td></tr>
-                        <tr><td><code>contento niches fork</code></td><td>Fork a system niche</td></tr>
+                        <tr><td><code>contento projects chrome</code></td><td>Configure chrome (header, footer, CSS) paths</td></tr>
+                        <tr><td><code>contento niches list</code></td><td>List built-in and custom niches</td></tr>
+                        <tr><td><code>contento niches view</code></td><td>View niche details</td></tr>
+                        <tr><td><code>contento niches fork</code></td><td>Fork a system niche for editing</td></tr>
+                        <tr><td><code>contento niches create</code></td><td>Create a custom niche from scratch</td></tr>
+                        <tr><td><code>contento niches edit</code></td><td>Edit a custom niche (subtopics, audience, context)</td></tr>
+                        <tr><td><code>contento niches select</code></td><td>Interactively browse and select niches</td></tr>
                         <tr><td><code>contento schemas list</code></td><td>List content schemas</td></tr>
-                        <tr><td><code>contento schemas show</code></td><td>Show schema definition</td></tr>
-                        <tr><td><code>contento collections list</code></td><td>List collections</td></tr>
-                        <tr><td><code>contento collections generate</code></td><td>Create collection and generate pages</td></tr>
-                        <tr><td><code>contento publish</code></td><td>Publish pages (all modes)</td></tr>
-                        <tr><td><code>contento publish history</code></td><td>View publish batch history</td></tr>
-                        <tr><td><code>contento pages approve</code></td><td>Approve pages for manual publishing</td></tr>
-                        <tr><td><code>contento pages unpublish</code></td><td>Remove a page from live site</td></tr>
+                        <tr><td><code>contento collections list</code></td><td>List collections in a project</td></tr>
+                        <tr><td><code>contento collections create</code></td><td>Create a new collection</td></tr>
+                        <tr><td><code>contento collections generate</code></td><td>Generate content for a collection</td></tr>
+                        <tr><td><code>contento publish</code></td><td>Publish a collection (immediate, batched, scheduled, manual)</td></tr>
+                        <tr><td><code>contento build</code></td><td>Render published pages to static HTML</td></tr>
+                        <tr><td><code>contento analytics connect</code></td><td>OAuth Google Search Console for a project</td></tr>
+                        <tr><td><code>contento analytics sync</code></td><td>Pull GSC data into the local cache</td></tr>
                         <tr><td><code>contento analytics summary</code></td><td>Project analytics overview</td></tr>
                         <tr><td><code>contento analytics top-pages</code></td><td>Top performing pages</td></tr>
                         <tr><td><code>contento analytics zero-traffic</code></td><td>Underperforming pages</td></tr>
                         <tr><td><code>contento analytics export</code></td><td>Export analytics as CSV</td></tr>
-                        <tr><td><code>contento analytics connect-gsc</code></td><td>Connect Google Search Console</td></tr>
-                        <tr><td><code>contento analytics sync</code></td><td>Manual GSC data sync</td></tr>
                     </tbody>
                 </table>
 
