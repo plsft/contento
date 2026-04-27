@@ -1,0 +1,3452 @@
+[
+  {
+    "slug": "developer-tools",
+    "name": "Developer Tools",
+    "category": "Software / SaaS",
+    "context": {
+      "audience": "Software engineers, DevOps practitioners, indie hackers, and CTOs evaluating tooling",
+      "pain_points": "Onboarding friction, documentation gaps, tool fatigue, integration complexity, vendor lock-in",
+      "monetization": "SaaS subscriptions, API credits, pro tiers, enterprise licensing",
+      "content_that_works": "Tutorials, comparisons, how-tos, changelogs, migration guides",
+      "subtopics": [
+        "CLI tools",
+        "API development",
+        "testing frameworks",
+        "deployment pipelines",
+        "logging",
+        "monitoring",
+        "code editors",
+        "version control",
+        "package managers",
+        "containerization"
+      ]
+    }
+  },
+  {
+    "slug": "project-management",
+    "name": "Project Management",
+    "category": "Software / SaaS",
+    "context": {
+      "audience": "Product managers, team leads, and startup founders managing cross-functional teams",
+      "pain_points": "Scope creep, status visibility, remote collaboration, tool overload, deadline tracking",
+      "monetization": "Per-seat SaaS pricing, freemium tiers, enterprise contracts",
+      "content_that_works": "Templates, workflow guides, methodology comparisons, productivity tips, case studies",
+      "subtopics": [
+        "agile methodology",
+        "kanban boards",
+        "sprint planning",
+        "resource allocation",
+        "time tracking",
+        "roadmapping",
+        "stakeholder reporting",
+        "risk management",
+        "Gantt charts",
+        "OKR tracking"
+      ]
+    }
+  },
+  {
+    "slug": "crm",
+    "name": "CRM",
+    "category": "Software / SaaS",
+    "context": {
+      "audience": "Sales teams, account executives, and revenue operations leaders in B2B companies",
+      "pain_points": "Data hygiene, pipeline visibility, adoption resistance, integration silos, lead scoring accuracy",
+      "monetization": "Tiered SaaS subscriptions, add-on modules, implementation consulting",
+      "content_that_works": "Feature comparisons, implementation guides, CRM strategy articles, ROI calculators, workflow templates",
+      "subtopics": [
+        "pipeline management",
+        "contact management",
+        "sales forecasting",
+        "email sequences",
+        "lead scoring",
+        "reporting dashboards",
+        "integrations",
+        "mobile CRM",
+        "deal tracking",
+        "customer segmentation"
+      ]
+    }
+  },
+  {
+    "slug": "analytics",
+    "name": "Analytics",
+    "category": "Software / SaaS",
+    "context": {
+      "audience": "Data analysts, growth marketers, and product teams needing actionable insights",
+      "pain_points": "Data silos, attribution complexity, privacy compliance, dashboard overload, real-time needs",
+      "monetization": "Usage-based pricing, data volume tiers, enterprise analytics suites",
+      "content_that_works": "Benchmark reports, setup tutorials, metric explainers, tool comparisons, privacy guides",
+      "subtopics": [
+        "web analytics",
+        "product analytics",
+        "marketing attribution",
+        "A/B testing",
+        "cohort analysis",
+        "funnel optimization",
+        "data visualization",
+        "event tracking",
+        "predictive analytics",
+        "privacy-first analytics"
+      ]
+    }
+  },
+  {
+    "slug": "email-marketing",
+    "name": "Email Marketing",
+    "category": "Software / SaaS",
+    "context": {
+      "audience": "Marketers, solopreneurs, and e-commerce operators building subscriber relationships",
+      "pain_points": "Deliverability issues, low open rates, list hygiene, automation complexity, spam filters",
+      "monetization": "Subscriber-tier pricing, pay-per-send, premium templates, deliverability add-ons",
+      "content_that_works": "Subject line guides, automation workflows, deliverability tips, template galleries, case studies",
+      "subtopics": [
+        "drip campaigns",
+        "list segmentation",
+        "A/B testing emails",
+        "transactional emails",
+        "email deliverability",
+        "newsletter strategy",
+        "email templates",
+        "opt-in forms",
+        "cold email outreach",
+        "email personalization"
+      ]
+    }
+  },
+  {
+    "slug": "hr-tools",
+    "name": "HR Tools",
+    "category": "Software / SaaS",
+    "context": {
+      "audience": "HR managers, people ops teams, and startup founders handling hiring and culture",
+      "pain_points": "Manual processes, compliance complexity, onboarding friction, retention tracking, payroll errors",
+      "monetization": "Per-employee pricing, module-based plans, payroll processing fees",
+      "content_that_works": "Policy templates, compliance checklists, onboarding guides, benefits comparisons, culture playbooks",
+      "subtopics": [
+        "applicant tracking",
+        "onboarding automation",
+        "performance reviews",
+        "payroll processing",
+        "benefits administration",
+        "employee engagement",
+        "time-off management",
+        "compliance tracking",
+        "org charts",
+        "offboarding"
+      ]
+    }
+  },
+  {
+    "slug": "cloud-infrastructure",
+    "name": "Cloud Infrastructure",
+    "category": "Software / SaaS",
+    "context": {
+      "audience": "DevOps engineers, platform teams, and CTOs building scalable cloud architectures",
+      "pain_points": "Cost overruns, security misconfigurations, multi-cloud complexity, scaling bottlenecks, vendor lock-in",
+      "monetization": "Usage-based pricing, reserved capacity, managed service tiers, support plans",
+      "content_that_works": "Architecture diagrams, cost optimization guides, migration playbooks, security hardening tutorials, benchmark comparisons",
+      "subtopics": [
+        "serverless computing",
+        "container orchestration",
+        "infrastructure as code",
+        "cloud cost optimization",
+        "multi-cloud strategy",
+        "edge computing",
+        "cloud security",
+        "auto-scaling",
+        "managed databases",
+        "CDN configuration"
+      ]
+    }
+  },
+  {
+    "slug": "cybersecurity",
+    "name": "Cybersecurity",
+    "category": "Software / SaaS",
+    "context": {
+      "audience": "CISOs, security engineers, and compliance officers protecting enterprise systems",
+      "pain_points": "Alert fatigue, talent shortage, evolving threats, compliance burden, third-party risk",
+      "monetization": "Endpoint licensing, managed security services, compliance audit tools, threat intelligence feeds",
+      "content_that_works": "Threat briefings, compliance checklists, incident response templates, tool comparisons, vulnerability roundups",
+      "subtopics": [
+        "endpoint protection",
+        "zero trust architecture",
+        "penetration testing",
+        "SIEM tools",
+        "vulnerability management",
+        "identity security",
+        "cloud security posture",
+        "phishing prevention",
+        "incident response",
+        "compliance frameworks"
+      ]
+    }
+  },
+  {
+    "slug": "data-engineering",
+    "name": "Data Engineering",
+    "category": "Software / SaaS",
+    "context": {
+      "audience": "Data engineers, analytics engineers, and platform teams building data pipelines",
+      "pain_points": "Pipeline fragility, data quality issues, schema drift, cost at scale, orchestration complexity",
+      "monetization": "Compute-based pricing, data volume tiers, managed pipeline services",
+      "content_that_works": "Architecture guides, ETL tutorials, tool comparisons, data modeling best practices, performance optimization tips",
+      "subtopics": [
+        "ETL pipelines",
+        "data warehousing",
+        "stream processing",
+        "data quality",
+        "data catalogs",
+        "orchestration tools",
+        "data lakehouse",
+        "schema management",
+        "batch processing",
+        "reverse ETL"
+      ]
+    }
+  },
+  {
+    "slug": "api-development",
+    "name": "API Development",
+    "category": "Software / SaaS",
+    "context": {
+      "audience": "Backend developers, API product managers, and integration engineers building and consuming APIs",
+      "pain_points": "Versioning headaches, documentation staleness, rate limiting, authentication complexity, breaking changes",
+      "monetization": "API call pricing, developer portal subscriptions, enterprise SLAs",
+      "content_that_works": "API design guides, SDK tutorials, authentication walkthroughs, versioning strategies, GraphQL vs REST comparisons",
+      "subtopics": [
+        "REST API design",
+        "GraphQL",
+        "API gateways",
+        "rate limiting",
+        "API documentation",
+        "webhook integrations",
+        "API versioning",
+        "SDK development",
+        "API security",
+        "OpenAPI specification"
+      ]
+    }
+  },
+  {
+    "slug": "devops",
+    "name": "DevOps",
+    "category": "Software / SaaS",
+    "context": {
+      "audience": "DevOps engineers, SREs, and platform teams automating software delivery",
+      "pain_points": "Deployment failures, environment drift, slow feedback loops, incident management, toolchain sprawl",
+      "monetization": "Platform licensing, CI/CD pipeline minutes, managed DevOps services",
+      "content_that_works": "Pipeline templates, runbook guides, tool comparisons, incident postmortems, automation playbooks",
+      "subtopics": [
+        "CI/CD pipelines",
+        "infrastructure as code",
+        "GitOps",
+        "observability",
+        "release management",
+        "configuration management",
+        "secrets management",
+        "blue-green deployments",
+        "feature flags",
+        "chaos engineering"
+      ]
+    }
+  },
+  {
+    "slug": "qa-testing",
+    "name": "QA Testing",
+    "category": "Software / SaaS",
+    "context": {
+      "audience": "QA engineers, test automation leads, and engineering managers ensuring software quality",
+      "pain_points": "Flaky tests, slow test suites, coverage gaps, manual regression burden, environment instability",
+      "monetization": "Test runner licensing, cloud testing infrastructure, test management SaaS",
+      "content_that_works": "Framework comparisons, test strategy guides, automation tutorials, CI integration guides, best practice articles",
+      "subtopics": [
+        "test automation",
+        "end-to-end testing",
+        "unit testing",
+        "performance testing",
+        "API testing",
+        "mobile testing",
+        "visual regression testing",
+        "test data management",
+        "load testing",
+        "accessibility testing"
+      ]
+    }
+  },
+  {
+    "slug": "design-tools",
+    "name": "Design Tools",
+    "category": "Software / SaaS",
+    "context": {
+      "audience": "UI/UX designers, product designers, and design system teams creating digital experiences",
+      "pain_points": "Design-to-dev handoff friction, version control for designs, collaboration overhead, prototyping speed, asset management",
+      "monetization": "Per-editor SaaS pricing, team plans, plugin marketplace, enterprise design systems",
+      "content_that_works": "Tool comparisons, workflow tutorials, design system guides, plugin roundups, shortcut cheat sheets",
+      "subtopics": [
+        "UI design",
+        "prototyping",
+        "design systems",
+        "wireframing",
+        "design tokens",
+        "component libraries",
+        "design handoff",
+        "user research tools",
+        "icon design",
+        "responsive design"
+      ]
+    }
+  },
+  {
+    "slug": "video-conferencing",
+    "name": "Video Conferencing",
+    "category": "Software / SaaS",
+    "context": {
+      "audience": "Remote teams, hybrid workplaces, and event organizers needing reliable virtual communication",
+      "pain_points": "Audio quality issues, meeting fatigue, recording management, integration gaps, security concerns",
+      "monetization": "Per-host licensing, meeting capacity tiers, webinar add-ons, recording storage",
+      "content_that_works": "Platform comparisons, setup guides, meeting best practices, integration tutorials, security checklists",
+      "subtopics": [
+        "virtual meetings",
+        "webinar platforms",
+        "screen sharing",
+        "meeting recordings",
+        "breakout rooms",
+        "virtual backgrounds",
+        "meeting transcription",
+        "hybrid meeting setups",
+        "meeting scheduling",
+        "live captions"
+      ]
+    }
+  },
+  {
+    "slug": "helpdesk-software",
+    "name": "Helpdesk Software",
+    "category": "Software / SaaS",
+    "context": {
+      "audience": "Support managers, customer success teams, and ops leaders scaling customer service",
+      "pain_points": "Ticket backlog, slow response times, agent burnout, knowledge base gaps, channel fragmentation",
+      "monetization": "Per-agent pricing, automation add-ons, omnichannel tiers, AI chatbot modules",
+      "content_that_works": "Platform comparisons, workflow automation guides, KPI benchmarks, canned response templates, self-service strategy articles",
+      "subtopics": [
+        "ticket management",
+        "live chat",
+        "knowledge bases",
+        "SLA tracking",
+        "chatbot automation",
+        "customer satisfaction scoring",
+        "omnichannel support",
+        "agent productivity",
+        "escalation workflows",
+        "self-service portals"
+      ]
+    }
+  },
+  {
+    "slug": "accounting-software",
+    "name": "Accounting Software",
+    "category": "Software / SaaS",
+    "context": {
+      "audience": "Small business owners, bookkeepers, and CFOs managing financial operations",
+      "pain_points": "Manual data entry, reconciliation errors, tax compliance, multi-currency complexity, reporting lag",
+      "monetization": "Subscription tiers, payroll add-ons, multi-entity pricing, accountant partner programs",
+      "content_that_works": "Software comparisons, setup tutorials, tax preparation guides, chart-of-accounts templates, integration walkthroughs",
+      "subtopics": [
+        "invoicing",
+        "expense tracking",
+        "bank reconciliation",
+        "tax reporting",
+        "accounts payable",
+        "accounts receivable",
+        "financial statements",
+        "multi-currency accounting",
+        "payroll integration",
+        "audit trails"
+      ]
+    }
+  },
+  {
+    "slug": "erp-systems",
+    "name": "ERP Systems",
+    "category": "Software / SaaS",
+    "context": {
+      "audience": "Operations leaders, IT directors, and CFOs in mid-market and enterprise organizations",
+      "pain_points": "Implementation complexity, change management, customization costs, data migration risk, user adoption",
+      "monetization": "Enterprise licensing, implementation services, module-based pricing, annual maintenance fees",
+      "content_that_works": "Vendor comparisons, implementation guides, ROI calculators, change management playbooks, industry-specific case studies",
+      "subtopics": [
+        "manufacturing ERP",
+        "supply chain management",
+        "inventory management",
+        "financial management",
+        "procurement",
+        "warehouse management",
+        "production planning",
+        "ERP implementation",
+        "ERP customization",
+        "ERP migration"
+      ]
+    }
+  },
+  {
+    "slug": "low-code-platforms",
+    "name": "Low-Code Platforms",
+    "category": "Software / SaaS",
+    "context": {
+      "audience": "Citizen developers, business analysts, and IT teams building internal tools rapidly",
+      "pain_points": "Scalability limits, vendor lock-in, governance concerns, integration gaps, enterprise readiness",
+      "monetization": "Per-app pricing, user-based tiers, enterprise governance add-ons, connector marketplace",
+      "content_that_works": "Platform comparisons, build-along tutorials, use case showcases, governance guides, citizen developer training",
+      "subtopics": [
+        "visual app builders",
+        "workflow automation",
+        "database builders",
+        "form builders",
+        "internal tool platforms",
+        "API connectors",
+        "business logic automation",
+        "app deployment",
+        "governance controls",
+        "citizen developer programs"
+      ]
+    }
+  },
+  {
+    "slug": "identity-management",
+    "name": "Identity Management",
+    "category": "Software / SaaS",
+    "context": {
+      "audience": "Security architects, IT admins, and compliance teams managing user access and identity",
+      "pain_points": "Password fatigue, provisioning delays, compliance audits, SSO integration, privilege creep",
+      "monetization": "Per-user licensing, MFA add-ons, governance tiers, directory sync pricing",
+      "content_that_works": "Implementation guides, compliance checklists, SSO tutorials, protocol comparisons, zero trust identity articles",
+      "subtopics": [
+        "single sign-on",
+        "multi-factor authentication",
+        "user provisioning",
+        "role-based access control",
+        "directory services",
+        "passwordless authentication",
+        "identity governance",
+        "privileged access management",
+        "OAuth/OIDC",
+        "SCIM provisioning"
+      ]
+    }
+  },
+  {
+    "slug": "workflow-automation",
+    "name": "Workflow Automation",
+    "category": "Software / SaaS",
+    "context": {
+      "audience": "Operations managers, business analysts, and tech-savvy teams eliminating manual processes",
+      "pain_points": "Process fragmentation, error-prone handoffs, approval bottlenecks, limited visibility, scaling manual work",
+      "monetization": "Task-based pricing, connector tiers, enterprise orchestration plans, premium integrations",
+      "content_that_works": "Automation recipes, platform comparisons, ROI calculators, integration tutorials, process mapping guides",
+      "subtopics": [
+        "no-code automation",
+        "business process automation",
+        "document workflows",
+        "approval workflows",
+        "integration platforms",
+        "robotic process automation",
+        "event-driven automation",
+        "notification workflows",
+        "data sync automation",
+        "conditional logic builders"
+      ]
+    }
+  },
+  {
+    "slug": "blogging",
+    "name": "Blogging",
+    "category": "Content Creation",
+    "context": {
+      "audience": "Bloggers, content creators, and niche site owners building audiences through written content",
+      "pain_points": "Traffic plateaus, monetization struggles, content consistency, SEO competition, writer's block",
+      "monetization": "Display ads, affiliate marketing, sponsored posts, digital products",
+      "content_that_works": "SEO guides, monetization strategies, content calendars, niche selection advice, blogging tool reviews",
+      "subtopics": [
+        "blog SEO",
+        "content planning",
+        "blog monetization",
+        "WordPress tips",
+        "blog design",
+        "guest posting",
+        "blog analytics",
+        "niche blogging",
+        "blog writing tips",
+        "blog promotion"
+      ]
+    }
+  },
+  {
+    "slug": "youtube",
+    "name": "YouTube",
+    "category": "Content Creation",
+    "context": {
+      "audience": "YouTubers, video creators, and brands building audiences on the world's largest video platform",
+      "pain_points": "Algorithm changes, subscriber growth, video production costs, burnout, copyright strikes",
+      "monetization": "Ad revenue, sponsorships, merchandise, channel memberships, Super Chats",
+      "content_that_works": "Growth strategies, thumbnail design tips, SEO tutorials, equipment guides, analytics breakdowns",
+      "subtopics": [
+        "YouTube SEO",
+        "thumbnail design",
+        "video editing",
+        "channel growth",
+        "YouTube analytics",
+        "monetization strategies",
+        "content planning",
+        "YouTube Shorts",
+        "live streaming",
+        "audience retention"
+      ]
+    }
+  },
+  {
+    "slug": "podcasting",
+    "name": "Podcasting",
+    "category": "Content Creation",
+    "context": {
+      "audience": "Podcast hosts, audio creators, and media companies launching and growing shows",
+      "pain_points": "Discoverability, audience growth, monetization difficulty, editing time, consistency",
+      "monetization": "Sponsorships, premium subscriptions, live shows, merchandise, consulting",
+      "content_that_works": "Launch guides, equipment reviews, interview techniques, growth strategies, monetization playbooks",
+      "subtopics": [
+        "podcast hosting",
+        "audio editing",
+        "podcast marketing",
+        "interview techniques",
+        "podcast analytics",
+        "show notes",
+        "podcast equipment",
+        "RSS feeds",
+        "podcast monetization",
+        "remote recording"
+      ]
+    }
+  },
+  {
+    "slug": "newsletter",
+    "name": "Newsletter",
+    "category": "Content Creation",
+    "context": {
+      "audience": "Newsletter creators, writers, and media entrepreneurs building subscriber-funded businesses",
+      "pain_points": "Subscriber acquisition, open rate decay, monetization, content fatigue, platform dependence",
+      "monetization": "Paid subscriptions, sponsorships, affiliate links, premium tiers",
+      "content_that_works": "Growth tactics, subject line guides, platform comparisons, pricing strategies, case studies",
+      "subtopics": [
+        "subscriber growth",
+        "email platforms",
+        "newsletter monetization",
+        "writing cadence",
+        "subject lines",
+        "paid newsletters",
+        "newsletter design",
+        "audience segmentation",
+        "referral programs",
+        "newsletter analytics"
+      ]
+    }
+  },
+  {
+    "slug": "course-creation",
+    "name": "Course Creation",
+    "category": "Content Creation",
+    "context": {
+      "audience": "Educators, subject matter experts, and entrepreneurs packaging knowledge into online courses",
+      "pain_points": "Completion rates, pricing anxiety, platform selection, content organization, marketing",
+      "monetization": "Course sales, coaching upsells, membership sites, certification fees",
+      "content_that_works": "Platform comparisons, pricing strategies, curriculum design guides, launch playbooks, student engagement tips",
+      "subtopics": [
+        "course platforms",
+        "curriculum design",
+        "video production",
+        "student engagement",
+        "course pricing",
+        "course marketing",
+        "quizzes and assessments",
+        "drip content",
+        "cohort-based courses",
+        "course completion"
+      ]
+    }
+  },
+  {
+    "slug": "social-media-management",
+    "name": "Social Media Management",
+    "category": "Content Creation",
+    "context": {
+      "audience": "Social media managers, brands, and agencies managing presence across multiple platforms",
+      "pain_points": "Content volume, platform algorithm changes, engagement decline, ROI measurement, team coordination",
+      "monetization": "Management retainers, tool subscriptions, content packages, strategy consulting",
+      "content_that_works": "Platform-specific guides, scheduling strategies, analytics tutorials, content calendar templates, trend reports",
+      "subtopics": [
+        "content scheduling",
+        "social analytics",
+        "community management",
+        "social listening",
+        "influencer outreach",
+        "social advertising",
+        "platform algorithms",
+        "content repurposing",
+        "brand voice",
+        "crisis management"
+      ]
+    }
+  },
+  {
+    "slug": "copywriting",
+    "name": "Copywriting",
+    "category": "Content Creation",
+    "context": {
+      "audience": "Freelance copywriters, marketing teams, and entrepreneurs crafting persuasive sales copy",
+      "pain_points": "Client acquisition, pricing confidence, writer's block, measuring copy effectiveness, niche selection",
+      "monetization": "Project-based fees, retainer agreements, course sales, copy templates",
+      "content_that_works": "Copywriting formulas, swipe files, headline guides, client acquisition strategies, portfolio tips",
+      "subtopics": [
+        "sales pages",
+        "email copy",
+        "landing pages",
+        "headlines",
+        "brand messaging",
+        "direct response",
+        "UX copy",
+        "ad copy",
+        "product descriptions",
+        "call-to-action optimization"
+      ]
+    }
+  },
+  {
+    "slug": "content-marketing",
+    "name": "Content Marketing",
+    "category": "Content Creation",
+    "context": {
+      "audience": "Content marketers, brand strategists, and growth teams driving leads through content",
+      "pain_points": "Content ROI measurement, production bottlenecks, distribution challenges, stakeholder buy-in, content decay",
+      "monetization": "Agency retainers, consulting, content strategy tools, training programs",
+      "content_that_works": "Strategy frameworks, distribution playbooks, ROI calculators, content audit guides, case studies",
+      "subtopics": [
+        "content strategy",
+        "content distribution",
+        "content operations",
+        "editorial calendars",
+        "content repurposing",
+        "content audits",
+        "thought leadership",
+        "gated content",
+        "content metrics",
+        "brand storytelling"
+      ]
+    }
+  },
+  {
+    "slug": "video-editing",
+    "name": "Video Editing",
+    "category": "Content Creation",
+    "context": {
+      "audience": "Video editors, content creators, and production teams crafting compelling visual stories",
+      "pain_points": "Render times, software learning curves, storage management, client feedback loops, hardware costs",
+      "monetization": "Freelance editing services, preset/template sales, course creation, stock footage licensing",
+      "content_that_works": "Software tutorials, effect breakdowns, workflow optimization, hardware reviews, before/after showcases",
+      "subtopics": [
+        "color grading",
+        "motion graphics",
+        "sound design",
+        "transitions",
+        "video effects",
+        "timeline editing",
+        "export settings",
+        "proxy editing",
+        "multi-cam editing",
+        "video compression"
+      ]
+    }
+  },
+  {
+    "slug": "graphic-design",
+    "name": "Graphic Design",
+    "category": "Content Creation",
+    "context": {
+      "audience": "Graphic designers, brand designers, and creative teams producing visual assets",
+      "pain_points": "Client revisions, pricing projects, creative blocks, staying current with trends, file management",
+      "monetization": "Design services, template sales, brand identity packages, online courses",
+      "content_that_works": "Design tutorials, trend reports, tool comparisons, portfolio advice, pricing guides",
+      "subtopics": [
+        "logo design",
+        "brand identity",
+        "typography",
+        "color theory",
+        "layout design",
+        "print design",
+        "packaging design",
+        "illustration",
+        "icon design",
+        "design systems"
+      ]
+    }
+  },
+  {
+    "slug": "photography",
+    "name": "Photography",
+    "category": "Content Creation",
+    "context": {
+      "audience": "Professional and hobbyist photographers building portfolios and client businesses",
+      "pain_points": "Client acquisition, pricing, gear costs, post-processing time, market saturation",
+      "monetization": "Client sessions, print sales, presets, workshops, stock photography",
+      "content_that_works": "Gear reviews, editing tutorials, business guides, location scouting tips, portfolio critiques",
+      "subtopics": [
+        "portrait photography",
+        "landscape photography",
+        "product photography",
+        "wedding photography",
+        "photo editing",
+        "lighting techniques",
+        "camera gear",
+        "composition",
+        "photo business",
+        "drone photography"
+      ]
+    }
+  },
+  {
+    "slug": "music-production",
+    "name": "Music Production",
+    "category": "Content Creation",
+    "context": {
+      "audience": "Music producers, beatmakers, and audio engineers creating and distributing music",
+      "pain_points": "DAW complexity, mixing quality, sample licensing, distribution confusion, monetization",
+      "monetization": "Beat sales, mixing/mastering services, sample packs, production courses",
+      "content_that_works": "DAW tutorials, mixing guides, gear reviews, sample pack showcases, music theory lessons",
+      "subtopics": [
+        "DAW workflows",
+        "mixing techniques",
+        "mastering",
+        "sound design",
+        "sampling",
+        "music theory",
+        "beat making",
+        "vocal recording",
+        "plugin reviews",
+        "music distribution"
+      ]
+    }
+  },
+  {
+    "slug": "live-streaming",
+    "name": "Live Streaming",
+    "category": "Content Creation",
+    "context": {
+      "audience": "Streamers, content creators, and brands using live video to engage audiences in real time",
+      "pain_points": "Audience growth, stream quality, equipment setup, burnout, monetization consistency",
+      "monetization": "Subscriptions, donations, sponsorships, merchandise, brand deals",
+      "content_that_works": "Setup guides, growth strategies, monetization tips, equipment reviews, engagement tactics",
+      "subtopics": [
+        "streaming setup",
+        "OBS configuration",
+        "audience engagement",
+        "stream overlays",
+        "Twitch growth",
+        "stream monetization",
+        "multi-platform streaming",
+        "stream alerts",
+        "chat moderation",
+        "streaming hardware"
+      ]
+    }
+  },
+  {
+    "slug": "technical-writing",
+    "name": "Technical Writing",
+    "category": "Content Creation",
+    "context": {
+      "audience": "Technical writers, developer advocates, and documentation teams creating clear technical content",
+      "pain_points": "Keeping docs current, information architecture, user testing docs, toolchain selection, style consistency",
+      "monetization": "Contract writing, documentation consulting, style guide creation, training",
+      "content_that_works": "Documentation templates, style guides, tool comparisons, information architecture guides, API documentation tutorials",
+      "subtopics": [
+        "API documentation",
+        "user guides",
+        "knowledge bases",
+        "docs-as-code",
+        "style guides",
+        "information architecture",
+        "release notes",
+        "tutorials",
+        "README writing",
+        "documentation tools"
+      ]
+    }
+  },
+  {
+    "slug": "ux-writing",
+    "name": "UX Writing",
+    "category": "Content Creation",
+    "context": {
+      "audience": "UX writers, content designers, and product teams crafting in-product microcopy",
+      "pain_points": "Stakeholder education, measuring impact, content consistency, scaling across products, localization",
+      "monetization": "Full-time roles, freelance contracts, UX writing courses, content design consulting",
+      "content_that_works": "Microcopy examples, A/B test case studies, content guidelines, portfolio advice, UX writing exercises",
+      "subtopics": [
+        "microcopy",
+        "error messages",
+        "onboarding flows",
+        "button labels",
+        "empty states",
+        "voice and tone",
+        "content design systems",
+        "localization",
+        "accessibility writing",
+        "conversational design"
+      ]
+    }
+  },
+  {
+    "slug": "community-building",
+    "name": "Community Building",
+    "category": "Content Creation",
+    "context": {
+      "audience": "Community managers, founders, and creator-educators building engaged online communities",
+      "pain_points": "Member engagement, moderation at scale, monetization, platform migration, measuring community health",
+      "monetization": "Membership fees, community-led events, sponsorships, premium tiers",
+      "content_that_works": "Launch playbooks, engagement strategies, platform comparisons, moderation guides, community metrics frameworks",
+      "subtopics": [
+        "community platforms",
+        "member onboarding",
+        "engagement strategies",
+        "moderation",
+        "community events",
+        "community metrics",
+        "community-led growth",
+        "Discord communities",
+        "community monetization",
+        "ambassador programs"
+      ]
+    }
+  },
+  {
+    "slug": "influencer-marketing",
+    "name": "Influencer Marketing",
+    "category": "Content Creation",
+    "context": {
+      "audience": "Brand marketers, influencer managers, and agencies running creator-based campaigns",
+      "pain_points": "Fake followers, ROI measurement, contract negotiation, content approval, finding the right fit",
+      "monetization": "Agency fees, platform commissions, campaign management retainers, influencer discovery tools",
+      "content_that_works": "Campaign playbooks, rate card guides, platform-specific strategies, case studies, contract templates",
+      "subtopics": [
+        "micro-influencers",
+        "influencer discovery",
+        "campaign management",
+        "influencer contracts",
+        "performance measurement",
+        "content guidelines",
+        "brand partnerships",
+        "affiliate influencer programs",
+        "influencer platforms",
+        "UGC campaigns"
+      ]
+    }
+  },
+  {
+    "slug": "content-strategy",
+    "name": "Content Strategy",
+    "category": "Content Creation",
+    "context": {
+      "audience": "Content strategists, heads of content, and marketing leaders aligning content with business goals",
+      "pain_points": "Content ROI, cross-team alignment, content governance, channel proliferation, audience fragmentation",
+      "monetization": "Strategy consulting, content audits, training workshops, content operations tooling",
+      "content_that_works": "Strategy frameworks, audit templates, governance models, content ops guides, maturity assessments",
+      "subtopics": [
+        "content pillars",
+        "content governance",
+        "content operations",
+        "editorial strategy",
+        "channel strategy",
+        "content measurement",
+        "content taxonomy",
+        "content workflow",
+        "content lifecycle",
+        "audience research"
+      ]
+    }
+  },
+  {
+    "slug": "shopify-stores",
+    "name": "Shopify Stores",
+    "category": "E-Commerce",
+    "context": {
+      "audience": "Shopify merchants, DTC brands, and e-commerce entrepreneurs building online stores",
+      "pain_points": "Theme customization, app bloat, conversion optimization, shipping complexity, customer retention",
+      "monetization": "Product sales, Shopify app revenue, theme sales, consulting services",
+      "content_that_works": "Store setup guides, app reviews, conversion tips, theme comparisons, case studies",
+      "subtopics": [
+        "Shopify themes",
+        "Shopify apps",
+        "checkout optimization",
+        "Shopify SEO",
+        "product pages",
+        "Shopify Plus",
+        "Shopify payments",
+        "inventory management",
+        "Shopify analytics",
+        "store migration"
+      ]
+    }
+  },
+  {
+    "slug": "dropshipping",
+    "name": "Dropshipping",
+    "category": "E-Commerce",
+    "context": {
+      "audience": "Aspiring e-commerce entrepreneurs and side-hustlers starting low-inventory online businesses",
+      "pain_points": "Supplier reliability, shipping times, thin margins, product quality, customer complaints",
+      "monetization": "Product margin, upsells, email marketing revenue, course sales",
+      "content_that_works": "Supplier guides, product research tutorials, store setup walkthroughs, niche selection, profit calculators",
+      "subtopics": [
+        "supplier sourcing",
+        "product research",
+        "AliExpress alternatives",
+        "fulfillment automation",
+        "dropshipping niches",
+        "pricing strategies",
+        "store branding",
+        "order tracking",
+        "returns management",
+        "dropshipping ads"
+      ]
+    }
+  },
+  {
+    "slug": "print-on-demand",
+    "name": "Print-on-Demand",
+    "category": "E-Commerce",
+    "context": {
+      "audience": "Designers, artists, and side-hustlers selling custom-designed merchandise without inventory",
+      "pain_points": "Design quality, mockup creation, platform fees, niche competition, profit margins",
+      "monetization": "Product sales, design licensing, niche store portfolios",
+      "content_that_works": "Design tutorials, platform comparisons, niche research guides, mockup tools, trending design roundups",
+      "subtopics": [
+        "t-shirt design",
+        "POD platforms",
+        "niche research",
+        "mockup creation",
+        "Merch by Amazon",
+        "Redbubble tips",
+        "design tools",
+        "pricing strategy",
+        "product selection",
+        "trademark research"
+      ]
+    }
+  },
+  {
+    "slug": "amazon-fba",
+    "name": "Amazon FBA",
+    "category": "E-Commerce",
+    "context": {
+      "audience": "Amazon sellers, private label brands, and e-commerce operators using Fulfillment by Amazon",
+      "pain_points": "Fee complexity, competition, listing optimization, inventory planning, account suspensions",
+      "monetization": "Product sales, wholesale arbitrage, private label margins, consulting",
+      "content_that_works": "Product research guides, listing optimization tips, PPC tutorials, sourcing strategies, fee calculators",
+      "subtopics": [
+        "product research",
+        "listing optimization",
+        "Amazon PPC",
+        "FBA fees",
+        "private label",
+        "wholesale sourcing",
+        "inventory management",
+        "Amazon SEO",
+        "brand registry",
+        "product photography"
+      ]
+    }
+  },
+  {
+    "slug": "dtc-brands",
+    "name": "DTC Brands",
+    "category": "E-Commerce",
+    "context": {
+      "audience": "Direct-to-consumer brand founders, e-commerce marketers, and brand strategists",
+      "pain_points": "Customer acquisition costs, brand differentiation, retention, supply chain, scaling profitably",
+      "monetization": "Product sales, subscriptions, brand licensing, wholesale partnerships",
+      "content_that_works": "Brand building guides, acquisition strategies, retention playbooks, case studies, supply chain optimization",
+      "subtopics": [
+        "brand identity",
+        "customer acquisition",
+        "retention strategies",
+        "subscription models",
+        "packaging design",
+        "supply chain",
+        "brand storytelling",
+        "community building",
+        "influencer partnerships",
+        "unit economics"
+      ]
+    }
+  },
+  {
+    "slug": "subscription-boxes",
+    "name": "Subscription Boxes",
+    "category": "E-Commerce",
+    "context": {
+      "audience": "Subscription box entrepreneurs and curated commerce operators building recurring revenue",
+      "pain_points": "Churn rates, curation costs, fulfillment logistics, pricing, customer acquisition",
+      "monetization": "Monthly subscriptions, gift subscriptions, one-time boxes, add-on sales",
+      "content_that_works": "Launch guides, churn reduction strategies, curation tips, fulfillment walkthroughs, pricing models",
+      "subtopics": [
+        "box curation",
+        "subscription pricing",
+        "churn reduction",
+        "fulfillment logistics",
+        "packaging design",
+        "subscriber acquisition",
+        "unboxing experience",
+        "gift subscriptions",
+        "niche selection",
+        "vendor relationships"
+      ]
+    }
+  },
+  {
+    "slug": "digital-products",
+    "name": "Digital Products",
+    "category": "E-Commerce",
+    "context": {
+      "audience": "Creators, educators, and entrepreneurs selling downloadable and digital goods online",
+      "pain_points": "Piracy, pricing, delivery automation, marketing, product idea validation",
+      "monetization": "Direct sales, marketplace commissions, bundles, membership access",
+      "content_that_works": "Product idea lists, platform comparisons, pricing strategies, launch playbooks, sales funnel guides",
+      "subtopics": [
+        "ebook creation",
+        "template design",
+        "digital downloads",
+        "Gumroad selling",
+        "product pricing",
+        "sales pages",
+        "digital delivery",
+        "product bundles",
+        "Notion templates",
+        "digital product marketing"
+      ]
+    }
+  },
+  {
+    "slug": "marketplace-selling",
+    "name": "Marketplace Selling",
+    "category": "E-Commerce",
+    "context": {
+      "audience": "Multi-channel sellers, resellers, and e-commerce operators selling across online marketplaces",
+      "pain_points": "Platform fees, listing management, price competition, review management, policy changes",
+      "monetization": "Product sales across platforms, arbitrage margins, bulk wholesale",
+      "content_that_works": "Multi-channel guides, platform comparisons, listing optimization, fee breakdowns, automation tools",
+      "subtopics": [
+        "Etsy selling",
+        "eBay strategies",
+        "Walmart marketplace",
+        "multi-channel management",
+        "listing optimization",
+        "pricing algorithms",
+        "review management",
+        "marketplace fees",
+        "product sourcing",
+        "seller metrics"
+      ]
+    }
+  },
+  {
+    "slug": "wholesale-b2b",
+    "name": "Wholesale B2B",
+    "category": "E-Commerce",
+    "context": {
+      "audience": "B2B wholesalers, distributors, and manufacturers selling in bulk to business buyers",
+      "pain_points": "Order management, payment terms, catalog management, buyer discovery, logistics coordination",
+      "monetization": "Wholesale margins, volume pricing, trade show leads, B2B marketplace commissions",
+      "content_that_works": "B2B platform guides, trade show strategies, catalog management tips, payment terms articles, buyer acquisition",
+      "subtopics": [
+        "B2B e-commerce platforms",
+        "wholesale pricing",
+        "trade shows",
+        "bulk order management",
+        "payment terms",
+        "catalog management",
+        "B2B marketing",
+        "distributor relationships",
+        "MOQ strategies",
+        "B2B customer portals"
+      ]
+    }
+  },
+  {
+    "slug": "product-photography",
+    "name": "Product Photography",
+    "category": "E-Commerce",
+    "context": {
+      "audience": "E-commerce sellers, brands, and photographers specializing in product imagery for online sales",
+      "pain_points": "Consistency across products, background removal, lighting, cost per shot, turnaround time",
+      "monetization": "Photography services, editing services, presets, training courses",
+      "content_that_works": "Lighting tutorials, DIY studio guides, editing workflows, equipment reviews, before/after showcases",
+      "subtopics": [
+        "lighting setups",
+        "background removal",
+        "lifestyle photography",
+        "360 product views",
+        "flat lay photography",
+        "photo editing",
+        "DIY product photos",
+        "color accuracy",
+        "model photography",
+        "photo studio setup"
+      ]
+    }
+  },
+  {
+    "slug": "inventory-management",
+    "name": "Inventory Management",
+    "category": "E-Commerce",
+    "context": {
+      "audience": "E-commerce operators, warehouse managers, and retail businesses tracking stock across channels",
+      "pain_points": "Overselling, stockouts, multi-warehouse complexity, dead stock, demand forecasting",
+      "monetization": "Software subscriptions, implementation services, integration consulting",
+      "content_that_works": "Software comparisons, forecasting guides, warehouse organization tips, multi-channel sync tutorials, KPI guides",
+      "subtopics": [
+        "demand forecasting",
+        "multi-warehouse management",
+        "barcode systems",
+        "reorder points",
+        "dead stock reduction",
+        "inventory audits",
+        "SKU management",
+        "just-in-time inventory",
+        "ABC analysis",
+        "inventory software"
+      ]
+    }
+  },
+  {
+    "slug": "shipping-logistics",
+    "name": "Shipping Logistics",
+    "category": "E-Commerce",
+    "context": {
+      "audience": "E-commerce businesses, fulfillment teams, and logistics managers optimizing order delivery",
+      "pain_points": "Shipping costs, delivery speed expectations, international shipping, returns processing, carrier reliability",
+      "monetization": "Shipping software subscriptions, fulfillment services, carrier negotiation consulting",
+      "content_that_works": "Carrier comparisons, cost optimization guides, international shipping guides, packaging tips, returns process templates",
+      "subtopics": [
+        "shipping rate negotiation",
+        "fulfillment centers",
+        "last-mile delivery",
+        "international shipping",
+        "package tracking",
+        "shipping labels",
+        "returns management",
+        "freight shipping",
+        "same-day delivery",
+        "packaging optimization"
+      ]
+    }
+  },
+  {
+    "slug": "payment-processing",
+    "name": "Payment Processing",
+    "category": "E-Commerce",
+    "context": {
+      "audience": "E-commerce merchants, SaaS companies, and marketplace operators handling online payments",
+      "pain_points": "Transaction fees, chargebacks, PCI compliance, multi-currency support, fraud prevention",
+      "monetization": "Transaction percentage, payment gateway subscriptions, fraud prevention add-ons",
+      "content_that_works": "Gateway comparisons, fee breakdowns, fraud prevention guides, checkout optimization tips, compliance checklists",
+      "subtopics": [
+        "payment gateways",
+        "checkout optimization",
+        "fraud prevention",
+        "chargeback management",
+        "multi-currency payments",
+        "mobile payments",
+        "buy-now-pay-later",
+        "recurring billing",
+        "PCI compliance",
+        "payment analytics"
+      ]
+    }
+  },
+  {
+    "slug": "customer-reviews",
+    "name": "Customer Reviews",
+    "category": "E-Commerce",
+    "context": {
+      "audience": "E-commerce brands, local businesses, and SaaS companies managing online reputation through reviews",
+      "pain_points": "Fake reviews, low review volume, negative review response, review platform fragmentation, review authenticity",
+      "monetization": "Review management software, reputation consulting, review generation services",
+      "content_that_works": "Review request templates, response frameworks, platform comparisons, UGC strategies, social proof guides",
+      "subtopics": [
+        "review generation",
+        "review responses",
+        "review platforms",
+        "social proof",
+        "user-generated content",
+        "review widgets",
+        "video reviews",
+        "review moderation",
+        "star ratings impact",
+        "review SEO"
+      ]
+    }
+  },
+  {
+    "slug": "pricing-strategy",
+    "name": "Pricing Strategy",
+    "category": "E-Commerce",
+    "context": {
+      "audience": "E-commerce operators, SaaS founders, and pricing analysts optimizing revenue through strategic pricing",
+      "pain_points": "Price sensitivity, competitor undercutting, margin erosion, discount dependency, price testing",
+      "monetization": "Pricing consulting, optimization software, training workshops",
+      "content_that_works": "Pricing model comparisons, A/B test case studies, psychology of pricing, calculator tools, industry benchmarks",
+      "subtopics": [
+        "dynamic pricing",
+        "price anchoring",
+        "bundle pricing",
+        "psychological pricing",
+        "competitive pricing",
+        "value-based pricing",
+        "discount strategies",
+        "price testing",
+        "subscription pricing",
+        "freemium models"
+      ]
+    }
+  },
+  {
+    "slug": "ecommerce-analytics",
+    "name": "E-commerce Analytics",
+    "category": "E-Commerce",
+    "context": {
+      "audience": "E-commerce managers, growth analysts, and marketing teams tracking store performance",
+      "pain_points": "Data fragmentation, attribution complexity, metric overload, actionability gaps, privacy regulations",
+      "monetization": "Analytics platform subscriptions, consulting, custom dashboard services",
+      "content_that_works": "KPI guides, dashboard templates, tool comparisons, attribution model explainers, benchmark reports",
+      "subtopics": [
+        "conversion tracking",
+        "customer lifetime value",
+        "cohort analysis",
+        "shopping cart analytics",
+        "attribution modeling",
+        "revenue analytics",
+        "product performance",
+        "customer segmentation",
+        "funnel analysis",
+        "heatmaps"
+      ]
+    }
+  },
+  {
+    "slug": "mobile-commerce",
+    "name": "Mobile Commerce",
+    "category": "E-Commerce",
+    "context": {
+      "audience": "E-commerce businesses and mobile product teams optimizing the shopping experience on smartphones",
+      "pain_points": "Mobile conversion rates, app vs mobile web, checkout friction, push notification fatigue, app discoverability",
+      "monetization": "Mobile app subscriptions, in-app purchases, mobile-optimized ad revenue",
+      "content_that_works": "Mobile UX guides, app vs web comparisons, checkout optimization tips, push notification strategies, mobile payment guides",
+      "subtopics": [
+        "mobile checkout",
+        "progressive web apps",
+        "mobile UX",
+        "push notifications",
+        "mobile payments",
+        "app store optimization",
+        "mobile-first design",
+        "mobile search",
+        "SMS commerce",
+        "mobile loyalty programs"
+      ]
+    }
+  },
+  {
+    "slug": "cross-border-commerce",
+    "name": "Cross-border Commerce",
+    "category": "E-Commerce",
+    "context": {
+      "audience": "International sellers, global brands, and e-commerce operators expanding into new geographic markets",
+      "pain_points": "Currency conversion, customs/duties, localization, tax compliance, cross-border payments",
+      "monetization": "International product sales, localization services, cross-border logistics consulting",
+      "content_that_works": "Market entry guides, localization checklists, tax compliance overviews, currency strategy articles, logistics partner comparisons",
+      "subtopics": [
+        "market localization",
+        "international payments",
+        "customs and duties",
+        "currency management",
+        "international shipping",
+        "tax compliance",
+        "market research",
+        "translation services",
+        "local payment methods",
+        "cross-border returns"
+      ]
+    }
+  },
+  {
+    "slug": "consulting",
+    "name": "Consulting",
+    "category": "Professional Services",
+    "context": {
+      "audience": "Independent consultants, boutique firms, and corporate advisors selling expertise",
+      "pain_points": "Lead generation, pricing engagements, scope creep, utilization rates, client retention",
+      "monetization": "Hourly/project fees, retainers, productized consulting, advisory boards",
+      "content_that_works": "Frameworks, case studies, engagement templates, pricing guides, thought leadership",
+      "subtopics": [
+        "proposal writing",
+        "client acquisition",
+        "pricing models",
+        "scope management",
+        "consulting frameworks",
+        "deliverable templates",
+        "stakeholder management",
+        "practice growth",
+        "niche specialization",
+        "consulting tools"
+      ]
+    }
+  },
+  {
+    "slug": "freelancing",
+    "name": "Freelancing",
+    "category": "Professional Services",
+    "context": {
+      "audience": "Freelancers, independent contractors, and solopreneurs across creative and technical fields",
+      "pain_points": "Income instability, client acquisition, scope creep, isolation, benefits/taxes",
+      "monetization": "Project fees, retainers, productized services, course sales",
+      "content_that_works": "Client acquisition strategies, pricing guides, contract templates, productivity tips, tax guides",
+      "subtopics": [
+        "client proposals",
+        "freelance pricing",
+        "contract templates",
+        "invoice management",
+        "portfolio building",
+        "freelance platforms",
+        "time management",
+        "freelance taxes",
+        "client communication",
+        "retainer agreements"
+      ]
+    }
+  },
+  {
+    "slug": "legal-services",
+    "name": "Legal Services",
+    "category": "Professional Services",
+    "context": {
+      "audience": "Law firms, solo practitioners, and legal tech companies serving businesses and individuals",
+      "pain_points": "Client acquisition, billable hour pressure, document management, compliance updates, competition",
+      "monetization": "Hourly billing, flat-fee packages, subscription legal services, legal tech SaaS",
+      "content_that_works": "Legal guides, compliance checklists, template contracts, practice area explainers, client intake strategies",
+      "subtopics": [
+        "client intake",
+        "legal marketing",
+        "practice management",
+        "document automation",
+        "compliance tracking",
+        "billing software",
+        "case management",
+        "legal research tools",
+        "client portals",
+        "virtual law practice"
+      ]
+    }
+  },
+  {
+    "slug": "accounting",
+    "name": "Accounting",
+    "category": "Professional Services",
+    "context": {
+      "audience": "Accounting firms, CPAs, and bookkeepers serving small to mid-size businesses",
+      "pain_points": "Seasonal workload, client communication, technology adoption, talent retention, fee compression",
+      "monetization": "Monthly retainers, tax preparation fees, advisory services, cloud accounting subscriptions",
+      "content_that_works": "Tax guides, software comparisons, practice management tips, client communication templates, industry specialization",
+      "subtopics": [
+        "tax preparation",
+        "bookkeeping services",
+        "advisory services",
+        "cloud accounting",
+        "practice management",
+        "client onboarding",
+        "audit services",
+        "payroll services",
+        "financial reporting",
+        "accounting technology"
+      ]
+    }
+  },
+  {
+    "slug": "real-estate",
+    "name": "Real Estate",
+    "category": "Professional Services",
+    "context": {
+      "audience": "Real estate agents, brokers, and property managers serving buyers, sellers, and renters",
+      "pain_points": "Lead generation, market fluctuations, commission pressure, transaction complexity, client management",
+      "monetization": "Commission-based sales, property management fees, referral income, real estate courses",
+      "content_that_works": "Market reports, neighborhood guides, home buying checklists, investment analyses, staging tips",
+      "subtopics": [
+        "lead generation",
+        "listing marketing",
+        "CRM for real estate",
+        "virtual tours",
+        "market analysis",
+        "open houses",
+        "transaction management",
+        "property valuation",
+        "real estate photography",
+        "buyer representation"
+      ]
+    }
+  },
+  {
+    "slug": "financial-advisory",
+    "name": "Financial Advisory",
+    "category": "Professional Services",
+    "context": {
+      "audience": "Financial advisors, wealth managers, and RIAs serving high-net-worth individuals and families",
+      "pain_points": "Client acquisition, compliance, fee transparency, digital transformation, succession planning",
+      "monetization": "AUM fees, financial planning fees, insurance commissions, advisory retainers",
+      "content_that_works": "Market commentary, financial planning guides, retirement calculators, compliance updates, client education",
+      "subtopics": [
+        "financial planning",
+        "retirement planning",
+        "investment management",
+        "estate planning",
+        "tax planning",
+        "risk management",
+        "client reporting",
+        "compliance",
+        "practice growth",
+        "technology adoption"
+      ]
+    }
+  },
+  {
+    "slug": "executive-coaching",
+    "name": "Executive Coaching",
+    "category": "Professional Services",
+    "context": {
+      "audience": "Executive coaches, leadership consultants, and corporate training firms developing leaders",
+      "pain_points": "Proving ROI, client acquisition, scaling one-on-one, maintaining boundaries, niche positioning",
+      "monetization": "Coaching engagements, group programs, assessments, corporate contracts, speaking fees",
+      "content_that_works": "Leadership frameworks, assessment tools, coaching methodologies, case studies, self-assessment guides",
+      "subtopics": [
+        "leadership development",
+        "coaching methodologies",
+        "360 assessments",
+        "executive presence",
+        "team coaching",
+        "career transitions",
+        "performance coaching",
+        "emotional intelligence",
+        "coaching tools",
+        "group coaching"
+      ]
+    }
+  },
+  {
+    "slug": "management-consulting",
+    "name": "Management Consulting",
+    "category": "Professional Services",
+    "context": {
+      "audience": "Strategy consultants, management firms, and advisory practices serving enterprise clients",
+      "pain_points": "Pipeline development, talent recruitment, project staffing, intellectual property, differentiation",
+      "monetization": "Project-based fees, retainers, strategy workshops, interim management",
+      "content_that_works": "Industry analyses, strategy frameworks, transformation guides, benchmarking reports, case studies",
+      "subtopics": [
+        "strategy development",
+        "organizational design",
+        "change management",
+        "digital transformation",
+        "operations improvement",
+        "M&A advisory",
+        "cost optimization",
+        "market entry",
+        "competitive analysis",
+        "performance management"
+      ]
+    }
+  },
+  {
+    "slug": "it-consulting",
+    "name": "IT Consulting",
+    "category": "Professional Services",
+    "context": {
+      "audience": "IT consultants, MSPs, and technology advisory firms helping businesses with IT strategy",
+      "pain_points": "Rapid technology change, talent availability, project scope, vendor management, security concerns",
+      "monetization": "Project fees, managed service contracts, staff augmentation, technology assessments",
+      "content_that_works": "Technology assessments, vendor comparisons, migration guides, security audits, IT strategy frameworks",
+      "subtopics": [
+        "IT strategy",
+        "cloud migration",
+        "cybersecurity consulting",
+        "vendor selection",
+        "IT governance",
+        "system integration",
+        "IT budgeting",
+        "disaster recovery",
+        "network design",
+        "managed IT services"
+      ]
+    }
+  },
+  {
+    "slug": "marketing-agencies",
+    "name": "Marketing Agencies",
+    "category": "Professional Services",
+    "context": {
+      "audience": "Marketing agency owners, account managers, and growth agencies serving B2B and B2C clients",
+      "pain_points": "Client churn, scope creep, talent retention, proving ROI, pricing pressure",
+      "monetization": "Monthly retainers, project fees, performance-based pricing, white-label services",
+      "content_that_works": "Case studies, strategy templates, client reporting guides, agency growth playbooks, service packaging",
+      "subtopics": [
+        "client management",
+        "agency pricing",
+        "service packaging",
+        "team management",
+        "client reporting",
+        "agency growth",
+        "new business development",
+        "agency tools",
+        "white-label services",
+        "agency specialization"
+      ]
+    }
+  },
+  {
+    "slug": "pr-firms",
+    "name": "PR Firms",
+    "category": "Professional Services",
+    "context": {
+      "audience": "Public relations professionals, communications agencies, and brand reputation managers",
+      "pain_points": "Media landscape changes, measuring PR value, crisis management, journalist relationships, digital PR",
+      "monetization": "Monthly retainers, project-based campaigns, crisis management fees, media training",
+      "content_that_works": "Press release templates, media pitch guides, crisis communication plans, PR measurement frameworks, case studies",
+      "subtopics": [
+        "media relations",
+        "press releases",
+        "crisis communication",
+        "thought leadership PR",
+        "digital PR",
+        "influencer relations",
+        "media monitoring",
+        "PR measurement",
+        "brand reputation",
+        "event PR"
+      ]
+    }
+  },
+  {
+    "slug": "architecture",
+    "name": "Architecture",
+    "category": "Professional Services",
+    "context": {
+      "audience": "Architecture firms, solo practitioners, and design studios creating built environments",
+      "pain_points": "Project timelines, client expectations, regulatory compliance, design technology, fee negotiation",
+      "monetization": "Design fees, project management, consulting, BIM services",
+      "content_that_works": "Project showcases, design process guides, software tutorials, sustainability guides, regulatory updates",
+      "subtopics": [
+        "residential design",
+        "commercial architecture",
+        "sustainable design",
+        "BIM workflows",
+        "project management",
+        "client presentations",
+        "building codes",
+        "interior architecture",
+        "landscape architecture",
+        "renovation design"
+      ]
+    }
+  },
+  {
+    "slug": "engineering-services",
+    "name": "Engineering Services",
+    "category": "Professional Services",
+    "context": {
+      "audience": "Engineering firms, structural engineers, and technical consultancies serving construction and manufacturing",
+      "pain_points": "Project complexity, regulatory compliance, talent shortage, technology adoption, liability management",
+      "monetization": "Project fees, consulting retainers, inspection services, design reviews",
+      "content_that_works": "Technical guides, code compliance articles, software tutorials, case studies, certification prep",
+      "subtopics": [
+        "structural engineering",
+        "civil engineering",
+        "environmental engineering",
+        "project management",
+        "CAD software",
+        "code compliance",
+        "site inspections",
+        "quality assurance",
+        "safety engineering",
+        "engineering calculations"
+      ]
+    }
+  },
+  {
+    "slug": "medical-practices",
+    "name": "Medical Practices",
+    "category": "Professional Services",
+    "context": {
+      "audience": "Physicians, medical group administrators, and healthcare practice managers running clinical operations",
+      "pain_points": "Patient acquisition, insurance complexity, EHR usability, staff burnout, regulatory compliance",
+      "monetization": "Patient revenue, insurance reimbursement, concierge medicine, telemedicine fees",
+      "content_that_works": "Practice management guides, patient engagement strategies, compliance checklists, technology reviews, marketing tips",
+      "subtopics": [
+        "patient acquisition",
+        "practice management",
+        "EHR systems",
+        "medical billing",
+        "patient engagement",
+        "telemedicine",
+        "staff management",
+        "regulatory compliance",
+        "online reputation",
+        "practice growth"
+      ]
+    }
+  },
+  {
+    "slug": "dental-practices",
+    "name": "Dental Practices",
+    "category": "Professional Services",
+    "context": {
+      "audience": "Dentists, dental practice owners, and dental service organizations growing their patient base",
+      "pain_points": "Patient retention, insurance negotiations, treatment acceptance, staff management, marketing costs",
+      "monetization": "Patient fees, dental plans, cosmetic procedures, dental membership plans",
+      "content_that_works": "Marketing guides, patient communication templates, practice growth strategies, technology reviews, case acceptance tips",
+      "subtopics": [
+        "patient marketing",
+        "treatment planning",
+        "dental technology",
+        "practice management",
+        "insurance management",
+        "cosmetic dentistry",
+        "patient retention",
+        "staff training",
+        "dental SEO",
+        "patient reviews"
+      ]
+    }
+  },
+  {
+    "slug": "veterinary-services",
+    "name": "Veterinary Services",
+    "category": "Professional Services",
+    "context": {
+      "audience": "Veterinarians, vet clinic owners, and animal hospital managers serving pet owners",
+      "pain_points": "Client communication, emergency management, pricing sensitivity, staffing, technology adoption",
+      "monetization": "Veterinary services, pet wellness plans, boarding, grooming, pharmacy",
+      "content_that_works": "Pet health guides, practice management tips, client communication templates, technology reviews, marketing strategies",
+      "subtopics": [
+        "client communication",
+        "practice management",
+        "veterinary technology",
+        "pet wellness plans",
+        "emergency care",
+        "staff management",
+        "veterinary marketing",
+        "telemedicine",
+        "pharmacy management",
+        "client retention"
+      ]
+    }
+  },
+  {
+    "slug": "therapy-practices",
+    "name": "Therapy Practices",
+    "category": "Professional Services",
+    "context": {
+      "audience": "Therapists, counselors, and mental health practice owners building sustainable private practices",
+      "pain_points": "Client acquisition, insurance credentialing, burnout, EHR selection, marketing ethics",
+      "monetization": "Session fees, insurance reimbursement, group therapy, telehealth, workshops",
+      "content_that_works": "Practice building guides, insurance navigation, telehealth setup, marketing ethics, self-care strategies",
+      "subtopics": [
+        "private practice building",
+        "insurance credentialing",
+        "telehealth setup",
+        "client acquisition",
+        "practice management software",
+        "ethical marketing",
+        "group therapy",
+        "clinical documentation",
+        "burnout prevention",
+        "niche specialization"
+      ]
+    }
+  },
+  {
+    "slug": "recruiting-agencies",
+    "name": "Recruiting Agencies",
+    "category": "Professional Services",
+    "context": {
+      "audience": "Recruiting firms, staffing agencies, and talent acquisition consultants placing candidates",
+      "pain_points": "Candidate sourcing, client acquisition, placement speed, fee negotiation, market competition",
+      "monetization": "Placement fees, retainer searches, RPO contracts, temp staffing margins",
+      "content_that_works": "Sourcing strategies, industry salary guides, interview frameworks, client pitch templates, market trend reports",
+      "subtopics": [
+        "candidate sourcing",
+        "client development",
+        "interview processes",
+        "ATS tools",
+        "salary benchmarking",
+        "employer branding",
+        "contract staffing",
+        "executive search",
+        "recruitment marketing",
+        "diversity recruiting"
+      ]
+    }
+  },
+  {
+    "slug": "tax-preparation",
+    "name": "Tax Preparation",
+    "category": "Professional Services",
+    "context": {
+      "audience": "Tax professionals, enrolled agents, and tax preparation firms serving individuals and businesses",
+      "pain_points": "Seasonal workload, regulatory changes, client document collection, technology adoption, fee pressure",
+      "monetization": "Tax preparation fees, year-round advisory, tax planning retainers, software commissions",
+      "content_that_works": "Tax deadline guides, deduction checklists, regulatory updates, software comparisons, client communication templates",
+      "subtopics": [
+        "individual taxes",
+        "business taxes",
+        "tax planning",
+        "tax software",
+        "client management",
+        "document collection",
+        "regulatory updates",
+        "state taxes",
+        "tax credits",
+        "year-round services"
+      ]
+    }
+  },
+  {
+    "slug": "insurance-brokerage",
+    "name": "Insurance Brokerage",
+    "category": "Professional Services",
+    "context": {
+      "audience": "Insurance brokers, independent agents, and insurance agencies serving personal and commercial clients",
+      "pain_points": "Lead generation, carrier relationships, compliance, technology adoption, client retention",
+      "monetization": "Commissions, renewal fees, consulting fees, agency management services",
+      "content_that_works": "Coverage guides, comparison tools, risk assessment checklists, industry updates, client education",
+      "subtopics": [
+        "commercial insurance",
+        "personal insurance",
+        "risk assessment",
+        "carrier management",
+        "client retention",
+        "insurance technology",
+        "compliance",
+        "claims management",
+        "agency growth",
+        "digital marketing"
+      ]
+    }
+  },
+  {
+    "slug": "fitness-training",
+    "name": "Fitness Training",
+    "category": "Health & Wellness",
+    "context": {
+      "audience": "Personal trainers, fitness coaches, and gym owners helping clients achieve physical goals",
+      "pain_points": "Client retention, program design, online vs in-person, pricing, liability",
+      "monetization": "Training sessions, online programs, group classes, supplement partnerships",
+      "content_that_works": "Workout plans, exercise tutorials, nutrition guides, transformation stories, equipment reviews",
+      "subtopics": [
+        "strength training",
+        "HIIT workouts",
+        "online coaching",
+        "program design",
+        "client management",
+        "fitness technology",
+        "group fitness",
+        "nutrition planning",
+        "injury prevention",
+        "home workouts"
+      ]
+    }
+  },
+  {
+    "slug": "nutrition-coaching",
+    "name": "Nutrition Coaching",
+    "category": "Health & Wellness",
+    "context": {
+      "audience": "Nutritionists, dietitians, and health coaches guiding clients toward better eating habits",
+      "pain_points": "Client compliance, misinformation, scope of practice, meal planning time, certification confusion",
+      "monetization": "Coaching packages, meal plans, group programs, corporate wellness contracts",
+      "content_that_works": "Meal plans, nutrition guides, recipe collections, myth-busting articles, client success stories",
+      "subtopics": [
+        "meal planning",
+        "macronutrient tracking",
+        "sports nutrition",
+        "weight management",
+        "food sensitivities",
+        "gut health",
+        "supplement guidance",
+        "mindful eating",
+        "nutrition for chronic conditions",
+        "plant-based nutrition"
+      ]
+    }
+  },
+  {
+    "slug": "mental-health",
+    "name": "Mental Health",
+    "category": "Health & Wellness",
+    "context": {
+      "audience": "Mental health professionals, wellness advocates, and organizations promoting psychological well-being",
+      "pain_points": "Stigma, access barriers, provider burnout, insurance complexity, crisis management",
+      "monetization": "Therapy sessions, digital mental health tools, workshops, corporate wellness programs",
+      "content_that_works": "Coping strategies, resource guides, awareness articles, self-help tools, provider directories",
+      "subtopics": [
+        "anxiety management",
+        "depression support",
+        "stress reduction",
+        "mindfulness practices",
+        "therapy types",
+        "self-care routines",
+        "mental health apps",
+        "workplace mental health",
+        "crisis resources",
+        "mental health advocacy"
+      ]
+    }
+  },
+  {
+    "slug": "supplements",
+    "name": "Supplements",
+    "category": "Health & Wellness",
+    "context": {
+      "audience": "Supplement brands, health-conscious consumers, and wellness retailers in the nutraceutical space",
+      "pain_points": "Regulatory compliance, ingredient sourcing, market saturation, misinformation, trust building",
+      "monetization": "Product sales, subscription models, private labeling, affiliate programs",
+      "content_that_works": "Ingredient explainers, product comparisons, research roundups, dosage guides, quality certification guides",
+      "subtopics": [
+        "vitamins and minerals",
+        "protein supplements",
+        "herbal supplements",
+        "sports nutrition",
+        "nootropics",
+        "probiotics",
+        "supplement quality",
+        "regulatory compliance",
+        "ingredient sourcing",
+        "supplement stacks"
+      ]
+    }
+  },
+  {
+    "slug": "telemedicine",
+    "name": "Telemedicine",
+    "category": "Health & Wellness",
+    "context": {
+      "audience": "Healthcare providers, telehealth platforms, and medical practices offering virtual care",
+      "pain_points": "Regulatory compliance, patient experience, technology adoption, reimbursement, clinical limitations",
+      "monetization": "Virtual visit fees, platform subscriptions, enterprise licensing, value-based care",
+      "content_that_works": "Implementation guides, platform comparisons, compliance updates, patient experience tips, technology reviews",
+      "subtopics": [
+        "virtual consultations",
+        "telehealth platforms",
+        "remote monitoring",
+        "regulatory compliance",
+        "patient engagement",
+        "telehealth technology",
+        "prescribing regulations",
+        "insurance coverage",
+        "telehealth marketing",
+        "clinical workflows"
+      ]
+    }
+  },
+  {
+    "slug": "yoga",
+    "name": "Yoga",
+    "category": "Health & Wellness",
+    "context": {
+      "audience": "Yoga instructors, studio owners, and wellness brands serving practitioners of all levels",
+      "pain_points": "Studio overhead, online competition, teacher certification costs, client retention, seasonal attendance",
+      "monetization": "Class fees, memberships, online subscriptions, teacher training, retreats",
+      "content_that_works": "Pose guides, sequence tutorials, philosophy articles, business tips for instructors, retreat guides",
+      "subtopics": [
+        "yoga poses",
+        "yoga sequences",
+        "meditation integration",
+        "yoga for beginners",
+        "yoga teacher training",
+        "online yoga classes",
+        "yoga philosophy",
+        "restorative yoga",
+        "yoga business",
+        "yoga retreats"
+      ]
+    }
+  },
+  {
+    "slug": "meditation",
+    "name": "Meditation",
+    "category": "Health & Wellness",
+    "context": {
+      "audience": "Meditation teachers, mindfulness app developers, and wellness practitioners teaching presence",
+      "pain_points": "Consistency challenges, app market saturation, monetization, beginner intimidation, measuring progress",
+      "monetization": "App subscriptions, guided meditation sales, retreat fees, corporate programs",
+      "content_that_works": "Guided meditations, technique explainers, scientific research summaries, beginner guides, app comparisons",
+      "subtopics": [
+        "guided meditation",
+        "mindfulness techniques",
+        "meditation apps",
+        "breathwork",
+        "body scanning",
+        "walking meditation",
+        "meditation for sleep",
+        "meditation for anxiety",
+        "meditation retreats",
+        "meditation research"
+      ]
+    }
+  },
+  {
+    "slug": "physical-therapy",
+    "name": "Physical Therapy",
+    "category": "Health & Wellness",
+    "context": {
+      "audience": "Physical therapists, rehabilitation clinics, and PT practice owners treating movement disorders",
+      "pain_points": "Insurance reimbursement, patient compliance, documentation burden, staffing, competition",
+      "monetization": "Patient sessions, cash-pay programs, telehealth PT, wellness programs, continuing education",
+      "content_that_works": "Exercise protocols, condition guides, recovery timelines, practice management tips, technology reviews",
+      "subtopics": [
+        "exercise prescription",
+        "manual therapy",
+        "sports rehabilitation",
+        "post-surgical recovery",
+        "telehealth PT",
+        "patient education",
+        "practice management",
+        "documentation",
+        "billing optimization",
+        "specialization"
+      ]
+    }
+  },
+  {
+    "slug": "weight-loss",
+    "name": "Weight Loss",
+    "category": "Health & Wellness",
+    "context": {
+      "audience": "Weight loss coaches, health professionals, and wellness programs helping clients lose weight sustainably",
+      "pain_points": "Sustainability, misinformation, emotional eating, plateaus, medical complexity",
+      "monetization": "Coaching programs, meal delivery, supplements, digital programs, group challenges",
+      "content_that_works": "Meal plans, success stories, myth debunking, exercise guides, mindset articles",
+      "subtopics": [
+        "calorie management",
+        "exercise for weight loss",
+        "behavioral change",
+        "meal planning",
+        "weight loss plateaus",
+        "body composition",
+        "intermittent fasting",
+        "metabolism",
+        "emotional eating",
+        "sustainable weight loss"
+      ]
+    }
+  },
+  {
+    "slug": "sports-medicine",
+    "name": "Sports Medicine",
+    "category": "Health & Wellness",
+    "context": {
+      "audience": "Sports medicine physicians, athletic trainers, and sports rehab clinics treating athletes",
+      "pain_points": "Return-to-play decisions, injury prevention, technology integration, athlete compliance, concussion management",
+      "monetization": "Clinical services, team contracts, performance assessments, rehab programs",
+      "content_that_works": "Injury prevention guides, rehabilitation protocols, sport-specific advice, technology reviews, research summaries",
+      "subtopics": [
+        "injury prevention",
+        "concussion management",
+        "rehabilitation protocols",
+        "performance optimization",
+        "sports nutrition",
+        "biomechanics",
+        "athletic taping",
+        "return-to-play criteria",
+        "overuse injuries",
+        "sports psychology"
+      ]
+    }
+  },
+  {
+    "slug": "functional-medicine",
+    "name": "Functional Medicine",
+    "category": "Health & Wellness",
+    "context": {
+      "audience": "Functional medicine practitioners, integrative health clinics, and root-cause-focused providers",
+      "pain_points": "Insurance coverage, patient education, testing costs, evidence debates, practice building",
+      "monetization": "Cash-pay consultations, lab testing, supplement dispensary, membership models",
+      "content_that_works": "Root cause explainers, lab test guides, protocol articles, patient success stories, practitioner training",
+      "subtopics": [
+        "root cause analysis",
+        "gut health",
+        "hormonal balance",
+        "detoxification",
+        "lab testing",
+        "nutrition protocols",
+        "supplements",
+        "autoimmune conditions",
+        "patient education",
+        "practice building"
+      ]
+    }
+  },
+  {
+    "slug": "skin-care",
+    "name": "Skin Care",
+    "category": "Health & Wellness",
+    "context": {
+      "audience": "Dermatologists, estheticians, and skincare brands helping consumers achieve healthy skin",
+      "pain_points": "Product overwhelm, misinformation, ingredient confusion, skin type matching, treatment costs",
+      "monetization": "Product sales, treatment services, consultations, brand partnerships, content creation",
+      "content_that_works": "Ingredient explainers, routine guides, product reviews, skin type guides, myth debunking",
+      "subtopics": [
+        "skincare routines",
+        "active ingredients",
+        "acne treatment",
+        "anti-aging",
+        "sunscreen",
+        "sensitive skin",
+        "professional treatments",
+        "clean beauty",
+        "skincare tools",
+        "seasonal skincare"
+      ]
+    }
+  },
+  {
+    "slug": "sleep-health",
+    "name": "Sleep Health",
+    "category": "Health & Wellness",
+    "context": {
+      "audience": "Sleep specialists, wellness brands, and health practitioners addressing sleep quality issues",
+      "pain_points": "Sleep disorder prevalence, technology disruption, inconsistent routines, medication reliance, screening gaps",
+      "monetization": "Sleep products, coaching programs, diagnostic services, app subscriptions",
+      "content_that_works": "Sleep hygiene guides, product reviews, disorder explainers, routine optimization tips, research summaries",
+      "subtopics": [
+        "sleep hygiene",
+        "insomnia management",
+        "sleep tracking",
+        "sleep environment",
+        "circadian rhythm",
+        "sleep disorders",
+        "napping",
+        "sleep supplements",
+        "sleep technology",
+        "sleep and mental health"
+      ]
+    }
+  },
+  {
+    "slug": "addiction-recovery",
+    "name": "Addiction Recovery",
+    "category": "Health & Wellness",
+    "context": {
+      "audience": "Addiction counselors, recovery centers, and support organizations helping individuals achieve sobriety",
+      "pain_points": "Relapse prevention, stigma, treatment access, family involvement, aftercare continuity",
+      "monetization": "Treatment services, insurance billing, sober living, outpatient programs, digital recovery tools",
+      "content_that_works": "Recovery guides, coping strategies, family resources, treatment comparisons, success stories",
+      "subtopics": [
+        "relapse prevention",
+        "treatment approaches",
+        "family support",
+        "sober living",
+        "medication-assisted treatment",
+        "group therapy",
+        "dual diagnosis",
+        "aftercare planning",
+        "recovery community",
+        "digital recovery tools"
+      ]
+    }
+  },
+  {
+    "slug": "womens-health",
+    "name": "Women's Health",
+    "category": "Health & Wellness",
+    "context": {
+      "audience": "Women's health practitioners, OB-GYN practices, and wellness brands serving women across life stages",
+      "pain_points": "Research gaps, hormonal complexity, access to care, stigma around topics, life-stage transitions",
+      "monetization": "Clinical services, digital health platforms, product sales, educational programs",
+      "content_that_works": "Condition guides, hormonal health articles, life-stage resources, provider directories, wellness tips",
+      "subtopics": [
+        "hormonal health",
+        "fertility",
+        "pregnancy wellness",
+        "menopause",
+        "pelvic floor health",
+        "breast health",
+        "reproductive health",
+        "menstrual health",
+        "postpartum care",
+        "preventive screenings"
+      ]
+    }
+  },
+  {
+    "slug": "mens-health",
+    "name": "Men's Health",
+    "category": "Health & Wellness",
+    "context": {
+      "audience": "Men's health practitioners, wellness brands, and health platforms addressing men's unique health needs",
+      "pain_points": "Stigma around help-seeking, preventive care avoidance, mental health barriers, hormonal changes, fitness injuries",
+      "monetization": "Telehealth consultations, supplement sales, fitness programs, health screenings",
+      "content_that_works": "Health guides, fitness programs, mental health resources, nutrition plans, preventive care checklists",
+      "subtopics": [
+        "testosterone health",
+        "prostate health",
+        "cardiovascular fitness",
+        "mental health",
+        "sexual health",
+        "hair loss",
+        "nutrition",
+        "preventive screenings",
+        "stress management",
+        "aging well"
+      ]
+    }
+  },
+  {
+    "slug": "senior-wellness",
+    "name": "Senior Wellness",
+    "category": "Health & Wellness",
+    "context": {
+      "audience": "Geriatric care providers, senior living communities, and wellness brands serving older adults",
+      "pain_points": "Mobility limitations, chronic condition management, social isolation, cognitive decline, caregiver burden",
+      "monetization": "Care services, wellness programs, assistive products, community memberships",
+      "content_that_works": "Exercise guides, nutrition for aging, cognitive health articles, safety checklists, caregiver resources",
+      "subtopics": [
+        "fall prevention",
+        "cognitive health",
+        "nutrition for seniors",
+        "mobility exercises",
+        "chronic disease management",
+        "social engagement",
+        "caregiver support",
+        "medication management",
+        "senior technology",
+        "end-of-life planning"
+      ]
+    }
+  },
+  {
+    "slug": "corporate-wellness",
+    "name": "Corporate Wellness",
+    "category": "Health & Wellness",
+    "context": {
+      "audience": "HR leaders, corporate wellness managers, and workplace health vendors serving employee populations",
+      "pain_points": "Engagement rates, ROI measurement, program diversity, remote workforce, budget justification",
+      "monetization": "Program licensing, per-employee pricing, wellness platform subscriptions, consulting",
+      "content_that_works": "Program design guides, ROI calculators, engagement strategies, vendor comparisons, wellness challenge templates",
+      "subtopics": [
+        "employee engagement",
+        "mental health programs",
+        "fitness challenges",
+        "nutrition programs",
+        "stress management",
+        "health screenings",
+        "wellness technology",
+        "remote wellness",
+        "wellness incentives",
+        "program measurement"
+      ]
+    }
+  },
+  {
+    "slug": "personal-finance",
+    "name": "Personal Finance",
+    "category": "Finance",
+    "context": {
+      "audience": "Individuals, families, and young professionals managing money and building financial literacy",
+      "pain_points": "Budgeting discipline, debt burden, savings consistency, financial literacy gaps, information overload",
+      "monetization": "Affiliate links, sponsored content, financial product referrals, courses, coaching",
+      "content_that_works": "Budget templates, savings strategies, debt payoff plans, financial calculators, beginner guides",
+      "subtopics": [
+        "budgeting methods",
+        "emergency funds",
+        "saving strategies",
+        "financial goals",
+        "money mindset",
+        "financial literacy",
+        "bank account optimization",
+        "automating finances",
+        "financial planning tools",
+        "money management apps"
+      ]
+    }
+  },
+  {
+    "slug": "investing",
+    "name": "Investing",
+    "category": "Finance",
+    "context": {
+      "audience": "Retail investors, aspiring traders, and wealth-builders learning to grow money through markets",
+      "pain_points": "Information asymmetry, emotional decision-making, fee awareness, portfolio construction, timing anxiety",
+      "monetization": "Newsletter subscriptions, brokerage referrals, course sales, advisory services",
+      "content_that_works": "Investment guides, market analysis, portfolio strategies, broker comparisons, educational series",
+      "subtopics": [
+        "stock investing",
+        "index funds",
+        "ETFs",
+        "dividend investing",
+        "growth vs value",
+        "portfolio diversification",
+        "investment research",
+        "brokerage platforms",
+        "dollar-cost averaging",
+        "risk management"
+      ]
+    }
+  },
+  {
+    "slug": "cryptocurrency",
+    "name": "Cryptocurrency",
+    "category": "Finance",
+    "context": {
+      "audience": "Crypto investors, DeFi enthusiasts, and blockchain developers navigating digital asset markets",
+      "pain_points": "Volatility, security risks, regulatory uncertainty, information overload, scam prevalence",
+      "monetization": "Exchange referrals, newsletter subscriptions, trading tools, educational content",
+      "content_that_works": "Coin analyses, wallet guides, security tutorials, DeFi explainers, regulatory updates",
+      "subtopics": [
+        "Bitcoin",
+        "Ethereum",
+        "DeFi protocols",
+        "crypto wallets",
+        "blockchain basics",
+        "crypto trading",
+        "NFTs",
+        "staking",
+        "crypto security",
+        "regulatory landscape"
+      ]
+    }
+  },
+  {
+    "slug": "insurance",
+    "name": "Insurance",
+    "category": "Finance",
+    "context": {
+      "audience": "Insurance seekers, policyholders, and insurance professionals navigating coverage options",
+      "pain_points": "Policy complexity, premium costs, coverage gaps, claims processes, comparison difficulty",
+      "monetization": "Insurance referrals, comparison tool commissions, educational content, lead generation",
+      "content_that_works": "Coverage guides, comparison articles, claims process walkthroughs, savings tips, policy explainers",
+      "subtopics": [
+        "health insurance",
+        "auto insurance",
+        "home insurance",
+        "life insurance",
+        "disability insurance",
+        "umbrella insurance",
+        "insurance comparisons",
+        "claims process",
+        "coverage optimization",
+        "insurance for businesses"
+      ]
+    }
+  },
+  {
+    "slug": "fintech",
+    "name": "Fintech",
+    "category": "Finance",
+    "context": {
+      "audience": "Fintech founders, investors, and financial professionals tracking innovation in financial services",
+      "pain_points": "Regulatory navigation, user trust, market saturation, legacy system integration, funding competition",
+      "monetization": "SaaS subscriptions, transaction fees, API licensing, consulting, investment",
+      "content_that_works": "Industry analyses, startup profiles, regulatory guides, technology deep dives, trend reports",
+      "subtopics": [
+        "digital banking",
+        "payment innovation",
+        "regtech",
+        "insurtech",
+        "lending platforms",
+        "open banking",
+        "embedded finance",
+        "blockchain finance",
+        "financial APIs",
+        "neobanks"
+      ]
+    }
+  },
+  {
+    "slug": "stock-trading",
+    "name": "Stock Trading",
+    "category": "Finance",
+    "context": {
+      "audience": "Active traders, day traders, and options traders seeking to profit from short-term market movements",
+      "pain_points": "Emotional trading, overtrading, risk management, platform selection, tax complexity",
+      "monetization": "Trading education, signal services, platform referrals, trading tools",
+      "content_that_works": "Trading strategies, technical analysis guides, platform reviews, risk management tips, market commentary",
+      "subtopics": [
+        "day trading",
+        "swing trading",
+        "options trading",
+        "technical analysis",
+        "chart patterns",
+        "risk management",
+        "trading platforms",
+        "position sizing",
+        "trading psychology",
+        "market scanners"
+      ]
+    }
+  },
+  {
+    "slug": "real-estate-investing",
+    "name": "Real Estate Investing",
+    "category": "Finance",
+    "context": {
+      "audience": "Real estate investors, landlords, and aspiring property owners building wealth through real estate",
+      "pain_points": "Capital requirements, property management, market timing, tenant issues, financing complexity",
+      "monetization": "Rental income, property appreciation, course sales, coaching, syndication",
+      "content_that_works": "Investment analysis guides, market reports, property management tips, financing strategies, case studies",
+      "subtopics": [
+        "rental properties",
+        "house flipping",
+        "REITs",
+        "commercial real estate",
+        "real estate syndication",
+        "property management",
+        "financing strategies",
+        "market analysis",
+        "tax strategies",
+        "vacation rentals"
+      ]
+    }
+  },
+  {
+    "slug": "retirement-planning",
+    "name": "Retirement Planning",
+    "category": "Finance",
+    "context": {
+      "audience": "Pre-retirees, retirement planners, and financial advisors helping clients prepare for retirement",
+      "pain_points": "Savings shortfalls, longevity risk, healthcare costs, Social Security complexity, withdrawal strategies",
+      "monetization": "Financial advisory fees, retirement planning tools, educational courses, product referrals",
+      "content_that_works": "Retirement calculators, savings guides, withdrawal strategy articles, Social Security guides, lifestyle planning",
+      "subtopics": [
+        "401(k) optimization",
+        "IRA strategies",
+        "Social Security",
+        "retirement income",
+        "healthcare in retirement",
+        "early retirement",
+        "pension planning",
+        "retirement budgeting",
+        "estate planning",
+        "retirement lifestyle"
+      ]
+    }
+  },
+  {
+    "slug": "debt-management",
+    "name": "Debt Management",
+    "category": "Finance",
+    "context": {
+      "audience": "Individuals in debt, credit counselors, and financial coaches helping people become debt-free",
+      "pain_points": "Overwhelm, interest burden, collection harassment, credit score impact, emotional stress",
+      "monetization": "Debt counseling fees, consolidation referrals, course sales, budgeting tool affiliates",
+      "content_that_works": "Payoff calculators, strategy comparisons, negotiation scripts, success stories, budgeting templates",
+      "subtopics": [
+        "debt snowball vs avalanche",
+        "debt consolidation",
+        "credit card debt",
+        "student loan debt",
+        "debt negotiation",
+        "bankruptcy guidance",
+        "debt-free living",
+        "interest reduction",
+        "collection defense",
+        "debt management plans"
+      ]
+    }
+  },
+  {
+    "slug": "credit-building",
+    "name": "Credit Building",
+    "category": "Finance",
+    "context": {
+      "audience": "Credit-builders, young adults, and individuals recovering from poor credit seeking to improve scores",
+      "pain_points": "Score confusion, limited history, errors on reports, predatory products, patience required",
+      "monetization": "Credit card referrals, credit monitoring affiliates, course sales, coaching",
+      "content_that_works": "Score improvement guides, credit card comparisons, dispute letter templates, credit-building strategies, myth debunking",
+      "subtopics": [
+        "credit score factors",
+        "credit reports",
+        "secured credit cards",
+        "credit disputes",
+        "credit utilization",
+        "authorized user strategies",
+        "credit monitoring",
+        "credit freezes",
+        "credit-builder loans",
+        "credit myths"
+      ]
+    }
+  },
+  {
+    "slug": "tax-planning",
+    "name": "Tax Planning",
+    "category": "Finance",
+    "context": {
+      "audience": "High-income earners, business owners, and tax professionals optimizing tax positions",
+      "pain_points": "Tax code complexity, changing regulations, missed deductions, estimated tax payments, audit risk",
+      "monetization": "Tax planning services, software referrals, educational content, consulting",
+      "content_that_works": "Tax strategy guides, deduction checklists, entity structure comparisons, year-end planning tips, regulatory updates",
+      "subtopics": [
+        "tax deductions",
+        "business entity selection",
+        "estimated taxes",
+        "tax-loss harvesting",
+        "retirement account strategies",
+        "capital gains planning",
+        "estate tax planning",
+        "state tax optimization",
+        "tax credits",
+        "audit preparation"
+      ]
+    }
+  },
+  {
+    "slug": "wealth-management",
+    "name": "Wealth Management",
+    "category": "Finance",
+    "context": {
+      "audience": "High-net-worth individuals, family offices, and wealth advisors managing complex financial portfolios",
+      "pain_points": "Tax efficiency, estate complexity, multi-generational planning, alternative investments, privacy",
+      "monetization": "AUM-based fees, family office services, alternative investment access, estate planning",
+      "content_that_works": "Investment strategies, tax optimization guides, estate planning articles, family governance, philanthropy guides",
+      "subtopics": [
+        "portfolio management",
+        "estate planning",
+        "tax optimization",
+        "alternative investments",
+        "family governance",
+        "philanthropic planning",
+        "risk management",
+        "trust structures",
+        "wealth transfer",
+        "family office services"
+      ]
+    }
+  },
+  {
+    "slug": "banking",
+    "name": "Banking",
+    "category": "Finance",
+    "context": {
+      "audience": "Consumers, small business owners, and financial professionals comparing banking products and services",
+      "pain_points": "Fee transparency, low interest rates, poor customer service, digital experience gaps, account complexity",
+      "monetization": "Account referrals, comparison tool commissions, sponsored reviews, educational content",
+      "content_that_works": "Account comparisons, fee analyses, savings optimization guides, digital banking reviews, business banking guides",
+      "subtopics": [
+        "high-yield savings",
+        "checking accounts",
+        "business banking",
+        "online banks",
+        "credit unions",
+        "banking fees",
+        "mobile banking",
+        "international banking",
+        "banking security",
+        "account bonuses"
+      ]
+    }
+  },
+  {
+    "slug": "budgeting",
+    "name": "Budgeting",
+    "category": "Finance",
+    "context": {
+      "audience": "Individuals, couples, and families creating and maintaining budgets to control spending",
+      "pain_points": "Consistency, tracking difficulty, partner alignment, unexpected expenses, lifestyle inflation",
+      "monetization": "App referrals, spreadsheet sales, coaching, course creation, affiliate partnerships",
+      "content_that_works": "Budget templates, app comparisons, method explainers, challenge ideas, savings strategies",
+      "subtopics": [
+        "budget methods",
+        "budgeting apps",
+        "expense tracking",
+        "envelope budgeting",
+        "zero-based budgeting",
+        "family budgeting",
+        "budget templates",
+        "irregular expenses",
+        "budget reviews",
+        "spending triggers"
+      ]
+    }
+  },
+  {
+    "slug": "student-loans",
+    "name": "Student Loans",
+    "category": "Finance",
+    "context": {
+      "audience": "Student loan borrowers, recent graduates, and parents navigating education financing and repayment",
+      "pain_points": "Repayment complexity, interest burden, forgiveness program confusion, refinancing decisions, income-driven plans",
+      "monetization": "Refinancing referrals, repayment tool affiliates, counseling services, educational content",
+      "content_that_works": "Repayment strategy guides, forgiveness program explainers, refinancing comparisons, calculators, policy updates",
+      "subtopics": [
+        "repayment strategies",
+        "loan forgiveness",
+        "refinancing",
+        "income-driven repayment",
+        "federal vs private loans",
+        "loan consolidation",
+        "PSLF program",
+        "student loan interest",
+        "deferment and forbearance",
+        "student loan legislation"
+      ]
+    }
+  },
+  {
+    "slug": "small-business-finance",
+    "name": "Small Business Finance",
+    "category": "Finance",
+    "context": {
+      "audience": "Small business owners, startup founders, and entrepreneurs managing business finances",
+      "pain_points": "Cash flow management, funding access, tax complexity, bookkeeping, financial planning",
+      "monetization": "Financial tool referrals, consulting, course sales, accounting service partnerships",
+      "content_that_works": "Cash flow guides, funding option comparisons, tax strategy articles, bookkeeping tutorials, financial planning templates",
+      "subtopics": [
+        "cash flow management",
+        "business loans",
+        "business credit",
+        "invoicing",
+        "payroll management",
+        "tax obligations",
+        "financial statements",
+        "funding options",
+        "profit margins",
+        "financial forecasting"
+      ]
+    }
+  },
+  {
+    "slug": "esg-investing",
+    "name": "ESG Investing",
+    "category": "Finance",
+    "context": {
+      "audience": "Socially conscious investors, ESG fund managers, and sustainability-focused financial professionals",
+      "pain_points": "Greenwashing, measurement inconsistency, performance concerns, data quality, regulatory evolution",
+      "monetization": "Fund referrals, ESG ratings tools, advisory services, research subscriptions",
+      "content_that_works": "ESG fund comparisons, impact measurement guides, regulatory updates, greenwashing spotlights, industry analyses",
+      "subtopics": [
+        "ESG ratings",
+        "sustainable funds",
+        "impact investing",
+        "green bonds",
+        "social investing",
+        "governance metrics",
+        "ESG reporting",
+        "climate investing",
+        "DEI investing",
+        "ESG regulation"
+      ]
+    }
+  },
+  {
+    "slug": "alternative-investments",
+    "name": "Alternative Investments",
+    "category": "Finance",
+    "context": {
+      "audience": "Accredited investors, family offices, and advisors diversifying beyond traditional stocks and bonds",
+      "pain_points": "Illiquidity, due diligence complexity, high minimums, fee structures, access barriers",
+      "monetization": "Platform referrals, advisory fees, educational content, fund placement",
+      "content_that_works": "Asset class explainers, platform comparisons, due diligence guides, performance analyses, regulatory updates",
+      "subtopics": [
+        "private equity",
+        "hedge funds",
+        "venture capital",
+        "real assets",
+        "collectibles",
+        "art investing",
+        "wine investing",
+        "farmland",
+        "private credit",
+        "crowdfunding platforms"
+      ]
+    }
+  },
+  {
+    "slug": "online-learning",
+    "name": "Online Learning",
+    "category": "Education",
+    "context": {
+      "audience": "Online learners, educators, and edtech platforms delivering education through digital channels",
+      "pain_points": "Completion rates, engagement, credential recognition, technology barriers, content quality",
+      "monetization": "Course sales, platform subscriptions, certificates, enterprise training, tutoring",
+      "content_that_works": "Platform comparisons, learning path guides, study tips, credential analyses, technology reviews",
+      "subtopics": [
+        "learning platforms",
+        "MOOC courses",
+        "microlearning",
+        "video-based learning",
+        "self-paced courses",
+        "learning management systems",
+        "digital credentials",
+        "learning communities",
+        "mobile learning",
+        "adaptive learning"
+      ]
+    }
+  },
+  {
+    "slug": "tutoring",
+    "name": "Tutoring",
+    "category": "Education",
+    "context": {
+      "audience": "Tutors, tutoring companies, and parents seeking academic support for students",
+      "pain_points": "Client acquisition, scheduling, pricing, student engagement, online vs in-person",
+      "monetization": "Hourly rates, package deals, group tutoring, online tutoring platforms",
+      "content_that_works": "Study techniques, subject guides, tutor marketing tips, platform comparisons, parent resources",
+      "subtopics": [
+        "math tutoring",
+        "reading tutoring",
+        "online tutoring platforms",
+        "group tutoring",
+        "tutor marketing",
+        "homework help",
+        "study skills",
+        "tutoring business",
+        "special needs tutoring",
+        "SAT/ACT tutoring"
+      ]
+    }
+  },
+  {
+    "slug": "edtech",
+    "name": "EdTech",
+    "category": "Education",
+    "context": {
+      "audience": "EdTech founders, education investors, and school administrators adopting educational technology",
+      "pain_points": "School procurement, teacher adoption, ROI measurement, student data privacy, integration complexity",
+      "monetization": "School/district licensing, freemium models, API access, sponsored content, consulting",
+      "content_that_works": "Product reviews, implementation guides, ROI analyses, privacy compliance articles, trend reports",
+      "subtopics": [
+        "classroom technology",
+        "learning analytics",
+        "student engagement tools",
+        "assessment platforms",
+        "virtual classrooms",
+        "AI in education",
+        "gamification",
+        "digital textbooks",
+        "educational data",
+        "teacher tools"
+      ]
+    }
+  },
+  {
+    "slug": "certification-prep",
+    "name": "Certification Prep",
+    "category": "Education",
+    "context": {
+      "audience": "Professionals pursuing industry certifications and career advancement through credentials",
+      "pain_points": "Study time management, exam anxiety, material quality, cost, recertification requirements",
+      "monetization": "Study materials, practice exams, bootcamps, coaching, study group facilitation",
+      "content_that_works": "Study guides, practice exams, exam tips, certification comparisons, career impact analyses",
+      "subtopics": [
+        "IT certifications",
+        "project management certs",
+        "cloud certifications",
+        "security certifications",
+        "professional certifications",
+        "study planning",
+        "practice exams",
+        "exam strategies",
+        "continuing education",
+        "certification ROI"
+      ]
+    }
+  },
+  {
+    "slug": "language-learning",
+    "name": "Language Learning",
+    "category": "Education",
+    "context": {
+      "audience": "Language learners, polyglots, and language educators across self-study and classroom settings",
+      "pain_points": "Consistency, speaking practice, plateau frustration, method confusion, motivation",
+      "monetization": "App subscriptions, tutoring sessions, course sales, textbook affiliates, immersion programs",
+      "content_that_works": "Method comparisons, vocabulary guides, grammar explanations, cultural context articles, app reviews",
+      "subtopics": [
+        "language apps",
+        "immersion methods",
+        "vocabulary building",
+        "grammar guides",
+        "speaking practice",
+        "language exchange",
+        "translation tools",
+        "language certifications",
+        "bilingual education",
+        "language learning for kids"
+      ]
+    }
+  },
+  {
+    "slug": "stem-education",
+    "name": "STEM Education",
+    "category": "Education",
+    "context": {
+      "audience": "STEM educators, parents, and organizations promoting science, technology, engineering, and math learning",
+      "pain_points": "Engagement challenges, resource access, equity gaps, teacher preparation, curriculum design",
+      "monetization": "Curriculum sales, workshop fees, educational kits, platform subscriptions, grants",
+      "content_that_works": "Project ideas, curriculum guides, resource roundups, career path articles, equity-focused strategies",
+      "subtopics": [
+        "coding for kids",
+        "robotics education",
+        "science experiments",
+        "math enrichment",
+        "engineering challenges",
+        "STEM careers",
+        "STEM equity",
+        "hands-on learning",
+        "STEM competitions",
+        "teacher resources"
+      ]
+    }
+  },
+  {
+    "slug": "test-preparation",
+    "name": "Test Preparation",
+    "category": "Education",
+    "context": {
+      "audience": "Students, parents, and test prep companies preparing for standardized exams and entrance tests",
+      "pain_points": "Test anxiety, score plateaus, study discipline, material overload, timing strategies",
+      "monetization": "Prep courses, practice tests, tutoring, study materials, app subscriptions",
+      "content_that_works": "Study schedules, practice questions, strategy guides, score improvement stories, test format explainers",
+      "subtopics": [
+        "SAT prep",
+        "ACT prep",
+        "GRE prep",
+        "GMAT prep",
+        "LSAT prep",
+        "MCAT prep",
+        "test-taking strategies",
+        "study schedules",
+        "practice tests",
+        "score analysis"
+      ]
+    }
+  },
+  {
+    "slug": "college-admissions",
+    "name": "College Admissions",
+    "category": "Education",
+    "context": {
+      "audience": "High school students, parents, and college counselors navigating the university application process",
+      "pain_points": "Application complexity, essay anxiety, financial aid confusion, school selection, timeline stress",
+      "monetization": "Counseling services, essay review, application courses, college match tools",
+      "content_that_works": "Application guides, essay examples, financial aid explainers, school profiles, timeline checklists",
+      "subtopics": [
+        "application essays",
+        "college selection",
+        "financial aid",
+        "scholarships",
+        "recommendation letters",
+        "extracurricular strategy",
+        "interview preparation",
+        "application timeline",
+        "early decision",
+        "transfer admissions"
+      ]
+    }
+  },
+  {
+    "slug": "homeschooling",
+    "name": "Homeschooling",
+    "category": "Education",
+    "context": {
+      "audience": "Homeschooling parents, family educators, and curriculum providers serving home-educated students",
+      "pain_points": "Curriculum selection, socialization concerns, time management, regulatory compliance, teaching confidence",
+      "monetization": "Curriculum sales, co-op fees, tutoring, resource subscriptions, workshop fees",
+      "content_that_works": "Curriculum reviews, scheduling guides, socialization strategies, state law guides, teaching tips",
+      "subtopics": [
+        "curriculum selection",
+        "homeschool methods",
+        "socialization",
+        "state regulations",
+        "homeschool co-ops",
+        "record keeping",
+        "homeschool scheduling",
+        "special needs homeschooling",
+        "high school homeschooling",
+        "homeschool resources"
+      ]
+    }
+  },
+  {
+    "slug": "corporate-training",
+    "name": "Corporate Training",
+    "category": "Education",
+    "context": {
+      "audience": "L&D professionals, training companies, and HR teams developing employee skills programs",
+      "pain_points": "Engagement, ROI measurement, content relevance, technology adoption, scaling training",
+      "monetization": "Training contracts, LMS licensing, course creation, consulting, certification programs",
+      "content_that_works": "Program design guides, ROI frameworks, technology reviews, engagement strategies, industry benchmarks",
+      "subtopics": [
+        "onboarding programs",
+        "leadership training",
+        "compliance training",
+        "skills assessments",
+        "e-learning development",
+        "training ROI",
+        "blended learning",
+        "microlearning",
+        "training technology",
+        "instructor-led training"
+      ]
+    }
+  },
+  {
+    "slug": "professional-development",
+    "name": "Professional Development",
+    "category": "Education",
+    "context": {
+      "audience": "Career-focused professionals, managers, and organizations investing in employee growth and advancement",
+      "pain_points": "Time for learning, relevance, career path clarity, skill gap identification, credential value",
+      "monetization": "Workshops, coaching, certification programs, membership communities, course sales",
+      "content_that_works": "Skill development guides, career path articles, learning resource roundups, networking strategies, goal-setting frameworks",
+      "subtopics": [
+        "skill development",
+        "career advancement",
+        "networking",
+        "mentorship",
+        "leadership skills",
+        "public speaking",
+        "time management",
+        "executive education",
+        "industry conferences",
+        "professional reading"
+      ]
+    }
+  },
+  {
+    "slug": "coding-bootcamps",
+    "name": "Coding Bootcamps",
+    "category": "Education",
+    "context": {
+      "audience": "Career changers, aspiring developers, and bootcamp operators offering intensive coding education",
+      "pain_points": "Bootcamp selection, cost justification, job placement rates, curriculum quality, learning pace",
+      "monetization": "Tuition, income share agreements, corporate training, prep courses, career services",
+      "content_that_works": "Bootcamp comparisons, student reviews, curriculum breakdowns, job placement data, learning path guides",
+      "subtopics": [
+        "bootcamp selection",
+        "web development bootcamps",
+        "data science bootcamps",
+        "part-time bootcamps",
+        "online bootcamps",
+        "bootcamp financing",
+        "job placement",
+        "portfolio building",
+        "interview prep",
+        "bootcamp alternatives"
+      ]
+    }
+  },
+  {
+    "slug": "special-education",
+    "name": "Special Education",
+    "category": "Education",
+    "context": {
+      "audience": "Special education teachers, parents of children with disabilities, and inclusion advocates",
+      "pain_points": "IEP navigation, resource scarcity, inclusion challenges, behavioral management, parent communication",
+      "monetization": "Resource sales, consulting, training workshops, assistive technology, tutoring",
+      "content_that_works": "IEP guides, strategy articles, resource roundups, assistive technology reviews, advocacy guides",
+      "subtopics": [
+        "IEP development",
+        "behavior management",
+        "assistive technology",
+        "inclusive education",
+        "learning disabilities",
+        "autism support",
+        "speech therapy",
+        "occupational therapy",
+        "transition planning",
+        "parent advocacy"
+      ]
+    }
+  },
+  {
+    "slug": "early-childhood",
+    "name": "Early Childhood",
+    "category": "Education",
+    "context": {
+      "audience": "Early childhood educators, daycare operators, and parents of young children (0-8 years)",
+      "pain_points": "Developmental milestones, behavior management, parent communication, regulatory compliance, curriculum design",
+      "monetization": "Program fees, curriculum sales, training workshops, educational materials, consulting",
+      "content_that_works": "Activity ideas, developmental guides, classroom management tips, parent resources, curriculum frameworks",
+      "subtopics": [
+        "developmental milestones",
+        "play-based learning",
+        "classroom management",
+        "literacy development",
+        "STEM for young children",
+        "social-emotional learning",
+        "parent engagement",
+        "assessment methods",
+        "outdoor education",
+        "creative arts"
+      ]
+    }
+  },
+  {
+    "slug": "higher-education",
+    "name": "Higher Education",
+    "category": "Education",
+    "context": {
+      "audience": "University administrators, faculty, and higher ed professionals managing academic institutions",
+      "pain_points": "Enrollment declines, funding pressures, student retention, technology adoption, institutional relevance",
+      "monetization": "Tuition, research grants, online program revenue, consulting, continuing education",
+      "content_that_works": "Enrollment strategies, retention analyses, technology reviews, policy discussions, best practice guides",
+      "subtopics": [
+        "enrollment management",
+        "student retention",
+        "online programs",
+        "academic technology",
+        "faculty development",
+        "student success",
+        "institutional research",
+        "accreditation",
+        "campus operations",
+        "student engagement"
+      ]
+    }
+  },
+  {
+    "slug": "trade-schools",
+    "name": "Trade Schools",
+    "category": "Education",
+    "context": {
+      "audience": "Trade school administrators, prospective students, and workforce development organizations",
+      "pain_points": "Enrollment marketing, employer partnerships, curriculum currency, student financing, job placement",
+      "monetization": "Tuition, employer partnerships, certification programs, continuing education, equipment sales",
+      "content_that_works": "Trade comparisons, career outcome data, program spotlights, financial aid guides, industry trend articles",
+      "subtopics": [
+        "skilled trades",
+        "apprenticeships",
+        "trade certifications",
+        "welding programs",
+        "electrician training",
+        "HVAC training",
+        "plumbing courses",
+        "automotive training",
+        "construction management",
+        "career placement"
+      ]
+    }
+  },
+  {
+    "slug": "study-abroad",
+    "name": "Study Abroad",
+    "category": "Education",
+    "context": {
+      "audience": "Students considering international study, study abroad providers, and university international offices",
+      "pain_points": "Cost concerns, safety worries, credit transfer, culture shock, program selection",
+      "monetization": "Program fees, travel insurance referrals, housing partnerships, language courses, advisory services",
+      "content_that_works": "Destination guides, packing lists, budget planners, culture adjustment tips, program comparisons",
+      "subtopics": [
+        "program selection",
+        "study abroad destinations",
+        "funding and scholarships",
+        "visa requirements",
+        "cultural adjustment",
+        "housing abroad",
+        "safety tips",
+        "credit transfer",
+        "language preparation",
+        "internships abroad"
+      ]
+    }
+  },
+  {
+    "slug": "educational-games",
+    "name": "Educational Games",
+    "category": "Education",
+    "context": {
+      "audience": "Game developers, educators, and parents using game-based learning to engage students",
+      "pain_points": "Engagement vs learning balance, age appropriateness, screen time concerns, assessment integration, cost",
+      "monetization": "Game sales, subscriptions, in-app purchases, licensing to schools, advertising",
+      "content_that_works": "Game reviews, age-appropriate guides, learning outcome analyses, development tutorials, gamification strategies",
+      "subtopics": [
+        "math games",
+        "reading games",
+        "science games",
+        "coding games",
+        "puzzle games",
+        "gamification",
+        "game-based learning",
+        "educational apps",
+        "board games for learning",
+        "game design for education"
+      ]
+    }
+  },
+  {
+    "slug": "restaurants",
+    "name": "Restaurants",
+    "category": "Local Business",
+    "context": {
+      "audience": "Restaurant owners, chefs, and hospitality managers running dining establishments",
+      "pain_points": "Labor costs, food waste, online reviews, delivery margins, seasonal fluctuations",
+      "monetization": "Dine-in revenue, delivery, catering, private events, merchandise",
+      "content_that_works": "Menu engineering tips, marketing strategies, operations guides, technology reviews, staff management",
+      "subtopics": [
+        "menu engineering",
+        "restaurant marketing",
+        "staff management",
+        "food cost control",
+        "online ordering",
+        "restaurant technology",
+        "customer experience",
+        "health inspections",
+        "restaurant design",
+        "catering operations"
+      ]
+    }
+  },
+  {
+    "slug": "salons",
+    "name": "Salons",
+    "category": "Local Business",
+    "context": {
+      "audience": "Salon owners, hairstylists, and beauty professionals running hair and beauty businesses",
+      "pain_points": "Client retention, no-shows, pricing, product sales, hiring stylists",
+      "monetization": "Service fees, product retail, memberships, gift cards, training classes",
+      "content_that_works": "Marketing strategies, client retention tips, pricing guides, social media strategies, business management",
+      "subtopics": [
+        "client retention",
+        "salon marketing",
+        "booking systems",
+        "salon pricing",
+        "product recommendations",
+        "social media for salons",
+        "staff recruitment",
+        "salon design",
+        "retail sales",
+        "customer loyalty"
+      ]
+    }
+  },
+  {
+    "slug": "home-services",
+    "name": "Home Services",
+    "category": "Local Business",
+    "context": {
+      "audience": "Home service providers, handymen, and general contractors serving residential customers",
+      "pain_points": "Lead generation, seasonal demand, pricing transparency, customer trust, scheduling",
+      "monetization": "Service fees, maintenance contracts, referral programs, upselling additional services",
+      "content_that_works": "Service guides, pricing estimators, DIY vs pro comparisons, marketing tips, customer trust strategies",
+      "subtopics": [
+        "lead generation",
+        "pricing strategies",
+        "customer reviews",
+        "scheduling software",
+        "service areas",
+        "seasonal marketing",
+        "insurance requirements",
+        "licensing",
+        "fleet management",
+        "customer communication"
+      ]
+    }
+  },
+  {
+    "slug": "retail-stores",
+    "name": "Retail Stores",
+    "category": "Local Business",
+    "context": {
+      "audience": "Retail shop owners, boutique operators, and brick-and-mortar merchants competing in local markets",
+      "pain_points": "Foot traffic decline, online competition, inventory management, staffing, visual merchandising",
+      "monetization": "Product sales, loyalty programs, online store expansion, events, consignment",
+      "content_that_works": "Visual merchandising tips, local marketing strategies, inventory guides, customer experience articles, POS comparisons",
+      "subtopics": [
+        "visual merchandising",
+        "local SEO",
+        "POS systems",
+        "inventory management",
+        "customer loyalty",
+        "store layout",
+        "retail marketing",
+        "seasonal displays",
+        "staff training",
+        "omnichannel retail"
+      ]
+    }
+  },
+  {
+    "slug": "auto-repair",
+    "name": "Auto Repair",
+    "category": "Local Business",
+    "context": {
+      "audience": "Auto repair shop owners, mechanics, and automotive service managers serving vehicle owners",
+      "pain_points": "Customer trust, technician shortage, part sourcing, digital marketing, pricing transparency",
+      "monetization": "Repair services, maintenance packages, parts markup, fleet accounts, inspections",
+      "content_that_works": "Maintenance guides, pricing transparency articles, marketing strategies, shop management tips, technology reviews",
+      "subtopics": [
+        "shop marketing",
+        "technician recruitment",
+        "diagnostic equipment",
+        "customer trust",
+        "pricing transparency",
+        "fleet services",
+        "shop management software",
+        "parts sourcing",
+        "warranty services",
+        "digital inspections"
+      ]
+    }
+  },
+  {
+    "slug": "landscaping",
+    "name": "Landscaping",
+    "category": "Local Business",
+    "context": {
+      "audience": "Landscapers, lawn care companies, and outdoor living professionals serving residential and commercial clients",
+      "pain_points": "Seasonal revenue, crew management, equipment costs, client acquisition, weather dependence",
+      "monetization": "Service contracts, maintenance plans, design fees, hardscape projects, seasonal cleanups",
+      "content_that_works": "Design inspiration, seasonal care guides, equipment reviews, business growth tips, pricing strategies",
+      "subtopics": [
+        "lawn care",
+        "landscape design",
+        "irrigation systems",
+        "hardscaping",
+        "tree services",
+        "seasonal maintenance",
+        "commercial landscaping",
+        "equipment management",
+        "crew management",
+        "snow removal"
+      ]
+    }
+  },
+  {
+    "slug": "cleaning-services",
+    "name": "Cleaning Services",
+    "category": "Local Business",
+    "context": {
+      "audience": "Cleaning company owners, janitorial services, and residential cleaning professionals",
+      "pain_points": "Employee turnover, pricing pressure, scheduling complexity, supply costs, quality consistency",
+      "monetization": "Recurring cleaning contracts, deep cleaning, move-in/out cleaning, commercial contracts",
+      "content_that_works": "Business startup guides, pricing strategies, marketing tips, employee management, quality checklists",
+      "subtopics": [
+        "residential cleaning",
+        "commercial cleaning",
+        "employee management",
+        "pricing models",
+        "cleaning supplies",
+        "scheduling systems",
+        "quality control",
+        "marketing strategies",
+        "insurance needs",
+        "green cleaning"
+      ]
+    }
+  },
+  {
+    "slug": "plumbing",
+    "name": "Plumbing",
+    "category": "Local Business",
+    "context": {
+      "audience": "Plumbing company owners, master plumbers, and plumbing contractors serving residential and commercial clients",
+      "pain_points": "Emergency calls, pricing disputes, apprentice training, marketing, seasonal demand shifts",
+      "monetization": "Service calls, maintenance agreements, remodeling projects, commercial contracts, water heater sales",
+      "content_that_works": "DIY guides, pricing transparency articles, business tips, marketing strategies, technology reviews",
+      "subtopics": [
+        "emergency plumbing",
+        "drain cleaning",
+        "water heater services",
+        "remodeling plumbing",
+        "commercial plumbing",
+        "plumbing marketing",
+        "apprentice training",
+        "plumbing technology",
+        "customer communication",
+        "pricing strategies"
+      ]
+    }
+  },
+  {
+    "slug": "electrical",
+    "name": "Electrical",
+    "category": "Local Business",
+    "context": {
+      "audience": "Electricians, electrical contractors, and electrical service companies serving homes and businesses",
+      "pain_points": "Safety liability, code compliance, customer education, pricing, competition from unlicensed",
+      "monetization": "Service calls, panel upgrades, EV charger installation, commercial contracts, maintenance plans",
+      "content_that_works": "Safety guides, code update articles, marketing strategies, business growth tips, technology trends",
+      "subtopics": [
+        "residential electrical",
+        "commercial electrical",
+        "EV charger installation",
+        "panel upgrades",
+        "electrical safety",
+        "code compliance",
+        "smart home wiring",
+        "generator installation",
+        "lighting design",
+        "electrical marketing"
+      ]
+    }
+  },
+  {
+    "slug": "hvac",
+    "name": "HVAC",
+    "category": "Local Business",
+    "context": {
+      "audience": "HVAC company owners, technicians, and heating/cooling contractors serving residential and commercial markets",
+      "pain_points": "Seasonal demand swings, technician shortage, equipment costs, energy efficiency regulations, customer trust",
+      "monetization": "Installation, maintenance contracts, emergency repairs, equipment sales, indoor air quality",
+      "content_that_works": "Maintenance tips, energy efficiency guides, equipment comparisons, business management, marketing strategies",
+      "subtopics": [
+        "heating systems",
+        "cooling systems",
+        "maintenance plans",
+        "energy efficiency",
+        "indoor air quality",
+        "ductwork",
+        "HVAC marketing",
+        "technician training",
+        "smart thermostats",
+        "commercial HVAC"
+      ]
+    }
+  },
+  {
+    "slug": "roofing",
+    "name": "Roofing",
+    "category": "Local Business",
+    "context": {
+      "audience": "Roofing contractors, roofing company owners, and storm restoration specialists",
+      "pain_points": "Weather dependence, insurance claims, lead generation, safety, material costs",
+      "monetization": "Roof installations, repairs, inspections, insurance restoration, commercial contracts",
+      "content_that_works": "Material comparisons, maintenance guides, insurance claim tips, marketing strategies, safety guides",
+      "subtopics": [
+        "roof replacement",
+        "roof repair",
+        "storm damage",
+        "roofing materials",
+        "insurance claims",
+        "roof inspections",
+        "commercial roofing",
+        "roofing marketing",
+        "safety procedures",
+        "gutter services"
+      ]
+    }
+  },
+  {
+    "slug": "pest-control",
+    "name": "Pest Control",
+    "category": "Local Business",
+    "context": {
+      "audience": "Pest control company owners, exterminators, and pest management professionals",
+      "pain_points": "Seasonal demand, customer retention, chemical regulations, reputation management, technician training",
+      "monetization": "Service plans, one-time treatments, commercial contracts, wildlife removal, termite bonds",
+      "content_that_works": "Pest identification guides, prevention tips, treatment comparisons, business growth strategies, marketing guides",
+      "subtopics": [
+        "residential pest control",
+        "commercial pest control",
+        "termite treatment",
+        "wildlife removal",
+        "bed bug treatment",
+        "pest prevention",
+        "green pest control",
+        "pest control marketing",
+        "regulatory compliance",
+        "seasonal pests"
+      ]
+    }
+  },
+  {
+    "slug": "moving-companies",
+    "name": "Moving Companies",
+    "category": "Local Business",
+    "context": {
+      "audience": "Moving company owners, relocation specialists, and logistics professionals serving residential and commercial moves",
+      "pain_points": "Seasonal demand, damage claims, pricing competition, crew reliability, online reviews",
+      "monetization": "Moving services, packing services, storage rentals, specialty moves, corporate relocation",
+      "content_that_works": "Moving checklists, pricing guides, packing tips, business management, marketing strategies",
+      "subtopics": [
+        "residential moving",
+        "commercial moving",
+        "long-distance moving",
+        "packing services",
+        "storage solutions",
+        "specialty moves",
+        "moving estimates",
+        "crew management",
+        "moving marketing",
+        "insurance and liability"
+      ]
+    }
+  },
+  {
+    "slug": "pet-services",
+    "name": "Pet Services",
+    "category": "Local Business",
+    "context": {
+      "audience": "Pet service business owners including groomers, sitters, walkers, and pet daycare operators",
+      "pain_points": "Scheduling, seasonal fluctuations, pet safety, pricing, customer trust",
+      "monetization": "Grooming, boarding, daycare, walking, training, pet sitting, retail products",
+      "content_that_works": "Pet care guides, business startup tips, marketing strategies, pricing guides, safety protocols",
+      "subtopics": [
+        "pet grooming",
+        "pet boarding",
+        "dog walking",
+        "pet daycare",
+        "pet training",
+        "pet sitting",
+        "pet photography",
+        "pet retail",
+        "pet health",
+        "pet business management"
+      ]
+    }
+  },
+  {
+    "slug": "photography-studios",
+    "name": "Photography Studios",
+    "category": "Local Business",
+    "context": {
+      "audience": "Studio photography business owners, portrait photographers, and creative studio operators",
+      "pain_points": "Booking consistency, pricing, equipment costs, client management, studio overhead",
+      "monetization": "Session fees, print sales, mini sessions, commercial shoots, studio rentals",
+      "content_that_works": "Marketing strategies, pricing guides, portfolio building, studio setup tips, client experience articles",
+      "subtopics": [
+        "portrait photography",
+        "studio lighting",
+        "client management",
+        "pricing packages",
+        "studio marketing",
+        "photo editing workflow",
+        "studio design",
+        "mini sessions",
+        "commercial photography",
+        "studio equipment"
+      ]
+    }
+  },
+  {
+    "slug": "fitness-studios",
+    "name": "Fitness Studios",
+    "category": "Local Business",
+    "context": {
+      "audience": "Boutique fitness studio owners, group fitness instructors, and gym operators serving local communities",
+      "pain_points": "Member retention, class scheduling, instructor turnover, pricing, competition from apps",
+      "monetization": "Memberships, class packs, personal training, retail, corporate wellness",
+      "content_that_works": "Retention strategies, marketing guides, class programming tips, pricing models, technology reviews",
+      "subtopics": [
+        "member retention",
+        "class scheduling",
+        "studio marketing",
+        "instructor management",
+        "pricing strategies",
+        "studio technology",
+        "group fitness programming",
+        "studio design",
+        "community building",
+        "hybrid classes"
+      ]
+    }
+  },
+  {
+    "slug": "daycare-centers",
+    "name": "Daycare Centers",
+    "category": "Local Business",
+    "context": {
+      "audience": "Daycare owners, childcare center directors, and early learning program administrators",
+      "pain_points": "Licensing compliance, staff turnover, parent communication, enrollment, safety protocols",
+      "monetization": "Tuition fees, extended care, summer programs, enrichment classes, drop-in care",
+      "content_that_works": "Compliance guides, parent communication tips, enrollment strategies, staff management, curriculum ideas",
+      "subtopics": [
+        "licensing requirements",
+        "staff management",
+        "parent communication",
+        "enrollment marketing",
+        "safety protocols",
+        "curriculum development",
+        "facility design",
+        "technology in childcare",
+        "nutrition programs",
+        "financial management"
+      ]
+    }
+  },
+  {
+    "slug": "event-venues",
+    "name": "Event Venues",
+    "category": "Local Business",
+    "context": {
+      "audience": "Event venue owners, wedding venue operators, and conference center managers hosting events",
+      "pain_points": "Seasonal booking, venue marketing, vendor coordination, pricing, client expectations",
+      "monetization": "Venue rental, catering, event coordination, vendor referrals, corporate bookings",
+      "content_that_works": "Venue marketing guides, event planning checklists, pricing strategies, vendor management, virtual tours",
+      "subtopics": [
+        "wedding venues",
+        "corporate event spaces",
+        "venue marketing",
+        "event coordination",
+        "vendor partnerships",
+        "venue pricing",
+        "venue design",
+        "booking management",
+        "event technology",
+        "seasonal events"
+      ]
+    }
+  },
+  {
+    "slug": "florists",
+    "name": "Florists",
+    "category": "Local Business",
+    "context": {
+      "audience": "Floral shop owners, event florists, and flower delivery businesses serving local customers",
+      "pain_points": "Perishability, seasonal demand, wire service dependency, online competition, pricing",
+      "monetization": "Arrangements, event floristry, subscriptions, delivery, workshops, weddings",
+      "content_that_works": "Arrangement guides, business tips, marketing strategies, seasonal trend reports, wedding floral planning",
+      "subtopics": [
+        "wedding floristry",
+        "event arrangements",
+        "delivery logistics",
+        "flower sourcing",
+        "floral design",
+        "shop marketing",
+        "seasonal flowers",
+        "subscription services",
+        "floral workshops",
+        "sustainable floristry"
+      ]
+    }
+  },
+  {
+    "slug": "bakeries",
+    "name": "Bakeries",
+    "category": "Local Business",
+    "context": {
+      "audience": "Bakery owners, pastry chefs, and home bakers turning passion into commercial baking businesses",
+      "pain_points": "Production scaling, ingredient costs, early hours, custom order management, food regulations",
+      "monetization": "Retail sales, custom orders, wholesale, catering, classes, online ordering",
+      "content_that_works": "Recipe development tips, business management guides, marketing strategies, production scaling, food safety",
+      "subtopics": [
+        "custom cakes",
+        "bread baking",
+        "pastry production",
+        "bakery marketing",
+        "food safety",
+        "production scaling",
+        "online ordering",
+        "wholesale baking",
+        "bakery design",
+        "specialty diets"
+      ]
+    }
+  }
+]

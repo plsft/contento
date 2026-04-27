@@ -1,67 +1,69 @@
 import { Command } from 'commander';
-import { createClient, ApiError } from '../api-client.js';
-import { output } from '../output.js';
-import { createSpinner } from '../ui/spinner.js';
+import chalk from 'chalk';
 
-interface Schema {
-  id: string;
-  name: string;
-  slug: string;
-  description?: string;
-  fieldsCount?: number;
-}
-
-interface SchemasResponse {
-  schemas: Schema[];
-}
+import { output, isJsonMode } from '../output.js';
+import { findSchemaBySlug, getAllSchemas } from '../lib/schema-store.js';
 
 export function registerSchemasCommand(program: Command): void {
   const schemas = program
     .command('schemas')
-    .description('View available content schemas');
+    .description('Browse the bundled content schemas');
 
-  // List schemas
+  // ── list ─────────────────────────────────────────────────────────────
   schemas
     .command('list')
-    .description('List all available schemas')
-    .action(async () => {
-      const spinner = createSpinner('Fetching schemas...').start();
-      try {
-        const client = createClient({ baseUrl: program.opts().apiUrl });
-        const data = await client.get<SchemasResponse>('/pseo/schemas');
-        spinner.stop();
+    .description('List all bundled content schemas')
+    .action(() => {
+      const all = getAllSchemas();
 
-        const schemaList = data.schemas ?? [];
-
-        if (schemaList.length === 0) {
-          output.info('No schemas found.');
-          return;
-        }
-
-        output.table(
-          ['ID', 'Name', 'Slug', 'Description', 'Fields'],
-          schemaList.map((s) => [
-            s.id,
-            s.name,
-            s.slug,
-            s.description ?? '',
-            s.fieldsCount ?? 0,
-          ]),
-        );
-      } catch (err) {
-        spinner.fail('Failed to fetch schemas');
-        handleError(err);
+      if (isJsonMode()) {
+        output.json(all);
+        return;
       }
-    });
-}
 
-function handleError(err: unknown): void {
-  if (err instanceof ApiError) {
-    output.error(`${err.message} (${err.code})`);
-  } else if (err instanceof Error) {
-    output.error(err.message);
-  } else {
-    output.error(String(err));
-  }
-  process.exit(1);
+      if (all.length === 0) {
+        output.info('No schemas available.');
+        return;
+      }
+
+      output.table(
+        ['Slug', 'Name', 'Title Pattern', 'Renderer'],
+        all.map((s) => [s.slug, s.name, s.titlePattern, s.rendererSlug]),
+      );
+    });
+
+  // ── view ─────────────────────────────────────────────────────────────
+  schemas
+    .command('view')
+    .description('View detailed information about a schema')
+    .argument('<slug>', 'Schema slug')
+    .action((slug: string) => {
+      const s = findSchemaBySlug(slug);
+      if (!s) {
+        output.error(`No schema found with slug "${slug}".`);
+        process.exit(1);
+      }
+
+      if (isJsonMode()) {
+        output.json(s);
+        return;
+      }
+
+      output.blank();
+      output.text(chalk.bold(s.name) + chalk.dim(` (${s.slug})`));
+      if (s.description) {
+        output.blank();
+        output.text(s.description);
+      }
+      output.blank();
+      output.text(chalk.cyan.bold('Title pattern: ') + s.titlePattern);
+      if (s.metaDescPattern) {
+        output.text(chalk.cyan.bold('Meta description pattern: ') + s.metaDescPattern);
+      }
+      output.text(chalk.cyan.bold('Renderer: ') + s.rendererSlug);
+      output.blank();
+      output.text(chalk.cyan.bold('Schema (JSON):'));
+      output.text(JSON.stringify(s.schemaJson, null, 2));
+      output.blank();
+    });
 }
