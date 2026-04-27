@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Collections & Generation — Contento pSEO</title>
+    <meta name="description" content="Create pSEO collections that combine schemas and niches to generate thousands of pages. Learn the generation pipeline, URL patterns, publishing modes, and monitoring." />
+    <script type="module" src="/src/main.js"></script>
+</head>
+<body class="bg-white text-gray-900 antialiased" x-data="{ mobileMenuOpen: false }">
+
+    <%nav-docs%>
+
+    <div class="max-w-[90rem] mx-auto flex">
+        <%sidebar-docs%>
+
+        <main class="flex-1 min-w-0 px-4 sm:px-6 lg:px-12 py-12">
+            <div class="max-w-3xl">
+
+                <!-- Breadcrumb -->
+                <div class="flex items-center gap-2 text-sm text-gray-400 mb-8">
+                    <a href="index.html" class="hover:text-gray-600">Docs</a>
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                    <span class="text-gray-600">Collections &amp; Generation</span>
+                </div>
+
+                <h1 style="font-size: 2.25rem; font-weight: 700; color: #1A1A1A; margin-bottom: 0.5rem; letter-spacing: -0.02em;">Collections &amp; Generation</h1>
+                <p style="font-size: 1.125rem; color: #6B7280; margin-bottom: 2.5rem;">Collections are the unit of work in pSEO: a schema + niches + templates that produce pages at scale.</p>
+
+                <!-- What is a collection -->
+                <h2>What Is a Collection?</h2>
+
+                <p>A <strong>collection</strong> is a generation job definition that combines a content schema with one or more niches to produce
+                pages. When you run a collection, the engine cross-multiplies your selected niches and their subtopics, deduplicates
+                against existing pages, queues AI generation jobs, validates the output, and publishes the results.</p>
+
+                <p>Each collection belongs to a project and stores:</p>
+                <ul>
+                    <li>A reference to a <strong>content schema</strong> (what structure to generate)</li>
+                    <li>A set of <strong>niches</strong> (who the content targets)</li>
+                    <li>A <strong>URL pattern</strong> (how page URLs are built)</li>
+                    <li>A <strong>title template</strong> (deterministic page titles)</li>
+                    <li><strong>Publishing mode</strong> (when pages go live)</li>
+                </ul>
+
+                <!-- Creating a collection -->
+                <h2>Creating a Collection</h2>
+
+                <p>The admin UI provides a multi-step wizard:</p>
+
+                <ol>
+                    <li><strong>Choose a schema</strong> &mdash; Select from the 10 built-in schemas or your custom ones.</li>
+                    <li><strong>Select niches</strong> &mdash; Pick one or more niches. Each niche's subtopics expand the page count.</li>
+                    <li><strong>Configure URL pattern</strong> &mdash; Define the URL slug template using tokens.</li>
+                    <li><strong>Set title template</strong> &mdash; Inherited from the schema's TitlePattern, but can be overridden.</li>
+                    <li><strong>Choose publishing mode</strong> &mdash; Immediate, batched, scheduled, or manual.</li>
+                    <li><strong>Review &amp; generate</strong> &mdash; Preview the expected page count and confirm.</li>
+                </ol>
+
+                <p>Via the CLI:</p>
+
+<pre><span class="function">contento</span> collections generate \
+    --project proj_8f3a... \
+    --schema <span class="string">"idea-list"</span> \
+    --niches <span class="string">"niche_01...,niche_02..."</span> \
+    --workers <span class="number">10</span>
+
+<span class="output">  Generating 40 pages across 2 niches...</span>
+<span class="output">  [00:26] &#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608; 40/40 (100%)</span>
+<span class="output">  Validation: 38 passed, 2 retried, 0 failed</span></pre>
+
+                <!-- URL pattern tokens -->
+                <h2>URL Pattern Tokens</h2>
+
+                <p>The <code>urlPattern</code> field accepts these tokens, which are replaced for each generated page:</p>
+
+                <table>
+                    <thead><tr><th>Token</th><th>Replaced With</th><th>Example Output</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>{niche}</code></td><td>Niche slug</td><td><code>developer-tools</code></td></tr>
+                        <tr><td><code>{subtopic}</code></td><td>Subtopic slug (kebab-case)</td><td><code>ci-cd-pipelines</code></td></tr>
+                        <tr><td><code>{year}</code></td><td>Current year</td><td><code>2026</code></td></tr>
+                        <tr><td><code>{count}</code></td><td>Item count from schema</td><td><code>10</code></td></tr>
+                    </tbody>
+                </table>
+
+                <p>Example: <code>/{niche}/{subtopic}-ideas-{year}</code> produces <code>/developer-tools/ci-cd-pipelines-ideas-2026</code>.</p>
+
+                <!-- Title template -->
+                <h2>Title Template</h2>
+
+                <p>Titles are <strong>deterministic and never AI-generated</strong>. The title template uses the same tokens as the URL pattern.
+                This ensures every page has a SERP-optimized title that matches the user's search intent exactly.</p>
+
+                <p>Example: <code>{count} {subtopic} Ideas for {year}</code> produces <code>10 CI/CD Pipelines Ideas for 2026</code>.</p>
+
+                <div class="callout callout-info">
+                    <strong>Why deterministic titles?</strong> AI-generated titles tend to be inconsistent, overly creative, or misaligned
+                    with search intent. By locking down the title pattern, you ensure predictable CTR and a consistent brand voice across
+                    thousands of pages.
+                </div>
+
+                <!-- Subtopic expansion -->
+                <h2>Subtopic Expansion</h2>
+
+                <p>When a collection runs, each niche contributes its list of subtopics. The engine forms a cross-product:</p>
+
+<pre><span class="comment"># 2 niches with 20 subtopics each = 40 pages</span>
+niche: Developer Tools   (20 subtopics)
+niche: DevOps            (20 subtopics)
+schema: Idea List
+= 40 unique pages</pre>
+
+                <p>Before queuing, the engine deduplicates against all existing pages in the project to avoid generating duplicate content
+                for subtopics already covered.</p>
+
+                <!-- Generation pipeline -->
+                <h2>Generation Pipeline</h2>
+
+                <p>The pipeline runs these stages in order:</p>
+
+                <ol>
+                    <li>
+                        <strong>Expand</strong> &mdash; Cross-multiply selected niches with their subtopics to produce a candidate page list.
+                    </li>
+                    <li>
+                        <strong>Deduplicate</strong> &mdash; Compare candidate URLs against existing pages in the project. Skip already-generated pages.
+                    </li>
+                    <li>
+                        <strong>Queue</strong> &mdash; Add remaining candidates to the Redis-backed job queue.
+                    </li>
+                    <li>
+                        <strong>Generate</strong> &mdash; Concurrent workers (default: 10) dequeue jobs and call the AI with the assembled prompt (niche context + schema + prompt template).
+                    </li>
+                    <li>
+                        <strong>Validate</strong> &mdash; Check the AI output against schema validation rules (item counts, lengths, required fields, JSON validity).
+                    </li>
+                    <li>
+                        <strong>Publish</strong> &mdash; Valid pages are rendered to HTML using the schema's renderer and published according to the collection's publishing mode.
+                    </li>
+                    <li>
+                        <strong>Link</strong> &mdash; Internal links are injected between related pages within the project for SEO interlinking.
+                    </li>
+                </ol>
+
+                <!-- Concurrent workers -->
+                <h2>Concurrent Workers</h2>
+
+                <p>The <code>concurrentWorkers</code> setting controls how many AI generation jobs run in parallel. The default is
+                <strong>10</strong>. You can increase this to speed up large batches or decrease it to stay within AI API rate limits.</p>
+
+                <table>
+                    <thead><tr><th>Setting</th><th>Pages/Hour (approx.)</th><th>Use Case</th></tr></thead>
+                    <tbody>
+                        <tr><td>5</td><td>~150</td><td>Conservative, low API rate limit</td></tr>
+                        <tr><td>10 (default)</td><td>~300</td><td>Standard generation</td></tr>
+                        <tr><td>20</td><td>~600</td><td>Large batch, high API tier</td></tr>
+                    </tbody>
+                </table>
+
+                <!-- Retry logic -->
+                <h2>Retry Logic</h2>
+
+                <p>If AI generation or validation fails for a page:</p>
+
+                <ol>
+                    <li>The generator retries <strong>once</strong> with an adjusted prompt (including the validation error message).</li>
+                    <li>If the retry also fails, the page is marked as <code>failed</code> and logged with the error details.</li>
+                    <li>Failed pages appear in the admin dashboard for manual review and re-generation.</li>
+                </ol>
+
+                <!-- Monitoring progress -->
+                <h2>Monitoring Progress</h2>
+
+                <p>The CLI shows a real-time progress bar during generation. For machine-readable output, use <code>--json</code>
+                to get NDJSON streaming:</p>
+
+<pre><span class="function">contento</span> collections generate --project proj_8f3a... --schema <span class="string">"idea-list"</span> --json
+
+<span class="output">{"type":"progress","current":12,"total":40,"done":false}</span>
+<span class="output">{"type":"progress","current":28,"total":40,"done":false}</span>
+<span class="output">{"type":"progress","current":40,"total":40,"done":true}</span></pre>
+
+                <!-- Publishing modes -->
+                <h2>Publishing Modes</h2>
+
+                <table>
+                    <thead><tr><th>Mode</th><th>Behavior</th></tr></thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Immediate</strong></td>
+                            <td>Pages go live as soon as they pass validation. Best for initial launches.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Batched</strong></td>
+                            <td>Pages accumulate and are published in configurable batches (e.g., 50 per day). Avoids triggering Google's "spam burst" detection.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Scheduled</strong></td>
+                            <td>All pages in the collection are published at a specified future date/time.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Manual</strong></td>
+                            <td>Pages are generated but held in draft. You review and publish individually or in bulk.</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="callout callout-tip">
+                    <strong>Recommended:</strong> Use <strong>batched</strong> mode for large collections (500+ pages).
+                    Publishing too many pages at once can trigger Google's indexing delays.
+                    Drip-feeding 50-100 pages per day produces better indexing results.
+                </div>
+
+                <!-- CLI Reference -->
+                <h2>CLI Commands</h2>
+
+                <table>
+                    <thead><tr><th>Command</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>contento collections list</code></td><td>List all collections for a project</td></tr>
+                        <tr><td><code>contento collections create</code></td><td>Create a new collection</td></tr>
+                        <tr><td><code>contento collections generate</code></td><td>Create a collection and start generation</td></tr>
+                        <tr><td><code>contento publish</code></td><td>Publish pages from a collection</td></tr>
+                    </tbody>
+                </table>
+
+                <p>See the <a href="cli.html" style="color: #3D5A80; font-weight: 500;">CLI reference</a> for all available flags and options.</p>
+
+            </div>
+        </main>
+    </div>
+
+    <%footer-docs%>
+
+</body>
+</html>

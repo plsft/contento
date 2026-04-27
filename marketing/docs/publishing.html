@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Publishing — Contento Docs</title>
+    <meta name="description" content="Four publish modes in Contento pSEO: immediate, batched, scheduled, and manual. Internal linking pass, sitemap rebuild, and progressive rollout strategies." />
+    <script type="module" src="/src/main.js"></script>
+</head>
+<body class="bg-white text-gray-900 antialiased" x-data="{ mobileMenuOpen: false }">
+
+    <%nav-docs%>
+
+    <div class="max-w-[90rem] mx-auto flex">
+        <%sidebar-docs%>
+
+        <main class="flex-1 min-w-0 px-4 sm:px-6 lg:px-12 py-12">
+            <div class="max-w-3xl">
+
+                <!-- Breadcrumb -->
+                <div class="flex items-center gap-2 text-sm text-gray-400 mb-8">
+                    <a href="index.html" class="hover:text-gray-600">Docs</a>
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                    <span class="text-gray-600">Publishing</span>
+                </div>
+
+                <h1 style="font-size: 2.25rem; font-weight: 700; color: #1A1A1A; margin-bottom: 0.5rem; letter-spacing: -0.02em;">Publishing</h1>
+                <p style="font-size: 1.125rem; color: #6B7280; margin-bottom: 2.5rem;">Four publish modes, internal linking, and sitemap generation.</p>
+
+                <!-- Overview -->
+                <h2>Overview</h2>
+
+                <p>Publishing takes generated pages from the <code>ready</code> state and makes them live on your subdomain. Every publish operation triggers two automatic passes:</p>
+
+                <ol>
+                    <li><strong>Internal linking pass</strong> &mdash; Cross-links related pages within the same niche</li>
+                    <li><strong>Sitemap rebuild</strong> &mdash; Regenerates <code>sitemap.xml</code> with all published URLs</li>
+                </ol>
+
+                <p>Additionally, each page receives JSON-LD structured data (Article + BreadcrumbList), canonical URLs, Open Graph meta tags, and your custom chrome (header/footer/CSS).</p>
+
+                <!-- Four modes -->
+                <h2>Publish Modes</h2>
+
+                <table>
+                    <thead><tr><th>Mode</th><th>Behavior</th><th>Best For</th></tr></thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Immediate</strong></td>
+                            <td>All ready pages are published at once</td>
+                            <td>First batch, small sites, testing</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Batched</strong></td>
+                            <td>Publish in fixed-size batches (e.g., 50 pages per batch)</td>
+                            <td>Progressive rollout, indexing monitoring</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Scheduled</strong></td>
+                            <td>Publish batches on a cron schedule (e.g., daily at 6am)</td>
+                            <td>Drip content, consistent indexing signals</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Manual</strong></td>
+                            <td>Pages require admin approval before publishing</td>
+                            <td>Quality control, high-stakes content</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <!-- Immediate -->
+                <h3>Immediate Publishing</h3>
+
+                <p>Publishes all pages in the collection that have a <code>ready</code> status:</p>
+
+<pre><span class="prompt">$</span> <span class="function">contento</span> publish \
+    --collection col_9d2f... \
+    --mode immediate
+
+<span class="output">  Publishing 48 pages...</span>
+<span class="output">  &#10003; Internal linking pass: 142 cross-links added</span>
+<span class="output">  &#10003; Sitemap rebuilt: 48 URLs</span>
+<span class="output">  &#10003; Schema markup injected</span>
+<span class="output">  Published to: resources.example.com</span></pre>
+
+                <!-- Batched -->
+                <h3>Batched Publishing</h3>
+
+                <p>Publishes a fixed number of pages per batch. Useful for monitoring indexing before publishing more:</p>
+
+<pre><span class="prompt">$</span> <span class="function">contento</span> publish \
+    --collection col_9d2f... \
+    --mode batched \
+    --batch-size 25
+
+<span class="output">  Publishing batch 1 of 2 (25 pages)...</span>
+<span class="output">  &#10003; Internal linking pass: 68 cross-links added</span>
+<span class="output">  &#10003; Sitemap rebuilt: 25 URLs</span>
+<span class="output">  Published 25 of 48 pages. Run again to publish the next batch.</span></pre>
+
+                <div class="callout callout-tip">
+                    <strong>Indexing strategy:</strong> Google indexes new pages more reliably when they appear gradually. Start with 25&ndash;50 pages, monitor indexing in GSC for a few days, then publish the next batch.
+                </div>
+
+                <!-- Scheduled -->
+                <h3>Scheduled Publishing</h3>
+
+                <p>Set up a schedule to publish batches automatically:</p>
+
+<pre><span class="prompt">$</span> <span class="function">contento</span> publish \
+    --collection col_9d2f... \
+    --mode scheduled \
+    --batch-size 10 \
+    --cron <span class="string">"0 6 * * *"</span>
+
+<span class="output">  Schedule created: 10 pages daily at 06:00 UTC</span>
+<span class="output">  Stops automatically when all ready pages are published.</span></pre>
+
+                <!-- Manual -->
+                <h3>Manual Publishing</h3>
+
+                <p>In manual mode, each page must be individually approved before it goes live. This is useful for sensitive niches where you want to review every page:</p>
+
+<pre><span class="comment"># Set collection to manual mode</span>
+<span class="prompt">$</span> <span class="function">contento</span> publish \
+    --collection col_9d2f... \
+    --mode manual
+
+<span class="comment"># Approve individual pages</span>
+<span class="prompt">$</span> <span class="function">contento</span> pages approve page_01...
+
+<span class="comment"># Or approve in bulk</span>
+<span class="prompt">$</span> <span class="function">contento</span> pages approve page_01... page_02... page_03...</pre>
+
+                <!-- Internal linking -->
+                <h2>Internal Linking Pass</h2>
+
+                <p>Every publish operation triggers an internal linking pass. The linker:</p>
+
+                <ol>
+                    <li>Finds all published pages in the same niche as the newly published pages</li>
+                    <li>Identifies related pages based on subtopic similarity</li>
+                    <li>Injects 2&ndash;4 contextual links into the content body of each page</li>
+                    <li>Updates existing pages that should link to the newly published pages</li>
+                </ol>
+
+                <p>This creates a web of internal links that distributes link equity across your pages and helps search engines discover and crawl all content. See <a href="internal-linking.html" style="color: #3D5A80; font-weight: 500;">Internal Linking</a> for the full guide.</p>
+
+                <!-- Sitemap rebuild -->
+                <h2>Sitemap Rebuild</h2>
+
+                <p>After each publish batch, the sitemap at <code>/sitemap.xml</code> is automatically regenerated to include all published URLs. The sitemap includes:</p>
+
+                <ul>
+                    <li><code>&lt;loc&gt;</code> &mdash; Full URL of each published page</li>
+                    <li><code>&lt;lastmod&gt;</code> &mdash; Publication timestamp</li>
+                    <li><code>&lt;changefreq&gt;</code> &mdash; Set to <code>monthly</code> by default</li>
+                    <li><code>&lt;priority&gt;</code> &mdash; Based on content type traffic potential</li>
+                </ul>
+
+                <p>For sites with more than 50,000 URLs, Contento generates a sitemap index with multiple sitemap files (50,000 URLs per file).</p>
+
+                <!-- Batch history -->
+                <h2>Batch History</h2>
+
+<pre><span class="prompt">$</span> <span class="function">contento</span> publish history --project proj_8f3a... --json
+
+[
+  {
+    <span class="property">"batchId"</span>: <span class="string">"batch_1a3c..."</span>,
+    <span class="property">"publishedAt"</span>: <span class="string">"2026-03-11T14:30:00Z"</span>,
+    <span class="property">"pagesPublished"</span>: <span class="number">48</span>,
+    <span class="property">"crossLinksAdded"</span>: <span class="number">142</span>,
+    <span class="property">"mode"</span>: <span class="string">"immediate"</span>
+  }
+]</pre>
+
+                <!-- CLI Commands -->
+                <h2>CLI Commands</h2>
+
+                <table>
+                    <thead><tr><th>Command</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>contento publish</code></td><td>Publish pages (all modes: immediate, batched, scheduled, manual)</td></tr>
+                        <tr><td><code>contento publish history</code></td><td>List publish batches for a project</td></tr>
+                        <tr><td><code>contento pages approve</code></td><td>Approve one or more pages for manual publishing</td></tr>
+                        <tr><td><code>contento pages unpublish</code></td><td>Remove a page from the live site</td></tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </main>
+    </div>
+
+    <%footer-docs%>
+
+</body>
+</html>

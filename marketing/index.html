@@ -3,8 +3,8 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Contento — Content, Made Happy</title>
-    <meta name="description" content="A writer-first content management system with a headless API, plugin system, and beautiful admin UI. Open source, built on .NET 10." />
+    <title>Contento — Programmatic SEO Engine for Any Domain</title>
+    <meta name="description" content="Generate thousands of structured, schema-validated, AI-powered pages on your subdomain. 150+ niches, 10 content types, cloud-hosted at contentocms.com. CLI-first, built for AI agents." />
     <script type="module" src="/src/main.js"></script>
 </head>
 <body class="bg-white text-gray-900 antialiased">
@@ -12,47 +12,57 @@
 <%nav-main%>
 
 <!-- Hero -->
-<section class="pt-32 pb-20 px-4 sm:px-6 overflow-hidden">
+<section class="pt-32 pb-20 px-4 sm:px-6 dot-bg">
     <div class="max-w-6xl mx-auto">
         <div class="max-w-3xl mx-auto text-center">
-            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium mb-6" style="background: #EEF2F7; color: #3D5A80;">
-                <span class="w-1.5 h-1.5 rounded-full" style="background: #3D5A80;"></span>
-                Open Source &middot; .NET 10 &middot; PostgreSQL
-            </div>
-            <h1 class="font-display text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.1] mb-6">
-                Content,<br><span class="gradient-text">made happy.</span>
+            <p class="font-mono text-sm text-accent mb-6">&gt; cloud-hosted &middot; cli-first &middot; agentic AI</p>
+            <h1 class="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.1] mb-6">
+                Programmatic SEO<br>for any domain.
             </h1>
             <p class="text-lg sm:text-xl text-gray-500 leading-relaxed max-w-2xl mx-auto mb-10">
-                A writer-first CMS that strips away every piece of friction. Beautiful admin UI, headless API, plugin ecosystem, dark mode — all in one package.
+                Generate thousands of structured, schema-validated, AI-powered pages &mdash; hosted on your subdomain. Cloud-hosted at contentocms.com, driven by the <code>contento</code> CLI.
             </p>
             <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <a href="docs/index.html" class="inline-flex items-center gap-2 px-6 py-3 text-sm font-medium text-white rounded-lg transition-all shadow-lg shadow-blue-900/20" style="background: #3D5A80;" onmouseover="this.style.background='#34506F'" onmouseout="this.style.background='#3D5A80'">
+                <a href="docs/index.html" class="btn-primary inline-flex items-center gap-2">
                     Get Started
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
                 </a>
-                <a href="docs/api.html" class="inline-flex items-center gap-2 px-6 py-3 text-sm font-medium text-gray-700 bg-white border border-gray-200 rounded-lg hover:border-gray-300 hover:bg-gray-50 transition-all">
-                    View API Docs
+                <a href="docs/cli.html" class="btn-secondary inline-flex items-center gap-2">
+                    Install CLI
                 </a>
             </div>
         </div>
 
         <!-- Terminal mockup -->
-        <div class="max-w-2xl mx-auto mt-16 float">
-            <div class="code-block overflow-hidden shadow-2xl">
-                <div class="flex items-center gap-2 px-4 py-3 border-b border-gray-800">
+        <div class="max-w-2xl mx-auto mt-16">
+            <div class="console overflow-hidden">
+                <div class="flex items-center gap-2 px-4 py-3 border-b border-[#2a2b3d]">
                     <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
                     <div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
                     <div class="w-3 h-3 rounded-full bg-green-500/80"></div>
-                    <span class="ml-2 text-xs text-gray-500">terminal</span>
+                    <span class="ml-2 text-xs text-gray-500 font-mono">terminal</span>
                 </div>
-                <div class="p-6 text-sm leading-relaxed">
-                    <p><span class="text-green-400">$</span> git clone https://github.com/plsft/contento.git</p>
-                    <p><span class="text-green-400">$</span> cd contento</p>
-                    <p><span class="text-green-400">$</span> dotnet run --project src/Contento.Web</p>
-                    <p class="mt-3 text-gray-500">info: Contento CMS started successfully</p>
-                    <p class="text-gray-500">info: Listening on: <span class="text-blue-400">https://localhost:5001</span></p>
-                    <p class="mt-3"><span class="text-green-400">$</span> curl https://localhost:5001/api/v1/content/posts</p>
-                    <p class="text-gray-400">{"data": [...], "meta": {"totalCount": 1}}</p>
+                <div class="p-6 text-sm leading-relaxed font-mono">
+                    <p class="comment"># Install &amp; authenticate</p>
+                    <p><span class="prompt">$</span> npm install -g contento</p>
+                    <p><span class="prompt">$</span> contento login --api-key ck_live_abc123</p>
+                    <p class="output">&gt; <span class="text-accent">&#10003;</span> Authenticated</p>
+                    <p class="mt-4 comment"># Create a project on your subdomain</p>
+                    <p><span class="prompt">$</span> contento projects create --name <span class="string">"Articles"</span> --domain worktale.org --subdomain articles</p>
+                    <p class="output">&gt; <span class="text-accent">&#10003;</span> Project created: <span class="url">articles.worktale.org</span></p>
+                    <p class="mt-4 comment"># Browse niches &amp; pick a content schema</p>
+                    <p><span class="prompt">$</span> contento niches list --category <span class="string">"Technology"</span></p>
+                    <p class="output">&gt; 20 niches found: Web Dev, DevOps, AI/ML, ...</p>
+                    <p class="mt-4 comment"># Create a collection (niches &times; schema = pages)</p>
+                    <p><span class="prompt">$</span> contento collections create --project proj_8f3a \</p>
+                    <p>    --schema <span class="string">idea-list</span> --niches <span class="string">niche_01,niche_02,niche_03</span></p>
+                    <p class="output">&gt; <span class="text-accent">&#10003;</span> Collection coll_a1b2c3 created (48 pages queued)</p>
+                    <p class="mt-4 comment"># Generate with AI &amp; publish</p>
+                    <p><span class="prompt">$</span> contento collections generate coll_a1b2c3</p>
+                    <p class="output">&gt; [&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;] 48/48 (100%)</p>
+                    <p class="output">&gt; <span class="text-accent">&#10003;</span> 48 pages generated, 46 validated, 2 retried</p>
+                    <p class="mt-3"><span class="prompt">$</span> contento publish coll_a1b2c3</p>
+                    <p class="output">&gt; <span class="text-accent">&#10003;</span> Published 48 pages to <span class="url">articles.worktale.org</span></p>
                 </div>
             </div>
         </div>
@@ -60,311 +70,564 @@
 </section>
 
 <!-- Stats bar -->
-<section class="border-y border-gray-100 py-12 px-4 sm:px-6" style="background: #FAFAFA;">
+<div class="section-divider"></div>
+<section class="py-12 px-4 sm:px-6" style="background: #FAFBFC;">
     <div class="max-w-4xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
         <div>
-            <p class="text-3xl font-bold tracking-tight" style="color: #3D5A80;">135</p>
-            <p class="text-sm text-gray-500 mt-1">API Endpoints</p>
+            <p class="stat-number text-3xl" style="color: #1a1b26;">150+</p>
+            <p class="text-sm text-gray-500 mt-1">Niches</p>
         </div>
         <div>
-            <p class="text-3xl font-bold tracking-tight" style="color: #3D5A80;">8</p>
-            <p class="text-sm text-gray-500 mt-1">Built-in Themes</p>
+            <p class="stat-number text-3xl" style="color: #1a1b26;">10</p>
+            <p class="text-sm text-gray-500 mt-1">Content Types</p>
         </div>
         <div>
-            <p class="text-3xl font-bold tracking-tight" style="color: #3D5A80;">582</p>
-            <p class="text-sm text-gray-500 mt-1">Test Coverage</p>
+            <p class="stat-number text-3xl" style="color: #1a1b26;">50,000</p>
+            <p class="text-sm text-gray-500 mt-1">Max Pages</p>
         </div>
         <div>
-            <p class="text-3xl font-bold tracking-tight" style="color: #3D5A80;">100%</p>
-            <p class="text-sm text-gray-500 mt-1">Open Source</p>
+            <p class="stat-number text-3xl" style="color: #1a1b26;">5 min</p>
+            <p class="text-sm text-gray-500 mt-1">To First Page</p>
         </div>
     </div>
 </section>
+<div class="section-divider"></div>
 
-<!-- Features grid -->
+<!-- How It Works — Full Workflow -->
 <section class="py-24 px-4 sm:px-6">
-    <div class="max-w-6xl mx-auto">
-        <div class="text-center mb-16">
-            <h2 class="font-display text-3xl sm:text-4xl font-bold tracking-tight mb-4">Everything you need to publish</h2>
-            <p class="text-gray-500 max-w-2xl mx-auto">A complete content platform with the DX you wish every CMS had.</p>
+    <div class="max-w-5xl mx-auto">
+        <div class="text-center mb-20">
+            <h2 class="text-3xl sm:text-4xl font-bold tracking-tight mb-4">The complete workflow</h2>
+            <p class="text-gray-500 max-w-2xl mx-auto">From install to indexed pages in six steps. Every step runs through the <code>contento</code> CLI &mdash; or fully automated by an AI agent with <code>--json</code>.</p>
         </div>
-        <div class="feature-grid grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div class="p-6 rounded-xl border border-gray-100 bg-white">
-                <div class="w-10 h-10 rounded-lg flex items-center justify-center mb-4" style="background: #EEF2F7; color: #3D5A80;">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
-                </div>
-                <h3 class="font-semibold mb-2">Distraction-Free Editor</h3>
-                <p class="text-sm text-gray-500 leading-relaxed">Full-page Markdown editor with autosave, word count, cover images, and keyboard shortcuts.</p>
-            </div>
-            <div class="p-6 rounded-xl border border-gray-100 bg-white">
-                <div class="w-10 h-10 rounded-lg flex items-center justify-center mb-4" style="background: #EEF2F7; color: #3D5A80;">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-                </div>
-                <h3 class="font-semibold mb-2">Headless API</h3>
-                <p class="text-sm text-gray-500 leading-relaxed">Full REST API with content delivery endpoints, bearer token auth, search with highlights, and structured JSON.</p>
-            </div>
-            <div class="p-6 rounded-xl border border-gray-100 bg-white">
-                <div class="w-10 h-10 rounded-lg flex items-center justify-center mb-4" style="background: #EEF2F7; color: #3D5A80;">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 14v6m-3-3h6M6 10h2a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2zm10 0h2a2 2 0 002-2V6a2 2 0 00-2-2h-2a2 2 0 00-2 2v2a2 2 0 002 2zM6 20h2a2 2 0 002-2v-2a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2z"/></svg>
-                </div>
-                <h3 class="font-semibold mb-2">Plugin System</h3>
-                <p class="text-sm text-gray-500 leading-relaxed">JavaScript plugins run in a Jint sandbox. SEO analyzer, contact forms, reading progress — install from admin.</p>
-            </div>
-            <div class="p-6 rounded-xl border border-gray-100 bg-white">
-                <div class="w-10 h-10 rounded-lg flex items-center justify-center mb-4" style="background: #EEF2F7; color: #3D5A80;">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/></svg>
-                </div>
-                <h3 class="font-semibold mb-2">8 Themes + Dark Mode</h3>
-                <p class="text-sm text-gray-500 leading-relaxed">From Playfair Display editorial to Lora night-reading. CSS variable system with full dark mode support.</p>
-            </div>
-            <div class="p-6 rounded-xl border border-gray-100 bg-white">
-                <div class="w-10 h-10 rounded-lg flex items-center justify-center mb-4" style="background: #EEF2F7; color: #3D5A80;">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-                </div>
-                <h3 class="font-semibold mb-2">Full-Text Search</h3>
-                <p class="text-sm text-gray-500 leading-relaxed">PostgreSQL-powered search with highlighted results, autocomplete suggestions, and relevance ranking.</p>
-            </div>
-            <div class="p-6 rounded-xl border border-gray-100 bg-white">
-                <div class="w-10 h-10 rounded-lg flex items-center justify-center mb-4" style="background: #EEF2F7; color: #3D5A80;">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-                </div>
-                <h3 class="font-semibold mb-2">Media Library</h3>
-                <p class="text-sm text-gray-500 leading-relaxed">Folder organization, drag-and-drop upload, responsive image variants (640w, 1024w, 1536w WebP), focal point picker, and grid/list views.</p>
-            </div>
-            <div class="p-6 rounded-xl border border-gray-100 bg-white">
-                <div class="w-10 h-10 rounded-lg flex items-center justify-center mb-4" style="background: #EEF2F7; color: #3D5A80;">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"/></svg>
-                </div>
-                <h3 class="font-semibold mb-2">Threaded Comments</h3>
-                <p class="text-sm text-gray-500 leading-relaxed">Threaded comments with nested replies, AI-powered spam scoring, auto-approve threshold, moderation queue, and batch actions.</p>
-            </div>
-            <div class="p-6 rounded-xl border border-gray-100 bg-white">
-                <div class="w-10 h-10 rounded-lg flex items-center justify-center mb-4" style="background: #EEF2F7; color: #3D5A80;">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"/></svg>
-                </div>
-                <h3 class="font-semibold mb-2">Import / Export</h3>
-                <p class="text-sm text-gray-500 leading-relaxed">Import from WordPress (WXR) or Markdown files. Export as JSON, Markdown, or HTML.</p>
-            </div>
-            <div class="p-6 rounded-xl border border-gray-100 bg-white">
-                <div class="w-10 h-10 rounded-lg flex items-center justify-center mb-4" style="background: #EEF2F7; color: #3D5A80;">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
-                </div>
-                <h3 class="font-semibold mb-2">Security First</h3>
-                <p class="text-sm text-gray-500 leading-relaxed">CSRF protection, CSP headers, BCrypt passwords, role-based access, audit logging, and anti-XSS sanitization.</p>
-            </div>
-            <div class="p-6 rounded-xl border border-gray-100 bg-white">
-                <div class="w-10 h-10 rounded-lg flex items-center justify-center mb-4" style="background: #EEF2F7; color: #3D5A80;">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
-                </div>
-                <h3 class="font-semibold mb-2">Membership &amp; Subscriptions</h3>
-                <p class="text-sm text-gray-500 leading-relaxed">Stripe-powered paid memberships with plan management, content gating, billing portal, and subscriber dashboard.</p>
-            </div>
-            <div class="p-6 rounded-xl border border-gray-100 bg-white">
-                <div class="w-10 h-10 rounded-lg flex items-center justify-center mb-4" style="background: #EEF2F7; color: #3D5A80;">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-                </div>
-                <h3 class="font-semibold mb-2">Newsletter &amp; Email</h3>
-                <p class="text-sm text-gray-500 leading-relaxed">Built-in newsletter with subscriber management, campaign editor, and email delivery. Grow your audience.</p>
-            </div>
-            <div class="p-6 rounded-xl border border-gray-100 bg-white">
-                <div class="w-10 h-10 rounded-lg flex items-center justify-center mb-4" style="background: #EEF2F7; color: #3D5A80;">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h7"/></svg>
-                </div>
-                <h3 class="font-semibold mb-2">Navigation Menus</h3>
-                <p class="text-sm text-gray-500 leading-relaxed">Admin-configurable header and footer menus with nested dropdowns, link types (custom, post, category, tag), and reordering.</p>
-            </div>
-            <div class="p-6 rounded-xl border border-gray-100 bg-white">
-                <div class="w-10 h-10 rounded-lg flex items-center justify-center mb-4" style="background: #EEF2F7; color: #3D5A80;">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9"/></svg>
-                </div>
-                <h3 class="font-semibold mb-2">Multi-Site</h3>
-                <p class="text-sm text-gray-500 leading-relaxed">Run multiple sites from one installation. Domain-based routing with per-site themes, content, and settings.</p>
-            </div>
-            <div class="p-6 rounded-xl border border-gray-100 bg-white">
-                <div class="w-10 h-10 rounded-lg flex items-center justify-center mb-4" style="background: #EEF2F7; color: #3D5A80;">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                </div>
-                <h3 class="font-semibold mb-2">oEmbed &amp; Rich Media</h3>
-                <p class="text-sm text-gray-500 leading-relaxed">Paste a YouTube, Vimeo, Spotify, or Twitter URL and it auto-embeds. Cached provider lookups with fallback.</p>
-            </div>
-            <div class="p-6 rounded-xl border border-gray-100 bg-white">
-                <div class="w-10 h-10 rounded-lg flex items-center justify-center mb-4" style="background: #EEF2F7; color: #3D5A80;">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
-                </div>
-                <h3 class="font-semibold mb-2">Shortcodes</h3>
-                <p class="text-sm text-gray-500 leading-relaxed">Use [youtube], [button], [callout], [gallery], [code], and [toc] shortcodes in your content. Register custom ones at runtime.</p>
-            </div>
-            <div class="p-6 rounded-xl border border-gray-100 bg-white">
-                <div class="w-10 h-10 rounded-lg flex items-center justify-center mb-4" style="background: #EEF2F7; color: #3D5A80;">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 9l3 3m0 0l-3 3m3-3H8m13 0a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                </div>
-                <h3 class="font-semibold mb-2">URL Redirects</h3>
-                <p class="text-sm text-gray-500 leading-relaxed">Manage 301/302 redirects from the admin panel. Hit tracking, auto-redirect on slug changes, and middleware processing.</p>
-            </div>
-            <div class="p-6 rounded-xl border border-gray-100 bg-white">
-                <div class="w-10 h-10 rounded-lg flex items-center justify-center mb-4" style="background: #EEF2F7; color: #3D5A80;">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/></svg>
-                </div>
-                <h3 class="font-semibold mb-2">User Registration</h3>
-                <p class="text-sm text-gray-500 leading-relaxed">Public signup with email verification, password reset flow, and Gravatar avatars. Secure token-based verification.</p>
-            </div>
-            <div class="p-6 rounded-xl border border-gray-100 bg-white">
-                <div class="w-10 h-10 rounded-lg flex items-center justify-center mb-4" style="background: #EEF2F7; color: #3D5A80;">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
-                </div>
-                <h3 class="font-semibold mb-2">Post Editing Locks</h3>
-                <p class="text-sm text-gray-500 leading-relaxed">Prevents simultaneous editing conflicts. 2-minute TTL locks with automatic expiry and real-time lock status.</p>
-            </div>
-            <div class="p-6 rounded-xl border border-gray-100 bg-white">
-                <div class="w-10 h-10 rounded-lg flex items-center justify-center mb-4" style="background: #EEF2F7; color: #3D5A80;">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-                </div>
-                <h3 class="font-semibold mb-2">AI &amp; MCP Ready</h3>
-                <p class="text-sm text-gray-500 leading-relaxed">Full REST API with OpenAPI spec lets AI agents create, manage, and publish content via MCP. Stateless bearer tokens, streaming AI endpoints, and SEO analysis built in.</p>
-            </div>
-        </div>
-    </div>
-</section>
 
-<!-- Headless CTA -->
-<section class="py-24 px-4 sm:px-6" style="background: #F8FAFC;">
-    <div class="max-w-6xl mx-auto">
-        <div class="grid lg:grid-cols-2 gap-12 items-center">
+        <!-- Step 1: Install & Auth -->
+        <div class="grid lg:grid-cols-2 gap-10 items-start mb-20">
             <div>
-                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium mb-4" style="background: #EEF2F7; color: #3D5A80;">Headless Mode</div>
-                <h2 class="font-display text-3xl sm:text-4xl font-bold tracking-tight mb-4">Use it your way</h2>
-                <p class="text-gray-500 leading-relaxed mb-6">
-                    Contento works as a traditional CMS with server-rendered pages, or as a headless API powering any frontend. Next.js, Astro, 11ty, mobile apps — anything that speaks HTTP.
-                </p>
-                <ul class="space-y-3 text-sm text-gray-600 mb-8">
-                    <li class="flex items-center gap-3">
-                        <svg class="w-5 h-5 flex-shrink-0" style="color: #059669;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                        Content Delivery API — no auth needed for public content
-                    </li>
-                    <li class="flex items-center gap-3">
-                        <svg class="w-5 h-5 flex-shrink-0" style="color: #059669;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                        Bearer token authentication for management endpoints
-                    </li>
-                    <li class="flex items-center gap-3">
-                        <svg class="w-5 h-5 flex-shrink-0" style="color: #059669;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                        Posts returned with rendered HTML + Markdown + table of contents
-                    </li>
-                    <li class="flex items-center gap-3">
-                        <svg class="w-5 h-5 flex-shrink-0" style="color: #059669;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                        Search, comments, media, themes — all accessible via API
-                    </li>
-                    <li class="flex items-center gap-3">
-                        <svg class="w-5 h-5 flex-shrink-0" style="color: #059669;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                        MCP-compatible — AI agents can create and publish content autonomously
-                    </li>
+                <div class="flex items-center gap-3 mb-4">
+                    <span class="stat-number text-3xl text-gray-200">01</span>
+                    <h3 class="text-xl font-bold">Install &amp; authenticate</h3>
+                </div>
+                <p class="text-gray-500 leading-relaxed mb-4">Install the CLI globally via npm. Authenticate with an API key from your <a href="https://app.contentocms.com" class="text-accent hover:underline">contentocms.com</a> dashboard. Your key is stored locally at <code class="text-xs">~/.contento/config.json</code> &mdash; one-time setup.</p>
+                <ul class="space-y-2 text-sm text-gray-600">
+                    <li class="flex items-center gap-2"><span class="text-accent">&#10003;</span> Works on macOS, Linux, and Windows</li>
+                    <li class="flex items-center gap-2"><span class="text-accent">&#10003;</span> Also runs via <code class="text-xs">npx contento</code> (zero install)</li>
+                    <li class="flex items-center gap-2"><span class="text-accent">&#10003;</span> Agents use <code class="text-xs">CONTENTO_API_KEY</code> env var</li>
                 </ul>
-                <a href="docs/headless.html" class="inline-flex items-center gap-2 text-sm font-medium transition-colors" style="color: #3D5A80;">
-                    Read the headless guide
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
-                </a>
             </div>
-            <div class="code-block overflow-hidden shadow-xl float-delay">
-                <div class="flex items-center gap-2 px-4 py-3 border-b border-gray-800">
+            <div class="console overflow-hidden">
+                <div class="flex items-center gap-2 px-4 py-3 border-b border-[#2a2b3d]">
                     <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
                     <div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
                     <div class="w-3 h-3 rounded-full bg-green-500/80"></div>
-                    <span class="ml-2 text-xs text-gray-500">fetch.js</span>
+                    <span class="ml-2 text-xs text-gray-500 font-mono">step-1</span>
                 </div>
-                <div class="p-6 text-sm leading-relaxed overflow-x-auto">
-<pre class="text-gray-300"><span class="text-purple-400">const</span> res = <span class="text-purple-400">await</span> <span class="text-blue-400">fetch</span>(<span class="text-green-400">'/api/v1/content/posts'</span>);
-<span class="text-purple-400">const</span> { data, meta } = <span class="text-purple-400">await</span> res.<span class="text-blue-400">json</span>();
+                <div class="p-5 text-sm leading-relaxed font-mono">
+                    <p><span class="prompt">$</span> npm install -g contento</p>
+                    <p class="output">added 1 package in 3s</p>
+                    <p class="mt-3"><span class="prompt">$</span> contento login --api-key ck_live_abc123def456</p>
+                    <p class="output"><span class="text-accent">&#10003;</span> Authenticated as team@worktale.org</p>
+                    <p class="output">Config saved to ~/.contento/config.json</p>
+                </div>
+            </div>
+        </div>
 
-<span class="text-gray-500">// Each post includes:</span>
-<span class="text-gray-500">// id, title, slug, excerpt, coverImageUrl,</span>
-<span class="text-gray-500">// publishedAt, readingTimeMinutes, tags</span>
+        <!-- Step 2: Create Project -->
+        <div class="grid lg:grid-cols-2 gap-10 items-start mb-20">
+            <div class="order-2 lg:order-1">
+                <div class="console overflow-hidden">
+                    <div class="flex items-center gap-2 px-4 py-3 border-b border-[#2a2b3d]">
+                        <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
+                        <div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
+                        <div class="w-3 h-3 rounded-full bg-green-500/80"></div>
+                        <span class="ml-2 text-xs text-gray-500 font-mono">step-2</span>
+                    </div>
+                    <div class="p-5 text-sm leading-relaxed font-mono">
+                        <p><span class="prompt">$</span> contento projects create \</p>
+                        <p>    --name <span class="string">"Developer Resources"</span> \</p>
+                        <p>    --domain worktale.org \</p>
+                        <p>    --subdomain articles</p>
+                        <p class="output mt-2"><span class="text-accent">&#10003;</span> Project created: <span class="url">articles.worktale.org</span></p>
+                        <p class="output">&rarr; Add CNAME: articles &rarr; pseo.contentocms.com</p>
+                        <p class="mt-3"><span class="prompt">$</span> contento domains verify proj_8f3a</p>
+                        <p class="output"><span class="text-accent">&#10003;</span> DNS verified | SSL active (Cloudflare)</p>
+                    </div>
+                </div>
+            </div>
+            <div class="order-1 lg:order-2">
+                <div class="flex items-center gap-3 mb-4">
+                    <span class="stat-number text-3xl text-gray-200">02</span>
+                    <h3 class="text-xl font-bold">Create a project &amp; subdomain</h3>
+                </div>
+                <p class="text-gray-500 leading-relaxed mb-4">A project maps to one subdomain on your domain. Add a CNAME record pointing to <code class="text-xs">pseo.contentocms.com</code> and Contento verifies it automatically (polling every 5 minutes). SSL is handled by Cloudflare &mdash; zero certificate management.</p>
+                <ul class="space-y-2 text-sm text-gray-600">
+                    <li class="flex items-center gap-2"><span class="text-accent">&#10003;</span> One CNAME record, done in your DNS panel</li>
+                    <li class="flex items-center gap-2"><span class="text-accent">&#10003;</span> Auto-verified with 48-hour timeout</li>
+                    <li class="flex items-center gap-2"><span class="text-accent">&#10003;</span> Multiple subdomains per domain</li>
+                    <li class="flex items-center gap-2"><span class="text-accent">&#10003;</span> SSL termination at Cloudflare edge</li>
+                </ul>
+            </div>
+        </div>
 
-data.<span class="text-blue-400">forEach</span>(post <span class="text-purple-400">=></span> {
-  <span class="text-blue-400">console</span>.<span class="text-blue-400">log</span>(post.title, post.slug);
-});
+        <!-- Step 3: Select Niches -->
+        <div class="grid lg:grid-cols-2 gap-10 items-start mb-20">
+            <div>
+                <div class="flex items-center gap-3 mb-4">
+                    <span class="stat-number text-3xl text-gray-200">03</span>
+                    <h3 class="text-xl font-bold">Browse &amp; select niches</h3>
+                </div>
+                <p class="text-gray-500 leading-relaxed mb-4">Contento ships with 150+ niches across 8 categories, each with rich context: target audience, pain points, monetization strategies, and 10&ndash;20 subtopics. The subtopics are what become your pages. Browse interactively or filter by category.</p>
+                <ul class="space-y-2 text-sm text-gray-600">
+                    <li class="flex items-center gap-2"><span class="text-accent">&#10003;</span> 8 categories: Tech, Business, Health, Finance, etc.</li>
+                    <li class="flex items-center gap-2"><span class="text-accent">&#10003;</span> Each niche has audience + pain points + subtopics</li>
+                    <li class="flex items-center gap-2"><span class="text-accent">&#10003;</span> Fork any niche to customize context</li>
+                    <li class="flex items-center gap-2"><span class="text-accent">&#10003;</span> Interactive selection: <code class="text-xs">contento niches select</code></li>
+                </ul>
+            </div>
+            <div class="console overflow-hidden">
+                <div class="flex items-center gap-2 px-4 py-3 border-b border-[#2a2b3d]">
+                    <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
+                    <div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
+                    <div class="w-3 h-3 rounded-full bg-green-500/80"></div>
+                    <span class="ml-2 text-xs text-gray-500 font-mono">step-3</span>
+                </div>
+                <div class="p-5 text-sm leading-relaxed font-mono">
+                    <p><span class="prompt">$</span> contento niches list --category <span class="string">"Technology"</span></p>
+                    <p class="output mt-2"> ID           Name                  Subtopics</p>
+                    <p class="output"> &#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;</p>
+                    <p class="output"> niche_01     Web Development        16</p>
+                    <p class="output"> niche_02     DevOps &amp; CI/CD         14</p>
+                    <p class="output"> niche_03     AI &amp; Machine Learning  18</p>
+                    <p class="output"> niche_04     Cybersecurity           12</p>
+                    <p class="output"> niche_05     Mobile Development      15</p>
+                    <p class="output"> <span class="comment">... 15 more</span></p>
+                    <p class="mt-3"><span class="prompt">$</span> contento niches view niche_01</p>
+                    <p class="output mt-1"><span class="text-white font-bold">Web Development</span> <span class="comment">(web-development)</span></p>
+                    <p class="output"><span class="text-[#7aa2f7]">Audience:</span> full-stack devs, frontend engineers</p>
+                    <p class="output"><span class="text-[#7aa2f7]">Pain Points:</span> framework fatigue, performance, SEO</p>
+                    <p class="output"><span class="text-[#7aa2f7]">Subtopics:</span> React patterns, CSS architecture,</p>
+                    <p class="output">  API design, testing strategies, ...</p>
+                </div>
+            </div>
+        </div>
 
-<span class="text-gray-500">// Get full post with HTML + table of contents</span>
-<span class="text-purple-400">const</span> post = <span class="text-purple-400">await</span> <span class="text-blue-400">fetch</span>(
-  <span class="text-green-400">`/api/v1/content/posts/${slug}`</span>
-).<span class="text-blue-400">then</span>(r <span class="text-purple-400">=></span> r.<span class="text-blue-400">json</span>());
+        <!-- Step 4: Pick Schema + Create Collection -->
+        <div class="grid lg:grid-cols-2 gap-10 items-start mb-20">
+            <div class="order-2 lg:order-1">
+                <div class="console overflow-hidden">
+                    <div class="flex items-center gap-2 px-4 py-3 border-b border-[#2a2b3d]">
+                        <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
+                        <div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
+                        <div class="w-3 h-3 rounded-full bg-green-500/80"></div>
+                        <span class="ml-2 text-xs text-gray-500 font-mono">step-4</span>
+                    </div>
+                    <div class="p-5 text-sm leading-relaxed font-mono">
+                        <p><span class="prompt">$</span> contento schemas list</p>
+                        <p class="output mt-2"> Slug           Title Pattern</p>
+                        <p class="output"> &#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;</p>
+                        <p class="output"> idea-list      "100 {subtopic} Ideas..."</p>
+                        <p class="output"> checklist      "The Ultimate {subtopic}..."</p>
+                        <p class="output"> how-to         "How to {subtopic}: A..."</p>
+                        <p class="output"> comparison     "{A} vs {B}: Which Is..."</p>
+                        <p class="output"> faq            "{subtopic} FAQ: {n}..."</p>
+                        <p class="output"> <span class="comment">... 5 more</span></p>
+                        <p class="mt-3"><span class="prompt">$</span> contento collections create \</p>
+                        <p>    --project proj_8f3a \</p>
+                        <p>    --schema <span class="string">idea-list</span> \</p>
+                        <p>    --niches <span class="string">niche_01,niche_02,niche_03</span> \</p>
+                        <p>    --url-pattern <span class="string">"/{slug}"</span> \</p>
+                        <p>    --title-template <span class="string">"{subtopic} Ideas for Developers"</span></p>
+                        <p class="output mt-2"><span class="text-accent">&#10003;</span> Collection coll_a1b2c3 created</p>
+                        <p class="output">48 pages queued (3 niches &times; 16 subtopics avg)</p>
+                    </div>
+                </div>
+            </div>
+            <div class="order-1 lg:order-2">
+                <div class="flex items-center gap-3 mb-4">
+                    <span class="stat-number text-3xl text-gray-200">04</span>
+                    <h3 class="text-xl font-bold">Choose a schema &amp; create a collection</h3>
+                </div>
+                <p class="text-gray-500 leading-relaxed mb-4">A <em>collection</em> combines a content schema with one or more niches. The schema defines the page structure (idea list, checklist, FAQ, etc.) and the niches provide the subtopics. Contento cross-products them: 3 niches &times; 16 subtopics = 48 pages.</p>
+                <p class="text-gray-500 leading-relaxed mb-4">Titles are <strong>deterministic</strong> &mdash; built from patterns like <code class="text-xs">"100 {subtopic} Ideas for {niche}"</code>, never AI-generated. This ensures predictable, SERP-optimized titles at scale.</p>
+                <ul class="space-y-2 text-sm text-gray-600">
+                    <li class="flex items-center gap-2"><span class="text-accent">&#10003;</span> 10 built-in schemas with strict JSON validation</li>
+                    <li class="flex items-center gap-2"><span class="text-accent">&#10003;</span> Subtopic expansion: niches &times; subtopics = pages</li>
+                    <li class="flex items-center gap-2"><span class="text-accent">&#10003;</span> URL and title patterns with token replacement</li>
+                    <li class="flex items-center gap-2"><span class="text-accent">&#10003;</span> Interactive mode prompts for schema + niches</li>
+                </ul>
+            </div>
+        </div>
 
-<span class="text-gray-500">// post.data.bodyHtml — rendered HTML</span>
-<span class="text-gray-500">// post.data.tableOfContents — [{id, text, level}]</span></pre>
+        <!-- Step 5: Generate -->
+        <div class="grid lg:grid-cols-2 gap-10 items-start mb-20">
+            <div>
+                <div class="flex items-center gap-3 mb-4">
+                    <span class="stat-number text-3xl text-gray-200">05</span>
+                    <h3 class="text-xl font-bold">Generate pages with AI</h3>
+                </div>
+                <p class="text-gray-500 leading-relaxed mb-4">Contento sends each page to an AI model with three inputs: the <strong>content schema</strong> (exact JSON structure to fill), the <strong>niche context</strong> (audience, pain points, expertise level), and the <strong>subtopic</strong>. The AI fills the schema &mdash; it doesn't write blank pages.</p>
+                <p class="text-gray-500 leading-relaxed mb-4">10 concurrent workers generate pages in parallel. Each result is validated against the schema: item counts, string lengths, enum values, required fields. Failed pages are retried once. Progress streams live to your terminal via SSE.</p>
+                <ul class="space-y-2 text-sm text-gray-600">
+                    <li class="flex items-center gap-2"><span class="text-accent">&#10003;</span> AI fills structured JSON, not blank pages</li>
+                    <li class="flex items-center gap-2"><span class="text-accent">&#10003;</span> 10 concurrent workers, ~3s per page</li>
+                    <li class="flex items-center gap-2"><span class="text-accent">&#10003;</span> Schema validation: item counts, lengths, enums</li>
+                    <li class="flex items-center gap-2"><span class="text-accent">&#10003;</span> Auto-retry on validation failure (1 attempt)</li>
+                    <li class="flex items-center gap-2"><span class="text-accent">&#10003;</span> Live progress bar or NDJSON for agents</li>
+                </ul>
+            </div>
+            <div class="console overflow-hidden">
+                <div class="flex items-center gap-2 px-4 py-3 border-b border-[#2a2b3d]">
+                    <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
+                    <div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
+                    <div class="w-3 h-3 rounded-full bg-green-500/80"></div>
+                    <span class="ml-2 text-xs text-gray-500 font-mono">step-5</span>
+                </div>
+                <div class="p-5 text-sm leading-relaxed font-mono">
+                    <p><span class="prompt">$</span> contento collections generate coll_a1b2c3</p>
+                    <p class="output mt-2">Generating 48 pages across 3 niches...</p>
+                    <p class="output">Workers: 10 concurrent</p>
+                    <p class="output mt-2">[&#9608;&#9608;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;]  6/48  (12%)  0:04</p>
+                    <p class="output">[&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;] 22/48  (46%)  0:12</p>
+                    <p class="output">[&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9601;&#9601;&#9601;&#9601;] 36/48  (75%)  0:20</p>
+                    <p class="output">[&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;] 48/48 (100%)  0:26</p>
+                    <p class="output mt-2"><span class="text-accent">&#10003;</span> Generation complete</p>
+                    <p class="output">  Validated: <span class="text-accent">46 passed</span></p>
+                    <p class="output">  Retried:   2 (both passed on retry)</p>
+                    <p class="output">  Failed:    0</p>
+                    <p class="output">  Avg time:  3.2s per page</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 6: Publish & Monitor -->
+        <div class="grid lg:grid-cols-2 gap-10 items-start">
+            <div class="order-2 lg:order-1">
+                <div class="console overflow-hidden">
+                    <div class="flex items-center gap-2 px-4 py-3 border-b border-[#2a2b3d]">
+                        <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
+                        <div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
+                        <div class="w-3 h-3 rounded-full bg-green-500/80"></div>
+                        <span class="ml-2 text-xs text-gray-500 font-mono">step-6</span>
+                    </div>
+                    <div class="p-5 text-sm leading-relaxed font-mono">
+                        <p><span class="prompt">$</span> contento publish coll_a1b2c3 --mode batched --batch-size 25</p>
+                        <p class="output mt-2">[batch 1/2] Publishing 25 pages...</p>
+                        <p class="output">  <span class="text-accent">&#10003;</span> HTML rendered with your chrome</p>
+                        <p class="output">  <span class="text-accent">&#10003;</span> Internal linking: 68 cross-links</p>
+                        <p class="output">  <span class="text-accent">&#10003;</span> Schema markup: Article + BreadcrumbList</p>
+                        <p class="output">  <span class="text-accent">&#10003;</span> Sitemap updated: 25 URLs</p>
+                        <p class="output mt-1"><span class="text-accent">&#10003;</span> Batch 1 live at <span class="url">articles.worktale.org</span></p>
+                        <p class="output comment">Batch 2 available in 24h (indexing cooldown)</p>
+                        <p class="mt-3"><span class="prompt">$</span> contento analytics top-pages --days 30</p>
+                        <p class="output mt-2"> /react-patterns-ideas     2,340 clicks  4.2%</p>
+                        <p class="output"> /api-design-checklist      1,892 clicks  3.8%</p>
+                        <p class="output"> /css-architecture-faq      1,104 clicks  5.1%</p>
+                    </div>
+                </div>
+            </div>
+            <div class="order-1 lg:order-2">
+                <div class="flex items-center gap-3 mb-4">
+                    <span class="stat-number text-3xl text-gray-200">06</span>
+                    <h3 class="text-xl font-bold">Publish &amp; monitor</h3>
+                </div>
+                <p class="text-gray-500 leading-relaxed mb-4">Four publish modes: <strong>immediate</strong> (all at once), <strong>batched</strong> (controlled rollout with indexing cooldowns), <strong>scheduled</strong> (cron), or <strong>manual</strong> (admin approval). Every batch triggers an internal linking pass &mdash; related pages cross-link automatically.</p>
+                <p class="text-gray-500 leading-relaxed mb-4">Each published page gets your custom chrome (header/footer/CSS), canonical URLs, JSON-LD structured data (Article + BreadcrumbList + FAQPage), Open Graph tags, and an auto-updated XML sitemap. Connect Google Search Console for daily analytics sync &mdash; track clicks, impressions, CTR, and position per page.</p>
+                <ul class="space-y-2 text-sm text-gray-600">
+                    <li class="flex items-center gap-2"><span class="text-accent">&#10003;</span> 4 publish modes for different strategies</li>
+                    <li class="flex items-center gap-2"><span class="text-accent">&#10003;</span> Auto internal linking across related pages</li>
+                    <li class="flex items-center gap-2"><span class="text-accent">&#10003;</span> Full SEO: canonical, JSON-LD, OG, sitemap</li>
+                    <li class="flex items-center gap-2"><span class="text-accent">&#10003;</span> GSC analytics: clicks, CTR, position tracking</li>
+                    <li class="flex items-center gap-2"><span class="text-accent">&#10003;</span> Zero-traffic page detection for pruning</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Built for AI Agents -->
+<section class="py-24 px-4 sm:px-6 grid-bg">
+    <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl sm:text-4xl font-bold tracking-tight mb-4">Built for AI Agents</h2>
+            <p class="text-gray-500 max-w-2xl mx-auto">Claude Code, Codex, OpenClaw, and Co-Work can automate the entire pSEO workflow through the CLI.</p>
+        </div>
+        <div class="max-w-3xl mx-auto">
+            <div class="console overflow-hidden">
+                <div class="flex items-center gap-2 px-4 py-3 border-b border-[#2a2b3d]">
+                    <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
+                    <div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
+                    <div class="w-3 h-3 rounded-full bg-green-500/80"></div>
+                    <span class="ml-2 text-xs text-gray-500 font-mono">agent-workflow.sh</span>
+                </div>
+                <div class="p-6 text-xs sm:text-sm leading-relaxed font-mono overflow-x-auto">
+<pre class="!bg-transparent !border-0 !p-0 !m-0"><code><span class="comment"># An AI agent can run the full workflow non-interactively:</span>
+
+<span class="comment"># 1. List available niches (JSON output for parsing)</span>
+<span class="prompt">$</span> contento niches list --category "Technology" --json
+
+<span class="comment"># 2. Create a collection</span>
+<span class="prompt">$</span> contento collections create \
+    --project proj_8f3a \
+    --schema idea-list \
+    --niches niche_01,niche_02,niche_03 \
+    --json
+
+<span class="comment"># 3. Generate pages (streams NDJSON progress)</span>
+<span class="prompt">$</span> contento collections generate coll_a1b2c3 --json
+<span class="output">{"completed":12,"total":48,"status":"generating"}</span>
+<span class="output">{"completed":48,"total":48,"status":"done","passed":46}</span>
+
+<span class="comment"># 4. Publish</span>
+<span class="prompt">$</span> contento publish coll_a1b2c3 --mode immediate --json
+<span class="output">{"published":48,"crossLinks":142,"sitemap":48}</span>
+
+<span class="comment"># 5. Check analytics</span>
+<span class="prompt">$</span> contento analytics top-pages --project proj_8f3a --days 30 --json</code></pre>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- Theme showcase -->
+<!-- Content Types -->
 <section class="py-24 px-4 sm:px-6">
-    <div class="max-w-6xl mx-auto text-center">
-        <h2 class="font-display text-3xl sm:text-4xl font-bold tracking-tight mb-4">8 beautiful themes, ready to go</h2>
-        <p class="text-gray-500 max-w-2xl mx-auto mb-12">Each with its own personality, font pairing, and color palette. Switch instantly from the admin panel.</p>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div class="p-4 rounded-xl border border-gray-100 text-left">
-                <div class="w-full h-20 rounded-lg mb-3 flex items-center justify-center" style="background: #FAF8F5; border: 1px solid #eee;"><span class="text-sm" style="font-family: 'Noto Serif JP', serif; color: #8B6914;">Shizen</span></div>
-                <p class="text-xs text-gray-500">Warm organic serif</p>
+    <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl sm:text-4xl font-bold tracking-tight mb-4">10 content types, built for traffic</h2>
+            <p class="text-gray-500 max-w-2xl mx-auto">Each type has a strict JSON schema, deterministic title pattern, and purpose-built UI rendering.</p>
+        </div>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div class="card p-6">
+                <div class="flex items-center justify-between mb-3">
+                    <h3 class="font-semibold">Idea List</h3>
+                    <span class="tag tag-green">Very High</span>
+                </div>
+                <p class="font-mono text-xs text-gray-400 mb-2">"100 {subtopic} Ideas for {niche} in 2026"</p>
+                <p class="text-sm text-gray-500">Numbered list with descriptions. Highest traffic potential for long-tail keywords.</p>
             </div>
-            <div class="p-4 rounded-xl border border-gray-100 text-left">
-                <div class="w-full h-20 rounded-lg mb-3 flex items-center justify-center" style="background: #FFFFFF; border: 1px solid #eee;"><span class="text-sm" style="color: #E63946; font-family: 'Playfair Display', serif;">Ink</span></div>
-                <p class="text-xs text-gray-500">Modern editorial</p>
+            <div class="card p-6">
+                <div class="flex items-center justify-between mb-3">
+                    <h3 class="font-semibold">Checklist</h3>
+                    <span class="tag tag-green">Very High</span>
+                </div>
+                <p class="font-mono text-xs text-gray-400 mb-2">"The Ultimate {subtopic} Checklist for {niche}"</p>
+                <p class="text-sm text-gray-500">Interactive checkboxes with progress indicator. Users bookmark and return.</p>
             </div>
-            <div class="p-4 rounded-xl border border-gray-100 text-left">
-                <div class="w-full h-20 rounded-lg mb-3 flex items-center justify-center" style="background: #FBF8F1; border: 1px solid #eee;"><span class="text-sm" style="color: #2D6A4F; font-family: 'Merriweather', serif;">Grove</span></div>
-                <p class="text-xs text-gray-500">Classic literary</p>
+            <div class="card p-6">
+                <div class="flex items-center justify-between mb-3">
+                    <h3 class="font-semibold">How-To Guide</h3>
+                    <span class="tag tag-green">Very High</span>
+                </div>
+                <p class="font-mono text-xs text-gray-400 mb-2">"How to {subtopic}: A Step-by-Step Guide"</p>
+                <p class="text-sm text-gray-500">Step progress bar, time estimates, and prerequisite lists.</p>
             </div>
-            <div class="p-4 rounded-xl border border-gray-100 text-left">
-                <div class="w-full h-20 rounded-lg mb-3 flex items-center justify-center" style="background: #FAF5FF; border: 1px solid #eee;"><span class="text-sm" style="color: #7C3AED;">Neon</span></div>
-                <p class="text-xs text-gray-500">Playful creative</p>
+            <div class="card p-6">
+                <div class="flex items-center justify-between mb-3">
+                    <h3 class="font-semibold">Comparison</h3>
+                    <span class="tag tag-blue">High</span>
+                </div>
+                <p class="font-mono text-xs text-gray-400 mb-2">"{A} vs {B}: Which Is Better for {niche}?"</p>
+                <p class="text-sm text-gray-500">Structured feature tables with verdict summaries and scoring.</p>
             </div>
-            <div class="p-4 rounded-xl border border-gray-100 text-left">
-                <div class="w-full h-20 rounded-lg mb-3 flex items-center justify-center" style="background: #FEFDFB; border: 1px solid #eee;"><span class="text-sm" style="color: #0E7490; font-family: 'Crimson Pro', serif;">Folio</span></div>
-                <p class="text-xs text-gray-500">Minimal reading</p>
+            <div class="card p-6">
+                <div class="flex items-center justify-between mb-3">
+                    <h3 class="font-semibold">Alternatives</h3>
+                    <span class="tag tag-blue">High</span>
+                </div>
+                <p class="font-mono text-xs text-gray-400 mb-2">"Best {subtopic} Alternatives for {niche}"</p>
+                <p class="text-sm text-gray-500">Ranked list with pros/cons, pricing, and feature highlights.</p>
             </div>
-            <div class="p-4 rounded-xl border border-gray-100 text-left">
-                <div class="w-full h-20 rounded-lg mb-3 flex items-center justify-center" style="background: #1A1A2E; border: 1px solid #333;"><span class="text-sm" style="color: #F59E0B; font-family: 'Lora', serif;">Dusk</span></div>
-                <p class="text-xs text-gray-500">Dark elegance</p>
+            <div class="card p-6">
+                <div class="flex items-center justify-between mb-3">
+                    <h3 class="font-semibold">Resource List</h3>
+                    <span class="tag tag-blue">High</span>
+                </div>
+                <p class="font-mono text-xs text-gray-400 mb-2">"Top {subtopic} Resources for {niche}"</p>
+                <p class="text-sm text-gray-500">Category filters with link tracking. Curated list format.</p>
             </div>
-            <div class="p-4 rounded-xl border border-gray-100 text-left">
-                <div class="w-full h-20 rounded-lg mb-3 flex items-center justify-center" style="background: #FDF6EC; border: 1px solid #eee;"><span class="text-sm" style="color: #A0522D;">Koyo</span></div>
-                <p class="text-xs text-gray-500">Autumn earth tones</p>
+            <div class="card p-6">
+                <div class="flex items-center justify-between mb-3">
+                    <h3 class="font-semibold">FAQ</h3>
+                    <span class="tag tag-green">Very High</span>
+                </div>
+                <p class="font-mono text-xs text-gray-400 mb-2">"{subtopic} FAQ: {n} Questions Answered"</p>
+                <p class="text-sm text-gray-500">Accordion layout with FAQPage schema markup for rich snippets.</p>
             </div>
-            <div class="p-4 rounded-xl border border-gray-100 text-left">
-                <div class="w-full h-20 rounded-lg mb-3 flex items-center justify-center" style="background: #FFFFFF; border: 1px solid #eee;"><span class="text-sm" style="color: #3D5A80;">Yuki</span></div>
-                <p class="text-xs text-gray-500">Stark minimal</p>
+            <div class="card p-6">
+                <div class="flex items-center justify-between mb-3">
+                    <h3 class="font-semibold">Glossary</h3>
+                    <span class="tag tag-blue">High</span>
+                </div>
+                <p class="font-mono text-xs text-gray-400 mb-2">"{niche} Glossary: {n} Terms Defined"</p>
+                <p class="text-sm text-gray-500">Alphabetical navigation with anchor links and cross-references.</p>
+            </div>
+            <div class="card p-6">
+                <div class="flex items-center justify-between mb-3">
+                    <h3 class="font-semibold">Template Pack</h3>
+                    <span class="tag tag-blue">High</span>
+                </div>
+                <p class="font-mono text-xs text-gray-400 mb-2">"Free {subtopic} Templates for {niche}"</p>
+                <p class="text-sm text-gray-500">Download and copy actions. High engagement and link potential.</p>
+            </div>
+            <div class="card p-6">
+                <div class="flex items-center justify-between mb-3">
+                    <h3 class="font-semibold">Tool Page</h3>
+                    <span class="tag tag-green">Very High</span>
+                </div>
+                <p class="font-mono text-xs text-gray-400 mb-2">"{subtopic} Calculator / Generator"</p>
+                <p class="text-sm text-gray-500">Embedded interactive tools. Highest engagement and backlink potential.</p>
             </div>
         </div>
     </div>
 </section>
 
-<!-- Tech stack -->
-<section class="py-24 px-4 sm:px-6 border-t border-gray-100" style="background: #FAFAFA;">
-    <div class="max-w-4xl mx-auto text-center">
-        <h2 class="font-display text-3xl font-bold tracking-tight mb-4">Built on proven foundations</h2>
-        <p class="text-gray-500 mb-12">Modern stack, battle-tested components, zero lock-in.</p>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-sm">
-            <div class="p-4 bg-white rounded-lg border border-gray-100"><p class="font-semibold mb-1">.NET 10</p><p class="text-gray-500 text-xs">Runtime &amp; framework</p></div>
-            <div class="p-4 bg-white rounded-lg border border-gray-100"><p class="font-semibold mb-1">PostgreSQL</p><p class="text-gray-500 text-xs">Primary database</p></div>
-            <div class="p-4 bg-white rounded-lg border border-gray-100"><p class="font-semibold mb-1">Redis</p><p class="text-gray-500 text-xs">Caching layer</p></div>
-            <div class="p-4 bg-white rounded-lg border border-gray-100"><p class="font-semibold mb-1">Alpine.js</p><p class="text-gray-500 text-xs">Reactive UI</p></div>
-            <div class="p-4 bg-white rounded-lg border border-gray-100"><p class="font-semibold mb-1">Tailwind CSS v4</p><p class="text-gray-500 text-xs">Design system</p></div>
-            <div class="p-4 bg-white rounded-lg border border-gray-100"><p class="font-semibold mb-1">Jint</p><p class="text-gray-500 text-xs">Plugin sandbox</p></div>
-            <div class="p-4 bg-white rounded-lg border border-gray-100"><p class="font-semibold mb-1">BCrypt</p><p class="text-gray-500 text-xs">Password hashing</p></div>
-            <div class="p-4 bg-white rounded-lg border border-gray-100"><p class="font-semibold mb-1">Serilog</p><p class="text-gray-500 text-xs">Structured logging</p></div>
-            <div class="p-4 bg-white rounded-lg border border-gray-100"><p class="font-semibold mb-1">Stripe</p><p class="text-gray-500 text-xs">Payments &amp; subscriptions</p></div>
-            <div class="p-4 bg-white rounded-lg border border-gray-100"><p class="font-semibold mb-1">ImageSharp</p><p class="text-gray-500 text-xs">Image processing</p></div>
+<!-- Custom Chrome -->
+<section class="py-24 px-4 sm:px-6 grid-bg">
+    <div class="max-w-6xl mx-auto">
+        <div class="grid lg:grid-cols-2 gap-12 items-center">
+            <div>
+                <h2 class="text-3xl sm:text-4xl font-bold tracking-tight mb-4">Your brand. Your pages.</h2>
+                <p class="text-gray-500 leading-relaxed mb-6">
+                    Upload your header HTML, footer HTML, and CSS. Every generated page wraps in your chrome &mdash; visitors see your navigation, your colors, your CTAs. Pages look native to your domain, not like a third-party tool.
+                </p>
+                <ul class="space-y-3 text-sm text-gray-600">
+                    <li class="flex items-center gap-3">
+                        <span class="text-accent font-mono text-xs">&#9632;</span>
+                        Custom header and footer HTML injection
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <span class="text-accent font-mono text-xs">&#9632;</span>
+                        Your CSS loaded on every page
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <span class="text-accent font-mono text-xs">&#9632;</span>
+                        Back-link component for link equity flow
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <span class="text-accent font-mono text-xs">&#9632;</span>
+                        Custom CTA injection per content type
+                    </li>
+                </ul>
+            </div>
+            <div>
+                <div class="space-y-4">
+                    <!-- Before -->
+                    <div>
+                        <p class="font-mono text-xs text-gray-400 mb-2">before &mdash; generic page</p>
+                        <div class="card p-4">
+                            <div class="h-6 bg-gray-100 rounded mb-3"></div>
+                            <div class="space-y-2">
+                                <div class="h-3 bg-gray-100 rounded w-3/4"></div>
+                                <div class="h-3 bg-gray-100 rounded w-full"></div>
+                                <div class="h-3 bg-gray-100 rounded w-5/6"></div>
+                            </div>
+                            <div class="h-6 bg-gray-100 rounded mt-3"></div>
+                        </div>
+                    </div>
+                    <!-- After -->
+                    <div>
+                        <p class="font-mono text-xs text-accent mb-2">after &mdash; your chrome applied</p>
+                        <div class="card p-4" style="border-color: #10b981;">
+                            <div class="h-6 rounded mb-3 flex items-center px-2" style="background: #1a1b26;">
+                                <span class="text-[10px] text-white font-mono">yoursite.com</span>
+                                <span class="ml-auto text-[10px] text-gray-400 font-mono">Home &middot; About &middot; Blog</span>
+                            </div>
+                            <div class="space-y-2">
+                                <div class="h-3 bg-gray-100 rounded w-3/4"></div>
+                                <div class="h-3 bg-gray-100 rounded w-full"></div>
+                                <div class="h-3 bg-gray-100 rounded w-5/6"></div>
+                            </div>
+                            <div class="h-6 rounded mt-3 flex items-center px-2" style="background: #1a1b26;">
+                                <span class="text-[10px] text-gray-400 font-mono">&copy; 2026 yoursite.com</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+</section>
+
+<!-- SEO Infrastructure -->
+<section class="py-24 px-4 sm:px-6">
+    <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl sm:text-4xl font-bold tracking-tight mb-4">SEO infrastructure, automated</h2>
+            <p class="text-gray-500 max-w-2xl mx-auto">Every page ships with production-grade SEO. No plugins, no manual setup.</p>
+        </div>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div class="card p-6">
+                <p class="font-mono text-xs text-accent mb-2">&lt;link rel="canonical"&gt;</p>
+                <h3 class="font-semibold mb-1">Canonical URLs</h3>
+                <p class="text-sm text-gray-500">Unique canonical on every page. No duplicate content issues.</p>
+            </div>
+            <div class="card p-6">
+                <p class="font-mono text-xs text-accent mb-2">&lt;script type="application/ld+json"&gt;</p>
+                <h3 class="font-semibold mb-1">JSON-LD Schema</h3>
+                <p class="text-sm text-gray-500">Article, FAQPage, and BreadcrumbList structured data on every page.</p>
+            </div>
+            <div class="card p-6">
+                <p class="font-mono text-xs text-accent mb-2">&lt;meta property="og:..."&gt;</p>
+                <h3 class="font-semibold mb-1">Open Graph + Twitter Cards</h3>
+                <p class="text-sm text-gray-500">Social preview metadata with generated OG images.</p>
+            </div>
+            <div class="card p-6">
+                <p class="font-mono text-xs text-accent mb-2">/sitemap.xml</p>
+                <h3 class="font-semibold mb-1">XML Sitemap</h3>
+                <p class="text-sm text-gray-500">Auto-updated on every publish batch. Submitted to Google automatically.</p>
+            </div>
+            <div class="card p-6">
+                <p class="font-mono text-xs text-accent mb-2">/robots.txt</p>
+                <h3 class="font-semibold mb-1">robots.txt</h3>
+                <p class="text-sm text-gray-500">Configured per subdomain. Crawl-friendly defaults out of the box.</p>
+            </div>
+            <div class="card p-6">
+                <p class="font-mono text-xs text-accent mb-2">&lt;a href="..."&gt;</p>
+                <h3 class="font-semibold mb-1">Internal Cross-Linking</h3>
+                <p class="text-sm text-gray-500">Automatic related-page links within the same niche. Link equity distribution.</p>
+            </div>
+            <div class="card p-6 lg:col-span-3">
+                <p class="font-mono text-xs text-accent mb-2">quality-gates</p>
+                <h3 class="font-semibold mb-1">Quality Gates</h3>
+                <p class="text-sm text-gray-500">Word count minimums, field-level validation, string length checks, and enum constraints. Pages that fail validation are rejected, not published.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Cloud Platform -->
+<section class="py-24 px-4 sm:px-6" style="background: #FAFBFC;">
+    <div class="section-divider mb-24"></div>
+    <div class="max-w-4xl mx-auto text-center">
+        <h2 class="text-3xl font-bold tracking-tight mb-4">Cloud-hosted. Zero infrastructure.</h2>
+        <p class="text-gray-500 mb-12">Contento runs on contentocms.com. Install the CLI, authenticate, and start generating. No servers, no Docker, no databases to manage.</p>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+            <div class="card p-4 text-center"><p class="font-semibold mb-1">CLI-First</p><p class="text-gray-500 text-xs">npm package</p></div>
+            <div class="card p-4 text-center"><p class="font-semibold mb-1">AI Agents</p><p class="text-gray-500 text-xs">--json mode</p></div>
+            <div class="card p-4 text-center"><p class="font-semibold mb-1">Cloudflare</p><p class="text-gray-500 text-xs">DNS + SSL</p></div>
+            <div class="card p-4 text-center"><p class="font-semibold mb-1">Global CDN</p><p class="text-gray-500 text-xs">Edge delivery</p></div>
+            <div class="card p-4 text-center"><p class="font-semibold mb-1">150+ Niches</p><p class="text-gray-500 text-xs">Built-in taxonomy</p></div>
+            <div class="card p-4 text-center"><p class="font-semibold mb-1">10 Schemas</p><p class="text-gray-500 text-xs">Content types</p></div>
+            <div class="card p-4 text-center"><p class="font-semibold mb-1">GSC Analytics</p><p class="text-gray-500 text-xs">Feedback loop</p></div>
+            <div class="card p-4 text-center"><p class="font-semibold mb-1">NDJSON Streaming</p><p class="text-gray-500 text-xs">Real-time progress</p></div>
+        </div>
+    </div>
+    <div class="section-divider mt-24"></div>
 </section>
 
 <!-- CTA -->
 <section class="py-24 px-4 sm:px-6">
     <div class="max-w-3xl mx-auto text-center">
-        <h2 class="font-display text-3xl sm:text-4xl font-bold tracking-tight mb-4">Start writing in minutes</h2>
-        <p class="text-gray-500 mb-8">Clone the repo, run one command, and you're live. No complex setup, no configuration files to hunt down.</p>
+        <h2 class="text-3xl sm:text-4xl font-bold tracking-tight mb-4">Generate your first 500 pages today.</h2>
+        <p class="text-gray-500 mb-8">Install the CLI, pick a niche, choose a schema, and publish. No infrastructure to manage, no configuration to debug.</p>
         <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <a href="docs/index.html" class="inline-flex items-center gap-2 px-6 py-3 text-sm font-medium text-white rounded-lg transition-colors" style="background: #3D5A80;" onmouseover="this.style.background='#34506F'" onmouseout="this.style.background='#3D5A80'">Read the Docs</a>
-            <a href="docs/api.html" class="inline-flex items-center gap-2 px-6 py-3 text-sm font-medium text-gray-700 bg-white border border-gray-200 rounded-lg hover:border-gray-300 hover:bg-gray-50 transition-all">API Reference</a>
+            <a href="docs/index.html" class="btn-primary inline-flex items-center gap-2">
+                Get Started
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+            </a>
+            <a href="docs/cli.html" class="btn-secondary inline-flex items-center gap-2">
+                CLI Reference
+            </a>
         </div>
     </div>
 </section>

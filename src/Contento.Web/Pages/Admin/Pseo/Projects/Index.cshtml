@@ -1,0 +1,113 @@
+@page "/admin/pseo/projects"
+@model Contento.Web.Pages.Admin.Pseo.Projects.IndexModel
+@{
+    ViewData["Title"] = "pSEO Projects";
+}
+
+<div class="max-w-7xl mx-auto" x-data="{ showNew: @(ViewContext.HttpContext.Request.Query["action"] == "new" ? "true" : "false") }">
+    <!-- Header -->
+    <div class="flex items-center justify-between mb-6">
+        <div>
+            <div class="flex items-center gap-2">
+                <a href="/admin/pseo" class="text-sm" style="color: var(--color-ash);">pSEO</a>
+                <span style="color: var(--color-cloud);">/</span>
+                <h2 class="text-xl font-semibold" style="color: var(--color-ink);">Projects</h2>
+            </div>
+            <p class="text-sm mt-1" style="color: var(--color-ash);">@Model.Projects.Count projects</p>
+        </div>
+        <button @@click="showNew = !showNew" class="btn btn-primary">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 4v16m8-8H4"/>
+            </svg>
+            New Project
+        </button>
+    </div>
+
+    <!-- New Project Form -->
+    <div x-show="showNew" x-cloak x-transition class="card mb-6">
+        <h3 class="text-sm font-semibold mb-4" style="color: var(--color-ink);">Create New Project</h3>
+        <form method="post" asp-page-handler="Create">
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div>
+                    <label class="form-label">Project Name</label>
+                    <input type="text" name="ProjectName" class="form-input" placeholder="My SEO Site" required />
+                </div>
+                <div>
+                    <label class="form-label">Root Domain</label>
+                    <input type="text" name="RootDomain" class="form-input" placeholder="example.com" required />
+                </div>
+                <div>
+                    <label class="form-label">Subdomain</label>
+                    <input type="text" name="Subdomain" class="form-input" placeholder="learn" required />
+                </div>
+            </div>
+            <div class="flex justify-end gap-2 mt-4">
+                <button type="button" @@click="showNew = false" class="btn btn-ghost">Cancel</button>
+                <button type="submit" class="btn btn-primary">Create Project</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Projects Table -->
+    <div class="table-container">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Subdomain</th>
+                    <th>FQDN</th>
+                    <th>Status</th>
+                    <th>Collections</th>
+                    <th>Pages</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Projects.Any())
+                {
+                    @foreach (var project in Model.Projects)
+                    {
+                        <tr>
+                            <td>
+                                <a href="/admin/pseo/projects/@project.Id" class="font-medium hover:underline" style="color: var(--color-ink);">
+                                    @project.Name
+                                </a>
+                            </td>
+                            <td style="color: var(--color-ash); font-size: 0.8125rem;">@project.Subdomain</td>
+                            <td style="color: var(--color-ash); font-size: 0.8125rem;">@project.Fqdn</td>
+                            <td>
+                                <span class="badge @(project.Status switch { "active" => "badge-success", "pending_dns" => "badge-warning", "paused" => "badge-neutral", "error" => "badge-danger", _ => "badge-neutral" })">
+                                    @project.Status
+                                </span>
+                            </td>
+                            <td style="color: var(--color-ash); font-size: 0.8125rem;">
+                                @(Model.ProjectCollectionCounts.GetValueOrDefault(project.Id))
+                            </td>
+                            <td style="color: var(--color-ash); font-size: 0.8125rem;">
+                                @(Model.ProjectPageCounts.GetValueOrDefault(project.Id))
+                            </td>
+                            <td>
+                                <div class="flex items-center gap-1">
+                                    <a href="/admin/pseo/projects/@project.Id" class="btn btn-ghost btn-sm">Edit</a>
+                                    <form method="post" asp-page-handler="Delete" asp-route-id="@project.Id"
+                                          onsubmit="return confirm('Delete this project and all its data?');" class="inline">
+                                        <button type="submit" class="btn btn-ghost btn-sm" style="color: var(--color-danger);">Delete</button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="7" class="text-center py-12">
+                            <p style="color: var(--color-cloud);">No projects found.</p>
+                            <button @@click="showNew = true" class="btn btn-primary btn-sm mt-4">Create your first project</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

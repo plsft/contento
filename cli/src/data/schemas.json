@@ -1,0 +1,922 @@
+[
+  {
+    "slug": "idea-list",
+    "name": "Idea List",
+    "description": "A comprehensive list of ideas, tips, or examples around a specific subtopic and niche",
+    "schemaJson": {
+      "type": "object",
+      "required": [
+        "title",
+        "intro",
+        "ideas",
+        "conclusion"
+      ],
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "SEO-optimized page title"
+        },
+        "intro": {
+          "type": "string",
+          "description": "2-3 paragraph introduction establishing context and value"
+        },
+        "ideas": {
+          "type": "array",
+          "minItems": 25,
+          "items": {
+            "type": "object",
+            "required": [
+              "number",
+              "title",
+              "description"
+            ],
+            "properties": {
+              "number": {
+                "type": "integer"
+              },
+              "title": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string",
+                "description": "2-4 sentences explaining the idea with actionable detail"
+              },
+              "example": {
+                "type": "string",
+                "description": "Optional real-world example"
+              }
+            }
+          }
+        },
+        "conclusion": {
+          "type": "string",
+          "description": "2-3 paragraph conclusion with next steps"
+        },
+        "faq": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "question": {
+                "type": "string"
+              },
+              "answer": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "promptTemplate": "You are an expert content strategist specializing in {niche}. Generate a comprehensive, actionable idea list about {subtopic}. Each idea must be specific, practical, and immediately usable by the target audience. Avoid generic advice — every idea should demonstrate deep domain knowledge. Include real-world examples where possible. Write in a professional but approachable tone. Target 50-100 ideas minimum, organized from foundational to advanced.",
+    "userPromptTemplate": "Create a comprehensive idea list: \"100 {subtopic} Ideas for {niche} in {year}\". Target audience: {audience}. Key pain points to address: {pain_points}.",
+    "rendererSlug": "idea-list",
+    "titlePattern": "100 {subtopic} Ideas for {niche} in {year}",
+    "metaDescPattern": "Discover 100+ actionable {subtopic} ideas for {niche}. Practical strategies, real examples, and expert tips to accelerate your success in {year}.",
+    "settings": {}
+  },
+  {
+    "slug": "checklist",
+    "name": "Checklist",
+    "description": "A step-by-step checklist that guides users through a process related to a subtopic and niche",
+    "schemaJson": {
+      "type": "object",
+      "required": [
+        "title",
+        "intro",
+        "sections",
+        "conclusion"
+      ],
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "intro": {
+          "type": "string",
+          "description": "2-3 paragraphs explaining why this checklist matters and who it's for"
+        },
+        "sections": {
+          "type": "array",
+          "minItems": 3,
+          "items": {
+            "type": "object",
+            "required": [
+              "heading",
+              "items"
+            ],
+            "properties": {
+              "heading": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "items": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "task",
+                    "details"
+                  ],
+                  "properties": {
+                    "task": {
+                      "type": "string",
+                      "description": "Clear, actionable task description"
+                    },
+                    "details": {
+                      "type": "string",
+                      "description": "Why this matters and how to do it"
+                    },
+                    "pro_tip": {
+                      "type": "string",
+                      "description": "Optional expert tip"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "conclusion": {
+          "type": "string"
+        },
+        "downloadable_summary": {
+          "type": "string",
+          "description": "Condensed bullet-point version for quick reference"
+        }
+      }
+    },
+    "promptTemplate": "You are a meticulous {niche} expert creating a comprehensive, actionable checklist about {subtopic}. Every item must be specific and verifiable — the reader should be able to check it off as done. Organize items logically from setup/prerequisites through execution to verification. Include expert pro-tips that demonstrate deep domain knowledge. The checklist should be thorough enough that following it guarantees a quality outcome.",
+    "userPromptTemplate": "Create a thorough checklist: \"{subtopic} Checklist for {niche}\". Target audience: {audience}. Pain points to address: {pain_points}. Include 20-40 specific, checkable items organized in logical sections.",
+    "rendererSlug": "checklist",
+    "titlePattern": "{subtopic} Checklist for {niche}",
+    "metaDescPattern": "The complete {subtopic} checklist for {niche}. Step-by-step tasks, expert pro-tips, and a downloadable summary to ensure nothing gets missed.",
+    "settings": {}
+  },
+  {
+    "slug": "how-to",
+    "name": "How-To Guide",
+    "description": "A detailed step-by-step tutorial showing how to accomplish a specific task",
+    "schemaJson": {
+      "type": "object",
+      "required": [
+        "title",
+        "intro",
+        "prerequisites",
+        "steps",
+        "conclusion"
+      ],
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "intro": {
+          "type": "string",
+          "description": "2-3 paragraphs explaining what the reader will learn and achieve"
+        },
+        "prerequisites": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "What the reader needs before starting"
+        },
+        "estimated_time": {
+          "type": "string",
+          "description": "How long this process typically takes"
+        },
+        "difficulty": {
+          "type": "string",
+          "description": "beginner, intermediate, or advanced"
+        },
+        "steps": {
+          "type": "array",
+          "minItems": 5,
+          "items": {
+            "type": "object",
+            "required": [
+              "step_number",
+              "title",
+              "content"
+            ],
+            "properties": {
+              "step_number": {
+                "type": "integer"
+              },
+              "title": {
+                "type": "string"
+              },
+              "content": {
+                "type": "string",
+                "description": "Detailed instruction with 3-5 paragraphs"
+              },
+              "warning": {
+                "type": "string",
+                "description": "Optional common mistake to avoid"
+              },
+              "tip": {
+                "type": "string",
+                "description": "Optional pro tip for better results"
+              }
+            }
+          }
+        },
+        "conclusion": {
+          "type": "string",
+          "description": "Summary and next steps"
+        },
+        "troubleshooting": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "problem": {
+                "type": "string"
+              },
+              "solution": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "promptTemplate": "You are an experienced {niche} practitioner writing a detailed how-to guide about {subtopic}. Write as if teaching someone in person — be specific, anticipate questions, and explain the 'why' behind each step. Include common pitfalls and how to avoid them. Each step should be self-contained and actionable. Include a troubleshooting section for common issues. The guide should take someone from zero to completion.",
+    "userPromptTemplate": "Write a detailed how-to guide: \"How to {subtopic} for {niche}\". Target audience: {audience}. Address these pain points: {pain_points}. Include prerequisites, clear steps, and troubleshooting tips.",
+    "rendererSlug": "how-to",
+    "titlePattern": "How to {subtopic} for {niche}",
+    "metaDescPattern": "Learn exactly how to {subtopic} for {niche} with this step-by-step guide. Includes prerequisites, detailed instructions, pro tips, and troubleshooting.",
+    "settings": {}
+  },
+  {
+    "slug": "comparison",
+    "name": "Comparison",
+    "description": "A detailed side-by-side comparison of tools, methods, or approaches for a specific niche",
+    "schemaJson": {
+      "type": "object",
+      "required": [
+        "title",
+        "intro",
+        "criteria",
+        "items",
+        "comparison_table",
+        "verdict",
+        "conclusion"
+      ],
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "intro": {
+          "type": "string",
+          "description": "2-3 paragraphs setting up the comparison and why it matters"
+        },
+        "criteria": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "weight": {
+                "type": "string",
+                "description": "How important this criterion is: high, medium, low"
+              }
+            }
+          }
+        },
+        "items": {
+          "type": "array",
+          "minItems": 3,
+          "items": {
+            "type": "object",
+            "required": [
+              "name",
+              "summary",
+              "pros",
+              "cons",
+              "best_for",
+              "scores"
+            ],
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "summary": {
+                "type": "string",
+                "description": "2-3 paragraph overview"
+              },
+              "pros": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "cons": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "best_for": {
+                "type": "string"
+              },
+              "pricing": {
+                "type": "string"
+              },
+              "scores": {
+                "type": "object",
+                "description": "Score per criterion (1-10)"
+              }
+            }
+          }
+        },
+        "comparison_table": {
+          "type": "object",
+          "description": "Structured feature comparison matrix"
+        },
+        "verdict": {
+          "type": "string",
+          "description": "2-3 paragraphs with final recommendation by use case"
+        },
+        "conclusion": {
+          "type": "string"
+        }
+      }
+    },
+    "promptTemplate": "You are an unbiased {niche} analyst creating a thorough comparison of {subtopic} options. Be fair and evidence-based — highlight genuine strengths and weaknesses for each option. Use specific criteria that matter to the target audience. Include pricing where relevant. Provide a clear verdict organized by use case (e.g., 'Best for beginners', 'Best for enterprise'). Avoid marketing language — be honest and helpful.",
+    "userPromptTemplate": "Create a detailed comparison: \"{subtopic} Comparison for {niche}\". Target audience: {audience}. Compare at least 5 options using criteria that matter most to this audience. Include pricing, pros/cons, and clear recommendations by use case.",
+    "rendererSlug": "comparison",
+    "titlePattern": "{subtopic} Comparison for {niche}",
+    "metaDescPattern": "Unbiased {subtopic} comparison for {niche}. Side-by-side analysis with pricing, pros/cons, feature matrix, and clear recommendations by use case.",
+    "settings": {}
+  },
+  {
+    "slug": "alternatives",
+    "name": "Alternatives",
+    "description": "A roundup of the best alternatives to a popular tool, service, or approach",
+    "schemaJson": {
+      "type": "object",
+      "required": [
+        "title",
+        "intro",
+        "original_overview",
+        "alternatives",
+        "comparison_table",
+        "conclusion"
+      ],
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "intro": {
+          "type": "string",
+          "description": "2-3 paragraphs on why people look for alternatives"
+        },
+        "original_overview": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "strengths": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "limitations": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "pricing": {
+              "type": "string"
+            }
+          }
+        },
+        "alternatives": {
+          "type": "array",
+          "minItems": 5,
+          "items": {
+            "type": "object",
+            "required": [
+              "name",
+              "tagline",
+              "description",
+              "pros",
+              "cons",
+              "best_for",
+              "pricing"
+            ],
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "tagline": {
+                "type": "string",
+                "description": "One-line value proposition"
+              },
+              "description": {
+                "type": "string",
+                "description": "2-3 paragraphs detailed overview"
+              },
+              "pros": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "cons": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "best_for": {
+                "type": "string"
+              },
+              "pricing": {
+                "type": "string"
+              },
+              "migration_difficulty": {
+                "type": "string",
+                "description": "easy, moderate, complex"
+              }
+            }
+          }
+        },
+        "comparison_table": {
+          "type": "object",
+          "description": "Quick-reference feature matrix"
+        },
+        "conclusion": {
+          "type": "string",
+          "description": "2-3 paragraphs with final thoughts and decision framework"
+        }
+      }
+    },
+    "promptTemplate": "You are a {niche} expert helping readers find the best alternative to a popular {subtopic} solution. First explain why someone might want to switch — be specific about common frustrations. Then present each alternative with honest analysis including migration difficulty. Prioritize alternatives by how well they address the original tool's limitations. Include real pricing and practical migration considerations.",
+    "userPromptTemplate": "Create an alternatives guide: \"Best {subtopic} Alternatives for {niche}\". Target audience: {audience}. List 8-12 alternatives with honest pros/cons, pricing, migration difficulty, and clear best-for recommendations.",
+    "rendererSlug": "alternatives",
+    "titlePattern": "Best {subtopic} Alternatives for {niche}",
+    "metaDescPattern": "Discover the best {subtopic} alternatives for {niche}. Honest reviews with pricing, pros/cons, migration tips, and recommendations for every use case.",
+    "settings": {}
+  },
+  {
+    "slug": "resource-list",
+    "name": "Resource List",
+    "description": "A curated collection of the best resources (tools, articles, courses, communities) for a subtopic",
+    "schemaJson": {
+      "type": "object",
+      "required": [
+        "title",
+        "intro",
+        "categories",
+        "conclusion"
+      ],
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "intro": {
+          "type": "string",
+          "description": "2-3 paragraphs on why these resources matter and how to use this guide"
+        },
+        "categories": {
+          "type": "array",
+          "minItems": 4,
+          "items": {
+            "type": "object",
+            "required": [
+              "name",
+              "description",
+              "resources"
+            ],
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Category name (e.g., 'Tools', 'Courses', 'Communities')"
+              },
+              "description": {
+                "type": "string"
+              },
+              "resources": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "name",
+                    "description",
+                    "type",
+                    "cost"
+                  ],
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string",
+                      "description": "2-3 sentences on what makes this resource valuable"
+                    },
+                    "url": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string",
+                      "description": "tool, course, book, community, blog, podcast, template"
+                    },
+                    "cost": {
+                      "type": "string",
+                      "description": "free, freemium, paid with price range"
+                    },
+                    "best_for": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "getting_started_path": {
+          "type": "string",
+          "description": "Recommended order of resources for beginners"
+        },
+        "conclusion": {
+          "type": "string"
+        }
+      }
+    },
+    "promptTemplate": "You are a {niche} curator assembling the definitive resource list for {subtopic}. Only recommend resources you'd genuinely suggest to a colleague — no filler. Organize resources into logical categories (tools, courses, communities, books, etc.). Include a mix of free and paid options. For each resource, explain specifically what makes it valuable and who it's best for. Include a 'getting started' path for beginners.",
+    "userPromptTemplate": "Curate a comprehensive resource list: \"Best {subtopic} Resources for {niche}\". Target audience: {audience}. Include tools, courses, communities, books, and other resources organized by category. Specify cost (free/paid) and best-for use cases.",
+    "rendererSlug": "resource-list",
+    "titlePattern": "Best {subtopic} Resources for {niche}",
+    "metaDescPattern": "The best {subtopic} resources for {niche} — curated tools, courses, books, and communities. Organized by category with cost info and beginner paths.",
+    "settings": {}
+  },
+  {
+    "slug": "tool-page",
+    "name": "Tool Page",
+    "description": "A free interactive tool or calculator page that provides immediate value",
+    "schemaJson": {
+      "type": "object",
+      "required": [
+        "title",
+        "intro",
+        "tool_description",
+        "how_to_use",
+        "methodology",
+        "related_content",
+        "faq"
+      ],
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "intro": {
+          "type": "string",
+          "description": "2-3 paragraphs explaining what the tool does and why it's useful"
+        },
+        "tool_description": {
+          "type": "object",
+          "properties": {
+            "purpose": {
+              "type": "string"
+            },
+            "inputs": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "type": {
+                    "type": "string",
+                    "description": "text, number, select, range"
+                  },
+                  "label": {
+                    "type": "string"
+                  },
+                  "placeholder": {
+                    "type": "string"
+                  },
+                  "options": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            },
+            "output_format": {
+              "type": "string",
+              "description": "Description of what the tool outputs"
+            }
+          }
+        },
+        "how_to_use": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "step": {
+                "type": "integer"
+              },
+              "instruction": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "methodology": {
+          "type": "string",
+          "description": "2-3 paragraphs explaining the logic/formula behind the tool"
+        },
+        "related_content": {
+          "type": "string",
+          "description": "Supporting educational content (500+ words)"
+        },
+        "faq": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "question": {
+                "type": "string"
+              },
+              "answer": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "promptTemplate": "You are a {niche} expert designing a free tool/calculator for {subtopic}. Describe the tool's purpose, inputs, outputs, and methodology clearly. The tool should solve a specific, common problem for the target audience. Write supporting educational content that explains the concepts behind the tool and helps users interpret results. Include clear usage instructions and FAQ.",
+    "userPromptTemplate": "Design a free tool page: \"Free {subtopic} Tool for {niche}\". Target audience: {audience}. Define the tool's inputs, outputs, methodology, and supporting content. The tool should address: {pain_points}.",
+    "rendererSlug": "tool-page",
+    "titlePattern": "Free {subtopic} Tool for {niche}",
+    "metaDescPattern": "Free {subtopic} tool for {niche}. Calculate, analyze, or generate results instantly. No signup required — includes methodology and expert guidance.",
+    "settings": {}
+  },
+  {
+    "slug": "faq",
+    "name": "FAQ",
+    "description": "A comprehensive FAQ page answering the most common questions about a subtopic",
+    "schemaJson": {
+      "type": "object",
+      "required": [
+        "title",
+        "intro",
+        "sections",
+        "conclusion"
+      ],
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "intro": {
+          "type": "string",
+          "description": "2-3 paragraphs setting context and explaining who this FAQ is for"
+        },
+        "sections": {
+          "type": "array",
+          "minItems": 4,
+          "items": {
+            "type": "object",
+            "required": [
+              "heading",
+              "questions"
+            ],
+            "properties": {
+              "heading": {
+                "type": "string",
+                "description": "Section category (e.g., 'Getting Started', 'Pricing', 'Technical')"
+              },
+              "questions": {
+                "type": "array",
+                "minItems": 3,
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "question",
+                    "answer"
+                  ],
+                  "properties": {
+                    "question": {
+                      "type": "string"
+                    },
+                    "answer": {
+                      "type": "string",
+                      "description": "Thorough 2-4 paragraph answer"
+                    },
+                    "related_questions": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "conclusion": {
+          "type": "string"
+        },
+        "still_have_questions": {
+          "type": "string",
+          "description": "CTA for users with unanswered questions"
+        }
+      }
+    },
+    "promptTemplate": "You are a {niche} expert answering the most common questions about {subtopic}. Write answers that are thorough yet accessible — assume the reader has basic knowledge but needs expert guidance. Each answer should be 2-4 paragraphs and include practical advice. Organize questions into logical sections. Include 'related questions' to help readers discover more. Target 25-40 questions total across all sections.",
+    "userPromptTemplate": "Create a comprehensive FAQ: \"{subtopic} FAQs for {niche}\". Target audience: {audience}. Address these pain points through Q&A: {pain_points}. Include 25-40 questions organized into 5-8 sections.",
+    "rendererSlug": "faq",
+    "titlePattern": "{subtopic} FAQs for {niche}",
+    "metaDescPattern": "Get answers to the most common {subtopic} questions for {niche}. Expert answers organized by topic — from beginner basics to advanced techniques.",
+    "settings": {}
+  },
+  {
+    "slug": "glossary",
+    "name": "Glossary",
+    "description": "A comprehensive glossary of terms, jargon, and concepts for a subtopic and niche",
+    "schemaJson": {
+      "type": "object",
+      "required": [
+        "title",
+        "intro",
+        "terms",
+        "conclusion"
+      ],
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "intro": {
+          "type": "string",
+          "description": "2-3 paragraphs explaining who this glossary is for and how to use it"
+        },
+        "terms": {
+          "type": "array",
+          "minItems": 30,
+          "items": {
+            "type": "object",
+            "required": [
+              "term",
+              "definition",
+              "category"
+            ],
+            "properties": {
+              "term": {
+                "type": "string"
+              },
+              "definition": {
+                "type": "string",
+                "description": "Clear, jargon-free definition in 2-4 sentences"
+              },
+              "category": {
+                "type": "string",
+                "description": "Grouping category for the term"
+              },
+              "example": {
+                "type": "string",
+                "description": "Real-world usage example"
+              },
+              "related_terms": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "also_known_as": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "conclusion": {
+          "type": "string"
+        },
+        "further_reading": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "promptTemplate": "You are a {niche} educator creating a definitive glossary of {subtopic} terminology. Define each term in plain language that a newcomer can understand, while being precise enough for experts. Include real-world examples of how each term is used. Group terms by category and cross-reference related terms. Aim for 40-60 terms covering foundational through advanced concepts. Avoid circular definitions.",
+    "userPromptTemplate": "Create a comprehensive glossary: \"{subtopic} Glossary for {niche}\". Target audience: {audience}. Define 40-60 terms from beginner to advanced, organized by category with examples and cross-references.",
+    "rendererSlug": "glossary",
+    "titlePattern": "{subtopic} Glossary for {niche}",
+    "metaDescPattern": "The complete {subtopic} glossary for {niche}. 50+ terms defined in plain language with examples, cross-references, and further reading.",
+    "settings": {}
+  },
+  {
+    "slug": "template-pack",
+    "name": "Template Pack",
+    "description": "A collection of ready-to-use templates, frameworks, and swipe files for a subtopic",
+    "schemaJson": {
+      "type": "object",
+      "required": [
+        "title",
+        "intro",
+        "templates",
+        "how_to_customize",
+        "conclusion"
+      ],
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "intro": {
+          "type": "string",
+          "description": "2-3 paragraphs explaining what templates are included and how to use them"
+        },
+        "templates": {
+          "type": "array",
+          "minItems": 5,
+          "items": {
+            "type": "object",
+            "required": [
+              "name",
+              "purpose",
+              "template_content",
+              "how_to_use"
+            ],
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "purpose": {
+                "type": "string",
+                "description": "When and why to use this template"
+              },
+              "template_content": {
+                "type": "string",
+                "description": "The actual template with placeholders marked as [PLACEHOLDER]"
+              },
+              "how_to_use": {
+                "type": "string",
+                "description": "Step-by-step customization instructions"
+              },
+              "example_filled": {
+                "type": "string",
+                "description": "Example with placeholders filled in for a real scenario"
+              },
+              "variations": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Alternative versions for different contexts"
+              }
+            }
+          }
+        },
+        "how_to_customize": {
+          "type": "string",
+          "description": "General guidance on adapting templates to specific situations"
+        },
+        "conclusion": {
+          "type": "string"
+        },
+        "bonus_tips": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Extra tips for getting the most from these templates"
+        }
+      }
+    },
+    "promptTemplate": "You are a {niche} expert creating a practical template pack for {subtopic}. Each template must be immediately usable — include the full template with clear [PLACEHOLDER] markers, step-by-step customization instructions, and a filled-in example. Templates should solve real problems the target audience faces daily. Include variations for different contexts. Focus on templates that save significant time and reduce errors.",
+    "userPromptTemplate": "Create a template pack: \"{subtopic} Templates for {niche}\". Target audience: {audience}. Include 8-15 ready-to-use templates with placeholder text, customization guides, and filled-in examples. Address: {pain_points}.",
+    "rendererSlug": "template-pack",
+    "titlePattern": "{subtopic} Templates for {niche}",
+    "metaDescPattern": "Free {subtopic} templates for {niche}. Ready-to-use templates with examples, customization guides, and expert tips. Copy, customize, and deploy.",
+    "settings": {}
+  }
+]

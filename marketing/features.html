@@ -3,8 +3,8 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Features — Contento CMS</title>
-    <meta name="description" content="Explore every feature of Contento CMS — from the distraction-free editor and headless API to the plugin system and dark mode." />
+    <title>Features — Contento pSEO Engine</title>
+    <meta name="description" content="Explore every pSEO feature: 150+ niches, 10 content schemas, concurrent AI generation, custom chrome, GSC analytics, and a CLI with agent-ready JSON output." />
     <script type="module" src="/src/main.js"></script>
 </head>
 <body class="bg-white text-gray-900 antialiased">
@@ -12,713 +12,577 @@
 <%nav-main%>
 
 <!-- Hero -->
-<section class="pt-32 pb-16 px-4 sm:px-6">
+<section class="pt-32 pb-16 px-4 sm:px-6 dot-bg">
     <div class="max-w-4xl mx-auto text-center">
-        <h1 class="font-display text-4xl sm:text-5xl font-bold tracking-tight mb-4">Every feature, <span class="gradient-text">no bloat</span></h1>
-        <p class="text-lg text-gray-500 max-w-2xl mx-auto">Contento gives you everything you need to publish content beautifully — as a traditional CMS or headless API — without the complexity.</p>
+        <p class="font-mono text-sm text-accent mb-6">&gt; features</p>
+        <h1 class="text-4xl sm:text-5xl font-bold tracking-tight mb-4">Every feature, built for scale.</h1>
+        <p class="text-lg text-gray-500 max-w-2xl mx-auto">Niche taxonomy, schema validation, concurrent generation, custom domains, analytics &mdash; everything you need to run programmatic SEO at 50,000 pages.</p>
     </div>
 </section>
 
-<!-- Writing & Publishing -->
-<section class="py-16 px-4 sm:px-6">
+<div class="section-divider"></div>
+
+<!-- Niche Taxonomy Library -->
+<section class="py-24 px-4 sm:px-6">
     <div class="max-w-6xl mx-auto">
         <div class="grid lg:grid-cols-2 gap-16 items-start">
             <div>
-                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium mb-4" style="background: #ECFDF5; color: #065F46;">Writing</div>
-                <h2 class="text-2xl font-bold tracking-tight mb-4">A writer-first editor</h2>
-                <p class="text-gray-500 leading-relaxed mb-6">Every pixel serves the writer. No distracting toolbars, no confusing WYSIWYG — just a clean Markdown surface with everything you need.</p>
-                <div class="space-y-4">
-                    <div class="flex gap-3">
-                        <div class="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5" style="background: #ECFDF5; color: #065F46;">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                        </div>
-                        <div>
-                            <p class="font-medium text-sm">Autosave every 3 seconds</p>
-                            <p class="text-xs text-gray-500 mt-0.5">Never lose a word. Changes saved automatically with version tracking.</p>
-                        </div>
-                    </div>
-                    <div class="flex gap-3">
-                        <div class="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5" style="background: #ECFDF5; color: #065F46;">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                        </div>
-                        <div>
-                            <p class="font-medium text-sm">Live word count &amp; reading time</p>
-                            <p class="text-xs text-gray-500 mt-0.5">Word count and estimated reading time update as you type.</p>
-                        </div>
-                    </div>
-                    <div class="flex gap-3">
-                        <div class="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5" style="background: #ECFDF5; color: #065F46;">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                        </div>
-                        <div>
-                            <p class="font-medium text-sm">Cover images &amp; SEO settings</p>
-                            <p class="text-xs text-gray-500 mt-0.5">Drag-and-drop cover images. Built-in meta title, description, canonical URL, and OpenGraph fields.</p>
-                        </div>
-                    </div>
-                    <div class="flex gap-3">
-                        <div class="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5" style="background: #ECFDF5; color: #065F46;">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                        </div>
-                        <div>
-                            <p class="font-medium text-sm">5 publication statuses</p>
-                            <p class="text-xs text-gray-500 mt-0.5">Draft, In Review, Published, Scheduled, and Archived. Full workflow support.</p>
-                        </div>
-                    </div>
-                    <div class="flex gap-3">
-                        <div class="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5" style="background: #ECFDF5; color: #065F46;">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                        </div>
-                        <div>
-                            <p class="font-medium text-sm">Dark mode editor</p>
-                            <p class="text-xs text-gray-500 mt-0.5">Toggle dark mode in the editor. Persists across sessions via localStorage.</p>
-                        </div>
-                    </div>
-                </div>
+                <span class="tag tag-green mb-4 inline-block">niches</span>
+                <h2 class="text-2xl sm:text-3xl font-bold tracking-tight mb-4">Niche Taxonomy Library</h2>
+                <p class="text-gray-500 leading-relaxed mb-6">150+ niches across 8 categories, each with rich context that drives better AI output. Not just keywords &mdash; full audience profiles, pain points, monetization strategies, and subtopic trees.</p>
+                <ul class="space-y-3 text-sm text-gray-600">
+                    <li class="flex items-center gap-3">
+                        <span class="text-accent font-mono text-xs">&#9632;</span>
+                        150+ niches across 8 categories
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <span class="text-accent font-mono text-xs">&#9632;</span>
+                        Rich context: audience, pain points, monetization, subtopics
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <span class="text-accent font-mono text-xs">&#9632;</span>
+                        Fork and customize any niche
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <span class="text-accent font-mono text-xs">&#9632;</span>
+                        Subtopic expansion for long-tail coverage
+                    </li>
+                </ul>
             </div>
-            <div class="bg-gray-50 rounded-2xl p-8 border border-gray-100">
-                <div class="space-y-4">
-                    <div class="flex items-center gap-3 mb-6">
-                        <span class="px-2 py-0.5 text-xs font-medium rounded" style="background: #ECFDF5; color: #065F46;">Published</span>
-                        <span class="text-xs text-gray-400">Auto-saved 2s ago</span>
-                    </div>
-                    <div style="font-family: 'Playfair Display', serif; font-size: 1.75rem; font-weight: 700; color: #1A1A1A; line-height: 1.2;">The Art of Simplicity</div>
-                    <div style="font-size: 1rem; color: #6B6B6B; line-height: 1.5;">Less is more — a meditation on minimal design</div>
-                    <div class="pt-4 border-t border-gray-200 text-sm text-gray-500 leading-relaxed" style="font-family: Georgia, serif;">
-                        <p>In the spirit of wabi-sabi, we find beauty in imperfection. The crack in the teacup tells a story that the perfect vessel cannot.</p>
-                        <p class="mt-3">Content should breathe. Give it space, and it will speak for itself...</p>
-                    </div>
-                    <div class="pt-4 border-t border-gray-200 flex items-center gap-4 text-xs text-gray-400">
-                        <span>247 words</span>
-                        <span>1 min read</span>
-                        <span>v3</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Headless API -->
-<section class="py-16 px-4 sm:px-6" style="background: #F8FAFC;">
-    <div class="max-w-6xl mx-auto">
-        <div class="grid lg:grid-cols-2 gap-16 items-start">
-            <div class="order-2 lg:order-1">
-                <div class="code-block overflow-hidden shadow-lg">
-                    <div class="flex items-center gap-2 px-4 py-3 border-b border-gray-800">
-                        <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
-                        <div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
-                        <div class="w-3 h-3 rounded-full bg-green-500/80"></div>
-                        <span class="ml-2 text-xs text-gray-500">API Response</span>
-                    </div>
-                    <div class="p-6 text-xs leading-relaxed overflow-x-auto">
-<pre class="text-gray-300"><span class="text-gray-500">// GET /api/v1/content/posts/the-art-of-simplicity</span>
-{
-  <span class="text-blue-400">"data"</span>: {
-    <span class="text-blue-400">"id"</span>: <span class="text-green-400">"a1b2c3d4-..."</span>,
-    <span class="text-blue-400">"title"</span>: <span class="text-green-400">"The Art of Simplicity"</span>,
-    <span class="text-blue-400">"slug"</span>: <span class="text-green-400">"the-art-of-simplicity"</span>,
-    <span class="text-blue-400">"bodyHtml"</span>: <span class="text-green-400">"&lt;h1&gt;The Art of..."</span>,
-    <span class="text-blue-400">"bodyMarkdown"</span>: <span class="text-green-400">"# The Art of..."</span>,
-    <span class="text-blue-400">"excerpt"</span>: <span class="text-green-400">"Less is more..."</span>,
-    <span class="text-blue-400">"coverImageUrl"</span>: <span class="text-green-400">"/media/cover.jpg"</span>,
-    <span class="text-blue-400">"publishedAt"</span>: <span class="text-green-400">"2026-02-18T..."</span>,
-    <span class="text-blue-400">"readingTimeMinutes"</span>: <span class="text-yellow-400">4</span>,
-    <span class="text-blue-400">"tags"</span>: [<span class="text-green-400">"design"</span>, <span class="text-green-400">"philosophy"</span>],
-    <span class="text-blue-400">"commentCount"</span>: <span class="text-yellow-400">12</span>,
-    <span class="text-blue-400">"tableOfContents"</span>: [
-      {<span class="text-blue-400">"id"</span>: <span class="text-green-400">"intro"</span>, <span class="text-blue-400">"text"</span>: <span class="text-green-400">"Introduction"</span>, <span class="text-blue-400">"level"</span>: <span class="text-yellow-400">2</span>},
-      {<span class="text-blue-400">"id"</span>: <span class="text-green-400">"beauty"</span>, <span class="text-blue-400">"text"</span>: <span class="text-green-400">"Finding Beauty"</span>, <span class="text-blue-400">"level"</span>: <span class="text-yellow-400">2</span>}
-    ]
-  }
-}</pre>
-                    </div>
-                </div>
-            </div>
-            <div class="order-1 lg:order-2">
-                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium mb-4" style="background: #EEF2F7; color: #3D5A80;">Headless API</div>
-                <h2 class="text-2xl font-bold tracking-tight mb-4">Complete REST API</h2>
-                <p class="text-gray-500 leading-relaxed mb-6">135 endpoints covering every piece of content in your CMS. Two API layers designed for different use cases.</p>
-                <div class="space-y-3 text-sm mb-8">
-                    <div class="p-3 bg-white rounded-lg border border-gray-100">
-                        <p class="font-medium">Content Delivery API</p>
-                        <p class="text-xs text-gray-500 mt-1">Public, no auth required. Site config, posts with HTML, categories, search, comments, themes, layouts, media.</p>
-                    </div>
-                    <div class="p-3 bg-white rounded-lg border border-gray-100">
-                        <p class="font-medium">Management API</p>
-                        <p class="text-xs text-gray-500 mt-1">Bearer token auth. Full CRUD for posts, categories, media, plugins, layouts. Import/export. Audit logging.</p>
-                    </div>
-                    <div class="p-3 bg-white rounded-lg border border-gray-100">
-                        <p class="font-medium">Authentication API</p>
-                        <p class="text-xs text-gray-500 mt-1">Token exchange, refresh, and user info. HMAC-SHA256 signed stateless tokens with configurable TTL.</p>
-                    </div>
-                </div>
-                <a href="docs/api.html" class="inline-flex items-center gap-2 text-sm font-medium" style="color: #3D5A80;">
-                    Full API reference
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
-                </a>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Plugin System -->
-<section class="py-16 px-4 sm:px-6">
-    <div class="max-w-6xl mx-auto">
-        <div class="grid lg:grid-cols-2 gap-16 items-start">
-            <div>
-                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium mb-4" style="background: #FAF5FF; color: #7C3AED;">Extensible</div>
-                <h2 class="text-2xl font-bold tracking-tight mb-4">Plugin ecosystem</h2>
-                <p class="text-gray-500 leading-relaxed mb-6">Extend Contento with JavaScript plugins that run in a secure Jint sandbox. No server restart needed — install from the admin panel.</p>
-                <div class="space-y-3 mb-8">
-                    <div class="flex items-center gap-3 p-3 bg-gray-50 rounded-lg border border-gray-100">
-                        <div class="w-8 h-8 rounded flex items-center justify-center flex-shrink-0" style="background: #EEF2F7; color: #3D5A80;">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
-                        </div>
-                        <div>
-                            <p class="text-sm font-medium">SEO Analyzer</p>
-                            <p class="text-xs text-gray-500">Keyword scoring, readability analysis, Flesch-Kincaid, JSON-LD generation</p>
-                        </div>
-                    </div>
-                    <div class="flex items-center gap-3 p-3 bg-gray-50 rounded-lg border border-gray-100">
-                        <div class="w-8 h-8 rounded flex items-center justify-center flex-shrink-0" style="background: #EEF2F7; color: #3D5A80;">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-                        </div>
-                        <div>
-                            <p class="text-sm font-medium">Contact Form</p>
-                            <p class="text-xs text-gray-500">Styled form with validation, honeypot spam protection, success animations</p>
-                        </div>
-                    </div>
-                    <div class="flex items-center gap-3 p-3 bg-gray-50 rounded-lg border border-gray-100">
-                        <div class="w-8 h-8 rounded flex items-center justify-center flex-shrink-0" style="background: #EEF2F7; color: #3D5A80;">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
-                        </div>
-                        <div>
-                            <p class="text-sm font-medium">Reading Progress</p>
-                            <p class="text-xs text-gray-500">Animated scroll progress bar at the top of posts</p>
-                        </div>
-                    </div>
-                    <div class="flex items-center gap-3 p-3 bg-gray-50 rounded-lg border border-gray-100">
-                        <div class="w-8 h-8 rounded flex items-center justify-center flex-shrink-0" style="background: #EEF2F7; color: #3D5A80;">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/></svg>
-                        </div>
-                        <div>
-                            <p class="text-sm font-medium">Social Share &amp; SEO Meta</p>
-                            <p class="text-xs text-gray-500">OpenGraph, Twitter Cards, and social sharing buttons</p>
-                        </div>
-                    </div>
-                </div>
-                <a href="docs/plugins.html" class="inline-flex items-center gap-2 text-sm font-medium" style="color: #3D5A80;">
-                    Build a plugin
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
-                </a>
-            </div>
-            <div class="code-block overflow-hidden shadow-lg">
-                <div class="flex items-center gap-2 px-4 py-3 border-b border-gray-800">
+            <div class="console overflow-hidden">
+                <div class="flex items-center gap-2 px-4 py-3 border-b border-[#2a2b3d]">
                     <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
                     <div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
                     <div class="w-3 h-3 rounded-full bg-green-500/80"></div>
-                    <span class="ml-2 text-xs text-gray-500">plugin.js</span>
+                    <span class="ml-2 text-xs text-gray-500 font-mono">niche.json</span>
                 </div>
-                <div class="p-6 text-xs leading-relaxed overflow-x-auto">
-<pre class="text-gray-300"><span class="text-gray-500">// name: "my-awesome-plugin"</span>
-<span class="text-gray-500">// version: "1.0.0"</span>
-<span class="text-gray-500">// hooks: ["post:render"]</span>
-
-(<span class="text-purple-400">function</span> () {
-  contento.<span class="text-blue-400">on</span>(<span class="text-green-400">'post:render'</span>, <span class="text-purple-400">function</span> (ctx) {
-    <span class="text-purple-400">var</span> doc = ctx.document;
-    <span class="text-purple-400">var</span> body = doc.body;
-
-    <span class="text-gray-500">// Full DOM API available</span>
-    <span class="text-purple-400">var</span> el = doc.<span class="text-blue-400">createElement</span>(<span class="text-green-400">'div'</span>);
-    el.<span class="text-blue-400">setAttribute</span>(<span class="text-green-400">'class'</span>, <span class="text-green-400">'my-widget'</span>);
-    el.textContent = <span class="text-green-400">'Hello!'</span>;
-    body.<span class="text-blue-400">appendChild</span>(el);
-
-    <span class="text-gray-500">// Access post metadata</span>
-    <span class="text-purple-400">var</span> title = ctx.title;
-    <span class="text-purple-400">var</span> tags  = ctx.tags;
-    <span class="text-purple-400">var</span> slug  = ctx.slug;
-
-    <span class="text-gray-500">// Inject styles</span>
-    <span class="text-purple-400">var</span> style = doc.<span class="text-blue-400">createElement</span>(<span class="text-green-400">'style'</span>);
-    style.textContent = <span class="text-green-400">'.my-widget {'</span>
-      + <span class="text-green-400">'  position: fixed;'</span>
-      + <span class="text-green-400">'  bottom: 20px;'</span>
-      + <span class="text-green-400">'}'</span>;
-    doc.head.<span class="text-blue-400">appendChild</span>(style);
-  });
-})();</pre>
+                <div class="p-6 text-sm leading-relaxed font-mono overflow-x-auto">
+<pre class="!bg-transparent !border-0 !p-0 !m-0"><code>{
+  <span class="property">"name"</span>: <span class="string">"Remote Work"</span>,
+  <span class="property">"category"</span>: <span class="string">"Business &amp; Career"</span>,
+  <span class="property">"audience"</span>: <span class="string">"Remote workers, freelancers, distributed teams"</span>,
+  <span class="property">"painPoints"</span>: [
+    <span class="string">"isolation"</span>, <span class="string">"time zones"</span>,
+    <span class="string">"productivity tracking"</span>, <span class="string">"async communication"</span>
+  ],
+  <span class="property">"monetization"</span>: [
+    <span class="string">"SaaS affiliate"</span>, <span class="string">"course sales"</span>,
+    <span class="string">"consulting"</span>
+  ],
+  <span class="property">"subtopics"</span>: [
+    <span class="string">"home office setup"</span>,
+    <span class="string">"async communication tools"</span>,
+    <span class="string">"remote team management"</span>,
+    <span class="string">"digital nomad lifestyle"</span>,
+    <span class="comment">// ... 12 more</span>
+  ]
+}</code></pre>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- AI & Agent Integration -->
-<section class="py-16 px-4 sm:px-6" style="background: #F8FAFC;">
+<div class="section-divider"></div>
+
+<!-- Content Schema Engine -->
+<section class="py-24 px-4 sm:px-6 grid-bg">
     <div class="max-w-6xl mx-auto">
         <div class="grid lg:grid-cols-2 gap-16 items-start">
             <div class="order-2 lg:order-1">
-                <div class="code-block overflow-hidden shadow-lg">
-                    <div class="flex items-center gap-2 px-4 py-3 border-b border-gray-800">
+                <div class="console overflow-hidden">
+                    <div class="flex items-center gap-2 px-4 py-3 border-b border-[#2a2b3d]">
                         <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
                         <div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
                         <div class="w-3 h-3 rounded-full bg-green-500/80"></div>
-                        <span class="ml-2 text-xs text-gray-500">mcp-tools.json</span>
+                        <span class="ml-2 text-xs text-gray-500 font-mono">schema-validation.json</span>
                     </div>
-                    <div class="p-6 text-xs leading-relaxed overflow-x-auto">
-<pre class="text-gray-300"><span class="text-gray-500">// MCP tool calling Contento's REST API</span>
+                    <div class="p-6 text-sm leading-relaxed font-mono overflow-x-auto">
+<pre class="!bg-transparent !border-0 !p-0 !m-0"><code><span class="comment">// Schema definition (checklist type)</span>
 {
-  <span class="text-blue-400">"tool"</span>: <span class="text-green-400">"create_post"</span>,
-  <span class="text-blue-400">"params"</span>: {
-    <span class="text-blue-400">"title"</span>: <span class="text-green-400">"10 Tips for Better SEO"</span>,
-    <span class="text-blue-400">"bodyMarkdown"</span>: <span class="text-green-400">"# Introduction\n\n..."</span>,
-    <span class="text-blue-400">"status"</span>: <span class="text-green-400">"draft"</span>,
-    <span class="text-blue-400">"tags"</span>: [<span class="text-green-400">"seo"</span>, <span class="text-green-400">"marketing"</span>],
-    <span class="text-blue-400">"metaTitle"</span>: <span class="text-green-400">"10 SEO Tips for 2026"</span>,
-    <span class="text-blue-400">"metaDescription"</span>: <span class="text-green-400">"Boost your..."</span>
+  <span class="property">"type"</span>: <span class="string">"checklist"</span>,
+  <span class="property">"fields"</span>: {
+    <span class="property">"title"</span>: { <span class="property">"pattern"</span>: <span class="string">"The Ultimate {subtopic} Checklist"</span> },
+    <span class="property">"items"</span>: { <span class="property">"min"</span>: <span class="number">15</span>, <span class="property">"max"</span>: <span class="number">30</span> },
+    <span class="property">"item.text"</span>: { <span class="property">"minLength"</span>: <span class="number">40</span>, <span class="property">"maxLength"</span>: <span class="number">200</span> },
+    <span class="property">"item.category"</span>: { <span class="property">"enum"</span>: [<span class="string">"setup"</span>, <span class="string">"daily"</span>, <span class="string">"weekly"</span>] }
   }
 }
-<span class="text-gray-500">// → POST /api/v1/posts</span>
-<span class="text-gray-500">// → 201 Created { data: { id, slug, ... } }</span>
 
-<span class="text-gray-500">// Then publish it:</span>
+<span class="comment">// Validated output</span>
 {
-  <span class="text-blue-400">"tool"</span>: <span class="text-green-400">"publish_post"</span>,
-  <span class="text-blue-400">"params"</span>: { <span class="text-blue-400">"id"</span>: <span class="text-green-400">"a1b2c3..."</span> }
-}
-<span class="text-gray-500">// → POST /api/v1/posts/{id}/publish</span></pre>
+  <span class="property">"title"</span>: <span class="string">"The Ultimate Home Office Checklist"</span>,
+  <span class="property">"items"</span>: [
+    { <span class="property">"text"</span>: <span class="string">"Invest in an ergonomic chair..."</span>,
+      <span class="property">"category"</span>: <span class="string">"setup"</span>,
+      <span class="property">"checked"</span>: <span class="keyword">false</span> },
+    <span class="comment">// ... 19 more items (validated)</span>
+  ],
+  <span class="property">"_validation"</span>: <span class="string">"passed"</span>
+}</code></pre>
                     </div>
                 </div>
             </div>
             <div class="order-1 lg:order-2">
-                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium mb-4" style="background: #E0E7FF; color: #3730A3;">AI &amp; Agents</div>
-                <h2 class="text-2xl font-bold tracking-tight mb-4">MCP-ready for AI agents</h2>
-                <p class="text-gray-500 leading-relaxed mb-6">Contento's full REST API with OpenAPI documentation makes it a natural backend for AI agents using the Model Context Protocol. Stateless bearer tokens, structured JSON responses, and 135 endpoints mean agents can manage your entire content operation.</p>
-                <div class="space-y-3 mb-8">
-                    <div class="p-3 bg-white rounded-lg border border-gray-100">
-                        <p class="font-medium">Content Generation</p>
-                        <p class="text-xs text-gray-500 mt-1">AI agents create posts with Markdown body, SEO metadata, tags, and cover images — then publish or schedule them via API.</p>
-                    </div>
-                    <div class="p-3 bg-white rounded-lg border border-gray-100">
-                        <p class="font-medium">Built-in AI Endpoints</p>
-                        <p class="text-xs text-gray-500 mt-1">Text completion, streaming SSE responses, AI-generated themes and layouts — all accessible via authenticated API calls.</p>
-                    </div>
-                    <div class="p-3 bg-white rounded-lg border border-gray-100">
-                        <p class="font-medium">Full OpenAPI Spec</p>
-                        <p class="text-xs text-gray-500 mt-1">Every endpoint documented with request/response schemas. Agents can discover available tools automatically via the OpenAPI spec at <code>/openapi/v1.json</code>.</p>
-                    </div>
-                    <div class="p-3 bg-white rounded-lg border border-gray-100">
-                        <p class="font-medium">Stateless Auth</p>
-                        <p class="text-xs text-gray-500 mt-1">HMAC-SHA256 bearer tokens with 24-hour TTL. No cookies, no sessions — ideal for headless agent workflows.</p>
-                    </div>
-                </div>
-                <a href="docs/api.html#mcp-integration" class="inline-flex items-center gap-2 text-sm font-medium" style="color: #3D5A80;">
-                    MCP integration guide
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
-                </a>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Admin & Security -->
-<section class="py-16 px-4 sm:px-6">
-    <div class="max-w-6xl mx-auto">
-        <div class="text-center mb-12">
-            <h2 class="text-2xl font-bold tracking-tight mb-4">Admin panel built for teams</h2>
-            <p class="text-gray-500 max-w-2xl mx-auto">Five roles, full audit logging, and a responsive admin UI that works on mobile.</p>
-        </div>
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div class="p-6 bg-white rounded-xl border border-gray-100">
-                <h3 class="font-semibold mb-2">5 User Roles</h3>
-                <p class="text-sm text-gray-500 mb-3">Granular access control for your team.</p>
-                <div class="space-y-2 text-xs">
-                    <div class="flex items-center justify-between p-2 bg-gray-50 rounded"><span class="font-medium">Owner</span><span class="text-gray-400">Full access + billing</span></div>
-                    <div class="flex items-center justify-between p-2 bg-gray-50 rounded"><span class="font-medium">Admin</span><span class="text-gray-400">All settings + users</span></div>
-                    <div class="flex items-center justify-between p-2 bg-gray-50 rounded"><span class="font-medium">Editor</span><span class="text-gray-400">All content + publish</span></div>
-                    <div class="flex items-center justify-between p-2 bg-gray-50 rounded"><span class="font-medium">Author</span><span class="text-gray-400">Own content only</span></div>
-                    <div class="flex items-center justify-between p-2 bg-gray-50 rounded"><span class="font-medium">Viewer</span><span class="text-gray-400">Read-only access</span></div>
-                </div>
-            </div>
-            <div class="p-6 bg-white rounded-xl border border-gray-100">
-                <h3 class="font-semibold mb-2">Audit Logging</h3>
-                <p class="text-sm text-gray-500 mb-3">Every action tracked with who, what, when, and where.</p>
-                <ul class="space-y-2 text-xs text-gray-500">
-                    <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-green-400"></span>Post created, updated, published</li>
-                    <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-blue-400"></span>User login, role changes</li>
-                    <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-yellow-400"></span>Settings changed</li>
-                    <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-red-400"></span>Content deleted</li>
-                    <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-purple-400"></span>Plugin installed/removed</li>
-                </ul>
-            </div>
-            <div class="p-6 bg-white rounded-xl border border-gray-100">
-                <h3 class="font-semibold mb-2">Security</h3>
-                <p class="text-sm text-gray-500 mb-3">OWASP best practices built in from day one.</p>
-                <ul class="space-y-2 text-xs text-gray-500">
-                    <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-green-400"></span>BCrypt password hashing</li>
-                    <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-green-400"></span>CSRF token protection</li>
-                    <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-green-400"></span>Content Security Policy headers</li>
-                    <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-green-400"></span>HTML sanitization (anti-XSS)</li>
-                    <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-green-400"></span>HMAC-signed API tokens</li>
-                    <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-green-400"></span>Honeypot spam protection</li>
-                </ul>
-            </div>
-            <div class="p-6 bg-white rounded-xl border border-gray-100">
-                <h3 class="font-semibold mb-2">SEO Built-In</h3>
-                <p class="text-sm text-gray-500 mb-3">Everything search engines need, zero plugins required.</p>
-                <ul class="space-y-2 text-xs text-gray-500">
-                    <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-blue-400"></span>Auto-generated XML sitemap</li>
-                    <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-blue-400"></span>RSS feed at /feed.xml</li>
-                    <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-blue-400"></span>robots.txt + llms.txt</li>
-                    <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-blue-400"></span>OpenGraph + Twitter Cards</li>
-                    <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-blue-400"></span>Canonical URL support</li>
-                    <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-blue-400"></span>Per-post meta title/description</li>
-                    <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-blue-400"></span>JSON-LD structured data (Article, WebSite)</li>
-                </ul>
-            </div>
-            <div class="p-6 bg-white rounded-xl border border-gray-100">
-                <h3 class="font-semibold mb-2">Import &amp; Export</h3>
-                <p class="text-sm text-gray-500 mb-3">Move your content freely. No vendor lock-in.</p>
-                <ul class="space-y-2 text-xs text-gray-500">
-                    <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-purple-400"></span>Import from WordPress (WXR/XML)</li>
-                    <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-purple-400"></span>Import Markdown files</li>
-                    <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-purple-400"></span>Export full site as JSON</li>
-                    <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-purple-400"></span>Export posts as Markdown</li>
-                    <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-purple-400"></span>Export posts as HTML</li>
-                </ul>
-            </div>
-            <div class="p-6 bg-white rounded-xl border border-gray-100">
-                <h3 class="font-semibold mb-2">Performance</h3>
-                <p class="text-sm text-gray-500 mb-3">Fast by default. Caching where it matters.</p>
-                <ul class="space-y-2 text-xs text-gray-500">
-                    <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-yellow-400"></span>Redis caching layer</li>
-                    <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-yellow-400"></span>Response compression (gzip)</li>
-                    <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-yellow-400"></span>Static file caching</li>
-                    <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-yellow-400"></span>PostgreSQL full-text search</li>
-                    <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-yellow-400"></span>HTTP cache headers on API</li>
+                <span class="tag tag-blue mb-4 inline-block">schemas</span>
+                <h2 class="text-2xl sm:text-3xl font-bold tracking-tight mb-4">Content Schema Engine</h2>
+                <p class="text-gray-500 leading-relaxed mb-6">AI fills structured JSON schemas, not blank pages. Every field has constraints &mdash; item counts, string lengths, enum values. Content that fails validation is rejected and retried.</p>
+                <ul class="space-y-3 text-sm text-gray-600">
+                    <li class="flex items-center gap-3">
+                        <span class="text-accent font-mono text-xs">&#9632;</span>
+                        10 built-in content types with strict JSON schemas
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <span class="text-accent font-mono text-xs">&#9632;</span>
+                        AI fills schemas, not blank pages
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <span class="text-accent font-mono text-xs">&#9632;</span>
+                        Field-level validation: exact item counts, string lengths, enum values
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <span class="text-accent font-mono text-xs">&#9632;</span>
+                        Deterministic titles (never AI-generated)
+                    </li>
                 </ul>
             </div>
         </div>
     </div>
 </section>
 
-<!-- Membership & Subscriptions -->
-<section class="py-16 px-4 sm:px-6">
+<div class="section-divider"></div>
+
+<!-- Generation Pipeline -->
+<section class="py-24 px-4 sm:px-6">
     <div class="max-w-6xl mx-auto">
         <div class="grid lg:grid-cols-2 gap-16 items-start">
             <div>
-                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium mb-4" style="background: #FEF3C7; color: #92400E;">Monetization</div>
-                <h2 class="text-2xl font-bold tracking-tight mb-4">Membership &amp; subscriptions</h2>
-                <p class="text-gray-500 leading-relaxed mb-6">Monetize your content with Stripe-powered paid memberships. Create plans, gate content by access level, and manage subscribers — all from the admin panel.</p>
-                <div class="space-y-3 mb-8">
-                    <div class="flex items-center gap-3 p-3 bg-gray-50 rounded-lg border border-gray-100">
-                        <div class="w-8 h-8 rounded flex items-center justify-center flex-shrink-0" style="background: #FEF3C7; color: #92400E;">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                        </div>
-                        <div>
-                            <p class="text-sm font-medium">Plan management</p>
-                            <p class="text-xs text-gray-500">Create unlimited plans with custom pricing, billing intervals (monthly/yearly/lifetime), trial periods, and access levels</p>
-                        </div>
-                    </div>
-                    <div class="flex items-center gap-3 p-3 bg-gray-50 rounded-lg border border-gray-100">
-                        <div class="w-8 h-8 rounded flex items-center justify-center flex-shrink-0" style="background: #FEF3C7; color: #92400E;">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                        </div>
-                        <div>
-                            <p class="text-sm font-medium">Stripe integration</p>
-                            <p class="text-xs text-gray-500">Checkout sessions, billing portal, webhook handling, payment failure recovery with automatic downgrade after 3 strikes</p>
-                        </div>
-                    </div>
-                    <div class="flex items-center gap-3 p-3 bg-gray-50 rounded-lg border border-gray-100">
-                        <div class="w-8 h-8 rounded flex items-center justify-center flex-shrink-0" style="background: #FEF3C7; color: #92400E;">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                        </div>
-                        <div>
-                            <p class="text-sm font-medium">Content gating</p>
-                            <p class="text-xs text-gray-500">Gate posts by membership level. Free, premium, and VIP tiers with paywall UI and member-only access</p>
-                        </div>
-                    </div>
-                    <div class="flex items-center gap-3 p-3 bg-gray-50 rounded-lg border border-gray-100">
-                        <div class="w-8 h-8 rounded flex items-center justify-center flex-shrink-0" style="background: #FEF3C7; color: #92400E;">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                        </div>
-                        <div>
-                            <p class="text-sm font-medium">Subscriber dashboard</p>
-                            <p class="text-xs text-gray-500">Admin dashboard with member stats, revenue placeholder, tier badges, expiry tracking, and grace periods</p>
-                        </div>
-                    </div>
-                </div>
+                <span class="tag tag-green mb-4 inline-block">generation</span>
+                <h2 class="text-2xl sm:text-3xl font-bold tracking-tight mb-4">Generation Pipeline</h2>
+                <p class="text-gray-500 leading-relaxed mb-6">Concurrent AI workers generate pages in parallel. Each worker receives the niche context and content schema, builds a prompt, and validates the output before storage.</p>
+                <ul class="space-y-3 text-sm text-gray-600">
+                    <li class="flex items-center gap-3">
+                        <span class="text-accent font-mono text-xs">&#9632;</span>
+                        Concurrent AI workers (configurable parallelism)
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <span class="text-accent font-mono text-xs">&#9632;</span>
+                        Prompt builder: schema + niche context injection
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <span class="text-accent font-mono text-xs">&#9632;</span>
+                        Retry logic with exponential backoff
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <span class="text-accent font-mono text-xs">&#9632;</span>
+                        Deterministic titles (never AI-generated)
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <span class="text-accent font-mono text-xs">&#9632;</span>
+                        Real-time progress streaming in the terminal
+                    </li>
+                </ul>
             </div>
-            <div class="bg-gray-50 rounded-2xl p-8 border border-gray-100">
-                <div class="space-y-4">
-                    <div class="flex items-center gap-3 mb-4">
-                        <span class="px-2 py-0.5 text-xs font-medium rounded" style="background: #FEF3C7; color: #92400E;">Membership Admin</span>
-                    </div>
-                    <div class="grid grid-cols-3 gap-3">
-                        <div class="bg-white rounded-lg p-3 text-center border border-gray-100">
-                            <p class="text-2xl font-bold" style="color: #1A1A1A;">247</p>
-                            <p class="text-xs text-gray-500">Total Subscribers</p>
-                        </div>
-                        <div class="bg-white rounded-lg p-3 text-center border border-gray-100">
-                            <p class="text-2xl font-bold" style="color: #3D5A80;">89</p>
-                            <p class="text-xs text-gray-500">Paid Members</p>
-                        </div>
-                        <div class="bg-white rounded-lg p-3 text-center border border-gray-100">
-                            <p class="text-2xl font-bold" style="color: #1A1A1A;">3</p>
-                            <p class="text-xs text-gray-500">Active Plans</p>
-                        </div>
-                    </div>
-                    <div class="space-y-2 mt-4">
-                        <div class="flex items-center justify-between p-2 bg-white rounded border border-gray-100 text-xs">
-                            <span class="font-medium">Premium</span>
-                            <span class="text-gray-400">$9.99/mo</span>
-                            <span class="px-2 py-0.5 rounded text-white text-xs" style="background: #059669;">Active</span>
-                        </div>
-                        <div class="flex items-center justify-between p-2 bg-white rounded border border-gray-100 text-xs">
-                            <span class="font-medium">VIP</span>
-                            <span class="text-gray-400">$29.99/mo</span>
-                            <span class="px-2 py-0.5 rounded text-white text-xs" style="background: #059669;">Active</span>
-                        </div>
-                        <div class="flex items-center justify-between p-2 bg-white rounded border border-gray-100 text-xs">
-                            <span class="font-medium">Lifetime</span>
-                            <span class="text-gray-400">$199.00</span>
-                            <span class="px-2 py-0.5 rounded text-white text-xs" style="background: #059669;">Active</span>
-                        </div>
-                    </div>
+            <div class="console overflow-hidden">
+                <div class="flex items-center gap-2 px-4 py-3 border-b border-[#2a2b3d]">
+                    <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
+                    <div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
+                    <div class="w-3 h-3 rounded-full bg-green-500/80"></div>
+                    <span class="ml-2 text-xs text-gray-500 font-mono">terminal</span>
+                </div>
+                <div class="p-6 text-sm leading-relaxed font-mono overflow-x-auto">
+<pre class="!bg-transparent !border-0 !p-0 !m-0"><code><span class="prompt">$</span> <span class="function">contento</span> collections generate \
+    --project proj_8f3a... \
+    --schema <span class="string">"idea-list"</span> \
+    --niches <span class="string">"niche_01...,niche_02...,niche_03..."</span>
+
+<span class="output">[00:02] 48 pages queued across 3 niches</span>
+<span class="output">[00:03] Worker pool: 10 concurrent</span>
+<span class="output">[00:04] &#9608;&#9608;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;  6/48  (12%)</span>
+<span class="output">[00:12] &#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601; 22/48  (46%)</span>
+<span class="output">[00:20] &#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9601;&#9601;&#9601;&#9601; 36/48  (75%)</span>
+<span class="output">[00:26] &#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608; 48/48 (100%)</span>
+<span class="output"></span>
+<span class="output">Validation: <span class="text-accent">46 passed</span>, 2 retried, 0 failed</span>
+<span class="output">Avg generation time: 3.2s per page</span></code></pre>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- Newsletter & Email -->
-<section class="py-16 px-4 sm:px-6" style="background: #F8FAFC;">
+<div class="section-divider"></div>
+
+<!-- Publishing Pipeline -->
+<section class="py-24 px-4 sm:px-6 grid-bg">
     <div class="max-w-6xl mx-auto">
         <div class="grid lg:grid-cols-2 gap-16 items-start">
             <div class="order-2 lg:order-1">
-                <div class="bg-white rounded-2xl p-8 border border-gray-100 shadow-sm">
-                    <div class="space-y-4">
-                        <div class="flex items-center gap-3 mb-2">
-                            <span class="px-2 py-0.5 text-xs font-medium rounded" style="background: #DBEAFE; color: #1E40AF;">Campaign Editor</span>
-                        </div>
-                        <div class="space-y-3">
-                            <div class="p-3 rounded-lg border border-gray-100 text-xs">
-                                <div class="flex justify-between mb-1"><span class="font-medium">Weekly Digest</span><span class="text-gray-400">Sent Feb 18</span></div>
-                                <p class="text-gray-500">This week's highlights: new membership features, media library improvements...</p>
-                            </div>
-                            <div class="p-3 rounded-lg border border-gray-100 text-xs">
-                                <div class="flex justify-between mb-1"><span class="font-medium">Welcome Series #1</span><span class="text-gray-400">Draft</span></div>
-                                <p class="text-gray-500">Welcome to our community! Here's what you can expect as a subscriber...</p>
-                            </div>
-                            <div class="p-3 rounded-lg border border-gray-100 text-xs">
-                                <div class="flex justify-between mb-1"><span class="font-medium">Product Update</span><span class="text-gray-400">Scheduled</span></div>
-                                <p class="text-gray-500">Exciting new features just launched: Stripe membership, multi-site...</p>
-                            </div>
-                        </div>
+                <div class="console overflow-hidden">
+                    <div class="flex items-center gap-2 px-4 py-3 border-b border-[#2a2b3d]">
+                        <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
+                        <div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
+                        <div class="w-3 h-3 rounded-full bg-green-500/80"></div>
+                        <span class="ml-2 text-xs text-gray-500 font-mono">terminal</span>
+                    </div>
+                    <div class="p-6 text-sm leading-relaxed font-mono overflow-x-auto">
+<pre class="!bg-transparent !border-0 !p-0 !m-0"><code><span class="prompt">$</span> <span class="function">contento</span> publish \
+    --collection col_9d2f... \
+    --mode batched \
+    --batch-size <span class="number">50</span>
+
+<span class="output">[batch 1/1] Publishing 48 pages...</span>
+<span class="output">  &#10003; Internal linking pass: 142 cross-links added</span>
+<span class="output">  &#10003; Sitemap rebuilt: 48 URLs</span>
+<span class="output">  &#10003; Schema markup injected (Article + BreadcrumbList)</span>
+<span class="output">  &#10003; Canonical URLs set</span>
+<span class="output">  &#10003; OG meta tags generated</span>
+<span class="output"></span>
+<span class="output">Published to: <span class="url">articles.worktale.org</span></span>
+
+<span class="comment"># Publish modes: immediate, batched, scheduled, manual</span></code></pre>
                     </div>
                 </div>
             </div>
             <div class="order-1 lg:order-2">
-                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium mb-4" style="background: #DBEAFE; color: #1E40AF;">Newsletter</div>
-                <h2 class="text-2xl font-bold tracking-tight mb-4">Newsletter &amp; email campaigns</h2>
-                <p class="text-gray-500 leading-relaxed mb-6">Grow your audience with built-in newsletter management. Subscribers sign up from your public site, and you manage campaigns from the admin panel.</p>
-                <div class="space-y-4">
-                    <div class="flex gap-3">
-                        <div class="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5" style="background: #DBEAFE; color: #1E40AF;">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                        </div>
-                        <div>
-                            <p class="font-medium text-sm">Subscriber management</p>
-                            <p class="text-xs text-gray-500 mt-0.5">Double opt-in signup, unsubscribe handling, active/inactive tracking, and bulk import.</p>
-                        </div>
-                    </div>
-                    <div class="flex gap-3">
-                        <div class="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5" style="background: #DBEAFE; color: #1E40AF;">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                        </div>
-                        <div>
-                            <p class="font-medium text-sm">Campaign editor</p>
-                            <p class="text-xs text-gray-500 mt-0.5">Create, preview, and send campaigns. Draft, scheduled, and sent statuses with delivery tracking.</p>
-                        </div>
-                    </div>
-                    <div class="flex gap-3">
-                        <div class="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5" style="background: #DBEAFE; color: #1E40AF;">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                        </div>
-                        <div>
-                            <p class="font-medium text-sm">Public signup form</p>
-                            <p class="text-xs text-gray-500 mt-0.5">Inline newsletter signup in the public layout footer. Works with the Content Delivery API for headless integration.</p>
-                        </div>
-                    </div>
+                <span class="tag tag-blue mb-4 inline-block">publishing</span>
+                <h2 class="text-2xl sm:text-3xl font-bold tracking-tight mb-4">Publishing Pipeline</h2>
+                <p class="text-gray-500 leading-relaxed mb-6">Four publish modes for different strategies. Batched publishing lets you control rollout speed for indexing monitoring. Every batch triggers an internal linking pass and sitemap rebuild.</p>
+                <ul class="space-y-3 text-sm text-gray-600">
+                    <li class="flex items-center gap-3">
+                        <span class="text-accent font-mono text-xs">&#9632;</span>
+                        4 publish modes: immediate, batched, scheduled, manual
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <span class="text-accent font-mono text-xs">&#9632;</span>
+                        Progressive rollout for indexing monitoring
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <span class="text-accent font-mono text-xs">&#9632;</span>
+                        Internal linking pass (cross-links related pages)
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <span class="text-accent font-mono text-xs">&#9632;</span>
+                        Sitemap auto-rebuild per batch
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <span class="text-accent font-mono text-xs">&#9632;</span>
+                        Schema markup and OG tags on every page
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- Custom Chrome System -->
+<section class="py-24 px-4 sm:px-6">
+    <div class="max-w-6xl mx-auto">
+        <div class="grid lg:grid-cols-2 gap-16 items-start">
+            <div>
+                <span class="tag tag-green mb-4 inline-block">chrome</span>
+                <h2 class="text-2xl sm:text-3xl font-bold tracking-tight mb-4">Custom Chrome System</h2>
+                <p class="text-gray-500 leading-relaxed mb-6">Your generated pages look native to your domain. Upload header HTML, footer HTML, and CSS &mdash; every page wraps in your chrome. Add a back-link component for link equity flow back to your main site.</p>
+                <ul class="space-y-3 text-sm text-gray-600">
+                    <li class="flex items-center gap-3">
+                        <span class="text-accent font-mono text-xs">&#9632;</span>
+                        Upload header/footer/CSS from your existing site
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <span class="text-accent font-mono text-xs">&#9632;</span>
+                        Back-link component on every page (equity flow)
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <span class="text-accent font-mono text-xs">&#9632;</span>
+                        Custom CTA injection per content type
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <span class="text-accent font-mono text-xs">&#9632;</span>
+                        Pages look native to your domain
+                    </li>
+                </ul>
+            </div>
+            <div class="console overflow-hidden">
+                <div class="flex items-center gap-2 px-4 py-3 border-b border-[#2a2b3d]">
+                    <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
+                    <div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
+                    <div class="w-3 h-3 rounded-full bg-green-500/80"></div>
+                    <span class="ml-2 text-xs text-gray-500 font-mono">chrome-config.json</span>
+                </div>
+                <div class="p-6 text-sm leading-relaxed font-mono overflow-x-auto">
+<pre class="!bg-transparent !border-0 !p-0 !m-0"><code>{
+  <span class="property">"headerHtml"</span>: <span class="string">"&lt;nav class='site-nav'&gt;...&lt;/nav&gt;"</span>,
+  <span class="property">"footerHtml"</span>: <span class="string">"&lt;footer class='site-footer'&gt;...&lt;/footer&gt;"</span>,
+  <span class="property">"cssUrl"</span>: <span class="string">"https://yourdomain.com/styles.css"</span>,
+  <span class="property">"backLink"</span>: {
+    <span class="property">"enabled"</span>: <span class="keyword">true</span>,
+    <span class="property">"text"</span>: <span class="string">"More on yourdomain.com"</span>,
+    <span class="property">"url"</span>: <span class="string">"https://yourdomain.com"</span>,
+    <span class="property">"position"</span>: <span class="string">"above-footer"</span>
+  },
+  <span class="property">"cta"</span>: {
+    <span class="property">"html"</span>: <span class="string">"&lt;div class='cta-box'&gt;...&lt;/div&gt;"</span>,
+    <span class="property">"position"</span>: <span class="string">"after-content"</span>
+  }
+}
+
+<span class="comment">// Rendered page structure:</span>
+<span class="comment">// [Your Header]</span>
+<span class="comment">// [Generated Content]</span>
+<span class="comment">// [Your CTA]</span>
+<span class="comment">// [Back-link]</span>
+<span class="comment">// [Your Footer]</span></code></pre>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- Advanced Platform Features -->
-<section class="py-16 px-4 sm:px-6">
+<div class="section-divider"></div>
+
+<!-- Analytics (GSC Integration) -->
+<section class="py-24 px-4 sm:px-6 grid-bg">
     <div class="max-w-6xl mx-auto">
-        <div class="text-center mb-12">
-            <h2 class="text-2xl font-bold tracking-tight mb-4">Advanced platform features</h2>
-            <p class="text-gray-500 max-w-2xl mx-auto">Enterprise-grade capabilities for scaling your content operation.</p>
-        </div>
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div class="p-6 bg-white rounded-xl border border-gray-100">
-                <h3 class="font-semibold mb-2">Multi-Site</h3>
-                <p class="text-sm text-gray-500 mb-3">Run multiple sites from one installation.</p>
-                <ul class="space-y-2 text-xs text-gray-500">
-                    <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-blue-400"></span>Domain-based site resolution</li>
-                    <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-blue-400"></span>Per-site themes and settings</li>
-                    <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-blue-400"></span>Primary site fallback</li>
-                    <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-blue-400"></span>Create, switch, and delete sites</li>
-                </ul>
+        <div class="grid lg:grid-cols-2 gap-16 items-start">
+            <div class="order-2 lg:order-1">
+                <div class="console overflow-hidden">
+                    <div class="flex items-center gap-2 px-4 py-3 border-b border-[#2a2b3d]">
+                        <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
+                        <div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
+                        <div class="w-3 h-3 rounded-full bg-green-500/80"></div>
+                        <span class="ml-2 text-xs text-gray-500 font-mono">terminal</span>
+                    </div>
+                    <div class="p-6 text-sm leading-relaxed font-mono overflow-x-auto">
+<pre class="!bg-transparent !border-0 !p-0 !m-0"><code><span class="comment"># Get top performing pages</span>
+<span class="prompt">$</span> <span class="function">contento</span> analytics top-pages --days <span class="number">30</span>
+
+<span class="output">&#9472;&#9472; Top Pages &#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;</span>
+<span class="output"> 1. /100-remote-work-ideas     2,340 clicks  4.2% CTR</span>
+<span class="output"> 2. /home-office-checklist      1,892 clicks  3.8% CTR</span>
+<span class="output"> 3. /async-tools-comparison     1,104 clicks  5.1% CTR</span>
+<span class="output"> 4. /freelancing-faq               987 clicks  6.3% CTR</span>
+<span class="output"> 5. /digital-nomad-guide           856 clicks  2.9% CTR</span>
+
+<span class="comment"># Detect zero-traffic pages</span>
+<span class="prompt">$</span> <span class="function">contento</span> analytics zero-traffic
+
+<span class="output"> &#9888; 3 pages with zero traffic (30d)</span>
+<span class="output"> &#9888; 1 page dropped &gt;10 positions</span>
+
+<span class="comment"># Export analytics data</span>
+<span class="prompt">$</span> <span class="function">contento</span> analytics export --format csv</code></pre>
+                    </div>
+                </div>
             </div>
-            <div class="p-6 bg-white rounded-xl border border-gray-100">
-                <h3 class="font-semibold mb-2">SEO &amp; Structured Data</h3>
-                <p class="text-sm text-gray-500 mb-3">Full SEO toolkit built in.</p>
-                <ul class="space-y-2 text-xs text-gray-500">
-                    <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-green-400"></span>JSON-LD schemas (Article, WebSite, Breadcrumb)</li>
-                    <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-green-400"></span>Sitemap index with category/post maps</li>
-                    <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-green-400"></span>SEO scoring (100-point scale)</li>
-                    <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-green-400"></span>OpenGraph, Twitter Cards, og:locale</li>
-                    <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-green-400"></span>robots.txt + llms.txt generation</li>
-                </ul>
-            </div>
-            <div class="p-6 bg-white rounded-xl border border-gray-100">
-                <h3 class="font-semibold mb-2">Task Scheduler</h3>
-                <p class="text-sm text-gray-500 mb-3">Automate recurring operations.</p>
-                <ul class="space-y-2 text-xs text-gray-500">
-                    <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-purple-400"></span>Cron-based scheduling with presets</li>
-                    <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-purple-400"></span>6 built-in task types</li>
-                    <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-purple-400"></span>Manual trigger from admin UI</li>
-                    <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-purple-400"></span>Last run and next run tracking</li>
-                </ul>
-            </div>
-            <div class="p-6 bg-white rounded-xl border border-gray-100">
-                <h3 class="font-semibold mb-2">Custom Post Types</h3>
-                <p class="text-sm text-gray-500 mb-3">Beyond blog posts.</p>
-                <ul class="space-y-2 text-xs text-gray-500">
-                    <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-yellow-400"></span>Define custom content types</li>
-                    <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-yellow-400"></span>Custom field schemas (JSON)</li>
-                    <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-yellow-400"></span>Icon and slug customization</li>
-                    <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-yellow-400"></span>Manage from admin panel or API</li>
-                </ul>
-            </div>
-            <div class="p-6 bg-white rounded-xl border border-gray-100">
-                <h3 class="font-semibold mb-2">Navigation Menus</h3>
-                <p class="text-sm text-gray-500 mb-3">WordPress-style configurable nav.</p>
-                <ul class="space-y-2 text-xs text-gray-500">
-                    <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-teal-400"></span>Header and footer menu locations</li>
-                    <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-teal-400"></span>4 link types: custom, post, category, tag</li>
-                    <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-teal-400"></span>Nested items for dropdown menus</li>
-                    <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-teal-400"></span>Reorder with up/down controls</li>
-                    <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-teal-400"></span>Public API for headless consumers</li>
-                </ul>
-            </div>
-            <div class="p-6 bg-white rounded-xl border border-gray-100">
-                <h3 class="font-semibold mb-2">Image Processing</h3>
-                <p class="text-sm text-gray-500 mb-3">Automatic image optimization on upload.</p>
-                <ul class="space-y-2 text-xs text-gray-500">
-                    <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-red-400"></span>Responsive variants (640w, 1024w, 1536w)</li>
-                    <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-red-400"></span>WebP format conversion</li>
-                    <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-red-400"></span>Automatic thumbnail generation</li>
-                    <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-red-400"></span>EXIF data stripping</li>
-                    <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-red-400"></span>Focal point picker in admin</li>
-                </ul>
-            </div>
-            <div class="p-6 bg-white rounded-xl border border-gray-100">
-                <h3 class="font-semibold mb-2">Spam Protection</h3>
-                <p class="text-sm text-gray-500 mb-3">Multi-layer spam defense.</p>
-                <ul class="space-y-2 text-xs text-gray-500">
-                    <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-orange-400"></span>AI-powered spam scoring</li>
-                    <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-orange-400"></span>Configurable auto-approve threshold</li>
-                    <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-orange-400"></span>Honeypot field protection</li>
-                    <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-orange-400"></span>Spam stats (approved/blocked/total)</li>
-                    <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-orange-400"></span>Pattern-based keyword detection</li>
-                </ul>
-            </div>
-            <div class="p-6 bg-white rounded-xl border border-gray-100">
-                <h3 class="font-semibold mb-2">URL Redirects</h3>
-                <p class="text-sm text-gray-500 mb-3">SEO-friendly redirect management.</p>
-                <ul class="space-y-2 text-xs text-gray-500">
-                    <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span>301 (permanent) and 302 (temporary)</li>
-                    <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span>Auto-redirect on slug changes</li>
-                    <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span>Hit count and last-hit tracking</li>
-                    <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span>Middleware processing on GET requests</li>
-                    <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span>Admin UI and REST API</li>
-                </ul>
-            </div>
-            <div class="p-6 bg-white rounded-xl border border-gray-100">
-                <h3 class="font-semibold mb-2">oEmbed &amp; Rich Media</h3>
-                <p class="text-sm text-gray-500 mb-3">Auto-embed from paste.</p>
-                <ul class="space-y-2 text-xs text-gray-500">
-                    <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-pink-400"></span>YouTube, Vimeo, Twitter/X</li>
-                    <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-pink-400"></span>Spotify, SoundCloud, CodePen</li>
-                    <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-pink-400"></span>In-memory cache (5-minute TTL)</li>
-                    <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-pink-400"></span>Extensible provider registry</li>
-                    <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-pink-400"></span>CSP frame-src auto-configured</li>
-                </ul>
-            </div>
-            <div class="p-6 bg-white rounded-xl border border-gray-100">
-                <h3 class="font-semibold mb-2">Shortcodes</h3>
-                <p class="text-sm text-gray-500 mb-3">Rich content with simple tags.</p>
-                <ul class="space-y-2 text-xs text-gray-500">
-                    <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-indigo-400"></span>7 built-in: youtube, vimeo, button, callout, gallery, code, toc</li>
-                    <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-indigo-400"></span>Attribute and inner content support</li>
-                    <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-indigo-400"></span>Register custom shortcodes at runtime</li>
-                    <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-indigo-400"></span>Context-aware (PostId, SiteId, BaseUrl)</li>
-                </ul>
-            </div>
-            <div class="p-6 bg-white rounded-xl border border-gray-100">
-                <h3 class="font-semibold mb-2">Post Editing Locks</h3>
-                <p class="text-sm text-gray-500 mb-3">Prevent editing conflicts.</p>
-                <ul class="space-y-2 text-xs text-gray-500">
-                    <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-rose-400"></span>Exclusive edit locks per post</li>
-                    <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-rose-400"></span>2-minute TTL with auto-expiry</li>
-                    <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-rose-400"></span>Lock acquire, renew, and release</li>
-                    <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-rose-400"></span>Shows who is currently editing</li>
-                </ul>
-            </div>
-            <div class="p-6 bg-white rounded-xl border border-gray-100">
-                <h3 class="font-semibold mb-2">User Registration</h3>
-                <p class="text-sm text-gray-500 mb-3">Self-service account management.</p>
-                <ul class="space-y-2 text-xs text-gray-500">
-                    <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>Public signup with email verification</li>
-                    <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>Password reset via token (1-hour expiry)</li>
-                    <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>Gravatar avatar integration</li>
-                    <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>Anti-enumeration protection</li>
-                    <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>REST API endpoints for headless auth</li>
-                </ul>
-            </div>
-            <div class="p-6 bg-white rounded-xl border border-gray-100">
-                <h3 class="font-semibold mb-2">AI &amp; MCP Integration</h3>
-                <p class="text-sm text-gray-500 mb-3">Agent-ready content platform.</p>
-                <ul class="space-y-2 text-xs text-gray-500">
-                    <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-violet-400"></span>Full OpenAPI spec for MCP tool discovery</li>
-                    <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-violet-400"></span>AI text completion and streaming (SSE)</li>
-                    <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-violet-400"></span>AI-generated themes and layouts</li>
-                    <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-violet-400"></span>Stateless bearer tokens for agent auth</li>
-                    <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-violet-400"></span>135 endpoints covering full CMS surface</li>
+            <div class="order-1 lg:order-2">
+                <span class="tag tag-blue mb-4 inline-block">analytics</span>
+                <h2 class="text-2xl sm:text-3xl font-bold tracking-tight mb-4">Analytics (GSC Integration)</h2>
+                <p class="text-gray-500 leading-relaxed mb-6">Connect Google Search Console via OAuth. Contento syncs daily data &mdash; clicks, impressions, CTR, average position &mdash; and surfaces actionable insights per niche and per page.</p>
+                <ul class="space-y-3 text-sm text-gray-600">
+                    <li class="flex items-center gap-3">
+                        <span class="text-accent font-mono text-xs">&#9632;</span>
+                        Google Search Console OAuth integration
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <span class="text-accent font-mono text-xs">&#9632;</span>
+                        Daily data sync: clicks, impressions, CTR, position
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <span class="text-accent font-mono text-xs">&#9632;</span>
+                        Top pages leaderboard
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <span class="text-accent font-mono text-xs">&#9632;</span>
+                        Niche performance ranking
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <span class="text-accent font-mono text-xs">&#9632;</span>
+                        Zero-traffic page detection
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <span class="text-accent font-mono text-xs">&#9632;</span>
+                        CSV export
+                    </li>
                 </ul>
             </div>
         </div>
     </div>
 </section>
+
+<div class="section-divider"></div>
+
+<!-- CLI + Agent Interface -->
+<section class="py-24 px-4 sm:px-6">
+    <div class="max-w-6xl mx-auto">
+        <div class="grid lg:grid-cols-2 gap-16 items-start">
+            <div>
+                <span class="tag tag-green mb-4 inline-block">cli</span>
+                <h2 class="text-2xl sm:text-3xl font-bold tracking-tight mb-4">CLI + Agent Interface</h2>
+                <p class="text-gray-500 leading-relaxed mb-6">Every operation is available through the <code>contento</code> CLI. Add <code>--json</code> to any command for machine-readable output, enabling AI agents to drive the entire pSEO pipeline programmatically.</p>
+                <ul class="space-y-3 text-sm text-gray-600">
+                    <li class="flex items-center gap-3">
+                        <span class="text-accent font-mono text-xs">&#9632;</span>
+                        21 commands across 7 resource types
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <span class="text-accent font-mono text-xs">&#9632;</span>
+                        <code>--json</code> flag for machine-readable output
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <span class="text-accent font-mono text-xs">&#9632;</span>
+                        NDJSON streaming for generation progress
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <span class="text-accent font-mono text-xs">&#9632;</span>
+                        Non-interactive login via API key
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <span class="text-accent font-mono text-xs">&#9632;</span>
+                        Works with Claude Code, Codex, OpenClaw, Co-Work
+                    </li>
+                </ul>
+            </div>
+            <div class="console overflow-hidden">
+                <div class="flex items-center gap-2 px-4 py-3 border-b border-[#2a2b3d]">
+                    <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
+                    <div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
+                    <div class="w-3 h-3 rounded-full bg-green-500/80"></div>
+                    <span class="ml-2 text-xs text-gray-500 font-mono">terminal</span>
+                </div>
+                <div class="p-6 text-sm leading-relaxed font-mono overflow-x-auto">
+<pre class="!bg-transparent !border-0 !p-0 !m-0"><code><span class="comment"># Human-friendly output</span>
+<span class="prompt">$</span> <span class="function">contento</span> projects list
+
+<span class="output">  Name               Status   Pages</span>
+<span class="output">  ─────────────────────────────────</span>
+<span class="output">  DevTools Resources active   48</span>
+<span class="output">  Travel Blog        active   120</span>
+
+<span class="comment"># Machine-readable output (for agents)</span>
+<span class="prompt">$</span> <span class="function">contento</span> projects list --json
+
+<span class="output">[</span>
+<span class="output">  {"name":"DevTools Resources","status":"active","pages":48},</span>
+<span class="output">  {"name":"Travel Blog","status":"active","pages":120}</span>
+<span class="output">]</span>
+
+<span class="comment"># NDJSON streaming for generation</span>
+<span class="prompt">$</span> <span class="function">contento</span> collections generate --json
+
+<span class="output">{"type":"progress","current":6,"total":48,"done":false}</span>
+<span class="output">{"type":"progress","current":22,"total":48,"done":false}</span>
+<span class="output">{"type":"progress","current":48,"total":48,"done":true}</span></code></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- Built for AI Agents -->
+<section class="py-24 px-4 sm:px-6 grid-bg">
+    <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-16">
+            <span class="tag tag-blue mb-4 inline-block">agents</span>
+            <h2 class="text-3xl sm:text-4xl font-bold tracking-tight mb-4">Built for AI Agents</h2>
+            <p class="text-gray-500 max-w-2xl mx-auto">The <code>--json</code> flag on every command means AI agents can drive the entire pSEO workflow. No scraping, no browser automation &mdash; just structured output.</p>
+        </div>
+        <div class="grid md:grid-cols-3 gap-6">
+            <div class="card p-6">
+                <p class="font-mono text-xs text-accent mb-3">structured output</p>
+                <h3 class="font-semibold mb-2">JSON Everywhere</h3>
+                <p class="text-sm text-gray-500">Every command supports <code>--json</code> for machine-readable output. Tables become arrays, status messages become objects.</p>
+            </div>
+            <div class="card p-6">
+                <p class="font-mono text-xs text-accent mb-3">streaming</p>
+                <h3 class="font-semibold mb-2">NDJSON Progress</h3>
+                <p class="text-sm text-gray-500">Generation streams progress as newline-delimited JSON. Agents can monitor completion without polling.</p>
+            </div>
+            <div class="card p-6">
+                <p class="font-mono text-xs text-accent mb-3">authentication</p>
+                <h3 class="font-semibold mb-2">Non-Interactive Login</h3>
+                <p class="text-sm text-gray-500">Set <code>CONTENTO_API_KEY</code> as an environment variable. No interactive prompts in CI or agent environments.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- DNS & Custom Domains -->
+<section class="py-24 px-4 sm:px-6">
+    <div class="max-w-6xl mx-auto">
+        <div class="grid lg:grid-cols-2 gap-16 items-start">
+            <div>
+                <span class="tag tag-green mb-4 inline-block">domains</span>
+                <h2 class="text-2xl sm:text-3xl font-bold tracking-tight mb-4">DNS &amp; Custom Domains</h2>
+                <p class="text-gray-500 leading-relaxed mb-6">CNAME-based subdomain routing with automatic SSL via Cloudflare. Add a DNS record and your subdomain is live in minutes. Run multiple subdomains per project for different content verticals.</p>
+                <ul class="space-y-3 text-sm text-gray-600">
+                    <li class="flex items-center gap-3">
+                        <span class="text-accent font-mono text-xs">&#9632;</span>
+                        CNAME-based subdomain routing
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <span class="text-accent font-mono text-xs">&#9632;</span>
+                        Cloudflare SSL termination
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <span class="text-accent font-mono text-xs">&#9632;</span>
+                        Automatic DNS verification (5-min polling)
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <span class="text-accent font-mono text-xs">&#9632;</span>
+                        Multi-subdomain per project support
+                    </li>
+                </ul>
+            </div>
+            <div class="console overflow-hidden">
+                <div class="flex items-center gap-2 px-4 py-3 border-b border-[#2a2b3d]">
+                    <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
+                    <div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
+                    <div class="w-3 h-3 rounded-full bg-green-500/80"></div>
+                    <span class="ml-2 text-xs text-gray-500 font-mono">terminal</span>
+                </div>
+                <div class="p-6 text-sm leading-relaxed font-mono overflow-x-auto">
+<pre class="!bg-transparent !border-0 !p-0 !m-0"><code><span class="prompt">$</span> <span class="function">contento</span> domains status
+
+<span class="output">  articles.worktale.org</span>
+<span class="output">    DNS:  <span class="text-accent">&#10003; verified</span></span>
+<span class="output">    SSL:  <span class="text-accent">&#10003; active</span> (Cloudflare)</span>
+<span class="output">    Pages: 48 published</span>
+<span class="output"></span>
+<span class="output">  tips.worktale.org</span>
+<span class="output">    DNS:  <span class="text-accent">&#10003; verified</span></span>
+<span class="output">    SSL:  <span class="text-accent">&#10003; active</span> (Cloudflare)</span>
+<span class="output">    Pages: 120 published</span>
+
+<span class="prompt">$</span> <span class="function">contento</span> domains add \
+    --subdomain <span class="string">"guides.worktale.org"</span>
+
+<span class="output">  Add CNAME: guides -> pseo.contentocms.com</span></code></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="section-divider"></div>
 
 <!-- CTA -->
 <section class="py-24 px-4 sm:px-6">
     <div class="max-w-3xl mx-auto text-center">
-        <h2 class="font-display text-3xl font-bold tracking-tight mb-4">Ready to get started?</h2>
-        <p class="text-gray-500 mb-8">Contento is open source and free to use. Clone it, run it, make it yours.</p>
+        <h2 class="text-3xl sm:text-4xl font-bold tracking-tight mb-4">Deploy your first 500 pages today.</h2>
+        <p class="text-gray-500 mb-8">Install the CLI, pick a niche, choose a schema, and publish. No infrastructure to manage.</p>
         <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <a href="docs/index.html" class="inline-flex items-center gap-2 px-6 py-3 text-sm font-medium text-white rounded-lg" style="background: #3D5A80;">
-                Read the Docs
+            <a href="docs/index.html" class="btn-primary inline-flex items-center gap-2">
+                Get Started
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
             </a>
-            <a href="docs/api.html" class="inline-flex items-center gap-2 px-6 py-3 text-sm font-medium text-gray-700 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-all">
-                API Reference
+            <a href="docs/cli.html" class="btn-secondary inline-flex items-center gap-2">
+                CLI Reference
             </a>
         </div>
     </div>

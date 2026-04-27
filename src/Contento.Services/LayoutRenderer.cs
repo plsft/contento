@@ -1,9 +1,6 @@
-using System.Data;
 using System.Text.Json;
 using Microsoft.Extensions.Logging;
 using Noundry.Guardian;
-using Noundry.Tuxedo;
-using Noundry.Tuxedo.Contrib;
 using Contento.Core.Interfaces;
 using Contento.Core.Models;
 
@@ -11,21 +8,21 @@ namespace Contento.Services;
 
 public class LayoutRenderer : ILayoutRenderer
 {
-    private readonly IDbConnection _db;
     private readonly ILayoutService _layoutService;
-    private readonly IMarkdownService _markdownService;
+    private readonly IComponentRendererRegistry _registry;
+    private readonly IPluginRuntime? _pluginRuntime;
     private readonly ILogger<LayoutRenderer> _logger;
 
     public LayoutRenderer(
-        IDbConnection db,
         ILayoutService layoutService,
-        IMarkdownService markdownService,
-        ILogger<LayoutRenderer> logger)
+        IComponentRendererRegistry registry,
+        ILogger<LayoutRenderer> logger,
+        IPluginRuntime? pluginRuntime = null)
     {
-        _db = Guard.Against.Null(db);
         _layoutService = Guard.Against.Null(layoutService);
-        _markdownService = Guard.Against.Null(markdownService);
+        _registry = Guard.Against.Null(registry);
         _logger = Guard.Against.Null(logger);
+        _pluginRuntime = pluginRuntime;
     }
 
     public async Task<LayoutRenderContext> BuildRenderContextAsync(Guid siteId, Guid? layoutId = null)
@@ -98,42 +95,38 @@ public class LayoutRenderer : ILayoutRenderer
     {
         try
         {
-            return component.ContentType switch
+            var layoutContext = new LayoutComponentContext
             {
-                "html" => component.Content ?? "",
-                "markdown" => _markdownService.RenderToHtml(component.Content ?? ""),
-                "recent_posts" => RenderRecentPostsWidget(component),
-                "categories" => RenderCategoriesWidget(component),
-                _ => component.Content ?? ""
+                ComponentId = component.Id,
+                ContentType = component.ContentType,
+                Content = component.Content,
+                Settings = component.Settings,
+                CssClasses = component.CssClasses,
+                SortOrder = component.SortOrder
             };
+
+            // 1. Try the registry
+            var renderer = _registry.GetRenderer(component.ContentType);
+            if (renderer != null)
+                return renderer.Render(layoutContext);
+
+            // 2. Try plugin hook
+            if (_pluginRuntime != null)
+            {
+                var contextJson = JsonSerializer.Serialize(layoutContext);
+                var results = _pluginRuntime.BroadcastHook("component:render", contextJson);
+                var pluginResult = results.Values.FirstOrDefault(v => !string.IsNullOrEmpty(v));
+                if (pluginResult != null)
+                    return pluginResult;
+            }
+
+            // 3. Fallback
+            return component.Content ?? "";
         }
         catch (Exception ex)
         {
             _logger.LogWarning(ex, "Failed to render component {ComponentId}", component.Id);
             return "";
         }
-    }
-
-    private string RenderRecentPostsWidget(LayoutComponent component)
-    {
-        // Widget rendered server-side — returns placeholder HTML for recent posts
-        var cssClasses = component.CssClasses ?? "";
-        return $"""
-            <div class="widget-recent-posts {cssClasses}" data-widget="recent_posts">
-                <h3 class="text-lg font-semibold mb-3">Recent Posts</h3>
-                <div data-region-widget="recent_posts"></div>
-            </div>
-            """;
-    }
-
-    private string RenderCategoriesWidget(LayoutComponent component)
-    {
-        var cssClasses = component.CssClasses ?? "";
-        return $"""
-            <div class="widget-categories {cssClasses}" data-widget="categories">
-                <h3 class="text-lg font-semibold mb-3">Categories</h3>
-                <div data-region-widget="categories"></div>
-            </div>
-            """;
     }
 }

@@ -1,0 +1,179 @@
+@page "/admin/pseo/pages"
+@model Contento.Web.Pages.Admin.Pseo.Pages.IndexModel
+@{
+    ViewData["Title"] = "pSEO Pages";
+}
+
+<div class="max-w-7xl mx-auto" x-data="pseoPageManager()">
+    <!-- Header -->
+    <div class="flex items-center justify-between mb-6">
+        <div>
+            <div class="flex items-center gap-2">
+                <a href="/admin/pseo" class="text-sm" style="color: var(--color-ash);">pSEO</a>
+                <span style="color: var(--color-cloud);">/</span>
+                <h2 class="text-xl font-semibold" style="color: var(--color-ink);">Pages</h2>
+            </div>
+            <p class="text-sm mt-1" style="color: var(--color-ash);">@Model.TotalCount pages</p>
+        </div>
+    </div>
+
+    <!-- Status Filter Tabs -->
+    <div class="flex gap-1 mb-6 border-b" style="border-color: var(--color-mist);">
+        @foreach (var tab in new[] { ("all", "All"), ("pending", "Pending"), ("validated", "Validated"), ("failed", "Failed"), ("published", "Published") })
+        {
+            <a href="/admin/pseo/pages?status=@tab.Item1&collectionId=@Model.CollectionId"
+               class="px-4 py-2.5 text-sm font-medium border-b-2 transition-colors @(Model.Status == tab.Item1 ? "border-[var(--color-indigo)] text-[var(--color-indigo)]" : "border-transparent text-[var(--color-ash)] hover:text-[var(--color-stone)]")">
+                @tab.Item2
+            </a>
+        }
+    </div>
+
+    <!-- Filters -->
+    <div class="mb-6">
+        <form method="get" class="flex gap-3 flex-wrap">
+            <input type="hidden" name="status" value="@Model.Status" />
+            @if (Model.Collections.Any())
+            {
+                <select name="collectionId" class="form-input max-w-xs"
+                        onchange="this.form.submit();">
+                    <option value="">All Collections</option>
+                    @foreach (var col in Model.Collections)
+                    {
+                        <option value="@col.Id" selected="@(Model.CollectionId == col.Id)">@col.Name</option>
+                    }
+                </select>
+            }
+            <input type="text" name="searchQuery" value="@Model.SearchQuery" placeholder="Search pages..."
+                   class="form-input max-w-sm" />
+            <button type="submit" class="btn btn-secondary btn-sm">Search</button>
+        </form>
+    </div>
+
+    <!-- Bulk Actions -->
+    <div x-show="selectedItems.length > 0" x-cloak class="mb-4 p-3 rounded-lg flex items-center gap-3" style="background: var(--color-indigo-pale); border: 1px solid var(--color-indigo);">
+        <span class="text-sm font-medium" style="color: var(--color-indigo);" x-text="selectedItems.length + ' selected'"></span>
+        <form method="post" asp-page-handler="BulkPublish" class="inline">
+            <template x-for="id in selectedItems" :key="id">
+                <input type="hidden" name="selectedPageIds" :value="id" />
+            </template>
+            <button type="submit" class="btn btn-primary btn-sm">Publish Selected</button>
+        </form>
+        <form method="post" asp-page-handler="BulkDelete" class="inline"
+              onsubmit="return confirm('Delete selected pages?');">
+            <template x-for="id in selectedItems" :key="id">
+                <input type="hidden" name="selectedPageIds" :value="id" />
+            </template>
+            <button type="submit" class="btn btn-ghost btn-sm" style="color: var(--color-danger);">Delete Selected</button>
+        </form>
+    </div>
+
+    <!-- Pages Table -->
+    <div class="table-container">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th class="w-8">
+                        <input type="checkbox" class="rounded" @@change="toggleAll($event)" />
+                    </th>
+                    <th>Title</th>
+                    <th>Slug</th>
+                    <th>Collection</th>
+                    <th>Status</th>
+                    <th>Words</th>
+                    <th>Published</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.PseoPages.Any())
+                {
+                    @foreach (var item in Model.PseoPages)
+                    {
+                        <tr>
+                            <td>
+                                <input type="checkbox" class="rounded" value="@item.Id"
+                                       @@change="toggleItem('@item.Id', $event)" />
+                            </td>
+                            <td>
+                                <span class="font-medium text-sm" style="color: var(--color-ink);">
+                                    @(string.IsNullOrEmpty(item.Title) ? "(untitled)" : item.Title)
+                                </span>
+                            </td>
+                            <td style="color: var(--color-ash); font-size: 0.8125rem;">
+                                <span class="truncate max-w-[200px] inline-block">@item.Slug</span>
+                            </td>
+                            <td style="color: var(--color-ash); font-size: 0.8125rem;">
+                                @(Model.CollectionNames.GetValueOrDefault(item.CollectionId, "\u2014"))
+                            </td>
+                            <td>
+                                <span class="badge @(item.Status switch { "published" => "badge-success", "validated" => "badge-info", "pending" => "badge-neutral", "generating" => "badge-warning", "failed" => "badge-danger", _ => "badge-neutral" })">
+                                    @item.Status
+                                </span>
+                            </td>
+                            <td style="color: var(--color-ash); font-size: 0.8125rem;">
+                                @item.WordCount
+                            </td>
+                            <td style="color: var(--color-ash); font-size: 0.8125rem;">
+                                @(item.PublishedAt?.ToString("MMM d, yyyy") ?? "\u2014")
+                            </td>
+                            <td>
+                                <div class="flex items-center gap-1">
+                                    @if (item.Status != "published")
+                                    {
+                                        <form method="post" asp-page-handler="Publish" class="inline">
+                                            <input type="hidden" name="pageId" value="@item.Id" />
+                                            <button type="submit" class="btn btn-ghost btn-sm text-xs" style="color: var(--color-indigo);">Publish</button>
+                                        </form>
+                                    }
+                                    <form method="post" asp-page-handler="Delete"
+                                          onsubmit="return confirm('Delete this page?');" class="inline">
+                                        <input type="hidden" name="pageId" value="@item.Id" />
+                                        <button type="submit" class="btn btn-ghost btn-sm text-xs" style="color: var(--color-danger);">Delete</button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="8" class="text-center py-12">
+                            <p style="color: var(--color-cloud);">No pages found.</p>
+                            <p class="text-sm mt-2" style="color: var(--color-ash);">
+                                Generate pages from a <a href="/admin/pseo/collections" class="hover:underline" style="color: var(--color-indigo);">collection</a>.
+                            </p>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+<script>
+function pseoPageManager() {
+    return {
+        selectedItems: [],
+        toggleItem(id, event) {
+            if (event.target.checked) {
+                this.selectedItems.push(id);
+            } else {
+                this.selectedItems = this.selectedItems.filter(p => p !== id);
+            }
+        },
+        toggleAll(event) {
+            const checkboxes = document.querySelectorAll('tbody input[type="checkbox"]');
+            this.selectedItems = [];
+            checkboxes.forEach(cb => {
+                cb.checked = event.target.checked;
+                if (event.target.checked) {
+                    this.selectedItems.push(cb.value);
+                }
+            });
+        }
+    };
+}
+</script>
+}

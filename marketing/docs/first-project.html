@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>First Project — Contento Docs</title>
+    <meta name="description" content="Walk through creating your first pSEO project in Contento. Set up a project via the CLI, pick niches, generate pages, and publish." />
+    <script type="module" src="/src/main.js"></script>
+</head>
+<body class="bg-white text-gray-900 antialiased" x-data="{ mobileMenuOpen: false }">
+
+    <%nav-docs%>
+
+    <div class="max-w-[90rem] mx-auto flex">
+        <%sidebar-docs%>
+
+        <main class="flex-1 min-w-0 px-4 sm:px-6 lg:px-12 py-12">
+            <div class="max-w-3xl">
+
+                <!-- Breadcrumb -->
+                <div class="flex items-center gap-2 text-sm text-gray-400 mb-8">
+                    <a href="index.html" class="hover:text-gray-600">Docs</a>
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                    <span class="text-gray-600">First Project</span>
+                </div>
+
+                <h1 style="font-size: 2.25rem; font-weight: 700; color: #1A1A1A; margin-bottom: 0.5rem; letter-spacing: -0.02em;">First Project</h1>
+                <p style="font-size: 1.125rem; color: #6B7280; margin-bottom: 2.5rem;">Create a project, select niches, generate pages, and publish &mdash; end to end.</p>
+
+                <div class="callout callout-tip">
+                    <strong>Prerequisite:</strong> Make sure the CLI is installed. See <a href="installation.html" style="color: #065f46; font-weight: 500;">Install CLI</a> if you have not set it up yet.
+                </div>
+
+                <!-- Step 1: Authenticate -->
+                <h2>Step 1: Authenticate</h2>
+
+<pre><span class="function">contento</span> login
+
+<span class="output">Opening browser for authentication...</span>
+<span class="output">Authenticated as george@example.com</span>
+
+<span class="comment"># Verify you're logged in</span>
+<span class="function">contento</span> whoami
+<span class="output">george@example.com (Growth plan)</span></pre>
+
+                <!-- Step 2: Create a project -->
+                <h2>Step 2: Create a Project</h2>
+
+                <p>A project defines your subdomain, branding, and back-link configuration:</p>
+
+<pre><span class="function">contento</span> projects create \
+    --name <span class="string">"My First Project"</span> \
+    --domain <span class="string">"example.com"</span> \
+    --subdomain <span class="string">"resources.example.com"</span>
+
+<span class="output">  Project created: proj_8f3a...</span>
+<span class="output">  Status: pending_dns</span>
+<span class="output">  Subdomain: resources.example.com</span>
+<span class="output"></span>
+<span class="output">  Add this DNS record:</span>
+<span class="output">    Type:   CNAME</span>
+<span class="output">    Name:   resources</span>
+<span class="output">    Target: pseo.contentocms.com</span></pre>
+
+                <p>The project starts in <code>pending_dns</code> status. You need to add a CNAME record before pages can be served.</p>
+
+                <!-- Step 3: Configure DNS -->
+                <h2>Step 3: Configure DNS</h2>
+
+                <p>Add a CNAME record in your DNS provider:</p>
+
+                <table>
+                    <thead><tr><th>Type</th><th>Name</th><th>Target</th><th>Proxy</th></tr></thead>
+                    <tbody>
+                        <tr><td>CNAME</td><td><code>resources</code></td><td><code>pseo.contentocms.com</code></td><td>Proxied (Cloudflare)</td></tr>
+                    </tbody>
+                </table>
+
+                <p>Contento polls DNS every 5 minutes. Once verified, the project transitions to <code>active</code>. Check status:</p>
+
+<pre><span class="function">contento</span> domains verify --project proj_8f3a...
+
+<span class="output">  resources.example.com</span>
+<span class="output">    DNS:  &#10003; verified</span>
+<span class="output">    SSL:  &#10003; active (Cloudflare)</span>
+<span class="output">    Status: active</span></pre>
+
+                <div class="callout callout-info">
+                    <strong>Tip:</strong> You can proceed with generation while DNS is propagating. Pages will be stored and ready to serve once DNS is verified.
+                </div>
+
+                <!-- Step 4: Browse niches -->
+                <h2>Step 4: Browse Niches</h2>
+
+                <p>Contento ships with 150+ niches. Browse them to find your target audience:</p>
+
+<pre><span class="function">contento</span> niches list --category <span class="string">"Technology"</span>
+
+<span class="output">  Name                 Category      Subtopics</span>
+<span class="output">  ──────────────────────────────────────────────</span>
+<span class="output">  Developer Tools      Technology    20</span>
+<span class="output">  DevOps              Technology    22</span>
+<span class="output">  Cloud Computing      Technology    16</span>
+<span class="output">  ... 22 more</span></pre>
+
+                <p>Note the niche IDs &mdash; you will use them when generating. Use <code>--json</code> to get IDs in machine-readable format.</p>
+
+                <!-- Step 5: Choose a schema -->
+                <h2>Step 5: Choose a Schema</h2>
+
+                <p>Pick a content type for your first batch. The <code>idea-list</code> schema is a good starting point:</p>
+
+<pre><span class="function">contento</span> schemas list
+
+<span class="output">  Slug             Title Pattern</span>
+<span class="output">  ──────────────────────────────────────────────</span>
+<span class="output">  idea-list        {count} {subtopic} Ideas for {year}</span>
+<span class="output">  checklist        The Ultimate {subtopic} Checklist</span>
+<span class="output">  comparison       {A} vs {B}: Which Is Better?</span>
+<span class="output">  ... 7 more</span></pre>
+
+                <!-- Step 6: Generate -->
+                <h2>Step 6: Generate Pages</h2>
+
+                <p>Start a generation job that combines your project, selected niches, and schema:</p>
+
+<pre><span class="function">contento</span> collections generate \
+    --project proj_8f3a... \
+    --schema <span class="string">"idea-list"</span> \
+    --niches <span class="string">"niche_01...,niche_02..."</span> \
+    --workers <span class="number">5</span>
+
+<span class="output">  Generating 38 pages across 2 niches...</span>
+<span class="output"></span>
+<span class="output">  [00:04] &#9608;&#9608;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;  5/38  (13%)</span>
+<span class="output">  [00:12] &#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601; 20/38  (53%)</span>
+<span class="output">  [00:20] &#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608; 38/38 (100%)</span>
+<span class="output"></span>
+<span class="output">  Validation: 36 passed, 2 retried, 0 failed</span>
+<span class="output">  Collection: col_9d2f...</span></pre>
+
+                <p>The engine expands subtopics from each niche, deduplicates titles, generates JSON content via AI, validates against the schema, and retries failures automatically.</p>
+
+                <!-- Step 7: Publish -->
+                <h2>Step 7: Publish</h2>
+
+                <p>Once generation completes, publish the pages to your subdomain:</p>
+
+<pre><span class="function">contento</span> publish \
+    --collection col_9d2f... \
+    --mode immediate
+
+<span class="output">  Publishing 36 pages...</span>
+<span class="output">  &#10003; Internal linking pass: 108 cross-links added</span>
+<span class="output">  &#10003; Sitemap rebuilt: 36 URLs</span>
+<span class="output">  &#10003; Schema markup injected</span>
+<span class="output">  &#10003; OG meta tags generated</span>
+<span class="output"></span>
+<span class="output">  Published to: resources.example.com</span></pre>
+
+                <p>Your pages are now live. Visit your subdomain to see them:</p>
+
+                <ul>
+                    <li><code>https://resources.example.com/100-api-testing-ideas-2026</code></li>
+                    <li><code>https://resources.example.com/100-cicd-pipeline-ideas-2026</code></li>
+                    <li><code>https://resources.example.com/sitemap.xml</code></li>
+                </ul>
+
+                <!-- What happened -->
+                <h2>What Happened Behind the Scenes</h2>
+
+                <p>During the generate and publish steps, Contento:</p>
+
+                <ol>
+                    <li><strong>Expanded subtopics</strong> &mdash; Pulled 10&ndash;20 subtopics from each selected niche</li>
+                    <li><strong>Deduplicated</strong> &mdash; Removed overlapping subtopics across niches</li>
+                    <li><strong>Built prompts</strong> &mdash; Combined niche context + schema template + validation rules</li>
+                    <li><strong>Generated JSON</strong> &mdash; Sent prompts to AI provider with concurrent workers</li>
+                    <li><strong>Validated</strong> &mdash; Checked item counts, string lengths, enum values, required fields</li>
+                    <li><strong>Retried failures</strong> &mdash; Adjusted prompt and retried once for failed pages</li>
+                    <li><strong>Rendered HTML</strong> &mdash; Transformed validated JSON through the schema's renderer</li>
+                    <li><strong>Applied chrome</strong> &mdash; Wrapped each page in your header/footer/CSS</li>
+                    <li><strong>Cross-linked</strong> &mdash; Added internal links between related pages in the same niche</li>
+                    <li><strong>Built sitemap</strong> &mdash; Generated <code>sitemap.xml</code> with all published URLs</li>
+                </ol>
+
+                <!-- Next steps -->
+                <h2>Next Steps</h2>
+
+                <ul>
+                    <li><a href="generation.html" style="color: #3D5A80; font-weight: 500;">Generation Pipeline</a> &mdash; Understand concurrent workers, prompt building, and retry logic</li>
+                    <li><a href="publishing.html" style="color: #3D5A80; font-weight: 500;">Publishing</a> &mdash; Learn the four publish modes and batch control</li>
+                    <li><a href="chrome.html" style="color: #3D5A80; font-weight: 500;">Custom Chrome</a> &mdash; Upload your header, footer, and CSS</li>
+                    <li><a href="analytics.html" style="color: #3D5A80; font-weight: 500;">Analytics</a> &mdash; Connect Google Search Console to track performance</li>
+                </ul>
+
+            </div>
+        </main>
+    </div>
+
+    <%footer-docs%>
+
+</body>
+</html>

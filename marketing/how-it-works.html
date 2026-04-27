@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>How It Works — Contento pSEO Engine</title>
+    <meta name="description" content="Learn the Contento pSEO workflow: Install the CLI, create a project, configure DNS, choose niches, pick schemas, generate pages with AI, and publish to your subdomain." />
+    <script type="module" src="/src/main.js"></script>
+</head>
+<body class="bg-white text-gray-900 antialiased">
+
+<%nav-main%>
+
+<!-- Hero -->
+<section class="pt-32 pb-16 px-4 sm:px-6 dot-bg">
+    <div class="max-w-4xl mx-auto text-center">
+        <p class="font-mono text-sm text-accent mb-6">&gt; workflow</p>
+        <h1 class="text-4xl sm:text-5xl font-bold tracking-tight mb-4">Six steps to thousands of pages.</h1>
+        <p class="text-lg text-gray-500 max-w-2xl mx-auto">Install the CLI, create a project, point your DNS, select niches and schemas, generate content with AI, and publish &mdash; all from the command line.</p>
+    </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- Step 1: Create Project -->
+<section class="py-24 px-4 sm:px-6">
+    <div class="max-w-6xl mx-auto">
+        <div class="grid lg:grid-cols-2 gap-16 items-start">
+            <div>
+                <div class="stat-number text-5xl text-gray-200 mb-4">01</div>
+                <h2 class="text-2xl sm:text-3xl font-bold tracking-tight mb-4">Create a Project</h2>
+                <p class="text-gray-500 leading-relaxed mb-6">A project maps to a single subdomain. It owns all collections, pages, chrome (branding), and analytics for that domain. Create as many projects as you need from your Contento account.</p>
+                <ul class="space-y-3 text-sm text-gray-600">
+                    <li class="flex items-center gap-3">
+                        <span class="text-accent font-mono text-xs">&#9632;</span>
+                        One project = one subdomain (e.g., <code>resources.example.com</code>)
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <span class="text-accent font-mono text-xs">&#9632;</span>
+                        Upload header/footer HTML and CSS to match your main site
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <span class="text-accent font-mono text-xs">&#9632;</span>
+                        Configure back-link URL and CTA injection
+                    </li>
+                </ul>
+            </div>
+            <div class="console overflow-hidden">
+                <div class="flex items-center gap-2 px-4 py-3 border-b border-[#2a2b3d]">
+                    <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
+                    <div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
+                    <div class="w-3 h-3 rounded-full bg-green-500/80"></div>
+                    <span class="ml-2 text-xs text-gray-500 font-mono">terminal</span>
+                </div>
+                <div class="p-6 text-sm leading-relaxed font-mono overflow-x-auto">
+<pre class="!bg-transparent !border-0 !p-0 !m-0"><code><span class="prompt">$</span> <span class="function">contento</span> projects create \
+    --name <span class="string">"DevTools Resources"</span> \
+    --domain <span class="string">"worktale.org"</span> \
+    --subdomain <span class="string">"articles.worktale.org"</span>
+
+<span class="output">  Project created: proj_8f3a...</span>
+<span class="output">  Status: pending_dns</span>
+<span class="output">  Subdomain: articles.worktale.org</span>
+<span class="output"></span>
+<span class="output">  Add this DNS record:</span>
+<span class="output">    Type:   CNAME</span>
+<span class="output">    Name:   articles</span>
+<span class="output">    Target: pseo.contentocms.com</span></code></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- Step 2: Configure DNS -->
+<section class="py-24 px-4 sm:px-6 grid-bg">
+    <div class="max-w-6xl mx-auto">
+        <div class="grid lg:grid-cols-2 gap-16 items-start">
+            <div class="order-2 lg:order-1">
+                <div class="console overflow-hidden">
+                    <div class="flex items-center gap-2 px-4 py-3 border-b border-[#2a2b3d]">
+                        <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
+                        <div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
+                        <div class="w-3 h-3 rounded-full bg-green-500/80"></div>
+                        <span class="ml-2 text-xs text-gray-500 font-mono">terminal</span>
+                    </div>
+                    <div class="p-6 text-sm leading-relaxed font-mono overflow-x-auto">
+<pre class="!bg-transparent !border-0 !p-0 !m-0"><code><span class="comment"># Add this CNAME record in your DNS provider:</span>
+<span class="comment">#</span>
+<span class="comment">#   Type:   CNAME</span>
+<span class="comment">#   Name:   articles</span>
+<span class="comment">#   Target: pseo.contentocms.com</span>
+<span class="comment">#   Proxy:  Enabled (Cloudflare orange cloud)</span>
+
+<span class="comment"># Check verification status</span>
+<span class="prompt">$</span> <span class="function">contento</span> domains verify --project proj_8f3a...
+
+<span class="output">  articles.worktale.org</span>
+<span class="output">    DNS:  <span class="text-accent">&#10003; verified</span></span>
+<span class="output">    SSL:  <span class="text-accent">&#10003; active</span> (Cloudflare)</span>
+<span class="output">    Status: active</span></code></pre>
+                    </div>
+                </div>
+            </div>
+            <div class="order-1 lg:order-2">
+                <div class="stat-number text-5xl text-gray-200 mb-4">02</div>
+                <h2 class="text-2xl sm:text-3xl font-bold tracking-tight mb-4">Configure DNS</h2>
+                <p class="text-gray-500 leading-relaxed mb-6">Add a single CNAME record pointing your subdomain to <code>pseo.contentocms.com</code>. Contento polls for verification every 5 minutes. Once verified, SSL is handled automatically via Cloudflare.</p>
+                <ul class="space-y-3 text-sm text-gray-600">
+                    <li class="flex items-center gap-3">
+                        <span class="text-accent font-mono text-xs">&#9632;</span>
+                        Single CNAME record &mdash; no A records, no TXT verification
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <span class="text-accent font-mono text-xs">&#9632;</span>
+                        Automatic SSL via Cloudflare (Full strict mode)
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <span class="text-accent font-mono text-xs">&#9632;</span>
+                        DNS verification polling every 5 minutes
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <span class="text-accent font-mono text-xs">&#9632;</span>
+                        Project transitions from <code>pending_dns</code> to <code>active</code>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- Step 3: Choose Niches -->
+<section class="py-24 px-4 sm:px-6">
+    <div class="max-w-6xl mx-auto">
+        <div class="grid lg:grid-cols-2 gap-16 items-start">
+            <div>
+                <div class="stat-number text-5xl text-gray-200 mb-4">03</div>
+                <h2 class="text-2xl sm:text-3xl font-bold tracking-tight mb-4">Choose Niches</h2>
+                <p class="text-gray-500 leading-relaxed mb-6">Browse 150+ niches across 8 categories. Each niche carries structured context &mdash; audience profile, pain points, monetization strategies, and subtopics &mdash; that is injected into every AI prompt.</p>
+                <ul class="space-y-3 text-sm text-gray-600">
+                    <li class="flex items-center gap-3">
+                        <span class="text-accent font-mono text-xs">&#9632;</span>
+                        150+ built-in niches with rich context
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <span class="text-accent font-mono text-xs">&#9632;</span>
+                        Fork system niches for customization
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <span class="text-accent font-mono text-xs">&#9632;</span>
+                        Create custom niches from scratch
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <span class="text-accent font-mono text-xs">&#9632;</span>
+                        10&ndash;30 subtopics per niche for long-tail coverage
+                    </li>
+                </ul>
+            </div>
+            <div class="console overflow-hidden">
+                <div class="flex items-center gap-2 px-4 py-3 border-b border-[#2a2b3d]">
+                    <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
+                    <div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
+                    <div class="w-3 h-3 rounded-full bg-green-500/80"></div>
+                    <span class="ml-2 text-xs text-gray-500 font-mono">terminal</span>
+                </div>
+                <div class="p-6 text-sm leading-relaxed font-mono overflow-x-auto">
+<pre class="!bg-transparent !border-0 !p-0 !m-0"><code><span class="prompt">$</span> <span class="function">contento</span> niches list --category <span class="string">"Software"</span>
+
+<span class="output">  Name                 Category          Subtopics</span>
+<span class="output">  ────────────────────────────────────────────────</span>
+<span class="output">  Developer Tools      Software / SaaS   20</span>
+<span class="output">  Project Management   Software / SaaS   18</span>
+<span class="output">  CRM Platforms        Software / SaaS   15</span>
+<span class="output">  DevOps              Software / SaaS   22</span>
+<span class="output">  ... 21 more</span>
+
+<span class="prompt">$</span> <span class="function">contento</span> niches fork --id niche_01... \
+    --name <span class="string">"Custom DevTools"</span>
+
+<span class="output">  Forked: Custom DevTools (niche_f8a2...)</span></code></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- Step 4: Pick Schema -->
+<section class="py-24 px-4 sm:px-6 grid-bg">
+    <div class="max-w-6xl mx-auto">
+        <div class="grid lg:grid-cols-2 gap-16 items-start">
+            <div class="order-2 lg:order-1">
+                <div class="console overflow-hidden">
+                    <div class="flex items-center gap-2 px-4 py-3 border-b border-[#2a2b3d]">
+                        <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
+                        <div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
+                        <div class="w-3 h-3 rounded-full bg-green-500/80"></div>
+                        <span class="ml-2 text-xs text-gray-500 font-mono">terminal</span>
+                    </div>
+                    <div class="p-6 text-sm leading-relaxed font-mono overflow-x-auto">
+<pre class="!bg-transparent !border-0 !p-0 !m-0"><code><span class="prompt">$</span> <span class="function">contento</span> schemas list
+
+<span class="output">  Slug             Title Pattern</span>
+<span class="output">  ──────────────────────────────────────────────</span>
+<span class="output">  idea-list        {count} {subtopic} Ideas for {year}</span>
+<span class="output">  checklist        The Ultimate {subtopic} Checklist</span>
+<span class="output">  how-to           How to {action} with {subtopic}</span>
+<span class="output">  comparison       {A} vs {B}: Which Is Better?</span>
+<span class="output">  alternatives     Best {tool} Alternatives</span>
+<span class="output">  faq              {subtopic} FAQ: {n} Questions</span>
+<span class="output">  glossary         {niche} Glossary: {n} Terms</span>
+<span class="output">  resource-list    Top {subtopic} Resources</span>
+<span class="output">  template-pack    Free {subtopic} Templates</span>
+<span class="output">  tool-page        {subtopic} Calculator</span></code></pre>
+                    </div>
+                </div>
+            </div>
+            <div class="order-1 lg:order-2">
+                <div class="stat-number text-5xl text-gray-200 mb-4">04</div>
+                <h2 class="text-2xl sm:text-3xl font-bold tracking-tight mb-4">Pick a Content Schema</h2>
+                <p class="text-gray-500 leading-relaxed mb-6">Select from 10 built-in content types. Each schema defines the exact JSON structure the AI must produce, with field-level constraints (item counts, string lengths, enums) and a deterministic title pattern.</p>
+                <ul class="space-y-3 text-sm text-gray-600">
+                    <li class="flex items-center gap-3">
+                        <span class="text-accent font-mono text-xs">&#9632;</span>
+                        10 schemas optimized for different traffic patterns
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <span class="text-accent font-mono text-xs">&#9632;</span>
+                        Strict field validation: counts, lengths, enums
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <span class="text-accent font-mono text-xs">&#9632;</span>
+                        Deterministic titles &mdash; never AI-generated
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <span class="text-accent font-mono text-xs">&#9632;</span>
+                        Custom schemas via the CLI
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- Step 5: Generate -->
+<section class="py-24 px-4 sm:px-6">
+    <div class="max-w-6xl mx-auto">
+        <div class="grid lg:grid-cols-2 gap-16 items-start">
+            <div>
+                <div class="stat-number text-5xl text-gray-200 mb-4">05</div>
+                <h2 class="text-2xl sm:text-3xl font-bold tracking-tight mb-4">Generate Content</h2>
+                <p class="text-gray-500 leading-relaxed mb-6">Create a collection that combines your project, niches, and schema. Kick off a generation job and Contento's concurrent AI workers expand subtopics, build prompts, generate JSON, validate output, and retry failures.</p>
+                <ul class="space-y-3 text-sm text-gray-600">
+                    <li class="flex items-center gap-3">
+                        <span class="text-accent font-mono text-xs">&#9632;</span>
+                        10 concurrent AI workers (configurable)
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <span class="text-accent font-mono text-xs">&#9632;</span>
+                        Schema validation on every generated page
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <span class="text-accent font-mono text-xs">&#9632;</span>
+                        Automatic retry with adjusted prompts on failure
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <span class="text-accent font-mono text-xs">&#9632;</span>
+                        Real-time progress streaming in the terminal
+                    </li>
+                </ul>
+            </div>
+            <div class="console overflow-hidden">
+                <div class="flex items-center gap-2 px-4 py-3 border-b border-[#2a2b3d]">
+                    <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
+                    <div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
+                    <div class="w-3 h-3 rounded-full bg-green-500/80"></div>
+                    <span class="ml-2 text-xs text-gray-500 font-mono">terminal</span>
+                </div>
+                <div class="p-6 text-sm leading-relaxed font-mono overflow-x-auto">
+<pre class="!bg-transparent !border-0 !p-0 !m-0"><code><span class="prompt">$</span> <span class="function">contento</span> collections generate \
+    --project proj_8f3a... \
+    --schema <span class="string">"idea-list"</span> \
+    --niches <span class="string">"niche_01...,niche_02..."</span> \
+    --workers <span class="number">10</span>
+
+<span class="output">  Generating 48 pages across 2 niches...</span>
+<span class="output"></span>
+<span class="output">  [00:03] Worker pool: 10 concurrent</span>
+<span class="output">  [00:04] &#9608;&#9608;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;  6/48  (12%)</span>
+<span class="output">  [00:12] &#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601; 22/48  (46%)</span>
+<span class="output">  [00:20] &#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9601;&#9601;&#9601;&#9601; 36/48  (75%)</span>
+<span class="output">  [00:26] &#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608; 48/48 (100%)</span>
+<span class="output"></span>
+<span class="output">  Validation: <span class="text-accent">46 passed</span>, 2 retried, 0 failed</span>
+<span class="output">  Collection: col_9d2f...</span></code></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- Step 6: Publish -->
+<section class="py-24 px-4 sm:px-6 grid-bg">
+    <div class="max-w-6xl mx-auto">
+        <div class="grid lg:grid-cols-2 gap-16 items-start">
+            <div class="order-2 lg:order-1">
+                <div class="console overflow-hidden">
+                    <div class="flex items-center gap-2 px-4 py-3 border-b border-[#2a2b3d]">
+                        <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
+                        <div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
+                        <div class="w-3 h-3 rounded-full bg-green-500/80"></div>
+                        <span class="ml-2 text-xs text-gray-500 font-mono">terminal</span>
+                    </div>
+                    <div class="p-6 text-sm leading-relaxed font-mono overflow-x-auto">
+<pre class="!bg-transparent !border-0 !p-0 !m-0"><code><span class="prompt">$</span> <span class="function">contento</span> publish \
+    --collection col_9d2f... \
+    --mode batched \
+    --batch-size <span class="number">50</span>
+
+<span class="output">  [batch 1/1] Publishing 48 pages...</span>
+<span class="output">  &#10003; Internal linking pass: 142 cross-links added</span>
+<span class="output">  &#10003; Sitemap rebuilt: 48 URLs</span>
+<span class="output">  &#10003; Schema markup injected (Article + BreadcrumbList)</span>
+<span class="output">  &#10003; OG meta tags generated</span>
+<span class="output"></span>
+<span class="output">  Published to: <span class="url">articles.worktale.org</span></span>
+
+<span class="comment"># Your pages are now live:</span>
+<span class="comment"># https://articles.worktale.org/100-api-testing-ideas-2026</span>
+<span class="comment"># https://articles.worktale.org/100-cicd-pipeline-ideas-2026</span>
+<span class="comment"># https://articles.worktale.org/sitemap.xml</span></code></pre>
+                    </div>
+                </div>
+            </div>
+            <div class="order-1 lg:order-2">
+                <div class="stat-number text-5xl text-gray-200 mb-4">06</div>
+                <h2 class="text-2xl sm:text-3xl font-bold tracking-tight mb-4">Publish</h2>
+                <p class="text-gray-500 leading-relaxed mb-6">Publish pages in one of four modes: immediate, batched, scheduled, or manual. Every publish triggers an internal linking pass (cross-links related pages) and a sitemap rebuild. Pages go live on your subdomain instantly.</p>
+                <ul class="space-y-3 text-sm text-gray-600">
+                    <li class="flex items-center gap-3">
+                        <span class="text-accent font-mono text-xs">&#9632;</span>
+                        4 modes: immediate, batched, scheduled, manual
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <span class="text-accent font-mono text-xs">&#9632;</span>
+                        Internal linking pass adds cross-links
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <span class="text-accent font-mono text-xs">&#9632;</span>
+                        Sitemap auto-rebuilt per batch
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <span class="text-accent font-mono text-xs">&#9632;</span>
+                        Schema markup (JSON-LD) and OG tags injected
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- Summary / Pipeline Diagram -->
+<section class="py-24 px-4 sm:px-6">
+    <div class="max-w-4xl mx-auto">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl sm:text-4xl font-bold tracking-tight mb-4">The complete pipeline</h2>
+            <p class="text-gray-500 max-w-2xl mx-auto">Every step is available through the CLI. Add <span class="font-mono text-xs">--json</span> to any command for machine-readable output.</p>
+        </div>
+        <div class="console overflow-hidden">
+            <div class="flex items-center gap-2 px-4 py-3 border-b border-[#2a2b3d]">
+                <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
+                <div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
+                <div class="w-3 h-3 rounded-full bg-green-500/80"></div>
+                <span class="ml-2 text-xs text-gray-500 font-mono">pipeline.txt</span>
+            </div>
+            <div class="p-6 text-xs sm:text-sm leading-relaxed font-mono overflow-x-auto">
+<pre class="!bg-transparent !border-0 !p-0 !m-0"><code>
+  <span class="function">Create Project</span>          <span class="comment">contento projects create</span>
+       &#9474;
+       &#9660;
+  <span class="function">Configure DNS</span>           <span class="comment">CNAME &rarr; pseo.contentocms.com</span>
+       &#9474;
+       &#9660;
+  <span class="function">Select Niches</span>           <span class="comment">contento niches list</span>
+       &#9474;
+       &#9660;
+  <span class="function">Pick Schema</span>             <span class="comment">contento schemas list</span>
+       &#9474;
+       &#9660;
+  <span class="function">Generate</span>                <span class="comment">contento collections generate</span>
+       &#9474;                       <span class="comment">  &#x2514; subtopic expansion</span>
+       &#9474;                       <span class="comment">  &#x2514; concurrent AI workers</span>
+       &#9474;                       <span class="comment">  &#x2514; schema validation</span>
+       &#9474;                       <span class="comment">  &#x2514; retry on failure</span>
+       &#9660;
+  <span class="function">Publish</span>                 <span class="comment">contento publish</span>
+       &#9474;                       <span class="comment">  &#x2514; internal linking pass</span>
+       &#9474;                       <span class="comment">  &#x2514; sitemap rebuild</span>
+       &#9474;                       <span class="comment">  &#x2514; JSON-LD + OG injection</span>
+       &#9660;
+  <span class="text-accent">Live on your subdomain</span>  <span class="comment">https://articles.worktale.org</span>
+</code></pre>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="py-24 px-4 sm:px-6">
+    <div class="max-w-3xl mx-auto text-center">
+        <h2 class="text-3xl sm:text-4xl font-bold tracking-tight mb-4">Ready to start?</h2>
+        <p class="text-gray-500 mb-8">Install the CLI and publish your first batch of pages in under 10 minutes.</p>
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <a href="docs/index.html" class="btn-primary inline-flex items-center gap-2">
+                Get Started
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+            </a>
+            <a href="docs/cli.html" class="btn-secondary inline-flex items-center gap-2">
+                CLI Reference
+            </a>
+        </div>
+    </div>
+</section>
+
+<%footer-main%>
+
+</body>
+</html>

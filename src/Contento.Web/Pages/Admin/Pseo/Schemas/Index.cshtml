@@ -1,0 +1,126 @@
+@page "/admin/pseo/schemas"
+@model Contento.Web.Pages.Admin.Pseo.Schemas.IndexModel
+@{
+    ViewData["Title"] = "Schema Library";
+}
+
+<div class="max-w-7xl mx-auto" x-data="{ showCreate: false, expandedSchema: '' }">
+    <!-- Header -->
+    <div class="flex items-center justify-between mb-6">
+        <div>
+            <div class="flex items-center gap-2">
+                <a href="/admin/pseo" class="text-sm" style="color: var(--color-ash);">pSEO</a>
+                <span style="color: var(--color-cloud);">/</span>
+                <h2 class="text-xl font-semibold" style="color: var(--color-ink);">Schema Library</h2>
+            </div>
+            <p class="text-sm mt-1" style="color: var(--color-ash);">@Model.Schemas.Count content schemas</p>
+        </div>
+        <button @@click="showCreate = !showCreate" class="btn btn-primary">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 4v16m8-8H4"/>
+            </svg>
+            Create Custom
+        </button>
+    </div>
+
+    <!-- Create Form -->
+    <div x-show="showCreate" x-cloak x-transition class="card mb-6">
+        <h3 class="text-sm font-semibold mb-4" style="color: var(--color-ink);">Create Custom Schema</h3>
+        <form method="post" asp-page-handler="Create">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                    <label class="form-label">Name</label>
+                    <input type="text" name="SchemaName" class="form-input" placeholder="e.g. City Guide" required />
+                </div>
+                <div>
+                    <label class="form-label">Slug</label>
+                    <input type="text" name="SchemaSlug" class="form-input" placeholder="e.g. city-guide" required />
+                </div>
+                <div class="sm:col-span-2">
+                    <label class="form-label">Description</label>
+                    <textarea name="SchemaDescription" rows="2" class="form-input" placeholder="Describe what this schema generates..."></textarea>
+                </div>
+                <div>
+                    <label class="form-label">Renderer Slug</label>
+                    <input type="text" name="RendererSlug" class="form-input" placeholder="e.g. city-guide-v1" required />
+                </div>
+                <div>
+                    <label class="form-label">Title Pattern</label>
+                    <input type="text" name="TitlePattern" class="form-input" placeholder="e.g. {{niche}} in {{city}} - Guide" required />
+                </div>
+            </div>
+            <div class="flex justify-end gap-2 mt-4">
+                <button type="button" @@click="showCreate = false" class="btn btn-ghost">Cancel</button>
+                <button type="submit" class="btn btn-primary">Create Schema</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Schema Cards -->
+    @if (Model.Schemas.Any())
+    {
+        <div class="space-y-4">
+            @foreach (var schema in Model.Schemas)
+            {
+                <div class="card">
+                    <div class="flex items-start justify-between">
+                        <div class="flex-1">
+                            <div class="flex items-center gap-3 mb-1">
+                                <h4 class="text-sm font-semibold" style="color: var(--color-ink);">@schema.Name</h4>
+                                @if (schema.IsSystem)
+                                {
+                                    <span class="badge badge-neutral text-xs">System</span>
+                                }
+                                else
+                                {
+                                    <span class="badge badge-info text-xs">Custom</span>
+                                }
+                            </div>
+                            @if (!string.IsNullOrEmpty(schema.Description))
+                            {
+                                <p class="text-sm mb-2" style="color: var(--color-ash);">@schema.Description</p>
+                            }
+                            <div class="flex flex-wrap gap-4 text-xs" style="color: var(--color-stone);">
+                                <span>
+                                    <span style="color: var(--color-ash);">Renderer:</span> @schema.RendererSlug
+                                </span>
+                                <span>
+                                    <span style="color: var(--color-ash);">Title:</span> @schema.TitlePattern
+                                </span>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button type="button"
+                                    @@click="expandedSchema = expandedSchema === '@schema.Id' ? '' : '@schema.Id'"
+                                    class="btn btn-ghost btn-sm text-xs">
+                                <span x-text="expandedSchema === '@schema.Id' ? 'Hide JSON' : 'View JSON'"></span>
+                            </button>
+                            @if (!schema.IsSystem)
+                            {
+                                <form method="post" asp-page-handler="Delete" asp-route-id="@schema.Id" class="inline"
+                                      onsubmit="return confirm('Delete this schema?');">
+                                    <button type="submit" class="btn btn-ghost btn-sm text-xs" style="color: var(--color-danger);">Delete</button>
+                                </form>
+                            }
+                        </div>
+                    </div>
+
+                    <!-- Expanded Schema JSON -->
+                    <div x-show="expandedSchema === '@schema.Id'" x-cloak x-transition class="mt-4 border-t pt-4" style="border-color: var(--color-mist);">
+                        <pre class="text-xs p-4 rounded overflow-x-auto" style="background: var(--color-paper); border: 1px solid var(--color-mist); color: var(--color-stone);">@schema.SchemaJson</pre>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="card text-center py-12">
+            <svg class="w-10 h-10 mx-auto mb-3" style="color: var(--color-cloud);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+            </svg>
+            <p style="color: var(--color-cloud);">No schemas found.</p>
+            <button @@click="showCreate = true" class="btn btn-primary btn-sm mt-4">Create your first schema</button>
+        </div>
+    }
+</div>

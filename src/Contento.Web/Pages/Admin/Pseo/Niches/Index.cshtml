@@ -1,0 +1,140 @@
+@page "/admin/pseo/niches"
+@model Contento.Web.Pages.Admin.Pseo.Niches.IndexModel
+@{
+    ViewData["Title"] = "Niche Library";
+}
+
+<div class="max-w-7xl mx-auto" x-data="{ showCreate: false }">
+    <!-- Header -->
+    <div class="flex items-center justify-between mb-6">
+        <div>
+            <div class="flex items-center gap-2">
+                <a href="/admin/pseo" class="text-sm" style="color: var(--color-ash);">pSEO</a>
+                <span style="color: var(--color-cloud);">/</span>
+                <h2 class="text-xl font-semibold" style="color: var(--color-ink);">Niche Library</h2>
+            </div>
+            <p class="text-sm mt-1" style="color: var(--color-ash);">@Model.Niches.Count niches available</p>
+        </div>
+        <button @@click="showCreate = !showCreate" class="btn btn-primary">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 4v16m8-8H4"/>
+            </svg>
+            Create Custom
+        </button>
+    </div>
+
+    <!-- Create Form -->
+    <div x-show="showCreate" x-cloak x-transition class="card mb-6">
+        <h3 class="text-sm font-semibold mb-4" style="color: var(--color-ink);">Create Custom Niche</h3>
+        <form method="post" asp-page-handler="Create">
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div>
+                    <label class="form-label">Name</label>
+                    <input type="text" name="NicheName" class="form-input" placeholder="e.g. Pet Insurance" required />
+                </div>
+                <div>
+                    <label class="form-label">Slug</label>
+                    <input type="text" name="NicheSlug" class="form-input" placeholder="e.g. pet-insurance" required />
+                </div>
+                <div>
+                    <label class="form-label">Category</label>
+                    <input type="text" name="NicheCategory" class="form-input" placeholder="e.g. Insurance" required />
+                </div>
+            </div>
+            <div class="flex justify-end gap-2 mt-4">
+                <button type="button" @@click="showCreate = false" class="btn btn-ghost">Cancel</button>
+                <button type="submit" class="btn btn-primary">Create Niche</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Category Filter Tabs -->
+    <div class="flex gap-1 mb-6 border-b overflow-x-auto" style="border-color: var(--color-mist);">
+        <a href="/admin/pseo/niches"
+           class="px-4 py-2.5 text-sm font-medium border-b-2 transition-colors whitespace-nowrap @(string.IsNullOrEmpty(Model.Category) ? "border-[var(--color-indigo)] text-[var(--color-indigo)]" : "border-transparent text-[var(--color-ash)] hover:text-[var(--color-stone)]")">
+            All
+        </a>
+        @foreach (var cat in Model.Categories)
+        {
+            <a href="/admin/pseo/niches?category=@cat"
+               class="px-4 py-2.5 text-sm font-medium border-b-2 transition-colors whitespace-nowrap @(Model.Category == cat ? "border-[var(--color-indigo)] text-[var(--color-indigo)]" : "border-transparent text-[var(--color-ash)] hover:text-[var(--color-stone)]")">
+                @cat
+            </a>
+        }
+    </div>
+
+    <!-- Search -->
+    <div class="mb-6">
+        <form method="get" class="flex gap-3">
+            @if (!string.IsNullOrEmpty(Model.Category))
+            {
+                <input type="hidden" name="category" value="@Model.Category" />
+            }
+            <input type="text" name="SearchQuery" value="@Model.SearchQuery" placeholder="Search niches..."
+                   class="form-input max-w-sm" />
+            <button type="submit" class="btn btn-secondary btn-sm">Search</button>
+        </form>
+    </div>
+
+    <!-- Niche Cards Grid -->
+    @if (Model.Niches.Any())
+    {
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            @foreach (var niche in Model.Niches)
+            {
+                <div class="card hover:shadow-md transition-shadow">
+                    <div class="flex items-start justify-between mb-3">
+                        <div>
+                            <h4 class="text-sm font-semibold" style="color: var(--color-ink);">@niche.Name</h4>
+                            <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium mt-1"
+                                  style="background: var(--color-indigo-pale); color: var(--color-indigo);">
+                                @niche.Category
+                            </span>
+                        </div>
+                        @if (niche.IsSystem)
+                        {
+                            <span class="badge badge-neutral text-xs">System</span>
+                        }
+                        else
+                        {
+                            <span class="badge badge-info text-xs">Custom</span>
+                        }
+                    </div>
+
+                    <p class="text-xs mb-4" style="color: var(--color-ash);">
+                        @niche.Slug
+                    </p>
+
+                    <div class="flex items-center gap-2 border-t pt-3" style="border-color: var(--color-mist);">
+                        @if (niche.IsSystem)
+                        {
+                            <button type="button" class="btn btn-ghost btn-sm text-xs" style="color: var(--color-indigo);"
+                                    title="Use in a collection">
+                                Use
+                            </button>
+                        }
+                        else
+                        {
+                            <form method="post" asp-page-handler="Delete" asp-route-id="@niche.Id" class="inline"
+                                  onsubmit="return confirm('Delete this niche?');">
+                                <button type="submit" class="btn btn-ghost btn-sm text-xs" style="color: var(--color-danger);">
+                                    Delete
+                                </button>
+                            </form>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="card text-center py-12">
+            <svg class="w-10 h-10 mx-auto mb-3" style="color: var(--color-cloud);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/>
+            </svg>
+            <p style="color: var(--color-cloud);">No niches found.</p>
+            <button @@click="showCreate = true" class="btn btn-primary btn-sm mt-4">Create your first niche</button>
+        </div>
+    }
+</div>
