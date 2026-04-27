@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>First Project — Contento Docs</title>
+    <meta name="description" content="Walk through creating your first pSEO project in Contento. Set up a project via the CLI, pick niches, generate pages, and publish." />
+    <script type="module" src="/src/main.js"></script>
+</head>
+<body class="bg-white text-gray-900 antialiased" x-data="{ mobileMenuOpen: false }">
+
+    <%nav-docs%>
+
+    <div class="max-w-[90rem] mx-auto flex">
+        <%sidebar-docs%>
+
+        <main class="flex-1 min-w-0 px-4 sm:px-6 lg:px-12 py-12">
+            <div class="max-w-3xl">
+
+                <!-- Breadcrumb -->
+                <div class="flex items-center gap-2 text-sm text-gray-400 mb-8">
+                    <a href="index.html" class="hover:text-gray-600">Docs</a>
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                    <span class="text-gray-600">First Project</span>
+                </div>
+
+                <h1 style="font-size: 2.25rem; font-weight: 700; color: #1A1A1A; margin-bottom: 0.5rem; letter-spacing: -0.02em;">First Project</h1>
+                <p style="font-size: 1.125rem; color: #6B7280; margin-bottom: 2.5rem;">Create a project, select niches, generate pages, and publish &mdash; end to end.</p>
+
+                <div class="callout callout-tip">
+                    <strong>Prerequisite:</strong> Make sure the CLI is installed. See <a href="installation.html" style="color: #065f46; font-weight: 500;">Install CLI</a> if you have not set it up yet.
+                </div>
+
+                <!-- Step 1: Configure AI -->
+                <h2>Step 1: Configure Your AI Provider</h2>
+
+                <p>Contento has no login or central account. The CLI calls your AI provider directly using your own key. If you haven't set one yet, run <code>contento config set</code> to pick a provider, model, and paste your API key &mdash; or set the provider env var (<code>OPENAI_API_KEY</code>, <code>ANTHROPIC_API_KEY</code>, etc.) and skip the prompt entirely.</p>
+
+<pre><span class="function">contento</span> config show
+
+<span class="output">  Provider:  openai</span>
+<span class="output">  Model:     gpt-4o-mini</span>
+<span class="output">  API Key:   sk-proj-A...xkN9</span>
+<span class="output">  Enabled:   yes</span></pre>
+
+                <!-- Step 2: Create a project -->
+                <h2>Step 2: Create a Project</h2>
+
+                <p>A project ties together your domain, chrome templates, output path, and any per-project overrides. Initialize one with <code>contento init</code> in any directory &mdash; it writes a <code>contento.config.json</code> you can commit to git:</p>
+
+<pre><span class="function">contento</span> init \
+    --name <span class="string">"DevTools Resources"</span>
+
+<span class="output">  &#10003; Project created</span>
+<span class="output">  Project "DevTools Resources" created with ID: proj_8f3a...</span>
+<span class="output"></span>
+<span class="output">  ID       proj_8f3a...</span>
+<span class="output">  Name     DevTools Resources</span>
+<span class="output">  Domain   example.com</span>
+<span class="output">  Status   active</span></pre>
+
+                <p>This writes <code>contento.config.json</code> in the working directory and returns a project ID you'll use for every later command.</p>
+
+                <!-- Step 3: Browse niches -->
+                <h2>Step 3: Browse Niches</h2>
+
+                <p>Contento ships with 150+ niches. Browse them to find your target audience:</p>
+
+<pre><span class="function">contento</span> niches list --category <span class="string">"Technology"</span>
+
+<span class="output">  Name                 Category      Subtopics</span>
+<span class="output">  ──────────────────────────────────────────────</span>
+<span class="output">  Developer Tools      Technology    20</span>
+<span class="output">  DevOps              Technology    22</span>
+<span class="output">  Cloud Computing      Technology    16</span>
+<span class="output">  ... 22 more</span></pre>
+
+                <p>Note the niche IDs &mdash; you will use them when generating. Use <code>--json</code> to get IDs in machine-readable format.</p>
+
+                <!-- Step 4: Choose a schema -->
+                <h2>Step 4: Choose a Schema</h2>
+
+                <p>Pick a content type for your first batch. The <code>idea-list</code> schema is a good starting point:</p>
+
+<pre><span class="function">contento</span> schemas list
+
+<span class="output">  Slug             Title Pattern</span>
+<span class="output">  ──────────────────────────────────────────────</span>
+<span class="output">  idea-list        {count} {subtopic} Ideas for {year}</span>
+<span class="output">  checklist        The Ultimate {subtopic} Checklist</span>
+<span class="output">  comparison       {A} vs {B}: Which Is Better?</span>
+<span class="output">  ... 7 more</span></pre>
+
+                <!-- Step 5: Generate -->
+                <h2>Step 5: Generate Pages</h2>
+
+                <p>Start a generation job that combines your project, selected niches, and schema:</p>
+
+<pre><span class="comment"># First, create a collection</span>
+<span class="function">contento</span> collections create \
+    --project proj_8f3a... \
+    --schema <span class="string">"idea-list"</span> \
+    --niches <span class="string">"niche_01...,niche_02..."</span>
+
+<span class="output">  &#10003; Collection created</span>
+<span class="output">  Collection created with ID: col_9d2f...</span>
+
+<span class="comment"># Then, generate content</span>
+<span class="function">contento</span> collections generate col_9d2f...
+
+<span class="output">  &#10003; Generation started (Job: job_4a1b...)</span>
+<span class="output"></span>
+<span class="output">  [00:04] &#9608;&#9608;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;  5/38  (13%)</span>
+<span class="output">  [00:12] &#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601;&#9601; 20/38  (53%)</span>
+<span class="output">  [00:20] &#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608; 38/38 (100%)</span>
+<span class="output"></span>
+<span class="output">  &#10003; Generation complete!</span></pre>
+
+                <p>The engine expands subtopics from each niche, deduplicates titles, generates JSON content via AI, validates against the schema, and retries failures automatically.</p>
+
+                <!-- Step 6: Build & Deploy -->
+                <h2>Step 6: Build &amp; Deploy</h2>
+
+                <p>Once generation completes, build the static HTML output:</p>
+
+<pre><span class="function">contento</span> build proj_8f3a... --output <span class="string">./dist/articles</span>
+
+<span class="output">  &#10003; Built 36 pages to ./dist/articles/</span>
+<span class="output">  HTML files:  36</span>
+<span class="output">  Sitemap:     ./dist/articles/sitemap.xml</span>
+<span class="output"></span>
+<span class="output">  Deploy with your existing pipeline: git push, netlify deploy, rsync, etc.</span></pre>
+
+                <p>Then deploy the output to your existing static site using whatever method you prefer:</p>
+
+<pre><span class="comment"># Netlify</span>
+<span class="function">netlify</span> deploy --prod
+
+<span class="comment"># Or rsync to your server</span>
+<span class="function">rsync</span> -avz ./dist/articles/ user@server:/var/www/example.com/articles/
+
+<span class="comment"># Or commit and push (e.g. GitHub Pages)</span>
+<span class="function">git</span> add dist/ && git commit -m <span class="string">"Add generated articles"</span> && git push</pre>
+
+                <p>Your pages are now live on your own domain at on-domain paths:</p>
+
+                <ul>
+                    <li><code>https://example.com/articles/100-api-testing-ideas-2026</code></li>
+                    <li><code>https://example.com/articles/100-cicd-pipeline-ideas-2026</code></li>
+                    <li><code>https://example.com/articles/sitemap.xml</code></li>
+                </ul>
+
+                <!-- What happened -->
+                <h2>What Happened Behind the Scenes</h2>
+
+                <p>During the generate and build steps, Contento:</p>
+
+                <ol>
+                    <li><strong>Expanded subtopics</strong> &mdash; Pulled 10&ndash;20 subtopics from each selected niche</li>
+                    <li><strong>Deduplicated</strong> &mdash; Removed overlapping subtopics across niches</li>
+                    <li><strong>Built prompts</strong> &mdash; Combined niche context + schema template + validation rules</li>
+                    <li><strong>Generated JSON</strong> &mdash; Sent prompts to AI provider with concurrent workers</li>
+                    <li><strong>Validated</strong> &mdash; Checked item counts, string lengths, enum values, required fields</li>
+                    <li><strong>Retried failures</strong> &mdash; Adjusted prompt and retried once for failed pages</li>
+                    <li><strong>Rendered HTML</strong> &mdash; Transformed validated JSON through the schema's renderer</li>
+                    <li><strong>Applied chrome</strong> &mdash; Wrapped each page in your header/footer/CSS</li>
+                    <li><strong>Cross-linked</strong> &mdash; Added internal links between related pages in the same niche</li>
+                    <li><strong>Built sitemap</strong> &mdash; Generated <code>sitemap.xml</code> with all page URLs</li>
+                </ol>
+
+                <!-- Next steps -->
+                <h2>Next Steps</h2>
+
+                <ul>
+                    <li><a href="generation.html" style="color: #3D5A80; font-weight: 500;">Generation Pipeline</a> &mdash; Understand concurrent workers, prompt building, and retry logic</li>
+                    <li><a href="publishing.html" style="color: #3D5A80; font-weight: 500;">Publishing</a> &mdash; Learn the four publish modes and batch control</li>
+                    <li><a href="chrome.html" style="color: #3D5A80; font-weight: 500;">Custom Chrome</a> &mdash; Upload your header, footer, and CSS</li>
+                    <li><a href="analytics.html" style="color: #3D5A80; font-weight: 500;">Analytics</a> &mdash; Connect Google Search Console to track performance</li>
+                </ul>
+
+            </div>
+        </main>
+    </div>
+
+    <%footer-docs%>
+
+</body>
+</html>

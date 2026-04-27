@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Generation Pipeline — Contento Docs</title>
+    <meta name="description" content="How the Contento generation pipeline works: concurrent AI workers, prompt building from niche context and schema, validation, retry logic, and SSE streaming." />
+    <script type="module" src="/src/main.js"></script>
+</head>
+<body class="bg-white text-gray-900 antialiased" x-data="{ mobileMenuOpen: false }">
+
+    <%nav-docs%>
+
+    <div class="max-w-[90rem] mx-auto flex">
+        <%sidebar-docs%>
+
+        <main class="flex-1 min-w-0 px-4 sm:px-6 lg:px-12 py-12">
+            <div class="max-w-3xl">
+
+                <!-- Breadcrumb -->
+                <div class="flex items-center gap-2 text-sm text-gray-400 mb-8">
+                    <a href="index.html" class="hover:text-gray-600">Docs</a>
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                    <span class="text-gray-600">Generation Pipeline</span>
+                </div>
+
+                <h1 style="font-size: 2.25rem; font-weight: 700; color: #1A1A1A; margin-bottom: 0.5rem; letter-spacing: -0.02em;">Generation Pipeline</h1>
+                <p style="font-size: 1.125rem; color: #6B7280; margin-bottom: 2.5rem;">Concurrent AI workers, structured prompts, schema validation, and retry logic.</p>
+
+                <!-- Overview -->
+                <h2>Overview</h2>
+
+                <p>The generation pipeline takes a set of niches and a content schema and produces validated JSON content for each niche-subtopic combination. The pipeline runs in stages:</p>
+
+                <ol>
+                    <li><strong>Subtopic expansion</strong> &mdash; Pull subtopics from each selected niche</li>
+                    <li><strong>Deduplication</strong> &mdash; Remove overlapping subtopics across niches</li>
+                    <li><strong>Title generation</strong> &mdash; Build deterministic titles from the schema's <code>TitlePattern</code></li>
+                    <li><strong>Prompt assembly</strong> &mdash; Combine niche context, schema JSON, and prompt template</li>
+                    <li><strong>Concurrent generation</strong> &mdash; Send prompts to the AI provider in parallel</li>
+                    <li><strong>Validation</strong> &mdash; Check output against schema constraints</li>
+                    <li><strong>Retry</strong> &mdash; Re-generate failed pages with an adjusted prompt</li>
+                </ol>
+
+                <!-- Concurrent workers -->
+                <h2>Concurrent Workers</h2>
+
+                <p>The generation engine runs multiple AI requests in parallel from your local machine. Concurrency defaults to 5 workers and can be tuned with <code>--workers &lt;n&gt;</code> to stay within your AI provider's rate limits.</p>
+
+<pre><span class="function">contento</span> collections generate col_8f3a...</pre>
+
+                <!-- Prompt building -->
+                <h2>Prompt Building</h2>
+
+                <p>The AI receives a single prompt composed of three parts:</p>
+
+                <h3>1. System context (from niche)</h3>
+                <p>The niche's <code>audience</code>, <code>painPoints</code>, <code>monetization</code>, and <code>contentThatWorks</code> fields are injected to steer tone and examples.</p>
+
+                <h3>2. Prompt template (from schema)</h3>
+                <p>The schema's <code>PromptTemplate</code> contains tokens like <code>{niche}</code>, <code>{subtopic}</code>, <code>{count}</code>, and <code>{schema}</code> that are replaced with actual values.</p>
+
+                <h3>3. Schema definition</h3>
+                <p>The full <code>SchemaJson</code> is serialized and included so the AI knows the exact JSON structure to produce, including field types, array sizes, and constraints.</p>
+
+<pre><span class="comment">// Assembled prompt (simplified)</span>
+{
+  <span class="property">"system"</span>: <span class="string">"You are writing for: Software developers, DevOps engineers.
+    Key pain points: tool evaluation, integration complexity.
+    Monetization context: freemium, per-seat SaaS."</span>,
+
+  <span class="property">"user"</span>: <span class="string">"Generate a JSON object with exactly 10 creative,
+    actionable ideas about CI/CD pipelines for the Developer Tools
+    audience. Each idea must have a title (5-12 words),
+    description (50-200 chars), and difficulty (easy/medium/hard).
+    Return ONLY valid JSON matching this schema:
+    {\"type\":\"object\",\"required\":[\"intro\",\"items\",\"conclusion\"],...}"</span>
+}</pre>
+
+                <div class="callout callout-tip">
+                    <strong>Key design decision:</strong> Titles are never AI-generated. They are built deterministically from the schema's <code>TitlePattern</code> by replacing tokens. This ensures SERP-optimized titles that are predictable and consistent.
+                </div>
+
+                <!-- Schema validation -->
+                <h2>Schema Validation</h2>
+
+                <p>After the AI returns JSON, it is validated against the schema's constraints. Validation checks:</p>
+
+                <table>
+                    <thead><tr><th>Rule</th><th>Example</th><th>On Failure</th></tr></thead>
+                    <tbody>
+                        <tr><td>JSON parse</td><td>Output must be valid JSON</td><td>Retry</td></tr>
+                        <tr><td>Required fields</td><td><code>"required": ["intro", "items"]</code></td><td>Reject</td></tr>
+                        <tr><td>Exact item count</td><td><code>"exactCount": 10</code></td><td>Reject</td></tr>
+                        <tr><td>Min/max string length</td><td><code>"minLength": 50, "maxLength": 200</code></td><td>Reject</td></tr>
+                        <tr><td>Enum values</td><td><code>"enum": ["easy", "medium", "hard"]</code></td><td>Reject</td></tr>
+                        <tr><td>Array min/max</td><td><code>"min": 15, "max": 30</code></td><td>Reject</td></tr>
+                    </tbody>
+                </table>
+
+                <p>Rejected pages are queued for retry. The retry prompt includes the validation error message, which helps the AI correct its output on the second attempt.</p>
+
+                <!-- Retry logic -->
+                <h2>Retry Logic</h2>
+
+                <p>When validation fails, the engine retries once with an adjusted prompt:</p>
+
+                <ol>
+                    <li>The original prompt is resent with an additional instruction: <em>"Your previous response failed validation: [error details]. Please fix and return valid JSON."</em></li>
+                    <li>If the retry also fails, the page is marked as <code>failed</code> and logged with the validation error to <code>~/.contento/logs/</code>.</li>
+                    <li>Failed pages do not block the rest of the batch from completing.</li>
+                </ol>
+
+<pre><span class="comment"># Check generation job status</span>
+<span class="function">contento</span> collections generate col_8f3a... --json
+
+{
+  <span class="property">"jobId"</span>: <span class="string">"gen_4b7e..."</span>,
+  <span class="property">"status"</span>: <span class="string">"completed"</span>,
+  <span class="property">"total"</span>: <span class="number">48</span>,
+  <span class="property">"passed"</span>: <span class="number">46</span>,
+  <span class="property">"retried"</span>: <span class="number">4</span>,
+  <span class="property">"retriedAndPassed"</span>: <span class="number">2</span>,
+  <span class="property">"failed"</span>: <span class="number">0</span>,
+  <span class="property">"avgGenerationTimeMs"</span>: <span class="number">3200</span>
+}</pre>
+
+                <!-- SSE streaming -->
+                <h2>SSE Streaming</h2>
+
+                <p>The CLI displays a real-time progress bar during generation. For programmatic monitoring (agents, CI/CD), use the <code>--json</code> flag to get NDJSON streaming output:</p>
+
+<pre><span class="function">contento</span> collections generate col_8f3a... \
+    --schema <span class="string">"idea-list"</span> \
+    --niches <span class="string">"niche_01..."</span> \
+    --json
+
+<span class="output">{"type":"progress","current":0,"total":48,"done":false}</span>
+<span class="output">{"type":"progress","current":5,"total":48,"done":false}</span>
+<span class="output">{"type":"progress","current":22,"total":48,"done":false}</span>
+<span class="output">{"type":"progress","current":48,"total":48,"done":true}</span></pre>
+
+                <p>Event types:</p>
+
+                <table>
+                    <thead><tr><th>Event Type</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>progress</code></td><td>Overall job progress with completed/total counts</td></tr>
+                        <tr><td><code>page</code></td><td>Individual page result (passed, retried, or failed)</td></tr>
+                        <tr><td><code>done</code></td><td>Job complete with final tallies</td></tr>
+                        <tr><td><code>error</code></td><td>Fatal error that stopped the job</td></tr>
+                    </tbody>
+                </table>
+
+                <!-- CLI Reference -->
+                <h2>CLI Commands</h2>
+
+                <table>
+                    <thead><tr><th>Command</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>contento collections generate</code></td><td>Create a collection and start generation</td></tr>
+                        <tr><td><code>contento collections list</code></td><td>List collections and their status</td></tr>
+                        <tr><td><code>contento publish</code></td><td>Publish generated pages</td></tr>
+                    </tbody>
+                </table>
+
+                <p>See the <a href="cli.html" style="color: #3D5A80; font-weight: 500;">CLI reference</a> for all available flags and options.</p>
+
+            </div>
+        </main>
+    </div>
+
+    <%footer-docs%>
+
+</body>
+</html>

@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Niche Taxonomy — Contento pSEO</title>
+    <meta name="description" content="Explore the 150 built-in niches across 8 categories, understand niche context structure, and create custom niches for targeted programmatic SEO." />
+    <script type="module" src="/src/main.js"></script>
+</head>
+<body class="bg-white text-gray-900 antialiased" x-data="{ mobileMenuOpen: false }">
+
+    <%nav-docs%>
+
+    <div class="max-w-[90rem] mx-auto flex">
+        <%sidebar-docs%>
+
+        <main class="flex-1 min-w-0 px-4 sm:px-6 lg:px-12 py-12">
+            <div class="max-w-3xl">
+
+                <!-- Breadcrumb -->
+                <div class="flex items-center gap-2 text-sm text-gray-400 mb-8">
+                    <a href="index.html" class="hover:text-gray-600">Docs</a>
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                    <span class="text-gray-600">Niche Taxonomy</span>
+                </div>
+
+                <h1 style="font-size: 2.25rem; font-weight: 700; color: #1A1A1A; margin-bottom: 0.5rem; letter-spacing: -0.02em;">Niche Taxonomy</h1>
+                <p style="font-size: 1.125rem; color: #6B7280; margin-bottom: 2.5rem;">Target the right audience with structured niche context that guides AI generation.</p>
+
+                <!-- What is a niche -->
+                <h2>What Is a Niche Taxonomy?</h2>
+
+                <p>A <strong>niche</strong> in Contento pSEO is a structured topic definition that tells the AI generator exactly who the
+                target audience is, what problems they face, how they monetize, and what subtopics to cover. Niches are the vertical axis
+                of the content matrix: when you create a collection, the engine cross-multiplies your chosen niches with the content schema
+                to produce unique pages for each niche + subtopic combination.</p>
+
+                <p>A well-defined niche ensures that generated content is specific, relevant, and keyword-targeted rather than generic.
+                The niche context is injected directly into the AI prompt, steering tone, examples, and recommendations toward the
+                correct audience.</p>
+
+                <!-- The 8 categories -->
+                <h2>The 8 Niche Categories</h2>
+
+                <p>Contento ships with 150 niches organized into 8 top-level categories:</p>
+
+                <table>
+                    <thead><tr><th>Category</th><th>Example Niches</th><th>Count</th></tr></thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Software / SaaS</strong></td>
+                            <td>Developer Tools, Project Management, CRM, DevOps, API Platforms</td>
+                            <td>~25</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Content Creation</strong></td>
+                            <td>Blogging, Podcasting, Video Production, Newsletter Growth, Social Media</td>
+                            <td>~20</td>
+                        </tr>
+                        <tr>
+                            <td><strong>E-Commerce</strong></td>
+                            <td>Dropshipping, Print on Demand, Amazon FBA, Shopify Apps, Marketplace Selling</td>
+                            <td>~20</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Professional Services</strong></td>
+                            <td>Legal Tech, Accounting SaaS, HR Platforms, Consulting Tools, Freelancing</td>
+                            <td>~18</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Health &amp; Wellness</strong></td>
+                            <td>Fitness Apps, Telehealth, Mental Health, Nutrition Tracking, Sleep Tech</td>
+                            <td>~18</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Finance</strong></td>
+                            <td>Personal Finance, Crypto, Investing Platforms, Insurtech, Neobanking</td>
+                            <td>~18</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Education</strong></td>
+                            <td>EdTech, Online Courses, Language Learning, Coding Bootcamps, LMS Platforms</td>
+                            <td>~16</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Local Business</strong></td>
+                            <td>Restaurants, Real Estate, Home Services, Auto Repair, Salons &amp; Spas</td>
+                            <td>~15</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <!-- Niche context structure -->
+                <h2>Niche Context Structure</h2>
+
+                <p>Each niche stores a <code>context</code> JSON object with these fields, which are injected into the AI prompt during generation:</p>
+
+                <table>
+                    <thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>audience</code></td><td>string</td><td>Who the content is for (e.g., "SaaS founders and product managers")</td></tr>
+                        <tr><td><code>pain_points</code></td><td>string[]</td><td>Top 3-5 problems the audience faces</td></tr>
+                        <tr><td><code>monetization</code></td><td>string[]</td><td>How products in this niche make money (e.g., "freemium", "per-seat SaaS")</td></tr>
+                        <tr><td><code>content_that_works</code></td><td>string[]</td><td>Content formats that perform well (e.g., "comparison posts", "tool roundups")</td></tr>
+                        <tr><td><code>subtopics</code></td><td>string[]</td><td>10-30 specific subtopics for cross-product expansion</td></tr>
+                    </tbody>
+                </table>
+
+                <!-- System vs custom -->
+                <h2>System Niches vs. Custom Niches</h2>
+
+                <p>The 150 built-in niches are <strong>system niches</strong> &mdash; read-only, maintained by Contento, and updated with new releases.
+                You can use them as-is or fork them for customization.</p>
+
+                <ul>
+                    <li><strong>System niches</strong> &mdash; Pre-defined, read-only. Updated automatically on upgrade.</li>
+                    <li><strong>Custom niches</strong> &mdash; Created by you. Full control over all fields including context.</li>
+                    <li><strong>Forked niches</strong> &mdash; A copy of a system niche that you can edit. The original is preserved.</li>
+                </ul>
+
+                <!-- Forking -->
+                <h2>Forking a Niche</h2>
+
+                <p>To customize a system niche without losing the original, run <code>contento niches fork &lt;id&gt;</code>. A new custom niche is created with the same context data; edit it with <code>contento niches edit</code> and reference it by its new ID in your collections.</p>
+
+<pre><span class="prompt">$</span> <span class="function">contento</span> niches fork niche_01... --name <span class="string">"My DevTools"</span>
+<span class="output">  &#10003; Forked "Developer Tools" as "My DevTools" (niche_4f2a...)</span>
+
+<span class="prompt">$</span> <span class="function">contento</span> niches edit niche_4f2a... --add-subtopic <span class="string">"WASM toolchains"</span>
+<span class="output">  &#10003; Subtopic added (21 total)</span></pre>
+
+                <p>Custom niches are stored locally in <code>~/.contento/niches/</code> as plain JSON &mdash; you can edit the files directly or commit them to a repo for team use.</p>
+
+                <!-- Creating custom -->
+                <h2>Creating a Custom Niche</h2>
+
+                <p>Create a niche from scratch via the CLI:</p>
+
+<pre><span class="comment"># Create a custom niche via the CLI</span>
+<span class="function">contento</span> niches list --category <span class="string">"Software"</span>
+<span class="function">contento</span> niches fork --id niche_01... --name <span class="string">"Custom DevTools"</span>
+
+<span class="comment"># Full niche JSON structure (shown with --json flag):</span>
+<span class="function">contento</span> niches list --id niche_01... --json
+
+{
+    "name": "Developer Tools",
+    "slug": "developer-tools",
+    "category": "Software / SaaS",
+    "context": {
+      "audience": "Software developers, DevOps engineers, and engineering managers building production applications",
+      "pain_points": [
+        "Too many tools with overlapping features",
+        "Difficulty evaluating tools without lengthy trials",
+        "Integration complexity across the development stack",
+        "Cost justification to management for developer tooling",
+        "Keeping up with the rapidly evolving ecosystem"
+      ],
+      "monetization": [
+        "Freemium with usage-based pricing",
+        "Per-seat SaaS subscriptions",
+        "Open-source with paid cloud hosting",
+        "Enterprise license tiers"
+      ],
+      "content_that_works": [
+        "Tool comparison posts (X vs Y)",
+        "Curated best-of lists by use case",
+        "Getting started tutorials",
+        "Integration guides",
+        "Annual state-of-the-ecosystem roundups"
+      ],
+      "subtopics": [
+        "API testing tools",
+        "CI/CD pipelines",
+        "code review platforms",
+        "container orchestration",
+        "database management tools",
+        "debugging tools",
+        "dependency management",
+        "feature flag platforms",
+        "IDE extensions",
+        "infrastructure as code",
+        "logging and monitoring",
+        "low-code development",
+        "open source alternatives",
+        "performance profiling",
+        "secret management",
+        "serverless frameworks",
+        "static analysis tools",
+        "terminal emulators",
+        "version control hosting",
+        "workflow automation"
+      ]
+    }
+  }</pre>
+
+                <!-- Example JSON -->
+                <h2>Example: Full Niche JSON</h2>
+
+                <p>Here is the complete structure of the <strong>Developer Tools</strong> system niche as returned by the API:</p>
+
+<pre>{
+  <span class="property">"id"</span>: <span class="string">"a1b2c3d4-e5f6-7890-abcd-ef1234567890"</span>,
+  <span class="property">"name"</span>: <span class="string">"Developer Tools"</span>,
+  <span class="property">"slug"</span>: <span class="string">"developer-tools"</span>,
+  <span class="property">"category"</span>: <span class="string">"Software / SaaS"</span>,
+  <span class="property">"isSystem"</span>: <span class="keyword">true</span>,
+  <span class="property">"context"</span>: {
+    <span class="property">"audience"</span>: <span class="string">"Software developers, DevOps engineers, and engineering managers"</span>,
+    <span class="property">"pain_points"</span>: [
+      <span class="string">"Too many tools with overlapping features"</span>,
+      <span class="string">"Difficulty evaluating tools without lengthy trials"</span>,
+      <span class="string">"Integration complexity across the development stack"</span>,
+      <span class="string">"Cost justification to management for developer tooling"</span>,
+      <span class="string">"Keeping up with the rapidly evolving ecosystem"</span>
+    ],
+    <span class="property">"monetization"</span>: [
+      <span class="string">"Freemium with usage-based pricing"</span>,
+      <span class="string">"Per-seat SaaS subscriptions"</span>,
+      <span class="string">"Open-source with paid cloud hosting"</span>,
+      <span class="string">"Enterprise license tiers"</span>
+    ],
+    <span class="property">"content_that_works"</span>: [
+      <span class="string">"Tool comparison posts"</span>,
+      <span class="string">"Curated best-of lists"</span>,
+      <span class="string">"Getting started tutorials"</span>,
+      <span class="string">"Integration guides"</span>
+    ],
+    <span class="property">"subtopics"</span>: [
+      <span class="string">"API testing tools"</span>,
+      <span class="string">"CI/CD pipelines"</span>,
+      <span class="string">"code review platforms"</span>,
+      <span class="string">"container orchestration"</span>,
+      <span class="string">"database management tools"</span>,
+      <span class="string">"debugging tools"</span>,
+      <span class="string">"dependency management"</span>,
+      <span class="string">"feature flag platforms"</span>,
+      <span class="string">"IDE extensions"</span>,
+      <span class="string">"infrastructure as code"</span>,
+      <span class="string">"logging and monitoring"</span>,
+      <span class="string">"low-code development"</span>,
+      <span class="string">"open source alternatives"</span>,
+      <span class="string">"performance profiling"</span>,
+      <span class="string">"secret management"</span>,
+      <span class="string">"serverless frameworks"</span>,
+      <span class="string">"static analysis tools"</span>,
+      <span class="string">"terminal emulators"</span>,
+      <span class="string">"version control hosting"</span>,
+      <span class="string">"workflow automation"</span>
+    ]
+  },
+  <span class="property">"createdAt"</span>: <span class="string">"2026-01-15T00:00:00Z"</span>,
+  <span class="property">"updatedAt"</span>: <span class="string">"2026-01-15T00:00:00Z"</span>
+}</pre>
+
+                <!-- CLI Reference -->
+                <h2>CLI Commands</h2>
+
+                <table>
+                    <thead><tr><th>Command</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>contento niches list</code></td><td>List all niches (filterable by --category, --search)</td></tr>
+                        <tr><td><code>contento niches view &lt;id&gt;</code></td><td>View niche details with full context</td></tr>
+                        <tr><td><code>contento niches fork &lt;id&gt;</code></td><td>Fork a system niche for customization</td></tr>
+                        <tr><td><code>contento niches create</code></td><td>Create a custom niche</td></tr>
+                        <tr><td><code>contento niches edit &lt;id&gt;</code></td><td>Edit a niche (subtopics, keywords, audience)</td></tr>
+                        <tr><td><code>contento niches select</code></td><td>Interactively browse and select niches</td></tr>
+                    </tbody>
+                </table>
+
+                <p>See the <a href="cli.html" style="color: #3D5A80; font-weight: 500;">CLI reference</a> for all available flags and options.</p>
+
+            </div>
+        </main>
+    </div>
+
+    <%footer-docs%>
+
+</body>
+</html>

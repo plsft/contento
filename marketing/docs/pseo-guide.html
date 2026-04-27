@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>pSEO Strategy Guide — Contento Docs</title>
+    <meta name="description" content="End-to-end programmatic SEO strategy guide. From niche selection to content generation to GSC monitoring. Practical advice for scaling traffic with Contento." />
+    <script type="module" src="/src/main.js"></script>
+</head>
+<body class="bg-white text-gray-900 antialiased" x-data="{ mobileMenuOpen: false }">
+
+    <%nav-docs%>
+
+    <div class="max-w-[90rem] mx-auto flex">
+        <%sidebar-docs%>
+
+        <main class="flex-1 min-w-0 px-4 sm:px-6 lg:px-12 py-12">
+            <div class="max-w-3xl">
+
+                <!-- Breadcrumb -->
+                <div class="flex items-center gap-2 text-sm text-gray-400 mb-8">
+                    <a href="index.html" class="hover:text-gray-600">Docs</a>
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                    <span class="text-gray-600">pSEO Guide</span>
+                </div>
+
+                <h1 style="font-size: 2.25rem; font-weight: 700; color: #1A1A1A; margin-bottom: 0.5rem; letter-spacing: -0.02em;">pSEO Strategy Guide</h1>
+                <p style="font-size: 1.125rem; color: #6B7280; margin-bottom: 2.5rem;">A practical, end-to-end guide to building and scaling a programmatic SEO operation.</p>
+
+                <!-- What is pSEO -->
+                <h2>What Is Programmatic SEO?</h2>
+
+                <p>Programmatic SEO (pSEO) is the practice of generating hundreds or thousands of search-optimized pages from structured data and templates. Instead of writing individual articles, you define a <strong>content schema</strong> (the page structure) and a <strong>niche taxonomy</strong> (the topic matrix), then cross-multiply them to produce unique pages at scale.</p>
+
+                <p>Done well, pSEO captures long-tail search traffic that manual content teams cannot reach. Each page targets a specific keyword combination (e.g., "100 CI/CD pipeline ideas for 2026") with validated, schema-consistent content.</p>
+
+                <p>Done poorly, pSEO produces thin, repetitive pages that Google penalizes. The difference is <strong>content quality</strong> and <strong>structural uniqueness</strong> &mdash; which is exactly what Contento's schema validation and niche context system are designed to ensure.</p>
+
+                <p>The core rule of safe pSEO: <strong>build pages that are useful because they exist, not pages that exist only because they can rank.</strong> Google's current position is clear &mdash; automation and AI are not the issue. The issue is scaled content created primarily to manipulate search rankings. If every page you publish genuinely helps someone answer a question or make a decision, the method of production is irrelevant. If pages exist only to cover keyword permutations, no amount of technical SEO will protect them.</p>
+
+                <!-- Phase 1: Niche selection -->
+                <h2>Phase 1: Niche Selection</h2>
+
+                <p>Your niche choices determine everything: the audience, the traffic ceiling, the competition level, and the monetization potential. Start with these criteria:</p>
+
+                <h3>Traffic potential</h3>
+                <p>Use Google Keyword Planner, Ahrefs, or SEMrush to estimate search volume for your target keyword patterns. Focus on niches where the long-tail (e.g., "best [subtopic] tools for [audience]") has consistent monthly volume.</p>
+
+                <h3>Competition level</h3>
+                <p>Check the top 10 results for your target keywords. If the results are dominated by high-authority sites with hand-written content, you need more pages to compete. If the results show weak content (forums, thin listicles), there is an opening.</p>
+
+                <h3>Audience alignment</h3>
+                <p>Your pSEO pages should attract visitors who are relevant to your business. There is no value in traffic from an audience you cannot monetize.</p>
+
+                <div class="callout callout-tip">
+                    <strong>Start narrow.</strong> Pick 2&ndash;3 niches for your first project. Generate 50&ndash;100 pages, monitor indexing and traffic for 2&ndash;4 weeks, then expand to more niches. Broad launches (500+ pages on day one) often get slower indexing. Most importantly, every page you generate should answer a <strong>distinct query</strong> with meaningful unique value &mdash; if two pages would satisfy the same search intent, merge them into one.
+                </div>
+
+<pre><span class="comment"># Browse niches to find your starting point</span>
+<span class="prompt">$</span> <span class="function">contento</span> niches list --category <span class="string">"Technology"</span>
+
+<span class="comment"># Get full context for a niche you are considering</span>
+<span class="prompt">$</span> <span class="function">contento</span> niches view niche_01... --json
+
+<span class="comment"># Check subtopics — these become your page titles</span>
+<span class="comment"># A niche with 20 subtopics × 1 schema = 20 pages</span>
+<span class="comment"># 3 niches × 16 subtopics × 2 schemas = 96 pages</span></pre>
+
+                <!-- Phase 2: Schema strategy -->
+                <h2>Phase 2: Schema Strategy</h2>
+
+                <p>Not all content types perform equally across all niches. Choose schemas that match your niche's search intent:</p>
+
+                <table>
+                    <thead><tr><th>Search Intent</th><th>Best Schemas</th><th>Example Keywords</th></tr></thead>
+                    <tbody>
+                        <tr>
+                            <td>Inspiration / discovery</td>
+                            <td>Idea List, Resource List</td>
+                            <td>"project management ideas", "best free tools"</td>
+                        </tr>
+                        <tr>
+                            <td>Decision making</td>
+                            <td>Comparison, Alternatives</td>
+                            <td>"Jira vs Asana", "Slack alternatives"</td>
+                        </tr>
+                        <tr>
+                            <td>Learning / how-to</td>
+                            <td>How-To Guide, Checklist</td>
+                            <td>"how to set up CI/CD", "remote work checklist"</td>
+                        </tr>
+                        <tr>
+                            <td>Quick answers</td>
+                            <td>FAQ, Glossary</td>
+                            <td>"what is Kubernetes", "DevOps FAQ"</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <p><strong>Multi-schema strategy:</strong> For each niche, generate pages with 2&ndash;3 different schemas. This lets you target different keyword patterns from the same niche. An "idea list" page and a "checklist" page about the same subtopic target different search intents and do not compete with each other.</p>
+
+                <!-- Phase 3: Content quality -->
+                <h2>Phase 3: Content Quality</h2>
+
+                <p>The biggest risk in pSEO is producing thin, generic content. Contento mitigates this through structured schemas and niche context, but you can further improve quality:</p>
+
+                <h3>Niche context depth</h3>
+                <p>The richer your niche context, the better the AI output. Fork system niches and add specific audience details, industry terminology, and concrete examples. A niche with 3 pain points produces more generic content than one with 8 specific pain points.</p>
+
+                <h3>Schema constraints</h3>
+                <p>Set tight validation constraints. Require minimum string lengths (50+ characters per item description), exact item counts, and specific enum values. Loose constraints produce shallow content.</p>
+
+                <h3>Post-generation review</h3>
+                <p>Use manual publish mode for your first few batches. Review the generated pages and look for patterns: Are descriptions too generic? Are examples relevant to the audience? Adjust the niche context and schema constraints based on what you find.</p>
+
+                <h3>The safety test</h3>
+                <p>Before publishing any batch, run every page through these four questions:</p>
+                <ol>
+                    <li><strong>What is unique here besides the keyword?</strong> &mdash; If you swap the keyword and the page reads identically, it has no real value.</li>
+                    <li><strong>What would a user lose if this page did not exist?</strong> &mdash; If the answer is "nothing", do not publish it.</li>
+                    <li><strong>Could this page be the best result for that exact query?</strong> &mdash; If not, improve it until it can be, or skip the query entirely.</li>
+                    <li><strong>Is this a destination, or just a doorway?</strong> &mdash; A useful page answers the query on the page itself. A doorway page exists only to funnel users somewhere else.</li>
+                </ol>
+
+                <h3>Pruning rules</h3>
+                <p>Not every generated page deserves to be published. Apply <code>noindex</code>, merge into a stronger page, or do not publish at all if any of the following are true:</p>
+                <ul>
+                    <li>The page is <strong>mostly template text</strong> &mdash; the unique content is a small fraction of the total word count.</li>
+                    <li>The <strong>unique content is trivial</strong> &mdash; a swapped keyword, a single changed sentence, or a reshuffled list.</li>
+                    <li><strong>Multiple pages satisfy the same intent</strong> &mdash; consolidate them into one comprehensive page.</li>
+                    <li>The page <strong>exists mainly to capture keyword variants</strong> rather than to help a reader.</li>
+                </ul>
+
+                <!-- Phase 4: Publishing strategy -->
+                <h2>Phase 4: Publishing Strategy</h2>
+
+                <p>How you publish matters as much as what you publish. Google's crawling and indexing behavior responds to how quickly new pages appear.</p>
+
+                <h3>Progressive rollout</h3>
+                <p>Do not publish 1,000 pages on day one. Use batched publishing to release 25&ndash;50 pages at a time. Wait 3&ndash;5 days between batches and monitor indexing via Google Search Console.</p>
+
+<pre><span class="comment"># First batch: 25 pages</span>
+<span class="prompt">$</span> <span class="function">contento</span> publish col_9d2f... \
+    --mode batched \
+    --batch-size 25
+
+<span class="comment"># Wait 3-5 days, check indexing</span>
+<span class="prompt">$</span> <span class="function">contento</span> analytics top-pages proj_8f3a... --limit 10
+
+<span class="comment"># If pages are being indexed, publish the next batch</span>
+<span class="prompt">$</span> <span class="function">contento</span> publish col_9d2f... --mode batched --batch-size 25</pre>
+
+                <h3>Indexing signals</h3>
+                <p>After publishing, submit your sitemap to Google Search Console. Contento auto-rebuilds the sitemap on every publish, but you should verify it is submitted:</p>
+
+                <ol>
+                    <li>Go to Google Search Console</li>
+                    <li>Navigate to <strong>Sitemaps</strong></li>
+                    <li>Submit <code>https://example.com/articles/sitemap.xml</code></li>
+                    <li>Monitor the "Discovered" and "Indexed" counts</li>
+                </ol>
+
+                <!-- Phase 5: Monitoring -->
+                <h2>Phase 5: GSC Monitoring</h2>
+
+                <p>Connect Google Search Console to Contento for automated daily data syncing. The analytics dashboard surfaces actionable insights:</p>
+
+                <h3>Key metrics to watch</h3>
+
+                <table>
+                    <thead><tr><th>Metric</th><th>What It Tells You</th><th>Action</th></tr></thead>
+                    <tbody>
+                        <tr>
+                            <td>Indexed pages</td>
+                            <td>How many pages Google has crawled and included in search</td>
+                            <td>If index rate is low (&lt;80%), slow down publishing and improve internal linking</td>
+                        </tr>
+                        <tr>
+                            <td>Clicks per page</td>
+                            <td>Which pages are generating traffic</td>
+                            <td>Double down on schemas and niches that produce high-click pages</td>
+                        </tr>
+                        <tr>
+                            <td>Average position</td>
+                            <td>Where your pages rank in search results</td>
+                            <td>Pages in positions 5&ndash;15 are "striking distance" &mdash; improve their content to push higher</td>
+                        </tr>
+                        <tr>
+                            <td>CTR</td>
+                            <td>How compelling your title and meta description are</td>
+                            <td>Low CTR with high impressions = improve title/meta desc pattern</td>
+                        </tr>
+                        <tr>
+                            <td>Zero-traffic pages</td>
+                            <td>Pages with no clicks after 30 days</td>
+                            <td>Consider unpublishing or regenerating with a different schema</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+<pre><span class="comment"># Niche performance breakdown</span>
+<span class="prompt">$</span> <span class="function">contento</span> analytics summary proj_8f3a... --json
+
+{
+  <span class="property">"totalClicks"</span>: <span class="number">11520</span>,
+  <span class="property">"totalImpressions"</span>: <span class="number">191000</span>,
+  <span class="property">"avgPosition"</span>: <span class="number">16.2</span>,
+  <span class="property">"avgCtr"</span>: <span class="number">0.060</span>,
+  <span class="property">"indexedPages"</span>: <span class="number">82</span>,
+  <span class="property">"totalPages"</span>: <span class="number">84</span>
+}</pre>
+
+                <!-- Phase 6: Iteration -->
+                <h2>Phase 6: Iteration</h2>
+
+                <p>pSEO is not a "set and forget" strategy. The best results come from iterating based on data:</p>
+
+                <ol>
+                    <li><strong>Expand winning niches</strong> &mdash; If "Developer Tools" pages get 3x the traffic of "DevOps" pages, fork the DevTools niche and add more subtopics</li>
+                    <li><strong>Switch schemas for underperformers</strong> &mdash; If idea lists are not ranking in a niche, try comparisons or FAQs instead</li>
+                    <li><strong>Prune zero-traffic pages</strong> &mdash; Pages with zero clicks after 60 days are hurting your crawl budget and diluting site quality. Mark them <code>noindex</code>, merge their content into a stronger related page, or remove them entirely. Simply unpublishing is not enough if Google has already indexed low-quality URLs</li>
+                    <li><strong>Refresh stale content</strong> &mdash; Re-generate pages from last year with updated year tokens and new AI output</li>
+                    <li><strong>Add custom niches</strong> &mdash; As you learn your audience, create custom niches with hyper-specific context</li>
+                </ol>
+
+<pre><span class="comment"># Find zero-traffic pages</span>
+<span class="prompt">$</span> <span class="function">contento</span> analytics zero-traffic proj_8f3a...
+
+<span class="comment"># Export analytics data for external analysis</span>
+<span class="prompt">$</span> <span class="function">contento</span> analytics export proj_8f3a... > analytics.csv</pre>
+
+                <!-- Common mistakes -->
+                <h2>Common Mistakes</h2>
+
+                <table>
+                    <thead><tr><th>Mistake</th><th>Consequence</th><th>Solution</th></tr></thead>
+                    <tbody>
+                        <tr>
+                            <td>Publishing 1,000+ pages on day one</td>
+                            <td>Slow indexing, potential quality penalty</td>
+                            <td>Use batched publishing, 25&ndash;50 pages per batch</td>
+                        </tr>
+                        <tr>
+                            <td>Using generic niche context</td>
+                            <td>Thin, non-specific content</td>
+                            <td>Fork niches and add detailed audience, pain points, examples</td>
+                        </tr>
+                        <tr>
+                            <td>No internal linking</td>
+                            <td>Orphaned pages, wasted crawl budget</td>
+                            <td>Contento handles this automatically, but verify with link stats</td>
+                        </tr>
+                        <tr>
+                            <td>Ignoring GSC data</td>
+                            <td>Cannot identify what works or what to fix</td>
+                            <td>Connect GSC, check analytics weekly, iterate</td>
+                        </tr>
+                        <tr>
+                            <td>Too many schemas per niche</td>
+                            <td>Pages compete with each other for the same keywords</td>
+                            <td>Stick to 2&ndash;3 schemas per niche with different search intents</td>
+                        </tr>
+                        <tr>
+                            <td>Using subdomains for pSEO content</td>
+                            <td>Tell-tale sign of pSEO, subdomain doesn't inherit root domain authority</td>
+                            <td>Use on-domain paths (<code>/articles/</code>, <code>/resources/</code>) instead</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <!-- Summary -->
+                <h2>Summary</h2>
+
+                <p>The pSEO workflow in Contento follows a cycle:</p>
+
+                <ol>
+                    <li><strong>Select</strong> niches with traffic potential and audience alignment</li>
+                    <li><strong>Choose</strong> schemas that match search intent for your niches</li>
+                    <li><strong>Generate</strong> pages with rich niche context and strict validation</li>
+                    <li><strong>Publish</strong> progressively in batches of 25&ndash;50</li>
+                    <li><strong>Monitor</strong> indexing, clicks, and positions via GSC</li>
+                    <li><strong>Iterate</strong> &mdash; expand winners, switch underperformers, prune dead weight</li>
+                </ol>
+
+                <p>For technical implementation details, see <a href="generation.html" style="color: #3D5A80; font-weight: 500;">Generation Pipeline</a> and <a href="publishing.html" style="color: #3D5A80; font-weight: 500;">Publishing</a>.</p>
+
+            </div>
+        </main>
+    </div>
+
+    <%footer-docs%>
+
+</body>
+</html>

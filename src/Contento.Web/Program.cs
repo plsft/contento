@@ -160,6 +160,20 @@ try
     builder.Services.AddScoped<IShortcodeProcessor, ShortcodeProcessor>();
     builder.Services.AddSingleton<IPostLockService, PostLockService>();
 
+    // --- pSEO Engine Services ---
+    builder.Services.AddScoped<IPseoProjectService, PseoProjectService>();
+    builder.Services.AddScoped<INicheService, NicheService>();
+    builder.Services.AddScoped<IContentSchemaService, ContentSchemaService>();
+    builder.Services.AddScoped<ICollectionService, CollectionService>();
+    builder.Services.AddScoped<IPseoPageService, PseoPageService>();
+    builder.Services.AddScoped<ISchemaValidationService, SchemaValidationService>();
+    builder.Services.AddScoped<IPromptBuilderService, PromptBuilderService>();
+    builder.Services.AddScoped<IGenerationService, GenerationService>();
+    builder.Services.AddScoped<IPublishService, PublishService>();
+    builder.Services.AddScoped<IPseoRendererService, PseoRendererService>();
+    builder.Services.AddScoped<IPseoAnalyticsService, PseoAnalyticsService>();
+    builder.Services.AddScoped<IInternalLinkingService, InternalLinkingService>();
+
     // --- Plugin Runtime (singleton — engines persist across requests) ---
     builder.Services.AddSingleton<IPluginRuntime>(sp =>
     {
@@ -168,8 +182,18 @@ try
         return new PluginHost(logger, pluginService);
     });
 
+    // --- pSEO Configuration ---
+    builder.Services.Configure<PseoOptions>(builder.Configuration.GetSection("Pseo"));
+
     // --- Task Scheduler Background Service (replaces ScheduledPublishingService) ---
     builder.Services.AddHostedService<TaskSchedulerBackgroundService>();
+    builder.Services.AddHostedService<PseoPublishBackgroundService>();
+
+    // --- GSC Sync Background Service (daily Google Search Console data sync) ---
+    builder.Services.AddHostedService<GscSyncBackgroundService>();
+
+    // --- DNS Verification Background Service (pSEO CNAME checking) ---
+    builder.Services.AddHostedService<DnsVerificationBackgroundService>();
 
     // --- AI Gateway (BYOK) ---
     builder.Services.AddHttpClient();
@@ -381,6 +405,7 @@ try
     {
         ForwardedHeaders = Microsoft.AspNetCore.HttpOverrides.ForwardedHeaders.XForwardedFor
                          | Microsoft.AspNetCore.HttpOverrides.ForwardedHeaders.XForwardedProto
+                         | Microsoft.AspNetCore.HttpOverrides.ForwardedHeaders.XForwardedHost
     });
 
     if (!app.Environment.IsDevelopment())
@@ -396,6 +421,9 @@ try
 
     // Site resolution middleware (before routing)
     app.UseSiteResolution();
+
+    // pSEO subdomain middleware (after site resolution, before redirects)
+    app.UsePseoMiddleware();
 
     // 301/302 redirect middleware (after site resolution, before routing)
     app.UseRedirectMiddleware();

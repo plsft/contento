@@ -1,0 +1,506 @@
+@page "/admin/pseo/onboarding"
+@model Contento.Web.Pages.Admin.Pseo.OnboardingModel
+@{
+    ViewData["Title"] = "pSEO Setup Wizard";
+}
+
+<div class="max-w-4xl mx-auto" x-data="onboardingWizard()">
+    <!-- Header -->
+    <div class="flex items-center justify-between mb-6">
+        <div class="flex items-center gap-2">
+            <a href="/admin/pseo" class="text-sm" style="color: var(--color-ash);">pSEO</a>
+            <span style="color: var(--color-cloud);">/</span>
+            <h2 class="text-xl font-semibold" style="color: var(--color-ink);">Setup Wizard</h2>
+        </div>
+    </div>
+
+    <!-- Step Indicators -->
+    <div class="flex items-center gap-2 mb-8">
+        @for (var i = 1; i <= 8; i++)
+        {
+            var step = i;
+            <button type="button" @@click="goToStep(@step)"
+                    :class="currentStep === @step ? 'bg-[var(--color-indigo)] text-white' : currentStep > @step ? 'bg-green-100 text-green-700' : 'bg-[var(--color-mist)] text-[var(--color-ash)]'"
+                    class="w-8 h-8 rounded-full text-sm font-medium flex items-center justify-center transition-colors"
+                    :disabled="@step > maxReachedStep">
+                @step
+            </button>
+            @if (i < 8)
+            {
+                <div class="flex-1 h-0.5" :class="currentStep > @step ? 'bg-green-300' : 'bg-[var(--color-mist)]'"
+                     style="max-width: 3rem;"></div>
+            }
+        }
+    </div>
+
+    <!-- Error message -->
+    @if (Model.ErrorMessage != null)
+    {
+        <div class="mb-4 p-4 rounded-lg bg-red-50 border border-red-200 text-red-800 text-sm">
+            @Model.ErrorMessage
+        </div>
+    }
+
+    <form method="post" id="onboardingForm">
+        <!-- Step 1: Welcome -->
+        <div x-show="currentStep === 1">
+            <div class="card text-center py-16">
+                <div class="w-16 h-16 mx-auto mb-6 rounded-2xl flex items-center justify-center" style="background: var(--color-indigo-pale);">
+                    <svg class="w-8 h-8" style="color: var(--color-indigo);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                    </svg>
+                </div>
+                <h1 class="text-3xl font-bold mb-4" style="color: var(--color-ink);">
+                    Generate thousands of SEO pages for your site.
+                </h1>
+                <p class="text-lg mb-2" style="color: var(--color-ash);">
+                    No infrastructure required.
+                </p>
+                <p class="text-sm mb-8" style="color: var(--color-cloud);">
+                    In a few steps you will set up a project, pick your niches, choose content types, and launch generation.
+                </p>
+                <button type="button" @@click="nextStep()" class="btn btn-primary text-lg px-8 py-3">
+                    Get Started
+                    <svg class="w-5 h-5 ml-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5l7 7-7 7"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Step 2: Create Project -->
+        <div x-show="currentStep === 2" x-cloak>
+            <div class="card">
+                <h3 class="text-lg font-semibold mb-6" style="color: var(--color-ink);">Create Your Project</h3>
+                <div class="space-y-4">
+                    <div>
+                        <label class="form-label">Project Name</label>
+                        <input type="text" name="ProjectName" x-model="projectName" class="form-input"
+                               placeholder="e.g. WorkTale Resources" required />
+                    </div>
+                    <div>
+                        <label class="form-label">Root Domain</label>
+                        <input type="text" name="RootDomain" x-model="rootDomain" class="form-input"
+                               placeholder="e.g. worktale.org" required />
+                    </div>
+                    <div>
+                        <label class="form-label">Subdomain Prefix</label>
+                        <div class="flex gap-2 items-center">
+                            <select name="SubdomainPrefix" x-model="subdomainPrefix" class="form-input max-w-xs"
+                                    @@change="if ($event.target.value === 'custom') customSubdomain = true; else customSubdomain = false;">
+                                <option value="articles">articles</option>
+                                <option value="resources">resources</option>
+                                <option value="help">help</option>
+                                <option value="tools">tools</option>
+                                <option value="guides">guides</option>
+                                <option value="custom">Custom...</option>
+                            </select>
+                            <template x-if="customSubdomain">
+                                <input type="text" name="SubdomainPrefix" x-model="subdomainPrefix" class="form-input max-w-xs"
+                                       placeholder="your-prefix" />
+                            </template>
+                        </div>
+                    </div>
+
+                    <!-- Preview -->
+                    <div class="rounded-lg p-4 mt-4" style="background: var(--color-paper); border: 1px solid var(--color-mist);">
+                        <p class="text-xs font-medium mb-2" style="color: var(--color-ash);">Your site will be at:</p>
+                        <p class="text-lg font-semibold" style="color: var(--color-indigo);"
+                           x-text="subdomainPrefix + '.' + (rootDomain || 'example.com')"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 3: DNS Setup -->
+        <div x-show="currentStep === 3" x-cloak>
+            <div class="card">
+                <h3 class="text-lg font-semibold mb-6" style="color: var(--color-ink);">DNS Configuration</h3>
+                <p class="text-sm mb-4" style="color: var(--color-ash);">
+                    Add this CNAME record to your DNS provider to point your subdomain to Contento.
+                </p>
+
+                <div class="rounded-lg p-4 mb-6" style="background: var(--color-paper); border: 1px solid var(--color-mist);">
+                    <div class="grid grid-cols-3 gap-4 text-sm">
+                        <div>
+                            <p class="font-medium mb-1" style="color: var(--color-ash);">Type</p>
+                            <p class="font-mono" style="color: var(--color-ink);">CNAME</p>
+                        </div>
+                        <div>
+                            <p class="font-medium mb-1" style="color: var(--color-ash);">Name</p>
+                            <p class="font-mono" style="color: var(--color-ink);" x-text="subdomainPrefix"></p>
+                        </div>
+                        <div>
+                            <p class="font-medium mb-1" style="color: var(--color-ash);">Value</p>
+                            <div class="flex items-center gap-2">
+                                <p class="font-mono" style="color: var(--color-ink);">pseo.contento.app</p>
+                                <button type="button"
+                                        @@click="navigator.clipboard.writeText('pseo.contento.app'); $store.toast.show('Copied to clipboard', 'success')"
+                                        class="p-1 rounded hover:bg-stone-100 transition-colors"
+                                        style="color: var(--color-ash);" title="Copy">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                              d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-4">
+                    <div class="flex items-center gap-2">
+                        <span class="w-3 h-3 rounded-full"
+                              :class="dnsVerified ? 'bg-green-400' : 'bg-yellow-400'"></span>
+                        <span class="text-sm" style="color: var(--color-ash);"
+                              x-text="dnsVerified ? 'DNS Verified' : 'Pending verification'"></span>
+                    </div>
+                </div>
+
+                <p class="text-xs mt-4" style="color: var(--color-cloud);">
+                    DNS propagation can take up to 48 hours. You can skip this step and verify later.
+                </p>
+            </div>
+        </div>
+
+        <!-- Step 4: Upload Chrome -->
+        <div x-show="currentStep === 4" x-cloak>
+            <div class="card">
+                <h3 class="text-lg font-semibold mb-2" style="color: var(--color-ink);">Site Chrome</h3>
+                <p class="text-sm mb-6" style="color: var(--color-ash);">
+                    Customize the header, footer, and styles for all generated pages. You can skip this and use defaults.
+                </p>
+
+                <div class="space-y-4">
+                    <div>
+                        <label class="form-label">Header HTML</label>
+                        <textarea name="HeaderHtml" x-model="headerHtml" rows="4" class="form-input font-mono text-sm"
+                                  placeholder='<header class="site-header"><a href="https://yoursite.com">Your Brand</a></header>'></textarea>
+                    </div>
+                    <div>
+                        <label class="form-label">Footer HTML</label>
+                        <textarea name="FooterHtml" x-model="footerHtml" rows="4" class="form-input font-mono text-sm"
+                                  placeholder='<footer class="site-footer"><p>&copy; 2026 Your Brand</p></footer>'></textarea>
+                    </div>
+                    <div>
+                        <label class="form-label">Custom CSS</label>
+                        <textarea name="CustomCss" x-model="customCss" rows="6" class="form-input font-mono text-sm"
+                                  placeholder="/* Custom styles for your pSEO pages */
+.pseo-content { max-width: 800px; margin: 0 auto; }"></textarea>
+                    </div>
+                </div>
+
+                <!-- Simple preview -->
+                <div class="rounded-lg p-4 mt-6" style="background: var(--color-paper); border: 1px solid var(--color-mist);">
+                    <p class="text-xs font-medium mb-2" style="color: var(--color-ash);">Preview:</p>
+                    <div class="border rounded" style="border-color: var(--color-mist); padding: 1rem;">
+                        <div x-show="headerHtml" class="mb-2 pb-2 border-b text-xs" style="border-color: var(--color-mist); color: var(--color-ash);">[Header]</div>
+                        <div class="text-sm py-4" style="color: var(--color-stone);">Page content will appear here...</div>
+                        <div x-show="footerHtml" class="mt-2 pt-2 border-t text-xs" style="border-color: var(--color-mist); color: var(--color-ash);">[Footer]</div>
+                    </div>
+                </div>
+
+                <div class="mt-4">
+                    <button type="button" @@click="headerHtml = ''; footerHtml = ''; customCss = ''; nextStep()"
+                            class="text-sm underline" style="color: var(--color-ash);">
+                        Skip &mdash; use defaults
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 5: Choose Niches -->
+        <div x-show="currentStep === 5" x-cloak>
+            <div class="card">
+                <h3 class="text-lg font-semibold mb-2" style="color: var(--color-ink);">Choose Your Niches</h3>
+                <p class="text-sm mb-4" style="color: var(--color-ash);">
+                    Select 3&ndash;5 niches that match your target audience. Each niche generates multiple subtopics.
+                </p>
+
+                <div class="flex items-center justify-between mb-4">
+                    <input type="text" x-model="nicheSearch" class="form-input max-w-sm" placeholder="Search niches..." />
+                    <span class="text-sm font-medium" style="color: var(--color-indigo);"
+                          x-text="selectedNicheIds.length + ' selected'"></span>
+                </div>
+
+                @foreach (var group in Model.NichesByCategory)
+                {
+                    <div class="mb-6"
+                         x-show="!nicheSearch || '@group.Key.ToLower()'.includes(nicheSearch.toLowerCase()) || nicheGroupHasMatch('@group.Key')">
+                        <h4 class="text-xs font-semibold uppercase tracking-wide mb-2" style="color: var(--color-ash);">
+                            @group.Key
+                        </h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
+                            @foreach (var niche in group.Value)
+                            {
+                                <label class="flex items-center gap-3 p-3 rounded-lg border cursor-pointer hover:bg-stone-50 transition-colors"
+                                       :class="selectedNicheIds.includes('@niche.Id') ? 'border-[var(--color-indigo)] bg-[var(--color-indigo-pale)]' : ''"
+                                       style="border-color: var(--color-mist);"
+                                       x-show="!nicheSearch || '@niche.Name.ToLower()'.includes(nicheSearch.toLowerCase()) || '@niche.Category.ToLower()'.includes(nicheSearch.toLowerCase())">
+                                    <input type="checkbox" name="SelectedNicheIds" value="@niche.Id"
+                                           class="rounded"
+                                           x-model="selectedNicheIds" />
+                                    <div>
+                                        <span class="text-sm font-medium" style="color: var(--color-ink);">@niche.Name</span>
+                                    </div>
+                                </label>
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <!-- Step 6: Choose Content Types -->
+        <div x-show="currentStep === 6" x-cloak>
+            <div class="card">
+                <h3 class="text-lg font-semibold mb-2" style="color: var(--color-ink);">Choose Content Types</h3>
+                <p class="text-sm mb-6" style="color: var(--color-ash);">
+                    Select 2&ndash;3 content types (schemas). Each type generates pages with a different structure.
+                </p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    @foreach (var schema in Model.AvailableSchemas)
+                    {
+                        <label class="flex items-start gap-3 p-4 rounded-lg border cursor-pointer hover:bg-stone-50 transition-colors"
+                               :class="selectedSchemaIds.includes('@schema.Id') ? 'border-[var(--color-indigo)] bg-[var(--color-indigo-pale)]' : ''"
+                               style="border-color: var(--color-mist);">
+                            <input type="checkbox" name="SelectedSchemaIds" value="@schema.Id"
+                                   class="rounded mt-1"
+                                   x-model="selectedSchemaIds" />
+                            <div>
+                                <span class="text-sm font-semibold" style="color: var(--color-ink);">@schema.Name</span>
+                                <span class="text-xs ml-2 px-2 py-0.5 rounded" style="background: var(--color-mist); color: var(--color-ash);">
+                                    @schema.RendererSlug
+                                </span>
+                                @if (schema.Description != null)
+                                {
+                                    <p class="text-xs mt-1" style="color: var(--color-ash);">@schema.Description</p>
+                                }
+                            </div>
+                        </label>
+                    }
+                </div>
+
+                <div class="rounded-lg p-4 mt-6" style="background: var(--color-paper); border: 1px solid var(--color-mist);">
+                    <p class="text-xs font-medium mb-1" style="color: var(--color-ash);">Estimated page count:</p>
+                    <p class="text-2xl font-bold" style="color: var(--color-indigo);"
+                       x-text="estimatedPageCount()"></p>
+                    <p class="text-xs" style="color: var(--color-cloud);">
+                        Based on <span x-text="selectedNicheIds.length"></span> niches &times; estimated subtopics &times; <span x-text="selectedSchemaIds.length"></span> content types
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 7: Preview & Generate -->
+        <div x-show="currentStep === 7" x-cloak>
+            <div class="card">
+                <h3 class="text-lg font-semibold mb-6" style="color: var(--color-ink);">Review &amp; Generate</h3>
+
+                <div class="space-y-3">
+                    <div class="flex items-center justify-between py-2 border-b" style="border-color: var(--color-mist);">
+                        <span class="text-sm" style="color: var(--color-ash);">Project Name</span>
+                        <span class="text-sm font-medium" style="color: var(--color-ink);" x-text="projectName"></span>
+                    </div>
+                    <div class="flex items-center justify-between py-2 border-b" style="border-color: var(--color-mist);">
+                        <span class="text-sm" style="color: var(--color-ash);">Subdomain</span>
+                        <span class="text-sm font-medium" style="color: var(--color-indigo);"
+                              x-text="subdomainPrefix + '.' + rootDomain"></span>
+                    </div>
+                    <div class="flex items-center justify-between py-2 border-b" style="border-color: var(--color-mist);">
+                        <span class="text-sm" style="color: var(--color-ash);">Selected Niches</span>
+                        <span class="text-sm font-medium" style="color: var(--color-ink);"
+                              x-text="selectedNicheIds.length + ' niches'"></span>
+                    </div>
+                    <div class="flex items-center justify-between py-2 border-b" style="border-color: var(--color-mist);">
+                        <span class="text-sm" style="color: var(--color-ash);">Content Types</span>
+                        <span class="text-sm font-medium" style="color: var(--color-ink);"
+                              x-text="selectedSchemaIds.length + ' schemas'"></span>
+                    </div>
+                    <div class="flex items-center justify-between py-2 border-b" style="border-color: var(--color-mist);">
+                        <span class="text-sm" style="color: var(--color-ash);">Estimated Page Count</span>
+                        <span class="text-sm font-bold" style="color: var(--color-indigo);"
+                              x-text="estimatedPageCount()"></span>
+                    </div>
+                    <div class="flex items-center justify-between py-2" style="border-color: var(--color-mist);">
+                        <span class="text-sm" style="color: var(--color-ash);">Chrome</span>
+                        <span class="text-sm font-medium" style="color: var(--color-ink);"
+                              x-text="headerHtml || footerHtml ? 'Custom' : 'Default'"></span>
+                    </div>
+                </div>
+
+                <!-- Sample page titles -->
+                <div class="mt-6 rounded-lg p-4" style="background: var(--color-paper); border: 1px solid var(--color-mist);">
+                    <p class="text-xs font-medium mb-3" style="color: var(--color-ash);">Sample page titles:</p>
+                    <ul class="space-y-1 text-sm" style="color: var(--color-stone);">
+                        <li>Plumbing &mdash; Drain Repair Guide</li>
+                        <li>Landscaping &mdash; Seasonal Maintenance Checklist</li>
+                        <li>HVAC &mdash; Energy Efficiency Tips</li>
+                    </ul>
+                </div>
+
+                <div class="flex justify-end gap-3 mt-8 border-t pt-4" style="border-color: var(--color-mist);">
+                    <button type="submit" class="btn btn-primary text-lg px-8 py-3"
+                            @@click.prevent="submitWizard()">
+                        <span x-show="!submitting">Generate First Batch</span>
+                        <span x-show="submitting" class="flex items-center gap-2">
+                            <svg class="animate-spin h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+                            Creating...
+                        </span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 8: Done -->
+        <div x-show="currentStep === 8" x-cloak>
+            <div class="card text-center py-16">
+                <div class="w-16 h-16 mx-auto mb-6 rounded-2xl flex items-center justify-center bg-green-100">
+                    <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                    </svg>
+                </div>
+                <h2 class="text-2xl font-bold mb-4" style="color: var(--color-ink);">
+                    Your pSEO project is set up!
+                </h2>
+                <p class="text-sm mb-2" style="color: var(--color-ash);">
+                    Your pages are being generated in the background.
+                </p>
+                <p class="text-sm mb-8" style="color: var(--color-ash);">
+                    Visit your subdomain at
+                    <a :href="'https://' + subdomainPrefix + '.' + rootDomain"
+                       class="font-semibold underline" style="color: var(--color-indigo);"
+                       x-text="subdomainPrefix + '.' + rootDomain" target="_blank"></a>
+                    once DNS is configured and pages are published.
+                </p>
+
+                <div class="flex justify-center gap-4">
+                    <a href="/admin/pseo" class="btn btn-primary">
+                        Go to Dashboard
+                    </a>
+                    <a href="/admin/pseo/collections" class="btn btn-ghost">
+                        View Collections
+                    </a>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <!-- Navigation Buttons -->
+    <div class="flex items-center justify-between mt-6" x-show="currentStep > 1 && currentStep < 8">
+        <button type="button" @@click="prevStep()" class="btn btn-ghost">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 19l-7-7 7-7"/>
+            </svg>
+            Previous
+        </button>
+
+        <button type="button" x-show="currentStep < 7" @@click="nextStep()" class="btn btn-primary"
+                :disabled="!canAdvance()">
+            Next
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5l7 7-7 7"/>
+            </svg>
+        </button>
+    </div>
+</div>
+
+@section Scripts {
+<script>
+function onboardingWizard() {
+    return {
+        currentStep: 1,
+        maxReachedStep: 1,
+        submitting: false,
+        dnsVerified: false,
+
+        // Step 2
+        projectName: '',
+        rootDomain: '',
+        subdomainPrefix: 'articles',
+        customSubdomain: false,
+
+        // Step 4
+        headerHtml: '',
+        footerHtml: '',
+        customCss: '',
+
+        // Step 5
+        nicheSearch: '',
+        selectedNicheIds: [],
+
+        // Step 6
+        selectedSchemaIds: [],
+
+        nextStep() {
+            if (this.currentStep < 8) {
+                this.currentStep++;
+                if (this.currentStep > this.maxReachedStep) {
+                    this.maxReachedStep = this.currentStep;
+                }
+            }
+        },
+        prevStep() {
+            if (this.currentStep > 1) this.currentStep--;
+        },
+        goToStep(step) {
+            if (step <= this.maxReachedStep) {
+                this.currentStep = step;
+            }
+        },
+        canAdvance() {
+            switch (this.currentStep) {
+                case 2: return this.projectName.trim() && this.rootDomain.trim() && this.subdomainPrefix.trim();
+                case 5: return this.selectedNicheIds.length >= 1;
+                case 6: return this.selectedSchemaIds.length >= 1;
+                default: return true;
+            }
+        },
+        nicheGroupHasMatch(category) {
+            // Check if any niche in the category matches the search
+            return true; // Simplified — individual items filtered via x-show
+        },
+        estimatedPageCount() {
+            // Rough estimate: each niche has ~10 subtopics on average
+            var subtopicsPerNiche = 10;
+            return this.selectedNicheIds.length * subtopicsPerNiche * this.selectedSchemaIds.length;
+        },
+        async submitWizard() {
+            if (this.submitting) return;
+            this.submitting = true;
+
+            try {
+                const form = document.getElementById('onboardingForm');
+                form.submit();
+            } catch (err) {
+                console.error('Wizard submission failed:', err);
+                this.submitting = false;
+            }
+        }
+    };
+}
+</script>
+
+@if (Model.CreatedProject != null)
+{
+    <script>
+        // After successful creation, advance to Done step
+        document.addEventListener('alpine:init', () => {
+            setTimeout(() => {
+                const wizard = document.querySelector('[x-data]').__x.$data;
+                if (wizard && wizard.currentStep !== undefined) {
+                    wizard.currentStep = 8;
+                    wizard.maxReachedStep = 8;
+                    wizard.projectName = '@Model.CreatedProject.Name.Replace("'", "\\'")';
+                    wizard.rootDomain = '@Model.CreatedProject.RootDomain.Replace("'", "\\'")';
+                    wizard.subdomainPrefix = '@Model.CreatedProject.Subdomain.Replace("'", "\\'")';
+                }
+            }, 100);
+        });
+    </script>
+}
+}

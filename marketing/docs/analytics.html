@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Analytics & GSC — Contento pSEO</title>
+    <meta name="description" content="Connect Google Search Console to Contento pSEO for a traffic feedback loop. Track clicks, impressions, CTR, and position. Identify underperformers and expand winners." />
+    <script type="module" src="/src/main.js"></script>
+</head>
+<body class="bg-white text-gray-900 antialiased" x-data="{ mobileMenuOpen: false }">
+
+    <%nav-docs%>
+
+    <div class="max-w-[90rem] mx-auto flex">
+        <%sidebar-docs%>
+
+        <main class="flex-1 min-w-0 px-4 sm:px-6 lg:px-12 py-12">
+            <div class="max-w-3xl">
+
+                <!-- Breadcrumb -->
+                <div class="flex items-center gap-2 text-sm text-gray-400 mb-8">
+                    <a href="index.html" class="hover:text-gray-600">Docs</a>
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                    <span class="text-gray-600">Analytics &amp; GSC</span>
+                </div>
+
+                <h1 style="font-size: 2.25rem; font-weight: 700; color: #1A1A1A; margin-bottom: 0.5rem; letter-spacing: -0.02em;">Analytics &amp; GSC</h1>
+                <p style="font-size: 1.125rem; color: #6B7280; margin-bottom: 2.5rem;">Close the feedback loop: use real traffic data to optimize your pSEO content engine.</p>
+
+                <!-- Overview -->
+                <h2>Overview</h2>
+
+                <p>Contento pSEO is not a "generate and forget" tool. The analytics system creates a <strong>feedback loop</strong>
+                between your generated content and real search performance data from Google Search Console (GSC). This loop lets you
+                identify which niches and subtopics are driving traffic, which pages are underperforming, and where to focus your
+                next generation batch.</p>
+
+                <!-- Connecting GSC -->
+                <h2>Connecting Google Search Console</h2>
+
+                <p>Connect your GSC property directly from the CLI &mdash; the CLI runs the OAuth flow in your default browser, then stores the refresh token locally next to your AI provider config.</p>
+
+<pre><span class="prompt">$</span> <span class="function">contento</span> analytics connect proj_8f3a...
+
+<span class="output">  Opening browser for Google OAuth...</span>
+<span class="output">  ? Select Search Console property: https://example.com/</span>
+<span class="output">  &#10003; GSC connected. Token saved to ~/.contento/gsc.json</span>
+<span class="output">  Run "contento analytics sync proj_8f3a..." to pull the last 28 days.</span></pre>
+
+                <p>OAuth uses Google's standard read-only Search Console scope. Contento never sees your token &mdash; everything stays on your machine.</p>
+
+                <!-- Daily sync -->
+                <h2>Pulling Data</h2>
+
+                <p>Run <code>contento analytics sync</code> to pull the latest GSC data into a local SQLite cache. Schedule it via cron (or your CI) for a daily refresh:</p>
+
+                <ul>
+                    <li><strong>Clicks</strong> &mdash; Number of times users clicked through to your page from search results</li>
+                    <li><strong>Impressions</strong> &mdash; Number of times your page appeared in search results</li>
+                    <li><strong>CTR</strong> &mdash; Click-through rate (clicks / impressions)</li>
+                    <li><strong>Position</strong> &mdash; Average ranking position in search results</li>
+                    <li><strong>Indexed status</strong> &mdash; Whether the page is in Google's index</li>
+                    <li><strong>Queries</strong> &mdash; Top search queries driving traffic to each page</li>
+                </ul>
+
+                <p>Data is pulled for the last 28 days (GSC's default reporting window) and stored locally in <code>~/.contento/analytics.db</code> &mdash; a plain SQLite file you can query directly if you want.</p>
+
+                <!-- Dashboard metrics -->
+                <h2>Summary Metrics</h2>
+
+                <p>View the analytics summary from the CLI:</p>
+
+<pre><span class="prompt">$</span> <span class="function">contento</span> analytics summary proj_8f3a...
+
+<span class="output">  Project: DevTools Resources</span>
+<span class="output">  Period:  Last 28 days</span>
+<span class="output">  ──────────────────────────────────────</span>
+<span class="output">  Total Clicks        12,450</span>
+<span class="output">  Total Impressions  285,000</span>
+<span class="output">  Average CTR          4.37%</span>
+<span class="output">  Average Position      16.3</span>
+<span class="output">  Indexed Pages      980 / 1,024 (96%)</span></pre>
+
+                <table>
+                    <thead><tr><th>Metric</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td><strong>Total Clicks</strong></td><td>Sum of all clicks across all pages in the project</td></tr>
+                        <tr><td><strong>Total Impressions</strong></td><td>Sum of all impressions across all pages</td></tr>
+                        <tr><td><strong>Average CTR</strong></td><td>Weighted average click-through rate</td></tr>
+                        <tr><td><strong>Average Position</strong></td><td>Weighted average ranking position</td></tr>
+                        <tr><td><strong>Indexed Pages</strong></td><td>Number of pages confirmed in Google's index</td></tr>
+                        <tr><td><strong>Pending Indexing</strong></td><td>Pages published but not yet indexed</td></tr>
+                    </tbody>
+                </table>
+
+                <!-- Top pages leaderboard -->
+                <h2>Top Pages Leaderboard</h2>
+
+                <p>The leaderboard ranks all pages in a project by performance:</p>
+
+<pre><span class="prompt">$</span> <span class="function">contento</span> analytics top-pages proj_8f3a... --limit 5
+
+<span class="output">  #  Title                              Clicks  Impr    CTR    Pos</span>
+<span class="output">  1  100 Remote Work Ideas              2,340   55,714  4.2%   14.2</span>
+<span class="output">  2  50 CI/CD Pipeline Tips              1,890   42,100  4.5%   12.8</span>
+<span class="output">  3  Best API Testing Tools 2026         1,650   38,900  4.2%   15.1</span>
+<span class="output">  4  DevOps Automation Checklist         1,420   31,200  4.6%   11.9</span>
+<span class="output">  5  Freelance Developer Tools Guide     1,100   28,500  3.9%   18.4</span></pre>
+
+                <p>You can sort by clicks, impressions, CTR, or position. Use <code>--json</code> for machine-readable output.</p>
+
+                <!-- Niche performance -->
+                <h2>Niche Performance Ranking</h2>
+
+                <p>Contento aggregates page-level data up to the niche level, letting you compare how different niches perform:</p>
+
+                <table>
+                    <thead><tr><th>Niche</th><th>Pages</th><th>Total Clicks</th><th>Avg. Position</th><th>Indexed %</th></tr></thead>
+                    <tbody>
+                        <tr><td>Developer Tools</td><td>120</td><td>4,280</td><td>14.2</td><td>98%</td></tr>
+                        <tr><td>DevOps</td><td>80</td><td>2,150</td><td>18.7</td><td>95%</td></tr>
+                        <tr><td>Freelancing</td><td>60</td><td>890</td><td>24.1</td><td>88%</td></tr>
+                    </tbody>
+                </table>
+
+                <p>Use niche rankings to decide where to invest your next generation batch. Expand high-performing niches with additional subtopics and schemas.</p>
+
+                <!-- Zero-traffic detection -->
+                <h2>Zero-Traffic Page Detection</h2>
+
+                <p>Pages that receive <strong>zero clicks for 60 consecutive days</strong> after publishing are flagged as underperformers:</p>
+
+<pre><span class="prompt">$</span> <span class="function">contento</span> analytics zero-traffic proj_8f3a...
+
+<span class="output">  12 pages with zero traffic (60+ days)</span>
+<span class="output">  ──────────────────────────────────────</span>
+<span class="output">  page_4f2a  /niche-marketing-tips-2026     Published 2026-01-05</span>
+<span class="output">  page_7b1c  /obscure-devops-patterns       Published 2026-01-08</span>
+<span class="output">  ...</span></pre>
+
+                <p>Options for zero-traffic pages:</p>
+                <ul>
+                    <li><strong>Regenerate</strong> &mdash; Re-run AI generation with an updated prompt to produce better content</li>
+                    <li><strong>Merge</strong> &mdash; Combine the subtopic into a related, better-performing page</li>
+                    <li><strong>Remove</strong> &mdash; Delete the page and its URL to reduce crawl budget waste</li>
+                    <li><strong>Ignore</strong> &mdash; Mark as reviewed if the page targets a long-tail query that needs more time</li>
+                </ul>
+
+                <!-- CSV export -->
+                <h2>CSV Export</h2>
+
+                <p>Export analytics data as CSV for use in spreadsheets or BI tools:</p>
+
+<pre><span class="prompt">$</span> <span class="function">contento</span> analytics export proj_8f3a... --format csv > analytics.csv
+
+<span class="output">  &#10003; Exported 1,024 pages to analytics.csv</span></pre>
+
+                <p>Export levels:</p>
+                <ul>
+                    <li><strong>Page-level export</strong> &mdash; All pages with clicks, impressions, CTR, position, and indexed status</li>
+                    <li><strong>Niche-level export</strong> &mdash; Aggregated niche performance data</li>
+                    <li><strong>Query-level export</strong> &mdash; Top queries per page with click and impression counts</li>
+                </ul>
+
+                <!-- CLI Commands -->
+                <h2>CLI Commands</h2>
+
+                <table>
+                    <thead><tr><th>Command</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>contento analytics summary</code></td><td>Project-level summary (clicks, impressions, CTR, position)</td></tr>
+                        <tr><td><code>contento analytics top-pages</code></td><td>Top pages ranked by performance</td></tr>
+                        <tr><td><code>contento analytics zero-traffic</code></td><td>Pages with zero clicks in 60+ days</td></tr>
+                        <tr><td><code>contento analytics export</code></td><td>CSV export of analytics data</td></tr>
+                    </tbody>
+                </table>
+
+                <!-- Optimizing -->
+                <h2>Optimizing Based on Data</h2>
+
+                <p>The analytics feedback loop enables a continuous optimization cycle:</p>
+
+                <ol>
+                    <li><strong>Identify winners</strong> &mdash; Find niches and schemas with the highest clicks and best CTR.</li>
+                    <li><strong>Expand winners</strong> &mdash; Add new subtopics to performing niches. Run additional schemas (e.g., add "FAQ" pages for a niche that performs well with "Best-Of" pages).</li>
+                    <li><strong>Diagnose underperformers</strong> &mdash; Check if low-performing pages are indexed. If indexed but low CTR, the title may need adjustment. If not indexed, the content may be too thin.</li>
+                    <li><strong>Regenerate underperformers</strong> &mdash; Use the "Regenerate" action on zero-traffic pages to produce improved content with a new AI prompt.</li>
+                    <li><strong>Prune dead weight</strong> &mdash; Remove pages that consistently get zero traffic after regeneration to improve overall domain quality.</li>
+                    <li><strong>Repeat</strong> &mdash; Run this cycle weekly or monthly to continuously improve your pSEO performance.</li>
+                </ol>
+
+                <div class="callout callout-tip">
+                    <strong>Tip:</strong> Wait at least 30 days after publishing before evaluating page performance. Google can take
+                    2-4 weeks to index and start showing pages in search results, especially for new content sections.
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <%footer-docs%>
+
+</body>
+</html>

@@ -1,29 +1,31 @@
 <!-- Main site navigation -->
-<nav class="fixed top-0 inset-x-0 z-50 glass border-b border-gray-200/50" x-data="{ open: false }">
+<nav class="fixed top-0 inset-x-0 z-50 bg-white/95 border-b border-gray-200" style="backdrop-filter: blur(8px);" x-data="{ open: false }">
     <div class="max-w-6xl mx-auto px-4 sm:px-6">
-        <div class="flex items-center justify-between h-16">
-            <a href="index.html" class="flex items-center">
-                <img src="/small-contento-cms-logo.png" alt="Contento CMS" class="h-8 w-auto">
+        <div class="flex items-center justify-between h-14">
+            <a href="index.html" class="flex items-center gap-2">
+                <span class="inline-block w-2 h-2 rounded-full bg-[#10b981]"></span>
+                <span class="font-mono text-base font-semibold tracking-tight text-[#1a1b26]">contento</span>
             </a>
-            <div class="hidden md:flex items-center gap-8">
-                <a href="features.html" class="text-sm text-gray-600 hover:text-gray-900 transition-colors">Features</a>
-                <a href="docs/index.html" class="text-sm text-gray-600 hover:text-gray-900 transition-colors">Docs</a>
-                <a href="docs/api.html" class="text-sm text-gray-600 hover:text-gray-900 transition-colors">API</a>
-                <a href="https://github.com/plsft/contento" class="text-sm text-gray-600 hover:text-gray-900 transition-colors">GitHub</a>
-                <a href="docs/index.html" class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white rounded-lg transition-colors" style="background: #3D5A80;" onmouseover="this.style.background='#34506F'" onmouseout="this.style.background='#3D5A80'">
+            <div class="hidden md:flex items-center gap-7">
+                <a href="how-it-works.html" class="text-sm text-gray-500 hover:text-[#1a1b26] transition-colors">How it Works</a>
+                <a href="niches.html" class="text-sm text-gray-500 hover:text-[#1a1b26] transition-colors">Niches</a>
+                <a href="docs/index.html" class="text-sm text-gray-500 hover:text-[#1a1b26] transition-colors">Docs</a>
+                <a href="docs/cli.html" class="text-sm text-gray-500 hover:text-[#1a1b26] transition-colors">CLI</a>
+                <a href="docs/index.html" class="btn-primary inline-flex items-center">
                     Get Started
                 </a>
             </div>
-            <button @click="open = !open" class="md:hidden p-2">
+            <button @click="open = !open" class="md:hidden p-2 text-gray-500 hover:text-[#1a1b26]">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"/></svg>
             </button>
         </div>
         <div x-show="open" x-cloak x-transition class="md:hidden pb-4 border-t border-gray-100">
-            <div class="flex flex-col gap-2 pt-4">
-                <a href="features.html" class="px-3 py-2 text-sm text-gray-600 hover:text-gray-900">Features</a>
-                <a href="docs/index.html" class="px-3 py-2 text-sm text-gray-600 hover:text-gray-900">Docs</a>
-                <a href="docs/api.html" class="px-3 py-2 text-sm text-gray-600 hover:text-gray-900">API</a>
-                <a href="https://github.com/plsft/contento" class="px-3 py-2 text-sm text-gray-600 hover:text-gray-900">GitHub</a>
+            <div class="flex flex-col gap-1 pt-3">
+                <a href="how-it-works.html" class="px-3 py-2 text-sm text-gray-500 hover:text-[#1a1b26]">How it Works</a>
+                <a href="niches.html" class="px-3 py-2 text-sm text-gray-500 hover:text-[#1a1b26]">Niches</a>
+                <a href="docs/index.html" class="px-3 py-2 text-sm text-gray-500 hover:text-[#1a1b26]">Docs</a>
+                <a href="docs/cli.html" class="px-3 py-2 text-sm text-gray-500 hover:text-[#1a1b26]">CLI</a>
+                <a href="docs/index.html" class="mx-3 mt-2 btn-primary text-center">Get Started</a>
             </div>
         </div>
     </div>

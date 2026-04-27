@@ -1,0 +1,189 @@
+@page "/admin/pseo/projects/{id:guid}"
+@model Contento.Web.Pages.Admin.Pseo.Projects.EditModel
+@{
+    ViewData["Title"] = $"Edit Project — {Model.Project.Name}";
+}
+
+<div class="max-w-5xl mx-auto" x-data="{ activeTab: 'settings', previewTarget: '' }">
+    <!-- Header -->
+    <div class="flex items-center justify-between mb-6">
+        <div>
+            <div class="flex items-center gap-2">
+                <a href="/admin/pseo" class="text-sm" style="color: var(--color-ash);">pSEO</a>
+                <span style="color: var(--color-cloud);">/</span>
+                <a href="/admin/pseo/projects" class="text-sm" style="color: var(--color-ash);">Projects</a>
+                <span style="color: var(--color-cloud);">/</span>
+                <h2 class="text-xl font-semibold" style="color: var(--color-ink);">@Model.Project.Name</h2>
+            </div>
+        </div>
+        <span class="badge @(Model.Project.Status switch { "active" => "badge-success", "pending_dns" => "badge-warning", "paused" => "badge-neutral", _ => "badge-neutral" })">
+            @Model.Project.Status
+        </span>
+    </div>
+
+    <!-- Tabs -->
+    <div class="flex gap-1 mb-6 border-b" style="border-color: var(--color-mist);">
+        <button @@click="activeTab = 'settings'"
+                :class="activeTab === 'settings' ? 'border-[var(--color-indigo)] text-[var(--color-indigo)]' : 'border-transparent text-[var(--color-ash)] hover:text-[var(--color-stone)]'"
+                class="px-4 py-2.5 text-sm font-medium border-b-2 transition-colors">
+            Settings
+        </button>
+        <button @@click="activeTab = 'chrome'"
+                :class="activeTab === 'chrome' ? 'border-[var(--color-indigo)] text-[var(--color-indigo)]' : 'border-transparent text-[var(--color-ash)] hover:text-[var(--color-stone)]'"
+                class="px-4 py-2.5 text-sm font-medium border-b-2 transition-colors">
+            Chrome
+        </button>
+        <button @@click="activeTab = 'dns'"
+                :class="activeTab === 'dns' ? 'border-[var(--color-indigo)] text-[var(--color-indigo)]' : 'border-transparent text-[var(--color-ash)] hover:text-[var(--color-stone)]'"
+                class="px-4 py-2.5 text-sm font-medium border-b-2 transition-colors">
+            DNS
+        </button>
+    </div>
+
+    <form method="post" asp-page-handler="Update" asp-route-id="@Model.Project.Id">
+        <!-- Settings Tab -->
+        <div x-show="activeTab === 'settings'">
+            <div class="card">
+                <h3 class="text-sm font-semibold mb-4" style="color: var(--color-ink);">Project Settings</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="form-label">Project Name</label>
+                        <input type="text" name="ProjectName" value="@Model.ProjectName" class="form-input" required />
+                    </div>
+                    <div>
+                        <label class="form-label">Root Domain</label>
+                        <input type="text" name="RootDomain" value="@Model.RootDomain" class="form-input" required />
+                    </div>
+                    <div>
+                        <label class="form-label">Subdomain</label>
+                        <input type="text" name="ProjectSubdomain" value="@Model.ProjectSubdomain" class="form-input" required />
+                    </div>
+                    <div>
+                        <label class="form-label">FQDN (auto-generated)</label>
+                        <input type="text" value="@Model.Project.Fqdn" class="form-input" disabled
+                               style="background: var(--color-paper);" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chrome Tab -->
+        <div x-show="activeTab === 'chrome'" x-cloak>
+            <div class="space-y-6">
+                <!-- Header HTML -->
+                <div class="card">
+                    <div class="flex items-center justify-between mb-3">
+                        <h3 class="text-sm font-semibold" style="color: var(--color-ink);">Header HTML</h3>
+                        <button type="button" @@click="previewTarget = previewTarget === 'header' ? '' : 'header'"
+                                class="btn btn-ghost btn-sm">
+                            <span x-text="previewTarget === 'header' ? 'Hide Preview' : 'Preview'"></span>
+                        </button>
+                    </div>
+                    <textarea name="HeaderHtml" rows="6" class="form-input font-mono text-xs" placeholder="<nav>...</nav>">@Model.HeaderHtml</textarea>
+                    <div x-show="previewTarget === 'header'" x-cloak class="mt-3 p-4 rounded border" style="border-color: var(--color-mist); background: var(--color-paper);">
+                        <p class="text-xs mb-2" style="color: var(--color-ash);">Preview:</p>
+                        <div class="prose prose-sm max-w-none" x-html="$refs.headerInput?.value || ''"></div>
+                    </div>
+                </div>
+
+                <!-- Footer HTML -->
+                <div class="card">
+                    <div class="flex items-center justify-between mb-3">
+                        <h3 class="text-sm font-semibold" style="color: var(--color-ink);">Footer HTML</h3>
+                        <button type="button" @@click="previewTarget = previewTarget === 'footer' ? '' : 'footer'"
+                                class="btn btn-ghost btn-sm">
+                            <span x-text="previewTarget === 'footer' ? 'Hide Preview' : 'Preview'"></span>
+                        </button>
+                    </div>
+                    <textarea name="FooterHtml" rows="6" class="form-input font-mono text-xs" placeholder="<footer>...</footer>">@Model.FooterHtml</textarea>
+                    <div x-show="previewTarget === 'footer'" x-cloak class="mt-3 p-4 rounded border" style="border-color: var(--color-mist); background: var(--color-paper);">
+                        <p class="text-xs mb-2" style="color: var(--color-ash);">Preview:</p>
+                        <div class="prose prose-sm max-w-none" x-html="$refs.footerInput?.value || ''"></div>
+                    </div>
+                </div>
+
+                <!-- Custom CSS -->
+                <div class="card">
+                    <div class="flex items-center justify-between mb-3">
+                        <h3 class="text-sm font-semibold" style="color: var(--color-ink);">Custom CSS</h3>
+                    </div>
+                    <textarea name="CustomCss" rows="8" class="form-input font-mono text-xs" placeholder="body { font-family: sans-serif; }">@Model.CustomCss</textarea>
+                </div>
+
+                <!-- Back-link & CTA -->
+                <div class="card">
+                    <h3 class="text-sm font-semibold mb-4" style="color: var(--color-ink);">Back-link &amp; CTA</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+                        <div>
+                            <label class="form-label">Back-link Text</label>
+                            <input type="text" name="BackLinkText" value="@Model.BackLinkText" class="form-input" />
+                        </div>
+                        <div>
+                            <label class="form-label">Back-link URL</label>
+                            <input type="text" name="BackLinkUrl" value="@Model.BackLinkUrl" class="form-input" placeholder="https://example.com" />
+                        </div>
+                    </div>
+                    <div>
+                        <label class="form-label">CTA HTML</label>
+                        <textarea name="CtaHtml" rows="4" class="form-input font-mono text-xs" placeholder="<div class='cta'>...</div>">@Model.CtaHtml</textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DNS Tab -->
+        <div x-show="activeTab === 'dns'" x-cloak>
+            <div class="card">
+                <h3 class="text-sm font-semibold mb-4" style="color: var(--color-ink);">DNS Configuration</h3>
+
+                <div class="flex items-center gap-3 mb-6 p-4 rounded-lg @(Model.DnsVerified ? "bg-green-50" : "bg-yellow-50")"
+                     style="border: 1px solid @(Model.DnsVerified ? "var(--color-success)" : "var(--color-warning)");">
+                    @if (Model.DnsVerified)
+                    {
+                        <svg class="w-5 h-5 flex-shrink-0 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                        </svg>
+                        <span class="text-sm font-medium text-green-800">DNS verified &mdash; CNAME is pointing correctly.</span>
+                    }
+                    else
+                    {
+                        <svg class="w-5 h-5 flex-shrink-0 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                        </svg>
+                        <span class="text-sm font-medium text-yellow-800">DNS not verified. Add the CNAME record below.</span>
+                    }
+                </div>
+
+                <div class="rounded-lg p-4 mb-4" style="background: var(--color-paper); border: 1px solid var(--color-mist);">
+                    <p class="text-sm font-medium mb-2" style="color: var(--color-ink);">Add this CNAME record to your DNS:</p>
+                    <div class="grid grid-cols-2 gap-4 text-sm">
+                        <div>
+                            <span class="form-label">Host / Name</span>
+                            <code class="block mt-1 px-3 py-2 rounded text-xs" style="background: var(--color-snow); border: 1px solid var(--color-mist); color: var(--color-ink);">
+                                @Model.Project.Subdomain
+                            </code>
+                        </div>
+                        <div>
+                            <span class="form-label">Points to / Value</span>
+                            <code class="block mt-1 px-3 py-2 rounded text-xs" style="background: var(--color-snow); border: 1px solid var(--color-mist); color: var(--color-ink);">
+                                pseo.contento.app
+                            </code>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Save Button (visible on Settings and Chrome tabs) -->
+        <div x-show="activeTab !== 'dns'" class="flex justify-end mt-6">
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+        </div>
+    </form>
+
+    <!-- DNS Check Button (visible on DNS tab only) -->
+    <div x-show="activeTab === 'dns'" x-cloak class="flex justify-end mt-6">
+        <form method="post" asp-page-handler="CheckDns" asp-route-id="@Model.Project.Id">
+            <button type="submit" class="btn btn-primary">Verify DNS Now</button>
+        </form>
+    </div>
+</div>

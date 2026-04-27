@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Renderers — Contento Docs</title>
+    <meta name="description" content="How content renderers transform JSON schema output into HTML pages in Contento pSEO. 8 dedicated renderers plus a generic fallback, with customization options." />
+    <script type="module" src="/src/main.js"></script>
+</head>
+<body class="bg-white text-gray-900 antialiased" x-data="{ mobileMenuOpen: false }">
+
+    <%nav-docs%>
+
+    <div class="max-w-[90rem] mx-auto flex">
+        <%sidebar-docs%>
+
+        <main class="flex-1 min-w-0 px-4 sm:px-6 lg:px-12 py-12">
+            <div class="max-w-3xl">
+
+                <!-- Breadcrumb -->
+                <div class="flex items-center gap-2 text-sm text-gray-400 mb-8">
+                    <a href="index.html" class="hover:text-gray-600">Docs</a>
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                    <span class="text-gray-600">Renderers</span>
+                </div>
+
+                <h1 style="font-size: 2.25rem; font-weight: 700; color: #1A1A1A; margin-bottom: 0.5rem; letter-spacing: -0.02em;">Renderers</h1>
+                <p style="font-size: 1.125rem; color: #6B7280; margin-bottom: 2.5rem;">Transform validated JSON schema output into production-ready HTML pages.</p>
+
+                <!-- What is a renderer -->
+                <h2>What Is a Renderer?</h2>
+
+                <p>A <strong>renderer</strong> is the component that transforms a page's validated JSON content into HTML. There are 8 dedicated renderers for the most common content schemas, each producing purpose-built UI components. The remaining schemas (alternatives, resource-list, tool-page, glossary, template-pack) use a generic renderer that adapts to the schema's field structure.</p>
+
+                <p>The rendering pipeline works like this:</p>
+
+                <ol>
+                    <li>The AI generates a JSON object matching the schema's structure</li>
+                    <li>The validator confirms the JSON meets all constraints</li>
+                    <li>The renderer reads the JSON and produces semantic HTML</li>
+                    <li>The chrome system wraps the HTML in your header/footer/CSS</li>
+                    <li>SEO infrastructure (JSON-LD, OG tags, canonical) is injected</li>
+                </ol>
+
+                <!-- Built-in renderers -->
+                <h2>Built-in Renderers</h2>
+
+                <h3>Dedicated Renderers</h3>
+
+                <p>These 8 renderers are purpose-built for their content type's specific layout and interaction patterns:</p>
+
+                <table>
+                    <thead><tr><th>Renderer</th><th>Schema</th><th>Key UI Elements</th></tr></thead>
+                    <tbody>
+                        <tr>
+                            <td><code>idea-list</code></td>
+                            <td>Idea List</td>
+                            <td>Numbered cards with title, description, difficulty badge</td>
+                        </tr>
+                        <tr>
+                            <td><code>checklist</code></td>
+                            <td>Checklist</td>
+                            <td>Interactive checkboxes, progress bar, category filters</td>
+                        </tr>
+                        <tr>
+                            <td><code>how-to</code></td>
+                            <td>How-To Guide</td>
+                            <td>Step progress bar, time estimates, prerequisite list</td>
+                        </tr>
+                        <tr>
+                            <td><code>comparison</code></td>
+                            <td>Comparison</td>
+                            <td>Feature comparison table, scoring, verdict summary</td>
+                        </tr>
+                        <tr>
+                            <td><code>listicle</code></td>
+                            <td>Listicle</td>
+                            <td>Ranked entries with images, descriptions, and highlights</td>
+                        </tr>
+                        <tr>
+                            <td><code>faq</code></td>
+                            <td>FAQ</td>
+                            <td>Accordion layout, FAQPage schema markup</td>
+                        </tr>
+                        <tr>
+                            <td><code>guide</code></td>
+                            <td>Guide</td>
+                            <td>Long-form sections with table of contents, anchor navigation</td>
+                        </tr>
+                        <tr>
+                            <td><code>review</code></td>
+                            <td>Review</td>
+                            <td>Rating scores, pros/cons, verdict summary</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>Generic Renderer</h3>
+
+                <p>The remaining schemas &mdash; alternatives, resource-list, tool-page, glossary, and template-pack &mdash; use a generic renderer that adapts to the schema's field structure. The generic renderer inspects the JSON fields and produces appropriate HTML sections automatically.</p>
+
+                <!-- Renderer anatomy -->
+                <h2>Renderer Anatomy</h2>
+
+                <p>A renderer produces a complete HTML fragment that sits between your header chrome and footer chrome. The structure of a typical rendered page:</p>
+
+<pre><span class="comment">&lt;!-- Your header chrome (from project settings) --&gt;</span>
+<span class="tag">&lt;header&gt;</span>...<span class="tag">&lt;/header&gt;</span>
+
+<span class="comment">&lt;!-- Rendered content --&gt;</span>
+<span class="tag">&lt;article</span> <span class="property">class</span>=<span class="string">"contento-page"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;h1&gt;</span>100 CI/CD Pipeline Ideas for 2026<span class="tag">&lt;/h1&gt;</span>
+  <span class="tag">&lt;p</span> <span class="property">class</span>=<span class="string">"intro"</span><span class="tag">&gt;</span>...<span class="tag">&lt;/p&gt;</span>
+
+  <span class="comment">&lt;!-- Content items (rendered per schema type) --&gt;</span>
+  <span class="tag">&lt;div</span> <span class="property">class</span>=<span class="string">"idea-list"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;div</span> <span class="property">class</span>=<span class="string">"idea-card"</span><span class="tag">&gt;</span>
+      <span class="tag">&lt;span</span> <span class="property">class</span>=<span class="string">"idea-number"</span><span class="tag">&gt;</span>1<span class="tag">&lt;/span&gt;</span>
+      <span class="tag">&lt;h3&gt;</span>Implement Blue-Green Deployments<span class="tag">&lt;/h3&gt;</span>
+      <span class="tag">&lt;p&gt;</span>...<span class="tag">&lt;/p&gt;</span>
+      <span class="tag">&lt;span</span> <span class="property">class</span>=<span class="string">"badge"</span><span class="tag">&gt;</span>medium<span class="tag">&lt;/span&gt;</span>
+    <span class="tag">&lt;/div&gt;</span>
+    <span class="comment">&lt;!-- ... more items --&gt;</span>
+  <span class="tag">&lt;/div&gt;</span>
+
+  <span class="comment">&lt;!-- Internal links (injected by linking pass) --&gt;</span>
+  <span class="tag">&lt;aside</span> <span class="property">class</span>=<span class="string">"related-pages"</span><span class="tag">&gt;</span>...<span class="tag">&lt;/aside&gt;</span>
+
+  <span class="comment">&lt;!-- CTA (from project settings) --&gt;</span>
+  <span class="tag">&lt;div</span> <span class="property">class</span>=<span class="string">"cta-box"</span><span class="tag">&gt;</span>...<span class="tag">&lt;/div&gt;</span>
+
+  <span class="comment">&lt;!-- Back-link (from project settings) --&gt;</span>
+  <span class="tag">&lt;a</span> <span class="property">href</span>=<span class="string">"https://example.com"</span><span class="tag">&gt;</span>More on Example Inc<span class="tag">&lt;/a&gt;</span>
+<span class="tag">&lt;/article&gt;</span>
+
+<span class="comment">&lt;!-- Your footer chrome --&gt;</span>
+<span class="tag">&lt;footer&gt;</span>...<span class="tag">&lt;/footer&gt;</span></pre>
+
+                <!-- Example: checklist renderer -->
+                <h2>Example: Checklist Renderer</h2>
+
+                <p>The checklist renderer produces an interactive page with JavaScript-powered checkboxes that persist state in <code>localStorage</code>:</p>
+
+<pre><span class="comment">// Input JSON (from AI generation)</span>
+{
+  <span class="property">"intro"</span>: <span class="string">"Setting up a home office requires..."</span>,
+  <span class="property">"items"</span>: [
+    {
+      <span class="property">"text"</span>: <span class="string">"Invest in an ergonomic chair with lumbar support"</span>,
+      <span class="property">"category"</span>: <span class="string">"setup"</span>,
+      <span class="property">"checked"</span>: <span class="keyword">false</span>
+    },
+    {
+      <span class="property">"text"</span>: <span class="string">"Set up a dedicated workspace away from distractions"</span>,
+      <span class="property">"category"</span>: <span class="string">"setup"</span>,
+      <span class="property">"checked"</span>: <span class="keyword">false</span>
+    }
+  ],
+  <span class="property">"conclusion"</span>: <span class="string">"With these items checked off..."</span>
+}
+
+<span class="comment">// Rendered HTML output includes:</span>
+<span class="comment">// - Progress bar (0/20 items checked)</span>
+<span class="comment">// - Category filter buttons (setup, daily, weekly)</span>
+<span class="comment">// - Interactive checkboxes with localStorage</span>
+<span class="comment">// - Completion celebration on 100%</span></pre>
+
+                <!-- Example: FAQ renderer -->
+                <h2>Example: FAQ Renderer</h2>
+
+                <p>The FAQ renderer produces an accordion layout with <code>FAQPage</code> structured data for Google rich snippets:</p>
+
+<pre><span class="comment">// The FAQ renderer automatically injects:</span>
+<span class="tag">&lt;script</span> <span class="property">type</span>=<span class="string">"application/ld+json"</span><span class="tag">&gt;</span>
+{
+  <span class="property">"@context"</span>: <span class="string">"https://schema.org"</span>,
+  <span class="property">"@type"</span>: <span class="string">"FAQPage"</span>,
+  <span class="property">"mainEntity"</span>: [
+    {
+      <span class="property">"@type"</span>: <span class="string">"Question"</span>,
+      <span class="property">"name"</span>: <span class="string">"What is CI/CD?"</span>,
+      <span class="property">"acceptedAnswer"</span>: {
+        <span class="property">"@type"</span>: <span class="string">"Answer"</span>,
+        <span class="property">"text"</span>: <span class="string">"CI/CD stands for..."</span>
+      }
+    }
+  ]
+}
+<span class="tag">&lt;/script&gt;</span></pre>
+
+                <!-- SEO output -->
+                <h2>SEO Output</h2>
+
+                <p>Every renderer injects the following SEO elements:</p>
+
+                <ul>
+                    <li><strong>Canonical URL</strong> &mdash; <code>&lt;link rel="canonical"&gt;</code> pointing to the page's permanent URL</li>
+                    <li><strong>JSON-LD</strong> &mdash; <code>Article</code> and <code>BreadcrumbList</code> structured data (plus <code>FAQPage</code> for FAQ content)</li>
+                    <li><strong>Open Graph</strong> &mdash; <code>og:title</code>, <code>og:description</code>, <code>og:url</code>, <code>og:type</code></li>
+                    <li><strong>Twitter Cards</strong> &mdash; <code>twitter:card</code>, <code>twitter:title</code>, <code>twitter:description</code></li>
+                    <li><strong>Meta description</strong> &mdash; Generated from the schema's <code>MetaDescPattern</code></li>
+                </ul>
+
+                <!-- Styling -->
+                <h2>Styling</h2>
+
+                <p>Renderers produce semantic HTML with CSS class names that follow a consistent naming convention. Your custom CSS (uploaded via chrome settings) can override any renderer style:</p>
+
+                <table>
+                    <thead><tr><th>Class Pattern</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>.contento-page</code></td><td>Root wrapper for all rendered content</td></tr>
+                        <tr><td><code>.idea-card</code>, <code>.checklist-item</code>, etc.</td><td>Schema-specific item wrappers</td></tr>
+                        <tr><td><code>.related-pages</code></td><td>Internal linking section</td></tr>
+                        <tr><td><code>.cta-box</code></td><td>CTA injection point</td></tr>
+                        <tr><td><code>.contento-backlink</code></td><td>Back-link component</td></tr>
+                    </tbody>
+                </table>
+
+                <p>See <a href="chrome.html" style="color: #3D5A80; font-weight: 500;">Chrome (Header/Footer/CSS)</a> for how to upload custom styles.</p>
+
+            </div>
+        </main>
+    </div>
+
+    <%footer-docs%>
+
+</body>
+</html>

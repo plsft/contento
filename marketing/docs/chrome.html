@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Custom Chrome — Contento pSEO</title>
+    <meta name="description" content="Wrap generated pSEO pages with your site's branding. Upload custom header HTML, footer HTML, and CSS to make pages match your main website." />
+    <script type="module" src="/src/main.js"></script>
+</head>
+<body class="bg-white text-gray-900 antialiased" x-data="{ mobileMenuOpen: false }">
+
+    <%nav-docs%>
+
+    <div class="max-w-[90rem] mx-auto flex">
+        <%sidebar-docs%>
+
+        <main class="flex-1 min-w-0 px-4 sm:px-6 lg:px-12 py-12">
+            <div class="max-w-3xl">
+
+                <!-- Breadcrumb -->
+                <div class="flex items-center gap-2 text-sm text-gray-400 mb-8">
+                    <a href="index.html" class="hover:text-gray-600">Docs</a>
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                    <span class="text-gray-600">Custom Chrome</span>
+                </div>
+
+                <h1 style="font-size: 2.25rem; font-weight: 700; color: #1A1A1A; margin-bottom: 0.5rem; letter-spacing: -0.02em;">Custom Chrome</h1>
+                <p style="font-size: 1.125rem; color: #6B7280; margin-bottom: 2.5rem;">Brand every generated page with your site's header, footer, and CSS.</p>
+
+                <!-- What is chrome -->
+                <h2>What Is Chrome?</h2>
+
+                <p><strong>Chrome</strong> is the branding wrapper around every pSEO page. It consists of three parts:</p>
+
+                <ul>
+                    <li><strong>Header HTML</strong> &mdash; Your site's navigation bar, logo, and any top-of-page elements</li>
+                    <li><strong>Footer HTML</strong> &mdash; Footer links, copyright notice, social icons, and any bottom-of-page elements</li>
+                    <li><strong>Custom CSS</strong> &mdash; Styles for your chrome elements, scoped to avoid conflicts with generated content</li>
+                </ul>
+
+                <p>Chrome is configured per-project. Each project can point at different header / footer / CSS files, so you can run multiple brands or sites from a single CLI install.</p>
+
+                <!-- How pages render -->
+                <h2>How Pages Render</h2>
+
+                <p>When a visitor requests a pSEO page, Contento assembles the final HTML in this order:</p>
+
+<pre><span class="comment">&lt;!-- 1. HTML document head --&gt;</span>
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;title&gt;{deterministic title}&lt;/title&gt;
+  &lt;meta name="description" content="{meta description}"&gt;
+  &lt;style&gt;{project custom CSS}&lt;/style&gt;
+  {JSON-LD structured data}
+&lt;/head&gt;
+&lt;body&gt;
+
+  <span class="comment">&lt;!-- 2. Your header chrome --&gt;</span>
+  {project headerHtml}
+
+  <span class="comment">&lt;!-- 3. Generated content --&gt;</span>
+  &lt;main class="pseo-content"&gt;
+    {rendered schema content}
+    {back-link}
+    {CTA HTML}
+  &lt;/main&gt;
+
+  <span class="comment">&lt;!-- 4. Your footer chrome --&gt;</span>
+  {project footerHtml}
+
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+
+                <!-- Configuring chrome via CLI -->
+                <h2>Configuring Chrome</h2>
+
+                <p>Point Contento at your existing site's header, footer, and CSS files using the <code>projects chrome</code> command. The paths are stored in your project config and read fresh on every build &mdash; edit your templates in place and rebuild to apply changes.</p>
+
+<pre><span class="prompt">$</span> <span class="function">contento</span> projects chrome proj_8f3a... \
+    --header ./chrome/header.html \
+    --footer ./chrome/footer.html \
+    --css ./chrome/styles.css
+
+<span class="output">  &#10003; Chrome updated for project "DevTools Resources"</span>
+<span class="output">  Changes are live immediately on all pages.</span></pre>
+
+                <p>Or pass inline HTML directly:</p>
+
+<pre><span class="prompt">$</span> <span class="function">contento</span> projects chrome proj_8f3a... \
+    --header-inline <span class="string">'&lt;nav&gt;&lt;a href="https://example.com"&gt;Home&lt;/a&gt;&lt;/nav&gt;'</span> \
+    --footer-inline <span class="string">'&lt;footer&gt;&amp;copy; 2026 Example Inc&lt;/footer&gt;'</span></pre>
+
+                <!-- Back-link configuration -->
+                <h2>Back-link Configuration</h2>
+
+                <p>Back-links are contextual links to your main site injected into the generated content body. They are configured at the project level (not in chrome):</p>
+
+                <ul>
+                    <li><strong>Back-link URL</strong> &mdash; The destination (e.g., <code>https://example.com</code>)</li>
+                    <li><strong>Back-link Anchor Text</strong> &mdash; The visible link text (e.g., "Example Inc" or "Try our tool")</li>
+                </ul>
+
+                <p>The back-link is placed contextually within the generated content, typically after the introduction paragraph. It uses a <code>rel="dofollow"</code> attribute for SEO value.</p>
+
+                <!-- CTA injection -->
+                <h2>CTA HTML Injection</h2>
+
+                <p>The CTA (Call to Action) HTML is a raw HTML snippet injected at strategic points within the generated content.
+                Unlike the header/footer chrome which wraps the page, the CTA is placed <strong>inside</strong> the content area:</p>
+
+                <ul>
+                    <li>After the introduction (if the page has 5+ items)</li>
+                    <li>After the midpoint of the content</li>
+                    <li>Before the conclusion</li>
+                </ul>
+
+                <p>Example CTA HTML:</p>
+
+<pre>&lt;div class="pseo-cta"&gt;
+  &lt;p&gt;Ready to streamline your workflow?&lt;/p&gt;
+  &lt;a href="https://example.com/signup" class="cta-button"&gt;Start Free Trial&lt;/a&gt;
+&lt;/div&gt;</pre>
+
+                <p>Style your CTA in the project's custom CSS:</p>
+
+<pre>.pseo-cta {
+    margin: 2rem 0;
+    padding: 1.5rem;
+    background: #f0f5ff;
+    border-radius: 8px;
+    text-align: center;
+}
+.pseo-cta .cta-button {
+    display: inline-block;
+    margin-top: 0.75rem;
+    padding: 0.75rem 2rem;
+    background: #3D5A80;
+    color: #fff;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 600;
+}</pre>
+
+                <!-- Copying your site's header/footer -->
+                <h2>Example: Copying Your Site's Header &amp; Footer</h2>
+
+                <p>The easiest way to create chrome is to copy your existing site's header and footer HTML:</p>
+
+                <ol>
+                    <li>Open your main site in a browser.</li>
+                    <li>Right-click the header and choose <strong>Inspect</strong>.</li>
+                    <li>Find the <code>&lt;header&gt;</code> or <code>&lt;nav&gt;</code> element and copy its outer HTML.</li>
+                    <li>Do the same for the <code>&lt;footer&gt;</code> element.</li>
+                    <li>Save each to a file (e.g., <code>header.html</code>, <code>footer.html</code>).</li>
+                    <li>Copy the relevant CSS rules from your site's stylesheet into a <code>styles.css</code> file.</li>
+                    <li>Update any relative URLs (e.g., <code>/images/logo.svg</code>) to absolute URLs (e.g., <code>https://example.com/images/logo.svg</code>).</li>
+                    <li>Upload with the CLI: <code>contento projects chrome proj_... --header ./header.html --footer ./footer.html --css ./styles.css</code></li>
+                </ol>
+
+                <div class="callout callout-warning">
+                    <strong>Important:</strong> Make sure all asset URLs (images, fonts, icons) in your chrome HTML use
+                    <strong>correct paths</strong> relative to your site's structure. Since pages are built locally and deployed on your domain, relative paths work as long as they resolve correctly from your output directory.
+                </div>
+
+                <!-- CSS considerations -->
+                <h2>CSS Considerations</h2>
+
+                <ul>
+                    <li><strong>Scope your styles</strong> &mdash; Use a prefix like <code>.site-header</code> or <code>.site-footer</code> to avoid conflicts with the generated content's default styles.</li>
+                    <li><strong>Avoid global resets</strong> &mdash; Do not include CSS resets (like <code>* { margin: 0; }</code>) in your custom CSS, as they will affect the generated content layout.</li>
+                    <li><strong>Responsive design</strong> &mdash; Generated content is responsive by default. Ensure your chrome is also responsive for mobile devices.</li>
+                    <li><strong>Font loading</strong> &mdash; If your chrome uses custom fonts, include the <code>@import</code> or <code>&lt;link&gt;</code> tag in the header HTML (not the CSS field).</li>
+                    <li><strong>z-index</strong> &mdash; Generated content uses z-index values up to 100. Keep your chrome's z-index below 1000 unless you need a sticky header.</li>
+                </ul>
+
+                <!-- Preview and testing -->
+                <h2>Preview &amp; Testing</h2>
+
+                <p>After uploading chrome, you can preview it in two ways:</p>
+
+                <ul>
+                    <li><strong>Local preview</strong> &mdash; Run <code>contento build &lt;project-id&gt; --output ./dist</code> and open any generated HTML file in your browser to preview chrome rendering.</li>
+                    <li><strong>Live page</strong> &mdash; After deploying to your site, navigate to any generated page on your domain to verify chrome rendering.</li>
+                </ul>
+
+                <div class="callout callout-tip">
+                    <strong>Tip:</strong> If your chrome looks correct in the preview but not on the live site, check for CSS specificity conflicts between your custom CSS and the generated content's base styles.
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <%footer-docs%>
+
+</body>
+</html>

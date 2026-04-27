@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Projects & Domains — Contento pSEO</title>
+    <meta name="description" content="Learn how to initialize pSEO projects, configure chrome, and manage project lifecycles in Contento." />
+    <script type="module" src="/src/main.js"></script>
+</head>
+<body class="bg-white text-gray-900 antialiased" x-data="{ mobileMenuOpen: false }">
+
+    <%nav-docs%>
+
+    <div class="max-w-[90rem] mx-auto flex">
+        <%sidebar-docs%>
+
+        <main class="flex-1 min-w-0 px-4 sm:px-6 lg:px-12 py-12">
+            <div class="max-w-3xl">
+
+                <!-- Breadcrumb -->
+                <div class="flex items-center gap-2 text-sm text-gray-400 mb-8">
+                    <a href="index.html" class="hover:text-gray-600">Docs</a>
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                    <span class="text-gray-600">Projects &amp; Domains</span>
+                </div>
+
+                <h1 style="font-size: 2.25rem; font-weight: 700; color: #1A1A1A; margin-bottom: 0.5rem; letter-spacing: -0.02em;">Projects &amp; Domains</h1>
+                <p style="font-size: 1.125rem; color: #6B7280; margin-bottom: 2.5rem;">Every pSEO campaign starts with a local project.</p>
+
+                <!-- What is a project -->
+                <h2>What Is a pSEO Project?</h2>
+
+                <p>A <strong>project</strong> is the top-level unit in Contento pSEO. It maps to a local directory
+                with a <code>contento.yaml</code> config file and owns all the niches, schemas, chrome templates, and
+                build output for a campaign. You can run multiple projects on the same machine, each targeting different
+                audiences or brands.</p>
+
+                <p>Each project stores:</p>
+                <ul>
+                    <li><strong>Output path</strong> &mdash; Where built pages are written (e.g., <code>./dist/articles</code>)</li>
+                    <li><strong>Custom chrome</strong> &mdash; Header HTML, footer HTML, and CSS that wrap every page</li>
+                    <li><strong>Back-link and CTA configuration</strong> &mdash; Links injected into generated content</li>
+                    <li><strong>Niches &amp; schemas</strong> &mdash; Topic definitions and data schemas that drive page generation</li>
+                    <li><strong>Analytics</strong> &mdash; GSC data, click/impression metrics, and performance rankings</li>
+                </ul>
+
+                <!-- Creating a project -->
+                <h2>Creating a Project</h2>
+
+                <p>Run <code>contento init</code> inside the directory where you want to manage your pSEO project:</p>
+
+<pre><span class="function">contento</span> init \
+    --name <span class="string">"DevTools Resources"</span> \
+    --output <span class="string">"./dist/articles"</span>
+
+<span class="output">  Project initialized: devtools-resources</span>
+<span class="output">  Created: contento.yaml</span>
+<span class="output">  Output:  ./dist/articles</span>
+<span class="output"></span>
+<span class="output">  Next steps:</span>
+<span class="output">    1. Run `contento projects chrome` to set header/footer/CSS</span>
+<span class="output">    2. Run `contento collections generate` to generate pages</span></pre>
+
+                <!-- Custom Chrome -->
+                <h2>Custom Chrome</h2>
+
+                <p>Chrome is the header, footer, and CSS that wraps every generated page in your project. This is how you
+                make pSEO pages match your main site's look and feel.</p>
+
+                <ul>
+                    <li><strong>Header HTML</strong> &mdash; Navigation bar, logo, site-wide banner</li>
+                    <li><strong>Footer HTML</strong> &mdash; Footer links, copyright, social icons</li>
+                    <li><strong>Custom CSS</strong> &mdash; Styles scoped to your chrome elements</li>
+                </ul>
+
+                <p>Chrome templates are defined as local files and referenced in your <code>contento.yaml</code>
+                configuration. During generation, Contento reads these templates and wraps every output page
+                automatically. See <a href="chrome.html" style="color: #3D5A80; font-weight: 500;">Custom Chrome</a> for the full guide.</p>
+
+                <!-- Back-link and CTA -->
+                <h2>Back-link &amp; CTA Configuration</h2>
+
+                <p>Every project can inject back-links and calls to action into generated content:</p>
+
+                <ul>
+                    <li><strong>Back-link URL</strong> &mdash; The target URL for contextual links in generated content (e.g., your homepage)</li>
+                    <li><strong>Back-link Anchor Text</strong> &mdash; The text for the link (e.g., your brand name)</li>
+                    <li><strong>CTA HTML</strong> &mdash; A raw HTML snippet injected at strategic points in pages (e.g., a signup button)</li>
+                </ul>
+
+                <p>These are configured at the project level and automatically applied to all pages generated under the project.</p>
+
+                <!-- Project lifecycle -->
+                <h2>Project Lifecycle</h2>
+
+                <table>
+                    <thead>
+                        <tr><th>Status</th><th>Description</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>initialized</code></td>
+                            <td>Project created, ready for generation. Config and chrome are in place.</td>
+                        </tr>
+                        <tr>
+                            <td><code>active</code></td>
+                            <td>Pages have been generated and written to the output path.</td>
+                        </tr>
+                        <tr>
+                            <td><code>archived</code></td>
+                            <td>Project paused. Build is skipped during generation runs.</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <p>Check the current state via the CLI:</p>
+
+<pre><span class="comment"># Check project status</span>
+<span class="function">contento</span> status
+
+<span class="comment"># List all projects</span>
+<span class="function">contento</span> projects list</pre>
+
+                <!-- CLI Reference -->
+                <h2>CLI Commands</h2>
+
+                <table>
+                    <thead><tr><th>Command</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>contento init</code></td><td>Create a new project (alias for projects create)</td></tr>
+                        <tr><td><code>contento projects list</code></td><td>List all projects</td></tr>
+                        <tr><td><code>contento projects status &lt;id&gt;</code></td><td>Get project status and page count</td></tr>
+                        <tr><td><code>contento projects chrome &lt;id&gt;</code></td><td>Upload custom chrome (header, footer, CSS)</td></tr>
+                    </tbody>
+                </table>
+
+                <p>See the <a href="cli.html" style="color: #3D5A80; font-weight: 500;">CLI reference</a> for all available flags and options.</p>
+
+            </div>
+        </main>
+    </div>
+
+    <%footer-docs%>
+
+</body>
+</html>

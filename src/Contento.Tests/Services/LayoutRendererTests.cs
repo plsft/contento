@@ -1,4 +1,3 @@
-using System.Data;
 using NUnit.Framework;
 using Moq;
 using Microsoft.Extensions.Logging;
@@ -7,34 +6,24 @@ using Contento.Services;
 
 namespace Contento.Tests.Services;
 
-/// <summary>
-/// Tests for <see cref="LayoutRenderer"/>. The service depends on <see cref="IDbConnection"/>,
-/// <see cref="ILayoutService"/>, <see cref="IMarkdownService"/>, and <see cref="ILogger{LayoutRenderer}"/>.
-/// All four constructor parameters use Guard.Against.Null. Since Tuxedo extension methods on
-/// IDbConnection are difficult to mock, tests focus on:
-///   - Constructor guard clauses
-///   - BuildRenderContextAsync behavior when no layout is found
-///   - LayoutRenderContext default values
-/// </summary>
 [TestFixture]
 public class LayoutRendererTests
 {
-    private Mock<IDbConnection> _mockDb = null!;
     private Mock<ILayoutService> _mockLayoutService = null!;
-    private Mock<IMarkdownService> _mockMarkdown = null!;
+    private Mock<IComponentRendererRegistry> _mockRegistry = null!;
+    private Mock<ILogger<LayoutRenderer>> _mockLogger = null!;
     private LayoutRenderer _service = null!;
 
     [SetUp]
     public void SetUp()
     {
-        _mockDb = new Mock<IDbConnection>();
         _mockLayoutService = new Mock<ILayoutService>();
-        _mockMarkdown = new Mock<IMarkdownService>();
+        _mockRegistry = new Mock<IComponentRendererRegistry>();
+        _mockLogger = new Mock<ILogger<LayoutRenderer>>();
         _service = new LayoutRenderer(
-            _mockDb.Object,
             _mockLayoutService.Object,
-            _mockMarkdown.Object,
-            Mock.Of<ILogger<LayoutRenderer>>());
+            _mockRegistry.Object,
+            _mockLogger.Object);
     }
 
     // ---------------------------------------------------------------
@@ -42,36 +31,23 @@ public class LayoutRendererTests
     // ---------------------------------------------------------------
 
     [Test]
-    public void Constructor_NullDbConnection_ThrowsArgumentNullException()
-    {
-        Assert.Throws<ArgumentNullException>(
-            () => new LayoutRenderer(
-                null!,
-                _mockLayoutService.Object,
-                _mockMarkdown.Object,
-                Mock.Of<ILogger<LayoutRenderer>>()));
-    }
-
-    [Test]
     public void Constructor_NullLayoutService_ThrowsArgumentNullException()
     {
         Assert.Throws<ArgumentNullException>(
             () => new LayoutRenderer(
-                _mockDb.Object,
                 null!,
-                _mockMarkdown.Object,
-                Mock.Of<ILogger<LayoutRenderer>>()));
+                _mockRegistry.Object,
+                _mockLogger.Object));
     }
 
     [Test]
-    public void Constructor_NullMarkdownService_ThrowsArgumentNullException()
+    public void Constructor_NullRegistry_ThrowsArgumentNullException()
     {
         Assert.Throws<ArgumentNullException>(
             () => new LayoutRenderer(
-                _mockDb.Object,
                 _mockLayoutService.Object,
                 null!,
-                Mock.Of<ILogger<LayoutRenderer>>()));
+                _mockLogger.Object));
     }
 
     [Test]
@@ -79,9 +55,8 @@ public class LayoutRendererTests
     {
         Assert.Throws<ArgumentNullException>(
             () => new LayoutRenderer(
-                _mockDb.Object,
                 _mockLayoutService.Object,
-                _mockMarkdown.Object,
+                _mockRegistry.Object,
                 null!));
     }
 
@@ -90,10 +65,9 @@ public class LayoutRendererTests
     {
         Assert.DoesNotThrow(
             () => new LayoutRenderer(
-                _mockDb.Object,
                 _mockLayoutService.Object,
-                _mockMarkdown.Object,
-                Mock.Of<ILogger<LayoutRenderer>>()));
+                _mockRegistry.Object,
+                _mockLogger.Object));
     }
 
     // ---------------------------------------------------------------
@@ -120,7 +94,6 @@ public class LayoutRendererTests
     public void LayoutRenderContext_MaxWidth_DefaultsToNull()
     {
         var context = new LayoutRenderContext();
-
         Assert.That(context.MaxWidth, Is.Null);
     }
 
@@ -128,7 +101,6 @@ public class LayoutRendererTests
     public void LayoutRenderContext_Gap_DefaultsToNull()
     {
         var context = new LayoutRenderContext();
-
         Assert.That(context.Gap, Is.Null);
     }
 
@@ -136,7 +108,6 @@ public class LayoutRendererTests
     public void LayoutRenderContext_HasLayout_DefaultsToFalse()
     {
         var context = new LayoutRenderContext();
-
         Assert.That(context.HasLayout, Is.False);
     }
 
@@ -144,7 +115,6 @@ public class LayoutRendererTests
     public void LayoutRenderContext_StructureJson_DefaultsToNull()
     {
         var context = new LayoutRenderContext();
-
         Assert.That(context.StructureJson, Is.Null);
     }
 
@@ -152,7 +122,6 @@ public class LayoutRendererTests
     public void LayoutRenderContext_RegionContent_DefaultsToEmptyDictionary()
     {
         var context = new LayoutRenderContext();
-
         Assert.That(context.RegionContent, Is.Not.Null);
         Assert.That(context.RegionContent, Is.Empty);
     }

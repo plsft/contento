@@ -1,0 +1,9 @@
+src/
+bin/
+tsconfig.json
+tsup.config.ts
+node_modules/
+.git/
+*.ts
+!dist/**/*.js
+!dist/**/*.d.ts

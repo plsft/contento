@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Install CLI — Contento Docs</title>
+    <meta name="description" content="Install the Contento CLI via npm. Global installation, authentication, configuration, and environment variables." />
+    <script type="module" src="/src/main.js"></script>
+</head>
+<body class="bg-white text-gray-900 antialiased" x-data="{ mobileMenuOpen: false }">
+
+    <%nav-docs%>
+
+    <div class="max-w-[90rem] mx-auto flex">
+        <%sidebar-docs%>
+
+        <main class="flex-1 min-w-0 px-4 sm:px-6 lg:px-12 py-12">
+            <div class="max-w-3xl">
+
+                <!-- Breadcrumb -->
+                <div class="flex items-center gap-2 text-sm text-gray-400 mb-8">
+                    <a href="index.html" class="hover:text-gray-600">Docs</a>
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                    <span class="text-gray-600">Install CLI</span>
+                </div>
+
+                <h1 style="font-size: 2.25rem; font-weight: 700; color: #1A1A1A; margin-bottom: 0.5rem; letter-spacing: -0.02em;">Install CLI</h1>
+                <p style="font-size: 1.125rem; color: #6B7280; margin-bottom: 2.5rem;">Install the <code>contento</code> CLI and configure your AI provider in under a minute.</p>
+
+                <!-- Prerequisites -->
+                <h2>Prerequisites</h2>
+
+                <table>
+                    <thead>
+                        <tr><th>Dependency</th><th>Version</th><th>Notes</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>Node.js</strong></td><td>18+</td><td>LTS recommended</td></tr>
+                        <tr><td><strong>npm</strong></td><td>9+</td><td>Included with Node.js</td></tr>
+                    </tbody>
+                </table>
+
+                <!-- Install -->
+                <h2>Install</h2>
+
+<pre><span class="comment"># Install globally via npm</span>
+<span class="function">npm</span> install -g contento
+
+<span class="comment"># Verify installation</span>
+<span class="function">contento</span> --version
+<span class="output">contento v0.1.0</span>
+
+<span class="comment"># Or run without installing (one-shot)</span>
+<span class="function">npx</span> contento --version</pre>
+
+                <!-- Configure AI provider -->
+                <h2>Configure Your AI Provider (BYOK)</h2>
+
+                <p>Contento has no login or central account. The only thing the CLI needs to generate pages is an AI provider key. Run the interactive setup once:</p>
+
+<pre><span class="function">contento</span> config set
+
+<span class="output">  ? AI Provider: OpenAI</span>
+<span class="output">  ? Model: gpt-4o-mini (default)</span>
+<span class="output">  ? API Key: ************************************</span>
+<span class="output">  &#10003; AI configuration saved to ~/.contento/config.json</span></pre>
+
+                <p>Or pass it non-interactively (recommended for CI and agents):</p>
+
+<pre><span class="function">contento</span> config set \
+    --provider openai \
+    --model <span class="string">"gpt-4o-mini"</span> \
+    --api-key <span class="string">"sk-proj-..."</span></pre>
+
+                <p>You can also drop the provider key into an environment variable and skip <code>config set</code> entirely:</p>
+
+<pre><span class="keyword">export</span> OPENAI_API_KEY=sk-proj-...
+<span class="comment"># or ANTHROPIC_API_KEY, GOOGLE_API_KEY, GROQ_API_KEY, OPENROUTER_API_KEY</span></pre>
+
+                <div class="callout callout-tip">
+                    <strong>Tip:</strong> Mix providers across projects by overriding with <code>--provider</code> on individual <code>collections generate</code> runs. Local models work too &mdash; point at any OpenAI-compatible endpoint via <code>--base-url</code>.
+                </div>
+
+                <!-- Configuration -->
+                <h2>Configuration Files</h2>
+
+                <p>Contento stores everything locally in <code>~/.contento/</code>:</p>
+
+<pre>{
+  <span class="property">"provider"</span>: <span class="string">"openai"</span>,
+  <span class="property">"model"</span>: <span class="string">"gpt-4o-mini"</span>,
+  <span class="property">"apiKey"</span>: <span class="string">"sk-proj-..."</span>,
+  <span class="property">"workers"</span>: <span class="number">5</span>
+}</pre>
+
+                <h3>Environment Variables</h3>
+
+                <table>
+                    <thead>
+                        <tr><th>Variable</th><th>Description</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><code>OPENAI_API_KEY</code></td><td>OpenAI key (used when provider is <code>openai</code>)</td></tr>
+                        <tr><td><code>ANTHROPIC_API_KEY</code></td><td>Anthropic key</td></tr>
+                        <tr><td><code>GOOGLE_API_KEY</code></td><td>Google AI key</td></tr>
+                        <tr><td><code>GROQ_API_KEY</code></td><td>Groq key</td></tr>
+                        <tr><td><code>OPENROUTER_API_KEY</code></td><td>OpenRouter key</td></tr>
+                        <tr><td><code>CONTENTO_PROVIDER</code></td><td>Override the configured provider</td></tr>
+                        <tr><td><code>CONTENTO_MODEL</code></td><td>Override the configured model identifier</td></tr>
+                        <tr><td><code>NO_COLOR</code></td><td>Disable colored output</td></tr>
+                    </tbody>
+                </table>
+
+                <!-- Global flags -->
+                <h2>Global Flags</h2>
+
+                <table>
+                    <thead>
+                        <tr><th>Flag</th><th>Description</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><code>--json</code></td><td>Output machine-readable JSON instead of formatted tables</td></tr>
+                        <tr><td><code>--no-color</code></td><td>Disable colored output</td></tr>
+                        <tr><td><code>-v, --verbose</code></td><td>Enable verbose logging</td></tr>
+                        <tr><td><code>-V, --version</code></td><td>Show CLI version</td></tr>
+                        <tr><td><code>-h, --help</code></td><td>Show help for any command</td></tr>
+                    </tbody>
+                </table>
+
+                <!-- Verify -->
+                <h2>Verify Everything Works</h2>
+
+<pre><span class="comment"># Confirm your AI configuration</span>
+<span class="function">contento</span> config show
+
+<span class="comment"># Browse the bundled niches</span>
+<span class="function">contento</span> niches list --category <span class="string">"Technology"</span>
+
+<span class="comment"># List available schemas</span>
+<span class="function">contento</span> schemas list</pre>
+
+                <!-- Next steps -->
+                <h2>Next Steps</h2>
+
+                <ul>
+                    <li><a href="first-project.html" style="color: #3D5A80; font-weight: 500;">First Project</a> &mdash; Create your first pSEO project and generate pages</li>
+                    <li><a href="cli.html" style="color: #3D5A80; font-weight: 500;">CLI Reference</a> &mdash; All commands with flags and examples</li>
+                    <li><a href="agents.html" style="color: #3D5A80; font-weight: 500;">Agent Integration</a> &mdash; Use Contento with AI agents</li>
+                </ul>
+
+            </div>
+        </main>
+    </div>
+
+    <%footer-docs%>
+
+</body>
+</html>
